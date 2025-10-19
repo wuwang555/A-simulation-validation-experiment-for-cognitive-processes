@@ -804,6 +804,8 @@ class AdjustedSubjectiveCognitiveGraph:
             return best_path
 
         return None
+
+
     def get_average_energy(self):
         """计算网络平均能耗"""
         if self.G.number_of_edges() == 0:
@@ -827,6 +829,7 @@ class AdjustedSubjectiveCognitiveGraph:
                 stats['migration_bridges'] += len(self.G.nodes[node]['migration_bridges'])
 
         return stats
+
 
     def visualize_energy_convergence(self):
         """可视化能耗收敛过程"""
