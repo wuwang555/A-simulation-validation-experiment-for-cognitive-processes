@@ -11,18 +11,24 @@ class EmergenceDetectorFixed:
     """修复的涌现现象检测器"""
 
     def __init__(self, detection_thresholds: Dict[str, float] = None):
-        # 降低检测阈值
+        # 改进的检测阈值
         self.thresholds = detection_thresholds or {
-            'compression_synergy': 0.55,  # 降低压缩协同性阈值
-            'migration_efficiency': 0.25,  # 降低迁移效率阈值
-            'pattern_stability': 0.65,  # 降低模式稳定性阈值
-            'energy_sync_threshold': 0.5,  # 降低能量同步阈值
-            'cross_domain_gain': 0.2,  # 降低跨领域增益阈值
-            'cluster_cohesion': 0.5,  # 降低集群内聚性阈值
-            'min_cluster_size': 2,  # 降低最小集群大小
-            'max_cluster_size': 20,  # 降低最大集群大小
+            'compression_synergy': 0.76,      # 提高压缩协同性阈值
+            'migration_efficiency': 0.35,     # 提高迁移效率阈值
+            'pattern_stability': 0.7,
+            'energy_sync_threshold': 0.65,
+            'cross_domain_gain': 0.2,
+            'cluster_cohesion': 0.7,
+            'min_cluster_size': 2,            # 允许更小的集群
+            'max_cluster_size': 6,            # 允许更大的集群
+            'dynamic_cluster_sizing': True,   # 新增：动态集群大小
+            'compression_persistence': 3,
+            'migration_confidence': 0.75,
+            'min_connection_strength': 0.5    # 新增：最小连接强度
         }
-
+        # 添加检测历史用于去重
+        self.compression_history = defaultdict(list)
+        self.migration_history = defaultdict(list)
         self.detection_history = {
             'compressions': [],
             'migrations': [],
@@ -30,19 +36,22 @@ class EmergenceDetectorFixed:
         }
 
     def detect_spontaneous_compression(self, network, energy_history, traversal_history=None):
-        """修复的概念压缩检测"""
+        """修复的概念压缩检测 - 改进版本"""
         compression_candidates = []
 
         # 只在能量历史足够长时检测
-        if len(energy_history) < 20:
+        if len(energy_history) < 50:
             return compression_candidates
 
         # 分析网络中的高连接度节点作为潜在中心
         node_degrees = dict(network.degree())
-        high_degree_nodes = [node for node, degree in node_degrees.items()
-                             if degree >= self.thresholds['min_cluster_size']]
+        # 选择度适中的节点作为中心候选（避免过度连接的节点）
+        candidate_nodes = [
+            node for node, degree in node_degrees.items()
+            if 3 <= degree <= 15  # 限制度范围，避免太大或太小的集群
+        ]
 
-        for center in high_degree_nodes:
+        for center in candidate_nodes:
             neighbors = list(network.neighbors(center))
 
             if len(neighbors) < self.thresholds['min_cluster_size']:
@@ -55,73 +64,162 @@ class EmergenceDetectorFixed:
                     weight = network[center][neighbor]['weight']
                     # 权重越低表示连接越强
                     strength = 1.0 / (1.0 + weight)
-                    connection_strengths.append((neighbor, strength))
+                    if strength > self.thresholds['min_connection_strength']:
+                        connection_strengths.append((neighbor, strength))
+
+            if len(connection_strengths) < self.thresholds['min_cluster_size']:
+                continue
 
             # 按连接强度排序
             connection_strengths.sort(key=lambda x: x[1], reverse=True)
 
-            # 选择最强的几个邻居
-            strong_neighbors = [n for n, s in connection_strengths[:self.thresholds['max_cluster_size']]]
+            # 动态确定集群大小
+            if self.thresholds['dynamic_cluster_sizing']:
+                # 基于连接强度分布确定集群大小
+                cluster_size = self._determine_dynamic_cluster_size(connection_strengths)
+            else:
+                cluster_size = self.thresholds['max_cluster_size']
 
-            if len(strong_neighbors) >= self.thresholds['min_cluster_size']:
-                # 计算集群内聚性
-                cohesion = self._compute_cluster_cohesion(center, strong_neighbors, network)
+            # 选择最强的邻居
+            selected_neighbors = [n for n, s in connection_strengths[:cluster_size]]
 
-                # 计算能量协同性
-                energy_sync = self._compute_energy_synchronization_simple(center, strong_neighbors, network)
+            # 计算集群内聚性
+            cohesion = self._compute_cluster_cohesion(center, selected_neighbors, network)
 
-                # 计算综合涌现强度
-                emergence_strength = (0.4 * cohesion + 0.6 * energy_sync)
+            # 计算能量协同性
+            energy_sync = self._compute_energy_synchronization_improved(
+                center, selected_neighbors, network, energy_history
+            )
 
-                if (emergence_strength > self.thresholds['compression_synergy'] and
-                        cohesion > self.thresholds['cluster_cohesion']):
+            # 计算综合涌现强度
+            emergence_strength = self._compute_comprehensive_emergence_strength(
+                center, selected_neighbors, network, cohesion, energy_sync
+            )
+
+            # 应用更严格的阈值
+            if (emergence_strength > self.thresholds['compression_synergy'] and
+                    cohesion > self.thresholds['cluster_cohesion'] and
+                    energy_sync > self.thresholds['energy_sync_threshold']):
+
+                # 检查是否重复
+                if not self._is_duplicate_compression(center, selected_neighbors):
                     compression_candidates.append({
                         'center': center,
-                        'related_nodes': strong_neighbors,
+                        'related_nodes': selected_neighbors,
                         'energy_synergy': energy_sync,
                         'cohesion': cohesion,
                         'emergence_strength': emergence_strength,
-                        'cluster_size': len(strong_neighbors)
+                        'cluster_size': len(selected_neighbors),
+                        'avg_connection_strength': np.mean([s for _, s in connection_strengths[:cluster_size]])
                     })
 
-        return compression_candidates
+        return compression_candidates[:10]  # 限制返回数量，避免过多检测
 
-    def _compute_energy_synchronization_simple(self, center, neighbors, network):
-        """简化的能量同步性计算"""
+    def _determine_dynamic_cluster_size(self, connection_strengths):
+        """动态确定集群大小"""
+        strengths = [s for _, s in connection_strengths]
+
+        # 基于强度分布确定集群大小
+        avg_strength = np.mean(strengths)
+        std_strength = np.std(strengths)
+
+        # 找到强度明显下降的点
+        for i in range(1, len(strengths)):
+            if strengths[i] < avg_strength - 0.5 * std_strength:
+                return max(self.thresholds['min_cluster_size'],
+                           min(i, self.thresholds['max_cluster_size']))
+
+        # 如果没有明显下降，使用适中的大小
+        return min(len(strengths),
+                   max(self.thresholds['min_cluster_size'] + 2,
+                       len(strengths) // 2))
+
+    def _compute_energy_synchronization_improved(self, center, neighbors, network, energy_history):
+        """改进的能量同步性计算"""
         if len(neighbors) < 2:
             return 0.0
 
-        center_energies = []
-        neighbor_avg_energies = []
+        # 计算中心节点与邻居的能量变化趋势
+        center_energy_trend = self._compute_energy_trend(center, network, energy_history)
+        neighbor_trends = []
 
         for neighbor in neighbors:
-            if network.has_edge(center, neighbor):
-                # 中心到邻居的能量
-                center_energy = network[center][neighbor]['weight']
-                center_energies.append(center_energy)
+            trend = self._compute_energy_trend(neighbor, network, energy_history)
+            neighbor_trends.append(trend)
 
-                # 邻居与其他邻居的平均能量
-                neighbor_energies = []
-                for other in neighbors:
-                    if other != neighbor and network.has_edge(neighbor, other):
-                        neighbor_energies.append(network[neighbor][other]['weight'])
+        if not neighbor_trends:
+            return 0.0
 
-                if neighbor_energies:
-                    neighbor_avg_energies.append(np.mean(neighbor_energies))
-                else:
-                    neighbor_avg_energies.append(center_energy)
+        # 计算趋势一致性
+        avg_neighbor_trend = np.mean(neighbor_trends)
+        trend_similarity = 1.0 - abs(center_energy_trend - avg_neighbor_trend)
 
-        if len(center_energies) < 2:
-            return 0.5
+        return max(0.0, trend_similarity)
 
-        # 计算相关性
-        try:
-            correlation = np.corrcoef(center_energies, neighbor_avg_energies)[0, 1]
-            if np.isnan(correlation):
-                return 0.5
-            return abs(correlation)
-        except:
-            return 0.5
+    def _compute_energy_trend(self, node, network, energy_history, window_size=20):
+        """计算节点能量趋势"""
+        if len(energy_history) < window_size:
+            return 0.0
+
+        # 简化的趋势计算：基于最近的能量变化
+        recent_energies = []
+        for neighbor in network.neighbors(node):
+            if network.has_edge(node, neighbor):
+                recent_energies.append(network[node][neighbor]['weight'])
+
+        if not recent_energies:
+            return 0.0
+
+        current_avg = np.mean(recent_energies)
+        # 这里简化处理，实际应该基于历史数据
+        return current_avg
+
+    def _compute_comprehensive_emergence_strength(self, center, neighbors, network, cohesion, energy_sync):
+        """计算综合涌现强度"""
+        # 考虑多个因素
+        connection_density = self._compute_connection_density(neighbors, network)
+        semantic_coherence = self._estimate_semantic_coherence(center, neighbors)
+
+        # 加权综合
+        emergence_strength = (
+                0.3 * cohesion +
+                0.3 * energy_sync +
+                0.2 * connection_density +
+                0.2 * semantic_coherence
+        )
+
+        return min(1.0, emergence_strength)
+
+    def _compute_connection_density(self, nodes, network):
+        """计算节点间的连接密度"""
+        if len(nodes) < 2:
+            return 0.0
+
+        possible_connections = len(nodes) * (len(nodes) - 1) / 2
+        actual_connections = 0
+
+        for i, node1 in enumerate(nodes):
+            for node2 in nodes[i + 1:]:
+                if network.has_edge(node1, node2):
+                    actual_connections += 1
+
+        return actual_connections / possible_connections if possible_connections > 0 else 0.0
+
+    def _estimate_semantic_coherence(self, center, neighbors):
+        """估计语义连贯性（简化版本）"""
+        # 在实际应用中，这里应该使用语义网络计算
+        # 这里使用基于节点名称的简单启发式
+        center_words = set(center)
+        coherence_scores = []
+
+        for neighbor in neighbors:
+            neighbor_words = set(neighbor)
+            overlap = len(center_words.intersection(neighbor_words))
+            total = len(center_words.union(neighbor_words))
+            if total > 0:
+                coherence_scores.append(overlap / total)
+
+        return np.mean(coherence_scores) if coherence_scores else 0.0
 
     def _compute_cluster_cohesion(self, center: str, neighbors: List[str], network: nx.Graph) -> float:
         """计算集群内聚性"""
@@ -243,3 +341,76 @@ class EmergenceDetectorFixed:
                 return domain
 
         return 'other'
+
+    def calculate_compression_confidence(self, compression):
+        """计算压缩置信度"""
+        synergy = compression.get('energy_synergy', 0)
+        cohesion = compression.get('cohesion', 0)
+        cluster_size = compression.get('cluster_size', 0)
+
+        # 置信度公式
+        confidence = (
+                0.4 * synergy +
+                0.3 * cohesion +
+                0.2 * min(1.0, cluster_size / 6) +  # 集群大小因子
+                0.1 * self._calculate_temporal_stability(compression)  # 时间稳定性
+        )
+
+        return min(1.0, confidence)
+
+    def calculate_migration_confidence(self, migration):
+        """计算迁移置信度"""
+        efficiency = migration.get('efficiency_gain', 0)
+        domain_span = migration.get('domain_span', 0)
+        path_length = len(migration.get('path', []))
+
+        # 置信度公式
+        confidence = (
+                0.5 * efficiency +
+                0.2 * min(1.0, domain_span / 3) +  # 领域跨度因子
+                0.2 * (1.0 / max(1, path_length)) +  # 路径长度因子
+                0.1 * self._calculate_innovation_score(migration)  # 创新性得分
+        )
+
+        return min(1.0, confidence)
+
+    def _calculate_temporal_stability(self, compression):
+        """计算时间稳定性"""
+        center = compression['center']
+        current_strength = compression['emergence_strength']
+
+        # 检查历史记录
+        if center in self.compression_history:
+            historical_strengths = [c['emergence_strength'] for c in self.compression_history[center]]
+            avg_historical = np.mean(historical_strengths)
+            stability = 1.0 - abs(current_strength - avg_historical)
+            return max(0, stability)
+
+        return 0.5  # 默认值
+
+    def _calculate_innovation_score(self, migration):
+        """计算创新性得分"""
+        path = migration.get('path', [])
+        principle_node = migration.get('principle_node', '')
+
+        # 检查是否包含新的连接模式
+        innovation_score = 0.0
+        if len(path) >= 3:
+            # 检查中间节点是否是第一次作为迁移桥梁
+            if principle_node not in self.migration_history:
+                innovation_score += 0.3
+
+            # 检查是否连接了新的领域组合
+            domains = [self._infer_domain(node) for node in path]
+            unique_domains = len(set(domains))
+            innovation_score += min(0.7, unique_domains * 0.2)
+
+        return innovation_score
+
+    def _is_duplicate_compression(self, center, neighbors):
+        """检查重复压缩"""
+        key = (center, tuple(sorted(neighbors)))
+        if key in self.compression_history:
+            return True
+        self.compression_history[key] = True
+        return False

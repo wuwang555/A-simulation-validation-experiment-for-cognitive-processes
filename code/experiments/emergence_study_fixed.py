@@ -3,10 +3,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from typing import Dict, List, Any
 import time
-
+import pandas as pd
+from datetime import datetime
+from emergence.universe_enhanced import CognitiveUniverseEnhanced
 from emergence.universe import CognitiveUniverse
 from emergence.observer import EmergenceObserver
-from emergence.detector import EmergenceDetector
+from emergence.detector_fixed import EmergenceDetectorFixed
 from emergence.metrics import NaturalEmergenceMetrics
 from utils.individual_variation import IndividualVariation, create_enhanced_individual_params
 from config import *
@@ -18,6 +20,31 @@ class EmergenceStudyFixed:
     def __init__(self):
         self.results = {}
         self.comparison_data = {}
+        self.excel_data = {
+            'compressions': [],
+            'migrations': []
+        }
+
+    def save_to_excel(self, filename=None):
+        """保存涌现数据到Excel"""
+        if filename is None:
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"emergence_results_{timestamp}.xlsx"
+
+        # 创建DataFrame
+        df_compressions = pd.DataFrame(self.excel_data['compressions'])
+        df_migrations = pd.DataFrame(self.excel_data['migrations'])
+
+        # 保存到Excel
+        with pd.ExcelWriter(filename, engine='openpyxl') as writer:
+            df_compressions.to_excel(writer, sheet_name='概念压缩', index=False)
+            df_migrations.to_excel(writer, sheet_name='第一性原理迁移', index=False)
+
+        print(f"数据已保存到: {filename}")
+        print(f"概念压缩记录: {len(df_compressions)} 条")
+        print(f"原理迁移记录: {len(df_migrations)} 条")
+
+        return filename
 
     def run_pure_emergence_experiment(self, num_individuals=3, max_iterations=None):
         """运行纯粹的涌现观察实验 - 修复版本"""
@@ -40,31 +67,37 @@ class EmergenceStudyFixed:
             base_params = variation_simulator.generate_individual(individual_id)
             individual_params = create_enhanced_individual_params(base_params)
 
-            # 创建纯粹能量宇宙
-            universe = CognitiveUniverse(individual_params)
+            # 直接创建增强宇宙实例，不要传递 universe 对象
+            universe_enhanced = CognitiveUniverseEnhanced(individual_params)
             observer = EmergenceObserver()
-            detector = EmergenceDetector()
+            detector = EmergenceDetectorFixed()
 
             # 初始化宇宙网络
-            self._initialize_universe_network(universe)
+            self._initialize_universe_network(universe_enhanced)
 
             # 运行宇宙演化
             start_time = time.time()
-            observations = universe.evolve(iterations=max_iterations)
+            observations = universe_enhanced.evolve_with_emergence_detection(
+                iterations=max_iterations,
+                detection_interval=100
+            )
             end_time = time.time()
+
+            # 记录到Excel数据结构
+            self._record_excel_data(individual_id, observations, universe_enhanced)
 
             # 收集个体结果
             individual_result = {
                 'individual_id': individual_id,
                 'parameters': individual_params,
-                'observations': universe.observations,
-                'final_energy': universe.calculate_network_energy(),
-                'initial_energy': universe.energy_history[0] if universe.energy_history else 1.0,
-                'energy_improvement': self._calculate_energy_improvement(universe.energy_history),
-                'compression_count': len(universe.observations['spontaneous_compressions']),
-                'migration_count': len(universe.observations['emergent_migrations']),
+                'observations': observations,  # 使用返回的observations
+                'final_energy': universe_enhanced.calculate_network_energy(),
+                'initial_energy': universe_enhanced.energy_history[0] if universe_enhanced.energy_history else 1.0,
+                'energy_improvement': self._calculate_energy_improvement(universe_enhanced.energy_history),
+                'compression_count': len(observations['natural_compressions']),
+                'migration_count': len(observations['natural_migrations']),
                 'computation_time': end_time - start_time,
-                'universe': universe  # 保存universe对象以便后续使用
+                'universe': universe_enhanced  # 保存universe对象以便后续使用
             }
 
             emergence_results.append(individual_result)
@@ -77,8 +110,40 @@ class EmergenceStudyFixed:
 
         self.results['pure_emergence'] = emergence_results
         self._analyze_emergence_results(emergence_results)
-
+        excel_file = self.save_to_excel()
         return emergence_results
+
+    def _record_excel_data(self, individual_id, observations, universe):
+        """记录Excel数据"""
+        # 记录概念压缩
+        for compression in observations['natural_compressions']:
+            self.excel_data['compressions'].append({
+                '个体ID': individual_id,
+                '中心节点': compression['center'],
+                '相关节点数': len(compression['related_nodes']),
+                '相关节点': ', '.join(compression['related_nodes']),
+                '能量协同性': compression.get('energy_synergy', 0),
+                '集群内聚性': compression.get('cohesion', 0),
+                '涌现强度': compression.get('emergence_strength', 0),
+                '检测迭代': compression.get('detection_iteration', 0),
+                '当前网络能耗': universe.calculate_network_energy(),
+                '时间戳': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            })
+
+        # 记录原理迁移
+        for migration in observations['natural_migrations']:
+            self.excel_data['migrations'].append({
+                '个体ID': individual_id,
+                '原理节点': migration['principle_node'],
+                '起始节点': migration['from_node'],
+                '目标节点': migration['to_node'],
+                '迁移路径': ' -> '.join(migration.get('path', [])),
+                '效率增益': migration.get('efficiency_gain', 0),
+                '领域跨度': migration.get('domain_span', 0),
+                '检测迭代': migration.get('detection_iteration', 0),
+                '当前网络能耗': universe.calculate_network_energy(),
+                '时间戳': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            })
 
     def _initialize_universe_network(self, universe):
         """初始化宇宙网络 - 简化版本"""
