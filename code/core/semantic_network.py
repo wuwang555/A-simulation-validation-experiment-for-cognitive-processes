@@ -2,7 +2,11 @@ import time
 from collections import defaultdict
 import jieba
 import numpy as np
-from config import CORE_CONCEPT_DEFINITIONS
+from config import (
+    CORE_CONCEPT_DEFINITIONS, CONCEPT_DOMAINS,
+    META_STRUCTURE_MAP, NETWORK_CONFIG, KEYWORD_CONFIG
+)
+
 
 class SemanticConceptNetwork:
     """基于定义关键词的语义概念网络"""
@@ -26,20 +30,18 @@ class SemanticConceptNetwork:
         print(f"添加概念 '{concept}': {definition}")
         print(f"  提取关键词: {keywords}")
 
-    def extract_keywords(self, text, top_k=10):
-        """从文本中提取关键词 - 改进版本"""
+    def extract_keywords(self, text, top_k=None):
+        """从文本中提取关键词"""
+        if top_k is None:
+            top_k = KEYWORD_CONFIG['top_k']
+
         # 使用jieba进行分词
         words = jieba.cut(text)
 
         # 过滤停用词和短词
-        stop_words = {
-            '的', '是', '在', '和', '与', '或', '等', '这个', '那个', '一种',
-            '研究', '包括', '通过', '给定', '任何', '两个', '某种', '一个'
-        }
-
         filtered_words = [
             word for word in words
-            if len(word) > 1 and word not in stop_words
+            if len(word) > KEYWORD_CONFIG['min_word_length'] and word not in KEYWORD_CONFIG['stop_words']
         ]
 
         # 统计词频
@@ -51,8 +53,11 @@ class SemanticConceptNetwork:
         sorted_words = sorted(word_freq.items(), key=lambda x: x[1], reverse=True)
         return [word for word, freq in sorted_words[:top_k]]
 
-    def expand_concept_network(self, concept, max_depth=2, current_depth=0):
+    def expand_concept_network(self, concept, max_depth=None, current_depth=0):
         """递归扩展概念网络"""
+        if max_depth is None:
+            max_depth = NETWORK_CONFIG['max_expansion_depth']
+
         if current_depth >= max_depth or concept not in self.concept_keywords:
             return
 
@@ -68,7 +73,7 @@ class SemanticConceptNetwork:
                     self.expand_concept_network(keyword, max_depth, current_depth + 1)
 
     def calculate_semantic_similarity(self, concept1, concept2):
-        """计算两个概念的语义相似度 - 增强版本"""
+        """计算两个概念的语义相似度"""
         if concept1 not in self.concept_keywords or concept2 not in self.concept_keywords:
             return 0.0
 
@@ -105,85 +110,50 @@ class SemanticConceptNetwork:
             return 0.2  # 不同领域的基础相似度
 
     def build_comprehensive_network(self):
-        """构建综合概念网络 - 修复版本"""
+        """构建综合概念网络"""
         # 预定义核心概念
         self._predefine_core_concepts()
 
-        # 为所有概念扩展网络 - 修复：确保所有节点都被处理
+        # 为所有概念扩展网络
         all_concepts = list(self.concept_definitions.keys())
         print(f"开始构建语义网络，共有 {len(all_concepts)} 个概念")
 
         # 首先建立所有概念之间的直接连接
+        threshold = NETWORK_CONFIG['similarity_threshold']
         for i, concept1 in enumerate(all_concepts):
             for j, concept2 in enumerate(all_concepts[i + 1:], i + 1):
                 similarity = self.calculate_semantic_similarity(concept1, concept2)
-                if similarity > 0.1:  # 设置较低的阈值以建立更多连接
+                if similarity > threshold:
                     self.semantic_network[concept1][concept2] = similarity
                     self.semantic_network[concept2][concept1] = similarity
 
         # 然后进行深度扩展
         for concept in all_concepts:
-            self.expand_concept_network(concept, max_depth=3)
+            self.expand_concept_network(concept)
 
         print(f"语义网络构建完成! 包含 {len(self.semantic_network)} 个概念节点")
-        print(f"网络连接数: {sum(len(neighbors) for neighbors in self.semantic_network.values()) // 2}")
+        total_connections = sum(len(neighbors) for neighbors in self.semantic_network.values()) // 2
+        print(f"网络连接数: {total_connections}")
+
     def _predefine_core_concepts(self):
         """预定义核心概念及其关系"""
-        core_definitions = {
-            # 物理学概念
-            "牛顿定律": "物体运动的基本定律，描述了力与运动的关系",
-            "力学": "研究物体运动和受力情况的物理学分支",
-            "运动学": "研究物体运动而不考虑力的物理学分支",
-            "能量守恒": "能量既不会凭空产生也不会凭空消失的物理定律",
-            "动量": "物体运动状态的量度，质量与速度的乘积",
-            "万有引力": "任何两个有质量的物体之间相互吸引的力",
-            "摩擦力": "两个接触表面之间阻碍相对运动的力",
-            "静电力": "电荷之间相互作用的力",
-
-            # 数学概念
-            "微积分": "研究变化和累积的数学分支，包括微分和积分",
-            "几何学": "研究空间形状大小和相对位置的数学分支",
-            "拓扑学": "研究空间在连续变形下不变性质的数学分支",
-            "线性代数": "研究向量空间和线性映射的数学分支",
-            "概率论": "研究随机现象数量规律的数学分支",
-            "统计学": "收集分析解释数据的数学科学",
-            "代数": "研究数学符号和运算规则的数学分支",
-            "离散数学": "研究离散结构的数学分支",
-
-            # 计算机科学概念
-            "算法": "解决问题的一系列明确的计算步骤",
-            "数据结构": "计算机中组织和存储数据的方式",
-            "机器学习": "让计算机通过经验自动改进性能的人工智能分支",
-            "神经网络": "模仿生物神经网络的计算模型",
-            "计算机视觉": "让计算机理解和分析视觉信息的技术",
-            "自然语言处理": "计算机与人类自然语言交互的技术",
-            "数据库": "结构化信息或数据的有组织集合",
-            "操作系统": "管理计算机硬件与软件资源的系统软件",
-
-            # 基础原理概念
-            "优化": "在给定约束下找到最佳解决方案的过程",
-            "变换": "从一个形式或状态转换为另一个的过程",
-            "迭代": "重复反馈过程的活动",
-            "抽象": "提取主要特征忽略次要细节的思维过程",
-            "模式识别": "通过算法识别数据中模式的过程",
-            "对称": "物体在某种变换下保持不变的性质",
-            "递归": "通过函数调用自身来解决问题的方法",
-            "归纳": "从特殊到一般的推理方法"
-        }
-
-        for concept, definition in core_definitions.items():
+        for concept, definition in CORE_CONCEPT_DEFINITIONS.items():
             self.add_concept_definition(concept, definition, "predefined")
 
-    def find_cross_domain_paths(self, start_concept, end_concept, max_path_length=4):
+    def find_cross_domain_paths(self, start_concept, end_concept, max_path_length=None):
         """寻找跨领域的概念路径"""
+        if max_path_length is None:
+            max_path_length = NETWORK_CONFIG['max_path_length']
+
         if start_concept not in self.semantic_network or end_concept not in self.semantic_network:
             return []
 
+        max_paths = NETWORK_CONFIG['max_paths_to_find']
         queue = [(start_concept, [start_concept], 1.0)]
         visited = {start_concept}
         found_paths = []
 
-        while queue and len(found_paths) < 10:
+        while queue and len(found_paths) < max_paths:
             current, path, path_similarity = queue.pop(0)
 
             if current == end_concept and len(path) > 1:
@@ -204,14 +174,7 @@ class SemanticConceptNetwork:
 
     def get_domain(self, concept):
         """获取概念所属领域"""
-        domains = {
-            "physics": ["牛顿定律", "力学", "运动学", "能量守恒", "动量", "万有引力", "摩擦力", "静电力"],
-            "math": ["微积分", "几何学", "拓扑学", "线性代数", "概率论", "统计学", "代数", "离散数学"],
-            "cs": ["算法", "数据结构", "机器学习", "神经网络", "计算机视觉", "自然语言处理", "数据库", "操作系统"],
-            "principles": ["优化", "变换", "迭代", "抽象", "模式识别", "对称", "递归", "归纳"]
-        }
-
-        for domain, concepts in domains.items():
+        for domain, concepts in CONCEPT_DOMAINS.items():
             if concept in concepts:
                 return domain
         return "other"
@@ -221,21 +184,13 @@ class SemanticConceptNetwork:
         from utils.visualization import visualize_semantic_network
         visualize_semantic_network(self.semantic_network, self.concept_definitions, highlight_concepts)
 
+
 class MetaStructureSimilarity:
     """基于元结构的相似度计算"""
 
     def __init__(self):
-        # 定义元结构映射
-        self.meta_structure_map = {
-            "信息": ["数据", "知识", "信号", "消息", "情报"],
-            "几何": ["结构", "形状", "关系", "形式", "布局", "拓扑"],
-            "运动": ["遍历", "变化", "过程", "流动", "迁移", "转换"],
-            "方法": ["算法", "策略", "技术", "途径", "手段", "方法论"],
-            "历史": ["迭代", "回归", "演化", "发展", "进程", "时间"],
-            "能量": ["能耗", "功率", "动力", "资源", "消耗"],
-            "抽象": ["概念", "思想", "理论", "原理", "范式"],
-            "系统": ["网络", "集合", "整体", "组织", "架构"]
-        }
+        # 使用配置中的元结构映射
+        self.meta_structure_map = META_STRUCTURE_MAP
 
         # 反向映射：从具体概念到元结构
         self.concept_to_meta = {}
@@ -277,6 +232,7 @@ class MetaStructureSimilarity:
             return 0.0
 
         return dot_product / (norm1 * norm2)
+
 
 class EnhancedSemanticConceptNetwork(SemanticConceptNetwork):
     """增强的语义概念网络，整合元结构相似度"""
@@ -364,4 +320,3 @@ class EnhancedSemanticConceptNetwork(SemanticConceptNetwork):
         abstraction2 = single_concept_abstraction(concept2)
 
         return (abstraction1 + abstraction2) / 2
-
