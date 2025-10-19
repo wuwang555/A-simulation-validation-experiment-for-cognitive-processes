@@ -5,7 +5,13 @@ import matplotlib.font_manager as fm
 from collections import defaultdict
 import random
 import math
+import json
+import requests
+from collections import defaultdict
+import jieba
 import numpy as np
+import time
+from enum import Enum
 from typing import Dict, Any
 
 # 解决中文显示问题
@@ -605,7 +611,7 @@ def create_sample_network():
                 weight = round(np.random.uniform(0.7, 1.5), 2)
             else:
                 # 跨领域：高能耗
-                weight = round(np.random.uniform(1.3, 2.2), 2)
+                weight = round(np.random.uniform(1.0, 2.0), 2)
 
             initial_edges.append((u, v, weight))
 
@@ -846,7 +852,7 @@ def create_individual_network(individual_id, individual_params, network_seed=42)
                 weight = round(np.random.uniform(0.7, 1.5), 2)
             else:
                 # 跨领域：高能耗
-                weight = round(np.random.uniform(1.3, 2.2), 2)
+                weight = round(np.random.uniform(1.0, 2.0), 2)
 
             initial_edges.append((u, v, weight))
 
@@ -969,24 +975,681 @@ def analyze_population_results(results):
     }
 
 
+class CognitiveState(Enum):
+    """认知状态枚举"""
+    FOCUSED = "专注状态"  # 高主观能耗，适合深度思考
+    EXPLORATORY = "探索状态"  # 中等主观能耗，适合广度探索
+    FATIGUED = "疲劳状态"  # 低主观能耗，认知受限
+    INSPIRED = "灵感状态"  # 可变主观能耗，创造性思维
 
+
+class SubjectiveCognitiveGraph(StochasticCognitiveGraph):
+    """带主观认知状态的认知图"""
+
+    def __init__(self, individual_params: Dict[str, Any], network_seed: int = 42):
+        super().__init__(individual_params, network_seed)
+
+        # 主观认知状态参数
+        self.current_state = CognitiveState.FOCUSED
+        self.subjective_energy = 1.0  # 当前主观认知能耗预算 (0-1范围)
+        self.energy_history = []  # 主观能耗历史
+
+        # 状态转移参数
+        self.state_transition_matrix = {
+            CognitiveState.FOCUSED: {
+                CognitiveState.EXPLORATORY: 0.3,
+                CognitiveState.FATIGUED: 0.1,  # 从0.2降低到0.1
+                CognitiveState.INSPIRED: 0.2,  # 从0.1提高到0.2
+                CognitiveState.FOCUSED: 0.4
+            },
+            CognitiveState.EXPLORATORY: {
+                CognitiveState.FOCUSED: 0.3,
+                CognitiveState.FATIGUED: 0.2,  # 从0.3降低到0.2
+                CognitiveState.INSPIRED: 0.2,
+                CognitiveState.EXPLORATORY: 0.3  # 从0.2提高到0.3
+            },
+            CognitiveState.FATIGUED: {
+                CognitiveState.FOCUSED: 0.3,  # 从0.1提高到0.3
+                CognitiveState.EXPLORATORY: 0.4,  # 从0.2提高到0.4
+                CognitiveState.INSPIRED: 0.1,  # 从0.05提高到0.1
+                CognitiveState.FATIGUED: 0.2  # 从0.65大幅降低到0.2
+            },
+            CognitiveState.INSPIRED: {
+                CognitiveState.FOCUSED: 0.4,
+                CognitiveState.EXPLORATORY: 0.3,
+                CognitiveState.FATIGUED: 0.1,
+                CognitiveState.INSPIRED: 0.2
+            }
+        }
+
+        # 状态对应的主观能耗范围
+        self.state_energy_ranges = {
+            CognitiveState.FOCUSED: (1.5, 2.5),  # 大幅提高专注状态能耗
+            CognitiveState.EXPLORATORY: (1.0, 1.8),  # 提高探索状态能耗
+            CognitiveState.FATIGUED: (0.8, 1.2),  # 大幅提高疲劳状态能耗
+            CognitiveState.INSPIRED: (2.0, 3.0)  # 大幅提高灵感状态能耗
+        }
+
+        # 硬遍历和软遍历的能耗分配策略
+        self.hard_traversal_energy_ratio = 0.6  # 硬遍历专注方向能耗占比
+        self.soft_traversal_energy_ratio = 0.4  # 软遍历扩散方向能耗占比
+
+    def update_cognitive_state(self):
+        """更新主观认知状态"""
+        current_state = self.current_state
+        transition_probs = self.state_transition_matrix[current_state]
+
+        # 基于概率进行状态转移
+        rand_val = random.random()
+        cumulative_prob = 0
+
+        for new_state, prob in transition_probs.items():
+            cumulative_prob += prob
+            if rand_val <= cumulative_prob:
+                if new_state != current_state:
+                    self.current_state = new_state
+                    # 状态改变时更新主观能耗
+                    self._update_subjective_energy()
+                break
+
+        # 记录状态和能耗
+        self.energy_history.append({
+            'iteration': self.iteration_count,
+            'state': self.current_state,
+            'energy': self.subjective_energy
+        })
+
+    def _update_subjective_energy(self):
+        """根据当前状态更新主观认知能耗"""
+        energy_range = self.state_energy_ranges[self.current_state]
+        self.subjective_energy = random.uniform(energy_range[0], energy_range[1])
+
+        # 添加个体差异
+        energy_variation = self.individual_params.get('energy_variation', 0.1)
+        self.subjective_energy *= random.uniform(1 - energy_variation, 1 + energy_variation)
+        self.subjective_energy = max(0.1, min(1.5, self.subjective_energy))  # 合理范围
+
+    def can_traverse_edge(self, edge_energy, traversal_type):
+        """检查是否可以遍历某条边（考虑主观认知能耗）"""
+        if traversal_type == "hard":
+            # 降低硬遍历的能耗要求
+            required_energy = edge_energy * 0.8  # 从1.2降低到0.8
+            available_energy = self.subjective_energy * self.hard_traversal_energy_ratio
+        else:
+            # 降低软遍历的能耗要求
+            required_energy = edge_energy * 0.6  # 从0.8降低到0.6
+            available_energy = self.subjective_energy * self.soft_traversal_energy_ratio
+
+        return available_energy >= required_energy, available_energy - required_energy
+
+    def traverse_path(self, path, traversal_type="hard"):
+        """改进的遍历函数 - 考虑主观认知状态"""
+        # 更新认知状态
+        if random.random() < 0.1:  # 10%的概率状态变化
+            self.update_cognitive_state()
+
+        # 检查整个路径是否可遍历
+        total_required_energy = 0
+        for i in range(len(path) - 1):
+            u, v = path[i], path[i + 1]
+            if self.G.has_edge(u, v):
+                edge_energy = self.G[u][v]['weight']
+                total_required_energy += edge_energy
+
+        # 基于路径总能耗和当前状态决定是否遍历
+        can_traverse, energy_balance = self.can_traverse_edge(total_required_energy, traversal_type)
+
+        if not can_traverse:
+            # 认知阻塞：主观能耗不足，无法完成遍历
+            if random.random() < 0.3:  # 30%的概率触发状态恶化
+                self.current_state = CognitiveState.FATIGUED
+                self._update_subjective_energy()
+            return  # 无法遍历，直接返回
+
+        # 可以遍历，执行原有逻辑
+        super().traverse_path(path, traversal_type)
+
+        # 遍历后可能的状态变化
+        self._post_traversal_state_update(traversal_type, energy_balance)
+
+    def _post_traversal_state_update(self, traversal_type, energy_balance):
+        """遍历后的状态更新"""
+        if energy_balance > 0.3:
+            # 能耗余额充足，可能进入更好的状态
+            if traversal_type == "hard" and random.random() < 0.4:
+                self.current_state = CognitiveState.FOCUSED
+            elif traversal_type == "soft" and random.random() < 0.3:
+                self.current_state = CognitiveState.EXPLORATORY
+        elif energy_balance < -0.2:
+            # 能耗透支，可能进入疲劳状态
+            if random.random() < 0.5:
+                self.current_state = CognitiveState.FATIGUED
+
+        self._update_subjective_energy()
+
+    def find_available_paths(self, start_node, traversal_type="hard", max_path_length=3):
+        """基于当前主观状态找到可用的路径"""
+        available_paths = []
+
+        if traversal_type == "hard":
+            # 硬遍历：深度优先，专注一个方向
+            self._hard_traversal_search(start_node, [], available_paths, max_path_length)
+        else:
+            # 软遍历：广度优先，探索多个方向
+            self._soft_traversal_search(start_node, [], available_paths, max_path_length)
+
+        return available_paths
+
+    def _hard_traversal_search(self, current_node, current_path, available_paths, max_length):
+        """硬遍历路径搜索"""
+        if len(current_path) >= max_length:
+            available_paths.append(current_path.copy())
+            return
+
+        current_path.append(current_node)
+
+        # 找到能耗最低的边作为硬遍历方向
+        neighbors = list(self.G.neighbors(current_node))
+        if not neighbors:
+            available_paths.append(current_path.copy())
+            return
+
+        # 按能耗排序，选择最低能耗的边
+        neighbors.sort(key=lambda n: self.G[current_node][n]['weight'])
+
+        for neighbor in neighbors[:2]:  # 只考虑前2个最低能耗的邻居
+            if neighbor not in current_path:
+                edge_energy = self.G[current_node][neighbor]['weight']
+                can_traverse, _ = self.can_traverse_edge(edge_energy, "hard")
+                if can_traverse:
+                    self._hard_traversal_search(neighbor, current_path, available_paths, max_length)
+
+        current_path.pop()
+
+    def _soft_traversal_search(self, current_node, current_path, available_paths, max_length):
+        """软遍历路径搜索"""
+        if len(current_path) >= max_length:
+            available_paths.append(current_path.copy())
+            return
+
+        current_path.append(current_node)
+
+        neighbors = list(self.G.neighbors(current_node))
+        if not neighbors:
+            available_paths.append(current_path.copy())
+            return
+
+        # 软遍历考虑所有方向，但受主观能耗限制
+        for neighbor in neighbors:
+            if neighbor not in current_path:
+                edge_energy = self.G[current_node][neighbor]['weight']
+                can_traverse, _ = self.can_traverse_edge(edge_energy, "soft")
+                if can_traverse:
+                    self._soft_traversal_search(neighbor, current_path, available_paths, max_length)
+
+        current_path.pop()
+
+    def monte_carlo_iteration(self, max_iterations=5000):
+        """改进的蒙特卡洛模拟 - 考虑主观认知状态"""
+        print(f"初始认知状态: {self.current_state.value}, 主观能耗: {self.subjective_energy:.2f}")
+
+        for iteration in range(max_iterations):
+            self.iteration_count += 1
+
+            # 每100次迭代更新一次状态
+            if iteration % 100 == 0:
+                self.update_cognitive_state()
+
+            # 应用遗忘机制
+            self._apply_forgetting()
+
+            # 记录当前状态
+            current_avg_energy = self.get_average_energy()
+            self.energy_history.append({
+                'iteration': self.iteration_count,
+                'state': self.current_state,
+                'energy': self.subjective_energy,
+                'network_energy': current_avg_energy
+            })
+
+            # 基于当前状态选择操作类型
+            operation = self._select_operation_based_on_state()
+
+            if operation == "hard_traversal":
+                self._state_based_hard_traversal()
+            elif operation == "soft_traversal":
+                self._state_based_soft_traversal()
+            elif operation == "compression":
+                self._random_compression()
+            elif operation == "migration":
+                self._random_migration()
+
+            # 进度报告
+            if iteration % 500 == 0:
+                stats = self.get_network_stats()
+                print(f"迭代 {iteration}, 状态: {self.current_state.value}, "
+                      f"主观能耗: {self.subjective_energy:.2f}, 网络能耗: {current_avg_energy:.3f}")
+
+    def _select_operation_based_on_state(self):
+        """基于认知状态选择操作类型 - 调整概率"""
+        state_operations = {
+            CognitiveState.FOCUSED: {
+                "hard_traversal": 0.5,  # 从0.6降低
+                "soft_traversal": 0.3,  # 从0.2提高
+                "compression": 0.1,
+                "migration": 0.1
+            },
+            CognitiveState.EXPLORATORY: {
+                "hard_traversal": 0.3,  # 从0.2提高
+                "soft_traversal": 0.4,  # 从0.5降低
+                "compression": 0.1,
+                "migration": 0.2
+            },
+            CognitiveState.FATIGUED: {
+                "hard_traversal": 0.2,  # 从0.1提高
+                "soft_traversal": 0.4,  # 从0.3提高
+                "compression": 0.2,  # 从0.3降低
+                "migration": 0.2  # 从0.3降低
+            },
+            CognitiveState.INSPIRED: {
+                "hard_traversal": 0.3,
+                "soft_traversal": 0.4,
+                "compression": 0.1,
+                "migration": 0.2
+            }
+        }
+    def _state_based_hard_traversal(self):
+        """基于状态的硬遍历"""
+        available_nodes = list(self.G.nodes())
+        if not available_nodes:
+            return
+
+        start_node = random.choice(available_nodes)
+        available_paths = self.find_available_paths(start_node, "hard", 3)
+
+        if available_paths:
+            selected_path = random.choice(available_paths)
+            if len(selected_path) >= 2:
+                super().traverse_path(selected_path, "hard")
+
+    def _state_based_soft_traversal(self):
+        """基于状态的软遍历"""
+        available_nodes = list(self.G.nodes())
+        if not available_nodes:
+            return
+
+        start_node = random.choice(available_nodes)
+        available_paths = self.find_available_paths(start_node, "soft", 2)
+
+        if available_paths:
+            selected_path = random.choice(available_paths)
+            if len(selected_path) >= 2:
+                super().traverse_path(selected_path, "soft")
+
+    def visualize_cognitive_states(self):
+        """可视化认知状态变化"""
+        if not self.energy_history:
+            return
+
+        iterations = [e['iteration'] for e in self.energy_history]
+        energies = [e['energy'] for e in self.energy_history]
+        network_energies = [e.get('network_energy', 0) for e in self.energy_history]
+        states = [e['state'] for e in self.energy_history]
+
+        # 创建颜色映射
+        state_colors = {
+            CognitiveState.FOCUSED: 'green',
+            CognitiveState.EXPLORATORY: 'blue',
+            CognitiveState.FATIGUED: 'red',
+            CognitiveState.INSPIRED: 'purple'
+        }
+
+        colors = [state_colors[state] for state in states]
+
+        plt.figure(figsize=(12, 8))
+
+        # 主观能耗曲线
+        plt.subplot(2, 1, 1)
+        plt.scatter(iterations, energies, c=colors, alpha=0.6)
+        plt.plot(iterations, energies, 'gray', alpha=0.3)
+        plt.ylabel('主观认知能耗')
+        plt.title('主观认知状态与能耗变化')
+
+        # 添加状态图例
+        for state, color in state_colors.items():
+            plt.plot([], [], 'o', color=color, label=state.value)
+        plt.legend()
+
+        # 网络能耗曲线
+        plt.subplot(2, 1, 2)
+        plt.plot(iterations, network_energies, 'b-', alpha=0.7)
+        plt.xlabel('迭代次数')
+        plt.ylabel('网络平均能耗')
+        plt.title('认知网络能耗演化')
+        plt.grid(True, alpha=0.3)
+
+        plt.tight_layout()
+        plt.show()
+
+        # 打印状态统计
+        state_counts = {}
+        for state in states:
+            state_counts[state] = state_counts.get(state, 0) + 1
+
+        print("\n=== 认知状态统计 ===")
+        for state, count in state_counts.items():
+            percentage = (count / len(states)) * 100
+            print(f"{state.value}: {count}次 ({percentage:.1f}%)")
+
+
+# 扩展的个体参数
+def create_enhanced_individual_params(base_params):
+    """创建增强的个体参数（包含认知状态相关参数）"""
+    enhanced_params = base_params.copy()
+
+    # 添加认知状态相关参数
+    enhanced_params.update({
+        'energy_variation': random.uniform(0.05, 0.15),
+        'focus_bias': random.uniform(-0.1, 0.1),
+        'exploration_bias': random.uniform(-0.1, 0.1),
+        'fatigue_resistance': random.uniform(0.1, 0.3),
+        'inspiration_frequency': random.uniform(0.05, 0.2)
+    })
+
+    return enhanced_params
+
+
+# 运行增强实验
+def run_enhanced_population_experiment(num_individuals=5, max_iterations=2000):
+    """运行增强的群体实验"""
+    base_parameters = {
+        'forgetting_rate': 0.002,
+        'base_learning_rate': 0.85,
+        'hard_traversal_bias': 0.0,
+        'soft_traversal_bias': 0.0,
+        'compression_bias': 0.0,
+        'migration_bias': 0.0,
+        'learning_rate_variation': 0.1
+    }
+
+    variation_ranges = {
+        'forgetting_rate': 0.2,
+        'base_learning_rate': 0.1,
+        'hard_traversal_bias': (-0.1, 0.1),
+        'soft_traversal_bias': (-0.1, 0.1),
+        'compression_bias': (-0.03, 0.03),
+        'migration_bias': (-0.05, 0.05),
+        'learning_rate_variation': (0.05, 0.15)
+    }
+
+    variation_simulator = IndividualVariation(base_parameters, variation_ranges)
+    population_results = []
+
+    print(f"=== 开始增强群体实验：{num_individuals}个个体 ===")
+
+    for i in range(num_individuals):
+        individual_id = f"个体_{i + 1}"
+        print(f"\n--- 模拟 {individual_id} ---")
+
+        # 生成基础参数
+        base_individual_params = variation_simulator.generate_individual(individual_id)
+        # 增强参数
+        individual_params = create_enhanced_individual_params(base_individual_params)
+
+        # 创建个体认知网络
+        individual_graph = AdjustedSubjectiveCognitiveGraph(individual_params)
+
+        # 初始化网络（使用更多节点）
+        extended_nodes = create_extended_network_nodes()
+        extended_edges = create_extended_network_edges(extended_nodes)
+        individual_graph.initialize_graph(extended_nodes, extended_edges)
+
+        # 运行模拟
+        initial_energy = individual_graph.get_average_energy()
+        individual_graph.monte_carlo_iteration(max_iterations=max_iterations)
+
+        # 收集结果
+        final_stats = individual_graph.get_network_stats()
+        improvement = ((initial_energy - final_stats['avg_energy']) / initial_energy * 100)
+
+        result = {
+            'individual_id': individual_id,
+            'parameters': individual_params,
+            'initial_energy': initial_energy,
+            'final_energy': final_stats['avg_energy'],
+            'improvement': improvement,
+            'compression_centers': final_stats['compression_centers'],
+            'migration_bridges': final_stats['migration_bridges'],
+            'concept_centers': list(individual_graph.concept_centers.keys()),
+            'cognitive_states': individual_graph.energy_history
+        }
+
+        population_results.append(result)
+
+        print(f"{individual_id} 结果:")
+        print(f"  能耗降低: {improvement:.1f}%")
+        print(f"  压缩中心: {result['compression_centers']}个")
+        print(f"  迁移桥梁: {result['migration_bridges']}个")
+
+        # 可视化认知状态
+        individual_graph.visualize_cognitive_states()
+
+    return population_results
+
+
+def create_extended_network_nodes():
+    """创建扩展的网络节点"""
+    # 基础节点
+    physics_nodes = ["牛顿定律", "运动学", "力学", "能量守恒", "动量", "热力学", "电磁学", "光学"]
+    math_nodes = ["微积分", "线性代数", "概率论", "优化理论", "数论", "几何学", "拓扑学", "统计学"]
+    cs_nodes = ["算法", "数据结构", "机器学习", "神经网络", "计算机视觉", "自然语言处理", "数据库", "操作系统"]
+    principle_nodes = ["优化", "变换", "迭代", "抽象", "模式识别", "对称", "递归", "归纳"]
+
+    return physics_nodes + math_nodes + cs_nodes + principle_nodes
+
+
+def create_extended_network_edges(nodes):
+    """创建扩展的网络边"""
+    np.random.seed(42)
+    initial_edges = []
+
+    # 简单的领域分类函数
+    def get_domain(node):
+        physics_keywords = ["定律", "运动", "力学", "能量", "动量", "热", "电磁", "光学"]
+        math_keywords = ["积分", "代数", "概率", "优化", "数论", "几何", "拓扑", "统计"]
+        cs_keywords = ["算法", "数据", "学习", "网络", "视觉", "语言", "数据库", "系统"]
+
+        for keyword in physics_keywords:
+            if keyword in node:
+                return "physics"
+        for keyword in math_keywords:
+            if keyword in node:
+                return "math"
+        for keyword in cs_keywords:
+            if keyword in node:
+                return "cs"
+        return "principle"
+
+    # 创建连接
+    for i in range(len(nodes)):
+        for j in range(i + 1, len(nodes)):
+            u, v = nodes[i], nodes[j]
+            domain_u = get_domain(u)
+            domain_v = get_domain(v)
+
+            # 基于领域关系设置初始能耗
+            if domain_u == domain_v:
+                # 同一领域内：低能耗
+                weight = round(np.random.uniform(0.5, 1.2), 2)
+            elif domain_u == "principle" or domain_v == "principle":
+                # 与原理节点的连接：中等能耗
+                weight = round(np.random.uniform(0.7, 1.5), 2)
+            else:
+                # 跨领域：高能耗
+                weight = round(np.random.uniform(1.3, 2.2), 2)
+
+            initial_edges.append((u, v, weight))
+
+    return initial_edges
+
+
+class AdjustedSubjectiveCognitiveGraph(SubjectiveCognitiveGraph):
+    """调整参数后的主观认知图"""
+
+    def __init__(self, individual_params: Dict[str, Any], network_seed: int = 42):
+        super().__init__(individual_params, network_seed)
+
+        # 调整状态能耗范围
+        self.state_energy_ranges = {
+            CognitiveState.FOCUSED: (1.5, 2.5),
+            CognitiveState.EXPLORATORY: (1.0, 1.8),
+            CognitiveState.FATIGUED: (0.8, 1.2),
+            CognitiveState.INSPIRED: (2.0, 3.0)
+        }
+
+        # 调整状态转移概率
+        self.state_transition_matrix = {
+            CognitiveState.FOCUSED: {
+                CognitiveState.EXPLORATORY: 0.3,
+                CognitiveState.FATIGUED: 0.1,
+                CognitiveState.INSPIRED: 0.2,
+                CognitiveState.FOCUSED: 0.4
+            },
+            CognitiveState.EXPLORATORY: {
+                CognitiveState.FOCUSED: 0.3,
+                CognitiveState.FATIGUED: 0.2,
+                CognitiveState.INSPIRED: 0.2,
+                CognitiveState.EXPLORATORY: 0.3
+            },
+            CognitiveState.FATIGUED: {
+                CognitiveState.FOCUSED: 0.3,
+                CognitiveState.EXPLORATORY: 0.4,
+                CognitiveState.INSPIRED: 0.1,
+                CognitiveState.FATIGUED: 0.2
+            },
+            CognitiveState.INSPIRED: {
+                CognitiveState.FOCUSED: 0.4,
+                CognitiveState.EXPLORATORY: 0.3,
+                CognitiveState.FATIGUED: 0.1,
+                CognitiveState.INSPIRED: 0.2
+            }
+        }
+
+        # 调整能耗分配
+        self.hard_traversal_energy_ratio = 0.6
+        self.soft_traversal_energy_ratio = 0.4
+
+        # 重新初始化主观能耗
+        self._update_subjective_energy()
+
+    def can_traverse_edge(self, edge_energy, traversal_type):
+        """调整能耗要求计算"""
+        if traversal_type == "hard":
+            required_energy = edge_energy * 0.8
+            available_energy = self.subjective_energy * self.hard_traversal_energy_ratio
+        else:
+            required_energy = edge_energy * 0.6
+            available_energy = self.subjective_energy * self.soft_traversal_energy_ratio
+
+        return available_energy >= required_energy, available_energy - required_energy
+
+    def traverse_path(self, path, traversal_type="hard"):
+        """添加强制学习机制的遍历函数"""
+        # 更新认知状态
+        if random.random() < 0.1:
+            self.update_cognitive_state()
+
+        # 检查路径能耗
+        total_required_energy = 0
+        for i in range(len(path) - 1):
+            u, v = path[i], path[i + 1]
+            if self.G.has_edge(u, v):
+                edge_energy = self.G[u][v]['weight']
+                total_required_energy += edge_energy
+
+        # 决定是否遍历
+        can_traverse, energy_balance = self.can_traverse_edge(total_required_energy, traversal_type)
+
+        # 强制学习机制
+        if not can_traverse and random.random() < 0.2 and self.current_state != CognitiveState.FATIGUED:
+            can_traverse = True
+            energy_balance = -0.5
+
+        if not can_traverse:
+            if random.random() < 0.3:
+                self.current_state = CognitiveState.FATIGUED
+                self._update_subjective_energy()
+            return
+
+        # 执行遍历
+        super().traverse_path(path, traversal_type)
+        self._post_traversal_state_update(traversal_type, energy_balance)
+
+    def _select_operation_based_on_state(self):
+        """调整状态基于的操作选择"""
+        state_operations = {
+            CognitiveState.FOCUSED: {
+                "hard_traversal": 0.5,
+                "soft_traversal": 0.3,
+                "compression": 0.1,
+                "migration": 0.1
+            },
+            CognitiveState.EXPLORATORY: {
+                "hard_traversal": 0.3,
+                "soft_traversal": 0.4,
+                "compression": 0.1,
+                "migration": 0.2
+            },
+            CognitiveState.FATIGUED: {
+                "hard_traversal": 0.2,
+                "soft_traversal": 0.4,
+                "compression": 0.2,
+                "migration": 0.2
+            },
+            CognitiveState.INSPIRED: {
+                "hard_traversal": 0.3,
+                "soft_traversal": 0.4,
+                "compression": 0.1,
+                "migration": 0.2
+            }
+        }
+
+        probs = state_operations[self.current_state]
+        rand_val = random.random()
+        cumulative = 0
+
+        for op, prob in probs.items():
+            cumulative += prob
+            if rand_val <= cumulative:
+                return op
+
+        return "hard_traversal"
+# 运行示例
 if __name__ == "__main__":
-    # 运行小规模群体测试
-    population_results = run_population_experiment(
+    # 运行小规模增强实验
+
+    enhanced_results = run_enhanced_population_experiment(
         num_individuals=5,
         max_iterations=10000
     )
 
-    # 可选：可视化某个个体的结果
-    if population_results:
-        # 重新创建最优个体进行可视化
-        best_individual = max(population_results, key=lambda x: x['improvement'])
-        print(f"\n=== 可视化最优个体: {best_individual['individual_id']} ===")
-
-        best_graph = create_individual_network(
-            best_individual['individual_id'],
-            best_individual['parameters']
-        )
-        best_graph.monte_carlo_iteration(max_iterations=10000)
-        best_graph.visualize_graph(f"最优个体: {best_individual['individual_id']}")
-        best_graph.visualize_energy_convergence()
+# if __name__ == "__main__":
+#     # 运行小规模群体测试
+#     population_results = run_population_experiment(
+#         num_individuals=5,
+#         max_iterations=10000
+#     )
+#
+#     # 可选：可视化某个个体的结果
+#     if population_results:
+#         # 重新创建最优个体进行可视化
+#         best_individual = max(population_results, key=lambda x: x['improvement'])
+#         print(f"\n=== 可视化最优个体: {best_individual['individual_id']} ===")
+#
+#         best_graph = create_individual_network(
+#             best_individual['individual_id'],
+#             best_individual['parameters']
+#         )
+#         best_graph.monte_carlo_iteration(max_iterations=10000)
+#         best_graph.visualize_graph(f"最优个体: {best_individual['individual_id']}")
+#         best_graph.visualize_energy_convergence()
