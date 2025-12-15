@@ -1,74 +1,82 @@
-# 认知过程模拟验证实验 README
+# Cognitive Process Simulation: Experimental Validation
 
-## 实验概述
-本实验基于**认知图论（Cognitive Graph Theory）** 理论框架，通过计算模拟验证了能量最小化原理驱动下的认知结构形成与演化机制。实验旨在揭示人类高效学习与创新思维背后的统一动力学规律，并为下一代人工智能系统提供理论基础。（注意，仅为验证，可能略有疏漏，并非完整的实验项目，另外，本项目声明，确实使用AI进行了辅助生成，但并非全部）
+## Experiment Overview
+This experiment is based on the theoretical framework of **Cognitive Graph Theory (CGT)**, using computational simulation to validate the mechanisms of cognitive structure formation and evolution driven by the principle of energy minimization. It aims to reveal the unified dynamics behind efficient human learning and innovative thinking, and to provide a theoretical foundation for next-generation artificial intelligence systems.
 
-## 核心目标
-- 验证能量优化是否作为认知组织的基本驱动力
-- 观察认知结构中**概念压缩**与**第一性原理迁移**的自然涌现
-- 探索认知系统在不同知识规模下的自适应机制
-- 对比传统预设算法与自然涌现范式的性能差异
-
-## 实验设计
-### 两种对比范式
-1. **传统机制设计模型**：基于预设规则和优化算法
-2. **纯粹能量涌现模型**：仅基于能量动力学与认知时空演化
-
-### 两种网络规模
-- **51概念网络**：涵盖物理学、数学、AI、认知科学等7个领域
-- **120概念网络**：扩展至更多专业领域，构建更丰富的知识生态系统
-
-### 统一参数设置
-- 迭代次数：10,000次
-- 认知温度 \( T = 1.0 \)
-- 学习率：0.85
-- 涌现阈值：概念压缩协同性 ≥ 0.76，迁移效率 ≥ 0.35
-
-## 关键发现
-### 1. 能量优化性能显著
-- 涌现模型在51概念网络中实现**81.8%** 的能耗降低
-- 在120概念网络中实现**61.6%** 的能耗降低
-- 显著优于传统模型（16.8% 和 9.9%）
-
-### 2. 概念压缩自发涌现
-- 系统自发形成高内聚性概念集群（内聚性 = 1.0）
-- 典型案例：物理力学集群、神经科学集群、AI技术集群
-- 压缩协同性平均达 0.791
-
-### 3. 第一性原理迁移模拟创造性思维
-- 实验共观察到45次高效迁移
-- 迁移效率平均为 0.528
-- 跨领域连接体现类比与创新思维
-
-### 4. 规模自适应机制
-- 系统随概念规模增大，从“广度探索”转向“深度整合”
-- 迁移次数减少但效率提升，模拟从新手到专家的认知发展
-
-## 实验意义
-- **理论层面**：为认知科学提供统一的可计算框架，揭示能量最小化作为认知组织第一性原理
-- **AI 层面**：质疑当前基于统计关联的AI范式，提出基于能量优化与代数结构的新路径
-- **应用层面**：为教育、创造性问题解决、自适应学习系统提供模型基础
-
-## 文件说明
-- `CognitiveGraph.pdf`：完整论文，包含理论框架、实验设计、数据分析和讨论
-- 附录包含核心算法实现与详细实验数据表
-- 若需要运行，建议clone后直接运行`sesfullu01.py`，你可以直接看到结果
-
-## 未来方向
-- 扩展至更大规模知识图谱
-- 整合多模态感知与具身认知
-- 结合神经科学实验数据进行验证
-- 开发基于认知原理的新一代AI系统
+*(Note: This is a validation study; there may be minor omissions. It is not a complete, production-ready project. This project acknowledges the use of AI assistance in its development.)*
 
 ---
-本实验通过较为严格的计算机模拟，揭示了认知过程中能量驱动下的自组织与涌现机制，为理解智能本质与设计真正具有适应性与创造性的智能系统提供了重要依据。
-注：作者为大二学生（2025.12.14），有时间、经历经验等限制，所以所做的实验可能不完备，另外有大量的AI辅助生成的地方，这是极为正常的，这里也欢迎各位提供宝贵的建议和方案，让我们一起探讨“人的认知”。
+
+[**中文文档 (README in Chinese)**](README_zh.md) | **English**
+
+## Core Objectives
+- Validate whether energy optimization serves as the fundamental driver of cognitive organization.
+- Observe the natural emergence of **Concept Compression** and **First-Principle Transfer** within cognitive structures.
+- Explore the adaptive mechanisms of cognitive systems under different knowledge scales.
+- Compare the performance differences between traditional preset algorithms and natural emergence paradigms.
+
+## Experimental Design
+### Two Contrasting Paradigms
+1.  **Traditional Mechanism Design Model**: Based on preset rules and optimization algorithms.
+2.  **Pure Energy Emergence Model**: Based solely on energy dynamics and cognitive spatiotemporal evolution.
+
+### Two Network Scales
+- **51-Concept Network**: Covers 7 domains including Physics, Mathematics, AI, and Cognitive Science.
+- **120-Concept Network**: Expanded to more specialized domains, constructing a richer knowledge ecosystem.
+
+### Unified Parameter Settings
+- Iterations: 10,000
+- Cognitive Temperature \( T = 1.0 \)
+- Learning Rate: 0.85
+- Emergence Thresholds: Concept Compression Synergy ≥ 0.76, Transfer Efficiency ≥ 0.35
+
+## Key Findings
+### 1. Significant Energy Optimization Performance
+- The Emergence model achieved **81.8%** reduction in energy consumption in the 51-concept network.
+- Achieved **61.6%** reduction in the 120-concept network.
+- Significantly outperformed the Traditional model (16.8% and 9.9% respectively).
+
+### 2. Spontaneous Emergence of Concept Compression
+- The system spontaneously formed highly cohesive concept clusters (Cohesion = 1.0).
+- Typical cases: Physical Mechanics cluster, Neuroscience cluster, AI Technology cluster.
+- Average Compression Synergy reached 0.791.
+
+### 3. First-Principle Transfer Simulating Creative Thinking
+- A total of 45 efficient transfer events were observed.
+- Average Transfer Efficiency was 0.528.
+- Cross-domain connections reflected analogical and innovative thinking.
+
+### 4. Scale-Adaptive Mechanisms
+- As concept scale increased, the system shifted from "breadth exploration" to "depth integration".
+- The number of transfers decreased but efficiency increased, simulating cognitive development from novice to expert.
+
+## Experimental Significance
+- **Theoretical Level**: Provides a unified, computable framework for cognitive science, revealing energy minimization as a first principle of cognitive organization.
+- **AI Level**: Questions the current AI paradigm based on statistical correlations, proposing a new path based on energy optimization and algebraic structures.
+- **Application Level**: Provides a model basis for education, creative problem-solving, and adaptive learning systems.
+
+## File Description
+- `CognitiveGraph.pdf`: Complete paper containing the theoretical framework, experimental design, data analysis, and discussion.
+- Appendices include core algorithm implementations and detailed experimental data tables.
+- **To run the simulation**: After cloning the repository, you can directly run `sesfullu01.py` to see the results.
+
+## Future Directions
+- Extend to larger-scale knowledge graphs.
+- Integrate multimodal perception and embodied cognition.
+- Validate with neuroscientific experimental data.
+- Develop a new generation of AI systems based on cognitive principles.
+
+---
+This experiment, through rigorous computer simulation, reveals the self-organization and emergence mechanisms driven by energy in cognitive processes. It provides an important basis for understanding the nature of intelligence and for designing truly adaptive and creative intelligent systems.
+
+*Note: The author is a sophomore student (as of Dec 14, 2025), with constraints on time and experience. Therefore, the experiments may not be exhaustive. Additionally, substantial AI assistance was used in the generation process, which is acknowledged as normal practice here. We welcome valuable suggestions and ideas from everyone. Let's explore "human cognition" together.*
+
 <div align="center">
 
-**🚀 探索认知的边界，理解学习的本质**
+**🚀 Exploring the Boundaries of Cognition, Understanding the Essence of Learning**
 
-*这是一个学习中的项目，记录着一个学生的好奇与尝试*  
-*进步没有尽头，人的潜力也是。*  
-*认知无界，学习无止，技术只是我们理解世界的工具*
+*This is a project in progress, documenting a student's curiosity and attempts.*  
+*Progress has no end, and neither does human potential.*  
+*Cognition is boundless, learning is endless, and technology is merely our tool for understanding the world.*
 
 </div>
