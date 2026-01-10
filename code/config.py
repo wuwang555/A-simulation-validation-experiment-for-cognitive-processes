@@ -8,6 +8,30 @@ plt.rcParams['axes.unicode_minus'] = False
 # 初始化jieba
 jieba.initialize()
 
+# 模型类型说明
+MODEL_TYPES = {
+    'preset_algorithm': {
+        'description': '预设算法模型 - 模拟传统认知计算范式',
+        'characteristics': [
+            '预设优化算法（蒙特卡洛迭代）',
+            '先验语义网络结构',
+            '主动控制机制',
+            '个体差异参数化'
+        ]
+    },
+    'natural_emergence': {
+        'description': '自然涌现模型 - 仅基于两个公设',
+        'characteristics': [
+            '仅能量动力学与时空结构',
+            '被动观察涌现现象',
+            '无预设优化目标',
+            '从简单规则产生复杂模式'
+        ]
+    }
+}
+
+
+
 # ========== 基础认知参数 ==========
 BASE_PARAMETERS = {
     'forgetting_rate': 0.002,
