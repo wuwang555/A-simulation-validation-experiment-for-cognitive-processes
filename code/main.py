@@ -15,7 +15,7 @@ class CognitiveGraphExperimentManager:
     def __init__(self):
         self.experiment_results = {}
 
-    def run_traditional_mechanisms(self):
+    def run_preset_algorithm_model(self):
         """运行传统机制设计模型"""
         print("\n" + "=" * 50)
         print("传统机制设计模型")
@@ -35,14 +35,14 @@ class CognitiveGraphExperimentManager:
         self.experiment_results['traditional'] = results
         return results
 
-    def run_pure_emergence(self, num_individuals=2, max_iterations=10000):
+    def run_natural_emergence_model(self, num_individuals=2, max_iterations=10000):
         """运行纯粹能量模型"""
         print("\n" + "=" * 50)
         print("纯粹能量模型 - 自然涌现观察")
         print("=" * 50)
 
         study = EmergenceStudyFixed()
-        results = study.run_pure_emergence_experiment(
+        results = study.run_natural_emergence_model_experiment(
             num_individuals=num_individuals,
             max_iterations=max_iterations
         )
@@ -60,8 +60,8 @@ class CognitiveGraphExperimentManager:
         print("=" * 50)
 
         # 运行两种模型
-        traditional_results = self.run_traditional_mechanisms()
-        emergence_results = self.run_pure_emergence()
+        traditional_results = self.run_preset_algorithm_model()
+        emergence_results = self.run_natural_emergence_model()
 
         # 简单对比
         self._compare_results(traditional_results, emergence_results)
@@ -90,7 +90,7 @@ class CognitiveGraphExperimentManager:
         demo_semantic_network()
 
         # 运行小型实验
-        return self.run_pure_emergence(
+        return self.run_natural_emergence_model(
             num_individuals=1,
             max_iterations=2000
         )
@@ -147,11 +147,11 @@ def main():
         choice = input("\n请选择模式 (1-6): ").strip()
 
         if choice == "1":
-            manager.run_traditional_mechanisms()
+            manager.run_preset_algorithm_model()
         elif choice == "2":
             num_individuals = input("个体数量 (默认2): ").strip() or "2"
             max_iterations = input("迭代次数 (默认8000): ").strip() or "8000"
-            manager.run_pure_emergence(
+            manager.run_natural_emergence_model(
                 num_individuals=int(num_individuals),
                 max_iterations=int(max_iterations)
             )
