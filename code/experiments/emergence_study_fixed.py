@@ -46,14 +46,16 @@ class EmergenceStudyFixed:
 
         return filename
 
-    def run_pure_emergence_experiment(self, num_individuals=3, max_iterations=None):
-        """运行纯粹的涌现观察实验 - 修复版本"""
+    def run_pure_emergence_experiment(self, num_individuals=3, max_iterations=None, num_concepts=None):
+        """运行纯粹的涌现观察实验 - 修复版本，新增num_concepts参数"""
         if max_iterations is None:
             max_iterations = EXPERIMENT_CONFIG['default_iterations']
 
         print("=== 纯粹涌现观察实验 ===")
         print("目标：观察从两个公设中自然涌现的认知现象")
         print(f"配置：{num_individuals}个个体，{max_iterations}次迭代")
+        if num_concepts:
+            print(f"概念数量：{num_concepts}")
         print("=" * 50)
 
         variation_simulator = IndividualVariation(BASE_PARAMETERS, VARIATION_RANGES)
@@ -67,8 +69,8 @@ class EmergenceStudyFixed:
             base_params = variation_simulator.generate_individual(individual_id)
             individual_params = create_enhanced_individual_params(base_params)
 
-            # 直接创建增强宇宙实例，不要传递 universe 对象
-            universe_enhanced = CognitiveUniverseEnhanced(individual_params)
+            # 直接创建增强宇宙实例，传入num_concepts参数
+            universe_enhanced = CognitiveUniverseEnhanced(individual_params, num_concepts=num_concepts)
             observer = EmergenceObserver()
             detector = EmergenceDetectorFixed()
 
@@ -148,7 +150,7 @@ class EmergenceStudyFixed:
     def _initialize_universe_network(self, universe):
         """初始化宇宙网络 - 简化版本"""
         try:
-            # 使用内置的语义网络初始化
+            # 使用增强的语义网络初始化，支持num_concepts参数
             universe.initialize_semantic_network()
         except Exception as e:
             print(f"语义网络初始化失败: {e}，使用测试网络")

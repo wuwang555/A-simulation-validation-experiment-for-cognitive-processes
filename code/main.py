@@ -5,25 +5,107 @@ from core.semantic_network import SemanticConceptNetwork
 from experiments.population_study import run_semantic_enhanced_experiment, demo_semantic_network
 from utils.visualization import *
 
+# 导入新的基准模型
+from models.random_network import RandomNetworkModel
+# 移除原有的错误 Q-learning 模型导入
+# from models.qlearning_model import QLearningCognitiveGraph
+# 导入增强的 Q-learning 模型
+from models.qlearning_enhanced import EnhancedQLearningCognitiveGraph
+
 # 添加项目根目录到路径
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 
 class CognitiveGraphExperimentManager:
-    """认知图实验管理器 - 精简版本"""
+    """认知图实验管理器 - 扩展版本，包含基准模型"""
 
     def __init__(self):
         self.experiment_results = {}
 
-    def run_preset_algorithm_model(self):
-        """运行传统机制设计模型"""
+    def run_random_network_model(self, num_nodes=51, max_iterations=10000):
+        """运行随机网络基准模型"""
         print("\n" + "=" * 50)
-        print("传统机制设计模型")
+        print("随机网络基准模型（无智能机制）")
+        print("=" * 50)
+
+        # 使用默认参数
+        base_params = {
+            'forgetting_rate': 0.002,
+            'base_learning_rate': 0.85,
+            'hard_traversal_bias': 0.0,
+            'soft_traversal_bias': 0.0,
+            'compression_bias': 0.0,
+            'migration_bias': 0.0,
+            'learning_rate_variation': 0.1
+        }
+
+        # 创建并运行随机网络模型
+        random_model = RandomNetworkModel(base_params)
+        result = random_model.run_experiment(num_nodes=num_nodes, max_iterations=max_iterations)
+
+        # 可视化结果
+        random_model.visualize_graph("随机网络模型")
+
+        self.experiment_results['random_network'] = result
+        return result
+
+    def run_qlearning_model(self, num_nodes=51, max_iterations=10000):
+        """运行增强的Q-learning基准模型（替换有问题的原版）"""
+        print("\n" + "=" * 50)
+        print("增强Q-learning基准模型（传统强化学习+改进）")
+        print("=" * 50)
+
+        # 使用默认参数
+        base_params = {
+            'forgetting_rate': 0.002,
+            'base_learning_rate': 0.85,
+            'hard_traversal_bias': 0.0,
+            'soft_traversal_bias': 0.0,
+            'compression_bias': 0.0,
+            'migration_bias': 0.0,
+            'learning_rate_variation': 0.1
+        }
+
+        # 创建并运行增强的Q-learning模型
+        qlearning_model = EnhancedQLearningCognitiveGraph(base_params)
+        result = qlearning_model.run_experiment(num_nodes=num_nodes, max_iterations=max_iterations)
+
+        # 可视化结果
+        qlearning_model.visualize_graph("增强Q-learning模型")
+
+        # 演示最优路径查找
+        if num_nodes >= 5 and 'path_examples' in result and result['path_examples']:
+            print("\n最优路径示例:")
+            for i, example in enumerate(result['path_examples'][:2]):  # 只显示前2个示例
+                print(f"  示例{i + 1}: {example['start']} -> {example['end']}")
+                print(f"    路径: {example['path']}")
+                print(f"    累计Q值: {example['q_value']:.3f}")
+
+        # 打印Q-table统计
+        if 'q_table_stats' in result:
+            q_stats = result['q_table_stats']
+            print(f"\nQ-table统计:")
+            print(f"  大小: {q_stats['size']}")
+            print(f"  稀疏度: {q_stats['sparsity']:.3f}")
+            print(f"  非零条目: {q_stats['non_zero_entries']}")
+            print(f"  平均值: {q_stats['mean']:.3f}")
+            print(f"  正值比例: {q_stats['positive_ratio']:.3f}")
+
+        self.experiment_results['qlearning'] = result
+        return result
+
+    def run_preset_algorithm_model(self, num_concepts=None):
+        """运行传统机制设计模型 - 新增num_concepts参数"""
+        print("\n" + "=" * 50)
+        print("传统机制设计模型（预设算法）")
+        if num_concepts:
+            print(f"使用概念数: {num_concepts}")
         print("=" * 50)
 
         results = run_semantic_enhanced_experiment(
             num_individuals=2,
-            max_iterations=10000
+            max_iterations=10000,
+            num_concepts=num_concepts  # 传入概念数参数
         )
 
         # 简单可视化第一个个体的结果
@@ -35,16 +117,19 @@ class CognitiveGraphExperimentManager:
         self.experiment_results['traditional'] = results
         return results
 
-    def run_natural_emergence_model(self, num_individuals=2, max_iterations=10000):
-        """运行纯粹能量模型"""
+    def run_natural_emergence_model(self, num_individuals=2, max_iterations=10000, num_concepts=None):
+        """运行纯粹能量模型 - 新增num_concepts参数"""
         print("\n" + "=" * 50)
         print("纯粹能量模型 - 自然涌现观察")
+        if num_concepts:
+            print(f"使用概念数: {num_concepts}")
         print("=" * 50)
 
         study = EmergenceStudyFixed()
-        results = study.run_natural_emergence_model_experiment(
+        results = study.run_pure_emergence_experiment(
             num_individuals=num_individuals,
-            max_iterations=max_iterations
+            max_iterations=max_iterations,
+            num_concepts=num_concepts  # 传入概念数参数
         )
 
         # 可视化结果
@@ -53,15 +138,157 @@ class CognitiveGraphExperimentManager:
         self.experiment_results['pure_emergence'] = results
         return results
 
-    def run_complete_study(self):
-        """运行完整研究"""
+    def run_benchmark_comparison(self, num_nodes=51, max_iterations=10000, num_concepts=None):
+        """运行所有基准模型对比实验 - 新增num_concepts参数"""
+        print("\n" + "=" * 60)
+        print("基准模型对比实验")
+        if num_concepts:
+            print(f"语义模型使用概念数: {num_concepts}")
+        print("=" * 60)
+
+        results = {}
+
+        # 1. 随机网络模型
+        print("\n1. 运行随机网络模型...")
+        random_result = self.run_random_network_model(num_nodes, max_iterations )  # 用一半迭代次数
+        results['random'] = random_result
+
+        # 2. 增强Q-learning模型
+        print("\n2. 运行增强Q-learning模型...")
+        qlearning_result = self.run_qlearning_model(num_nodes, max_iterations)
+        results['qlearning'] = qlearning_result
+
+        # 3. 传统机制模型（简化版，减少迭代次数）
+        print("\n3. 运行传统机制模型...")
+        # 这里简化运行，实际应该调用完整的传统模型
+        from experiments.population_study import run_semantic_enhanced_experiment
+        traditional_results = run_semantic_enhanced_experiment(
+            num_individuals=1,
+            max_iterations=max_iterations,
+            num_concepts=num_concepts  # 传入概念数参数
+        )
+        if traditional_results:
+            results['traditional'] = traditional_results[0]
+
+        # 4. 自然涌现模型（简化版）
+        print("\n4. 运行自然涌现模型...")
+        study = EmergenceStudyFixed()
+        emergence_results = study.run_pure_emergence_experiment(
+            num_individuals=1,
+            max_iterations=max_iterations,
+            num_concepts=num_concepts  # 传入概念数参数
+        )
+        if emergence_results:
+            results['emergence'] = emergence_results[0]
+
+        # 对比分析
+        self._compare_benchmark_results(results)
+
+        self.experiment_results['benchmark_comparison'] = results
+        return results
+
+    def _compare_benchmark_results(self, results):
+        """对比基准模型结果"""
+        print("\n" + "=" * 60)
+        print("基准模型性能对比")
+        print("=" * 60)
+
+        print(f"{'模型类型':<20} {'能耗降低(%)':<15} {'计算迭代':<12} {'节点数':<10}")
+        print("-" * 60)
+
+        for model_type, result in results.items():
+            if isinstance(result, dict) and 'improvement' in result:
+                improvement = result['improvement']
+                iterations = result.get('iterations', 'N/A')
+                nodes = result.get('num_nodes', 'N/A')
+                print(f"{model_type:<20} {improvement:<15.1f} {iterations:<12} {nodes:<10}")
+            elif isinstance(result, list) and len(result) > 0 and 'improvement' in result[0]:
+                improvement = result[0]['improvement']
+                print(f"{model_type:<20} {improvement:<15.1f} {'N/A':<12} {'N/A':<10}")
+
+        print("-" * 60)
+
+        # 绘制对比图表
+        self._plot_benchmark_comparison(results)
+
+    def _plot_benchmark_comparison(self, results):
+        """绘制基准模型对比图"""
+        try:
+            import matplotlib.pyplot as plt
+
+            # 提取数据
+            model_names = []
+            improvements = []
+            colors = []
+
+            color_map = {
+                'random': 'gray',
+                'qlearning': 'blue',
+                'traditional': 'green',
+                'emergence': 'red'
+            }
+
+            for model_type, result in results.items():
+                if model_type in color_map:
+                    if isinstance(result, dict) and 'improvement' in result:
+                        model_names.append(model_type)
+                        improvements.append(result['improvement'])
+                        colors.append(color_map[model_type])
+                    elif isinstance(result, list) and len(result) > 0 and 'improvement' in result[0]:
+                        model_names.append(model_type)
+                        improvements.append(result[0]['improvement'])
+                        colors.append(color_map[model_type])
+
+            if not model_names:
+                return
+
+            # 创建柱状图
+            plt.figure(figsize=(10, 6))
+            bars = plt.bar(model_names, improvements, color=colors, alpha=0.7)
+
+            # 添加数值标签
+            for bar, improvement in zip(bars, improvements):
+                plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.5,
+                         f'{improvement:.1f}%', ha='center', va='bottom')
+
+            plt.xlabel('模型类型')
+            plt.ylabel('能耗降低 (%)')
+            plt.title('基准模型性能对比')
+            plt.ylim(0, max(improvements) * 1.2 if improvements else 50)
+            plt.grid(True, alpha=0.3)
+
+            # 添加图例
+            from matplotlib.patches import Patch
+            legend_elements = [Patch(facecolor=color, label=name, alpha=0.7)
+                               for name, color in color_map.items() if name in model_names]
+            plt.legend(handles=legend_elements, loc='upper right')
+
+            plt.tight_layout()
+            plt.show()
+
+            # 保存图表
+            os.makedirs('results/comparison', exist_ok=True)
+            plt.savefig('results/comparison/benchmark_comparison.png', dpi=300, bbox_inches='tight')
+            print(f"对比图表已保存到: results/comparison/benchmark_comparison.png")
+
+        except Exception as e:
+            print(f"绘制对比图表时出错: {e}")
+
+    def run_complete_study(self, num_concepts=None):
+        """运行完整研究 - 新增num_concepts参数"""
         print("\n" + "=" * 50)
         print("完整认知图研究")
+        if num_concepts:
+            print(f"使用概念数: {num_concepts}")
         print("=" * 50)
 
-        # 运行两种模型
-        traditional_results = self.run_preset_algorithm_model()
-        emergence_results = self.run_natural_emergence_model()
+        # 运行所有模型
+        print("阶段1: 基准模型对比")
+        benchmark_results = self.run_benchmark_comparison(num_nodes=51, max_iterations=10000, num_concepts=num_concepts)
+
+        print("\n阶段2: 主要模型对比")
+        traditional_results = self.run_preset_algorithm_model(num_concepts=num_concepts)
+        emergence_results = self.run_natural_emergence_model(num_concepts=num_concepts)
 
         # 简单对比
         self._compare_results(traditional_results, emergence_results)
@@ -80,19 +307,22 @@ class CognitiveGraphExperimentManager:
             print(f"传统模型平均改善: {trad_improve:.1f}%")
             print(f"涌现模型平均改善: {emerge_improve:.1f}%")
 
-    def quick_demo(self):
-        """快速演示"""
+    def quick_demo(self, num_concepts=None):
+        """快速演示 - 新增num_concepts参数"""
         print("\n" + "=" * 50)
         print("快速演示模式")
+        if num_concepts:
+            print(f"使用概念数: {num_concepts}")
         print("=" * 50)
 
         # 演示语义网络
-        demo_semantic_network()
+        demo_semantic_network(num_concepts=num_concepts)
 
         # 运行小型实验
         return self.run_natural_emergence_model(
             num_individuals=1,
-            max_iterations=2000
+            max_iterations=2000,
+            num_concepts=num_concepts
         )
 
     def show_summary(self):
@@ -103,8 +333,14 @@ class CognitiveGraphExperimentManager:
 
         for exp_type, results in self.experiment_results.items():
             if results:
-                count = len(results) if isinstance(results, list) else 1
-                print(f"{exp_type}: {count}个实验")
+                if isinstance(results, dict):
+                    print(f"{exp_type}: 1个实验")
+                    if 'improvement' in results:
+                        print(f"  能耗改善: {results['improvement']:.1f}%")
+                elif isinstance(results, list):
+                    print(f"{exp_type}: {len(results)}个实验")
+                else:
+                    print(f"{exp_type}: 结果数据")
 
 
 def check_dependencies():
@@ -127,6 +363,43 @@ def check_dependencies():
     return True
 
 
+def get_concept_count_input():
+    """获取概念数量输入"""
+    print("\n选择概念数量:")
+    print("1. 51个概念（默认）")
+    print("2. 71个概念")
+    print("3. 120个概念（完整）")
+    print("4. 自定义概念数")
+
+    choice = input("请选择 (1-4，默认1): ").strip() or "1"
+
+    if choice == "1":
+        return 51
+    elif choice == "2":
+        return 71
+    elif choice == "3":
+        return 120
+    elif choice == "4":
+        custom_input = input("请输入自定义概念数 (1-120，默认51): ").strip()
+        if custom_input == "":
+            return 51
+        try:
+            num_concepts = int(custom_input)
+            if num_concepts < 1:
+                print("概念数必须大于0，使用默认值51")
+                return 51
+            elif num_concepts > 120:
+                print("概念数最大为120，使用120")
+                return 120
+            return num_concepts
+        except ValueError:
+            print("输入无效，使用默认值51")
+            return 51
+    else:
+        print("输入无效，使用默认值51")
+        return 51
+
+
 def main():
     """主函数"""
     if not check_dependencies():
@@ -134,38 +407,77 @@ def main():
 
     print("\n=== 认知图模型实验平台 ===")
     print("选择运行模式:")
-    print("1. 传统机制设计模型")
-    print("2. 纯粹能量涌现模型")
-    print("3. 完整对比研究")
-    print("4. 语义网络演示")
-    print("5. 快速演示")
-    print("6. 实验总结")
+    print("1. 随机网络基准模型（无智能）")
+    print("2. 增强Q-learning基准模型（传统AI+改进）")
+    print("3. 传统机制设计模型（预设算法）")
+    print("4. 纯粹能量涌现模型（自然涌现）")
+    print("5. 基准模型对比实验")
+    print("6. 完整对比研究")
+    print("7. 语义网络演示")
+    print("8. 快速演示")
+    print("9. 实验总结")
 
     manager = CognitiveGraphExperimentManager()
 
     try:
-        choice = input("\n请选择模式 (1-6): ").strip()
+        choice = input("\n请选择模式 (1-9): ").strip()
 
         if choice == "1":
-            manager.run_preset_algorithm_model()
+            num_nodes = input("网络节点数 (默认51): ").strip() or "51"
+            max_iterations = input("迭代次数 (默认3000): ").strip() or "3000"
+            manager.run_random_network_model(
+                num_nodes=int(num_nodes),
+                max_iterations=int(max_iterations)
+            )
         elif choice == "2":
-            num_individuals = input("个体数量 (默认2): ").strip() or "2"
-            max_iterations = input("迭代次数 (默认8000): ").strip() or "8000"
-            manager.run_natural_emergence_model(
-                num_individuals=int(num_individuals),
+            num_nodes = input("网络节点数 (默认51): ").strip() or "51"
+            max_iterations = input("迭代次数 (默认5000): ").strip() or "5000"
+            manager.run_qlearning_model(
+                num_nodes=int(num_nodes),
                 max_iterations=int(max_iterations)
             )
         elif choice == "3":
-            manager.run_complete_study()
+            # 询问概念数量
+            num_concepts = get_concept_count_input()
+            manager.run_preset_algorithm_model(num_concepts=num_concepts)
         elif choice == "4":
-            demo_semantic_network()
+            num_individuals = input("个体数量 (默认2): ").strip() or "2"
+            max_iterations = input("迭代次数 (默认8000): ").strip() or "8000"
+            # 询问概念数量
+            num_concepts = get_concept_count_input()
+            manager.run_natural_emergence_model(
+                num_individuals=int(num_individuals),
+                max_iterations=int(max_iterations),
+                num_concepts=num_concepts
+            )
         elif choice == "5":
-            manager.quick_demo()
+            num_nodes = input("网络节点数 (默认51): ").strip() or "51"
+            max_iterations = input("迭代次数 (默认3000): ").strip() or "3000"
+            # 询问概念数量（仅用于语义模型）
+            print("\n语义模型概念数量设置（随机和Q-learning模型不受影响）:")
+            num_concepts = get_concept_count_input()
+            manager.run_benchmark_comparison(
+                num_nodes=int(num_nodes),
+                max_iterations=int(max_iterations),
+                num_concepts=num_concepts
+            )
         elif choice == "6":
+            # 询问概念数量
+            num_concepts = get_concept_count_input()
+            manager.run_complete_study(num_concepts=num_concepts)
+        elif choice == "7":
+            # 询问概念数量
+            num_concepts = get_concept_count_input()
+            demo_semantic_network(num_concepts=num_concepts)
+        elif choice == "8":
+            # 询问概念数量
+            num_concepts = get_concept_count_input()
+            manager.quick_demo(num_concepts=num_concepts)
+        elif choice == "9":
             manager.show_summary()
         else:
-            print("无效选择，运行快速演示")
-            manager.quick_demo()
+            print("无效选择，运行基准模型对比")
+            manager.run_benchmark_comparison()
 
     except KeyboardInterrupt:
         print("\n\n程序被用户中断")

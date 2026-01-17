@@ -109,10 +109,10 @@ class SemanticConceptNetwork:
         else:
             return 0.2  # 不同领域的基础相似度
 
-    def build_comprehensive_network(self):
-        """构建综合概念网络"""
+    def build_comprehensive_network(self, num_concepts=None):
+        """构建综合概念网络 - 新增num_concepts参数控制概念数量"""
         # 预定义核心概念
-        self._predefine_core_concepts()
+        self._predefine_core_concepts(num_concepts)
 
         # 为所有概念扩展网络
         all_concepts = list(self.concept_definitions.keys())
@@ -135,10 +135,26 @@ class SemanticConceptNetwork:
         total_connections = sum(len(neighbors) for neighbors in self.semantic_network.values()) // 2
         print(f"网络连接数: {total_connections}")
 
-    def _predefine_core_concepts(self):
-        """预定义核心概念及其关系"""
-        for concept, definition in CORE_CONCEPT_DEFINITIONS.items():
-            self.add_concept_definition(concept, definition, "predefined")
+    def _predefine_core_concepts(self, num_concepts=None):
+        """预定义核心概念及其关系 - 新增num_concepts参数"""
+        # 如果指定了概念数量，只取前num_concepts个概念
+        if num_concepts is not None:
+            # 获取前num_concepts个概念
+            all_concepts = list(CORE_CONCEPT_DEFINITIONS.keys())
+            if num_concepts > len(all_concepts):
+                print(f"警告：请求的概念数{num_concepts}超过最大概念数{len(all_concepts)}，使用最大概念数")
+                num_concepts = len(all_concepts)
+
+            selected_concepts = all_concepts[:num_concepts]
+            for concept in selected_concepts:
+                definition = CORE_CONCEPT_DEFINITIONS[concept]
+                self.add_concept_definition(concept, definition, "predefined")
+            print(f"使用前 {num_concepts} 个核心概念构建语义网络")
+        else:
+            # 使用所有概念
+            for concept, definition in CORE_CONCEPT_DEFINITIONS.items():
+                self.add_concept_definition(concept, definition, "predefined")
+            print(f"使用全部 {len(CORE_CONCEPT_DEFINITIONS)} 个核心概念构建语义网络")
 
     def find_cross_domain_paths(self, start_concept, end_concept, max_path_length=None):
         """寻找跨领域的概念路径"""
@@ -237,10 +253,37 @@ class MetaStructureSimilarity:
 class EnhancedSemanticConceptNetwork(SemanticConceptNetwork):
     """增强的语义概念网络，整合元结构相似度"""
 
-    def __init__(self):
+    def __init__(self, num_concepts=None):
         super().__init__()
         self.meta_similarity = MetaStructureSimilarity()
         self.concept_frequency = defaultdict(int)  # 概念出现频率
+        self.num_concepts = num_concepts  # 保存概念数设置
+
+    def build_comprehensive_network(self):
+        """构建综合概念网络 - 重写以使用num_concepts参数"""
+        # 预定义核心概念，传入num_concepts参数
+        self._predefine_core_concepts(self.num_concepts)
+
+        # 为所有概念扩展网络
+        all_concepts = list(self.concept_definitions.keys())
+        print(f"开始构建增强语义网络，共有 {len(all_concepts)} 个概念")
+
+        # 首先建立所有概念之间的直接连接
+        threshold = NETWORK_CONFIG['similarity_threshold']
+        for i, concept1 in enumerate(all_concepts):
+            for j, concept2 in enumerate(all_concepts[i + 1:], i + 1):
+                similarity = self.calculate_semantic_similarity(concept1, concept2)
+                if similarity > threshold:
+                    self.semantic_network[concept1][concept2] = similarity
+                    self.semantic_network[concept2][concept1] = similarity
+
+        # 然后进行深度扩展
+        for concept in all_concepts:
+            self.expand_concept_network(concept)
+
+        print(f"增强语义网络构建完成! 包含 {len(self.semantic_network)} 个概念节点")
+        total_connections = sum(len(neighbors) for neighbors in self.semantic_network.values()) // 2
+        print(f"网络连接数: {total_connections}")
 
     def calculate_enhanced_similarity(self, concept1, concept2, method="combined"):
         """增强的相似度计算，整合多种方法"""

@@ -431,16 +431,31 @@ class AlgebraValidationExperiments:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"algebra_validation_results_{timestamp}.json"
 
-        # 转换结果为可序列化格式
+        # 转换结果为可序列化格式，并替换特殊字符
         serializable_results = {}
         for exp_name, exp_data in self.results.items():
             if isinstance(exp_data, dict):
                 serializable_results[exp_name] = self._make_serializable(exp_data)
+            else:
+                serializable_results[exp_name] = str(exp_data)
 
-        with open(filename, 'w') as f:
-            json.dump(serializable_results, f, indent=2, ensure_ascii=False)
-
-        print(f"\n详细结果已保存到: {filename}")
+        # 安全保存：使用ASCII编码
+        try:
+            with open(filename, 'w', encoding='utf-8') as f:
+                json.dump(serializable_results, f, indent=2, ensure_ascii=False)
+            print(f"\n详细结果已保存到: {filename}")
+        except UnicodeEncodeError:
+            # 回退方案：使用ASCII编码
+            with open(filename, 'w', encoding='utf-8') as f:
+                json.dump(serializable_results, f, indent=2, ensure_ascii=True)
+            print(f"\n详细结果已保存到: {filename} (回退到ASCII编码)")
+        except Exception as e:
+            print(f"保存结果时出错: {e}")
+            # 尝试使用更简单的文件名
+            simple_filename = f"results_{timestamp}.json"
+            with open(simple_filename, 'w', encoding='ascii') as f:
+                json.dump(serializable_results, f, indent=2, ensure_ascii=True)
+            print(f"结果已保存到备用文件: {simple_filename}")
 
     def _make_serializable(self, obj):
         """确保对象可JSON序列化"""

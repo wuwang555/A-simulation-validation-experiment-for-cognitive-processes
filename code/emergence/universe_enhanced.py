@@ -7,7 +7,7 @@ from emergence.detector_fixed import EmergenceDetectorFixed
 class CognitiveUniverseEnhanced(CognitiveUniverse):
     """增强的认知宇宙，改进涌现观察"""
 
-    def __init__(self, individual_params: Dict[str, Any] = None, network_seed: int = 42):
+    def __init__(self, individual_params: Dict[str, Any] = None, network_seed: int = 42, num_concepts: int = None):
         # 直接调用父类构造函数，传递正确的参数
         super().__init__(individual_params, network_seed)
         self.emergence_detector = EmergenceDetectorFixed()
@@ -17,6 +17,43 @@ class CognitiveUniverseEnhanced(CognitiveUniverse):
             'natural_migrations': [],    # 改为与调用代码一致
             'energy_convergence_phases': []
         }
+        self.num_concepts = num_concepts  # 保存概念数设置
+
+    def initialize_semantic_network(self):
+        """初始化语义网络 - 重写以支持num_concepts参数"""
+        from core.semantic_network import SemanticConceptNetwork
+
+        semantic_net = SemanticConceptNetwork()
+        # 构建语义网络，传入num_concepts参数
+        semantic_net.build_comprehensive_network(num_concepts=self.num_concepts)
+
+        nodes = list(semantic_net.concept_definitions.keys())
+        self.G.add_nodes_from(nodes)
+
+        initial_edges = []
+        for i, node1 in enumerate(nodes):
+            for j, node2 in enumerate(nodes[i + 1:], i + 1):
+                similarity = semantic_net.calculate_semantic_similarity(node1, node2)
+
+                if similarity > 0.1:
+                    # 基于相似度设置初始能量（相似度越高，能量越低）
+                    energy = 2.0 - similarity * 1.5
+                    energy = max(0.3, min(2.0, energy))
+
+                    initial_edges.append((node1, node2, {
+                        'weight': energy,
+                        'traversal_count': 0,
+                        'original_weight': energy,
+                        'similarity': similarity
+                    }))
+                    # 初始化激活时间为0
+                    self.last_activation_time[(node1, node2)] = 0
+
+        for u, v, attr in initial_edges:
+            self.G.add_edge(u, v, **attr)
+
+        print(f"语义网络初始化: {len(nodes)}节点, {len(initial_edges)}条边")
+        print(f"初始全局能量: {self.calculate_network_energy():.3f}")
 
     def evolve_with_emergence_detection(self, iterations: int = 1000,
                                         detection_interval: int = 200):  # 增加检测间隔

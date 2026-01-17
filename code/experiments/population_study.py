@@ -5,8 +5,8 @@ from core.cognitive_states import *
 from utils.visualization import *
 
 
-def run_semantic_enhanced_experiment(num_individuals=3, max_iterations=10000):
-    """运行语义增强的群体实验"""
+def run_semantic_enhanced_experiment(num_individuals=3, max_iterations=10000, num_concepts=None):
+    """运行语义增强的群体实验 - 新增num_concepts参数"""
     base_parameters = {
         'forgetting_rate': 0.002,
         'base_learning_rate': 0.85,
@@ -31,6 +31,8 @@ def run_semantic_enhanced_experiment(num_individuals=3, max_iterations=10000):
     population_results = []
 
     print(f"=== 开始语义增强群体实验：{num_individuals}个个体 ===")
+    if num_concepts:
+        print(f"概念数量: {num_concepts}")
 
     for i in range(num_individuals):
         individual_id = f"个体_{i + 1}"
@@ -39,7 +41,8 @@ def run_semantic_enhanced_experiment(num_individuals=3, max_iterations=10000):
         base_individual_params = variation_simulator.generate_individual(individual_id)
         individual_params = create_enhanced_individual_params(base_individual_params)
 
-        individual_graph = SemanticEnhancedCognitiveGraph(individual_params)
+        # 创建认知图，传入num_concepts参数
+        individual_graph = SemanticEnhancedCognitiveGraph(individual_params, num_concepts=num_concepts)
         individual_graph.initialize_semantic_graph()
 
         # 修复：使用 get_network_stats() 获取初始统计信息
@@ -78,9 +81,11 @@ def run_semantic_enhanced_experiment(num_individuals=3, max_iterations=10000):
     return population_results
 
 
-def test_enhanced_features():
-    """测试增强功能"""
+def test_enhanced_features(num_concepts=None):
+    """测试增强功能 - 新增num_concepts参数"""
     print("=== 测试增强的认知图模型 ===")
+    if num_concepts:
+        print(f"概念数量: {num_concepts}")
 
     # 创建个体参数
     base_params = {
@@ -93,8 +98,8 @@ def test_enhanced_features():
         'learning_rate_variation': 0.1
     }
 
-    # 创建能耗优化的认知图
-    cognitive_graph = EnergyOptimizedCognitiveGraph(base_params)
+    # 创建能耗优化的认知图，传入num_concepts参数
+    cognitive_graph = EnergyOptimizedCognitiveGraph(base_params, num_concepts=num_concepts)
     cognitive_graph.initialize_semantic_graph()
 
     print("初始网络统计:")
@@ -138,15 +143,18 @@ def test_enhanced_features():
     return cognitive_graph
 
 
-def demo_semantic_network():
-    """演示语义网络功能"""
+def demo_semantic_network(num_concepts=None):
+    """演示语义网络功能 - 新增num_concepts参数"""
     from core.semantic_network import SemanticConceptNetwork
     from utils.visualization import visualize_semantic_network
 
     semantic_net = SemanticConceptNetwork()
-    semantic_net.build_comprehensive_network()
+    # 构建语义网络，传入num_concepts参数
+    semantic_net.build_comprehensive_network(num_concepts=num_concepts)
 
     print("\n=== 语义网络演示 ===")
+    if num_concepts:
+        print(f"概念数量: {num_concepts}")
 
     # 显示一些概念的关键词
     sample_concepts = ["牛顿定律", "微积分", "算法", "优化"]
