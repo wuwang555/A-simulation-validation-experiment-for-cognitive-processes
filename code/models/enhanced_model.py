@@ -7,9 +7,9 @@ import random
 class SemanticEnhancedCognitiveGraph(BaseCognitiveGraph):
     """语义增强认知图 - 精简版本"""
 
-    def __init__(self, individual_params: Dict[str, Any], network_seed: int = 42):
+    def __init__(self, individual_params: Dict[str, Any], network_seed: int = 42, num_concepts: int = None):
         super().__init__(individual_params, network_seed)
-        self.semantic_network = EnhancedSemanticConceptNetwork()
+        self.semantic_network = EnhancedSemanticConceptNetwork(num_concepts=num_concepts)
         self.semantic_network.build_comprehensive_network()
 
     def calculate_semantic_similarity(self, node1: str, node2: str) -> float:
@@ -93,8 +93,8 @@ class SemanticEnhancedCognitiveGraph(BaseCognitiveGraph):
 class EnergyOptimizedCognitiveGraph(SemanticEnhancedCognitiveGraph):
     """能耗优化认知图 - 精简版本"""
 
-    def __init__(self, individual_params: Dict[str, Any], network_seed: int = 42):
-        super().__init__(individual_params, network_seed)
+    def __init__(self, individual_params: Dict[str, Any], network_seed: int = 42, num_concepts: int = None):
+        super().__init__(individual_params, network_seed, num_concepts)
         self.energy_optimization_threshold = 0.3
 
     def energy_efficient_traversal(self, start_node: str, target_node: str, max_depth: int = 3):
