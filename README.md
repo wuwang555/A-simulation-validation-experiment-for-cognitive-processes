@@ -134,7 +134,7 @@ pip install numpy pandas matplotlib networkx scipy
 ### Running Experiments
 #### Method 1: One-click run all experiments (recommended)
 ```bash
-python sesfullu01.py
+python run_experiments.py
 ```
 
 #### Method 2: Run by module

@@ -172,7 +172,7 @@ pip install numpy pandas matplotlib networkx scipy
 ### 运行实验
 #### 方法1：一键运行所有实验（推荐）
 ```bash
-python sesfullu01.py
+python run_experiments.py
 ```
 
 #### 方法2：按模块运行
