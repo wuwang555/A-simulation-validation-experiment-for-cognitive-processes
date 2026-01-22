@@ -2,9 +2,7 @@ import networkx as nx
 import numpy as np
 import random
 import math
-from collections import defaultdict
 from typing import Dict, Any, List, Tuple
-import time
 
 from core.cognitive_states import CognitiveState, CognitiveStateManager
 from config import BASE_PARAMETERS, ENERGY_CONFIG

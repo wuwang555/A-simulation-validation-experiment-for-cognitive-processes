@@ -21,7 +21,9 @@
 \usepackage[sort&compress]{natbib}  % 更强大的引用管理，替换原来的 cite 包
 \bibliographystyle{plainnat}  % 引用样式，也可以选 apalike, ieeetr, alpha 等
 \usepackage{tikz}
-\usetikzlibrary{positioning, shapes, arrows}
+\usetikzlibrary{positioning, shapes, arrows, calc, decorations.pathreplacing}
+\usepackage{pgfplots}  % 如果使用坐标轴
+\pgfplotsset{compat=1.17}
 \usepackage{array}  % 增强表格功能
 \usepackage{booktabs}  % 三线表
 \usepackage{makecell}  % 多行表头
@@ -84,32 +86,31 @@
 \maketitle
 
 \begin{abstract}
-本文提出一个名为"认知图论"的完整形式化框架，通过几何、代数和动力学三个维度为人类的高效学习与创新思维提供统一解释。模型建立在两个核心公设之上：(1) 认知状态可表征为时空中的动态网络（认知时空）；(2) 该网络的演化受能量动力学支配，其核心优化目标是认知能耗的最小化。在此公理化基础上，我们引入群论代数结构描述认知操作的封闭性和可逆性，推导出系统的"可迭代性"与"可回归性"等基本性质，并严格证明"概念压缩"与"第一性原理迁移"是系统为达成能耗优化而自然涌现的宏观行为模式。
+本文提出一个完整的认知计算框架，通过几何、代数和动力学三个维度为认知过程提供统一的形式化模型。系统建立在两个核心公设之上：(1) 认知状态可表征为时空中的动态网络（认知图）；(2) 网络演化受能量动力学支配，其核心优化目标是认知能耗最小化。在此公理化基础上，我们引入群论代数结构描述认知操作的封闭性和可逆性，推导出系统的“可迭代性”与“可回归性”等基本性质，并严格证明“概念压缩”与“第一性原理迁移”是系统为达成能耗优化而自然涌现的宏观行为模式。
 
-通过包含1、71、91和111个跨领域概念的四规模实验，模型在预设算法范式中分别实现了23.1\%、15.5\%、12.2\%和7.6\%的平均能耗降低，而在自然涌现范式中分别实现了88.0\%、72.3\%、61.4\%和47.9\%的显著优化。实验产生了大量高度合理的概念压缩和原理迁移，所有压缩均达到完全内聚性（1.0），迁移效率达到0.35-0.52。
-
-\textbf{核心发现}：系统在不同概念规模下均展现出与人类认知高度一致的组织原则——概念压缩形成稳定的知识结构，原理迁移实现跨领域创造性连接，且系统能够根据认知负荷自适应调整探索-利用策略。这些发现为能量最小化作为认知组织基本原则提供了计算证据。
+通过包含51、71、91和111个跨领域概念的四规模实验，系统在预设算法模型中分别实现了23.1%、15.5%、12.2%和7.6%的平均能耗降低，而在自然涌现模型中分别实现了88.0%、72.3%、61.4%和47.9%的显著优化。实验产生了大量高度合理的概念压缩和原理迁移，所有压缩均达到完全内聚性（1.0），迁移效率达到0.35-0.52。核心发现：系统在不同概念规模下均展现出与人类认知高度一致的组织原则——概念压缩形成稳定的知识结构，原理迁移实现跨领域创造性连接，且系统能够根据认知负荷自适应调整探索-利用策略。这些发现为能量最小化作为认知组织基本原则提供了计算证据。
 
 本工作桥接了认知科学、计算机科学与数学物理，为理解智能的本质及设计下一代人工智能提供了坚实的理论基础。框架不仅统一解释了一系列分散的认知现象，更对当前基于统计关联的人工智能范式构成了根本性质疑，指明了通向更具洞察力与能效的智能系统的设计路径。
 
 \textbf{关键词：} 认知图论，能量最小化，群论代数，概念压缩，第一性原理迁移，认知动力学，涌现现象
+
 \end{abstract}
 
 % ========== SECTION 1: 引言 ==========
 \section{引言}
 
-构建一个能够同时描述知识表征、学习动态与创造性思维的计算理论，是认知科学与人工智能领域的核心挑战。现有工作，如语义网络与知识图谱，精于描述知识的静态结构，却拙于刻画其动态演化过程与内在的优化目标。这些模型大多描述了认知的"几何学"，但缺乏其"动力学"，更未能指明驱动整个系统演化的"目标函数"为何。
+构建一个能够同时描述知识表征、学习动态与创造性思维的计算理论，是认知科学与人工智能领域的核心挑战。现有工作，如语义网络与知识图谱，精于描述知识的静态结构，却拙于刻画其动态演化过程与内在的优化目标。这些模型大多描述了认知的“几何学”，但缺乏其“动力学”，更未能指明驱动整个系统演化的“目标函数”为何。
 
-当前人工智能系统，特别是大型语言模型，虽然在特定任务上表现出色，但其运作机制本质上是基于统计关联的暴力计算，缺乏对认知过程的深刻理解。这种"知其然不知其所以然"的现状，限制了AI系统在创造性思维、跨领域迁移和能量效率方面的表现。
+当前人工智能系统，特别是大型语言模型，虽然在特定任务上表现出色，但其运作机制本质上是基于统计关联的暴力计算，缺乏对认知过程的深刻理解。这种“知其然不知其所以然”的现状，限制了AI系统在创造性思维、跨领域迁移和能量效率方面的表现。
 
-受物理学中"最小作用量原理"和数学中群论的启发，本文提出一个反直觉却强有力的核心论点：认知过程的底层驱动力，是对"认知能耗"这一内部代价的优化，且认知操作具有代数封闭性和结构保持性。基于此，我们构建了一个以"认知时空"与"能量动力学"为第一性原理的公理化系统，旨在为分散的认知现象提供一个统一的、可计算的解释框架。
+受物理学中“最小作用量原理”和数学中群论的启发，本文提出一个反直觉却强有力的核心论点：认知过程的底层驱动力，是对“认知能耗”这一内部代价的优化，且认知操作具有代数封闭性和结构保持性。基于此，我们构建了一个以“认知时空”与“能量动力学”为第一性原理的公理化系统，旨在为分散的认知现象提供一个统一的、可计算的解释框架。
 
 本文的主要理论创新包括：
 \begin{itemize}
-\item 建立认知图论的完整公理化体系，包含几何、代数和动力学三个维度
-\item 引入群论结构描述认知操作的代数性质
-\item 提出并对比两种研究范式：预设算法设计与自然能量涌现
-\item 通过严格的计算实验验证理论预测
+    \item 建立认知图论的完整公理化体系，包含几何、代数和动力学三个维度
+    \item 引入群论结构描述认知操作的代数性质
+    \item 提出并对比两种研究范式：预设算法设计与自然能量涌现
+    \item 通过严格的计算实验验证理论预测
 \end{itemize}
 
 本文结构如下：第二节回顾相关工作和理论背景；第三节形式化阐述认知图论的公理系统；第四节介绍代数结构的群论描述；第五节分析能量动力学驱动的涌现机制；第六节详述实验设计与结果分析；第七节讨论理论意义和应用前景；第八节总结全文。
@@ -292,6 +293,60 @@ F(G) = \sum_{e_{ij} \in E} E_{ij} - T \cdot S(G) + R(G)
 \end{itemize}
 \end{enumerate}
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    scale=1.0,
+    every node/.style={circle, draw, minimum size=1.2cm},
+    concept/.style={fill=blue!20},
+    energy/.style={fill=red!20},
+    thick,
+    >=stealth
+]
+
+% 定义节点位置（调整垂直位置：向下移动2cm）
+\node[concept] (v1) at (-2,1) {算法};  % 调整：原y=4，现y=2
+\node[concept] (v2) at (1,2) {递归};  % 调整：原y=5，现y=3
+\node[concept] (v3) at (3,1) {神经网络};  % 调整：原y=4，现y=2
+\node[concept] (v4) at (0,-2) {模式识别};  % 调整：原y=2，现y=0
+\node[concept] (v5) at (4,-2) {优化};  % 调整：原y=2，现y=0
+\node[energy] (v6) at (7,-3) {认知能耗};  % 调整：原y=0，现y=-2
+
+% 连接边并标注权重
+\draw[->] (v1) -- node[midway, above left] {0.85} (v2);
+\draw[->] (v1) -- node[midway, above] {0.78} (v3);
+\draw[->] (v2) -- node[midway, right] {0.92} (v3);
+\draw[->] (v2) -- node[midway, left] {0.67} (v4);
+\draw[->] (v3) -- node[midway, right] {0.81} (v5);
+\draw[->] (v4) -- node[midway, below] {0.74} (v5);
+\draw[->] (v5) -- node[midway, right] {0.63} (v6);
+\draw[->] (v1) .. controls (-1,1) and (-1,-1) .. node[midway, left] {0.45} (v4);
+\draw[->] (v3) .. controls (5,1) and (5,-1) .. node[midway, right] {0.58} (v5);
+
+% 添加时间标注（调整位置：向右移动，向上移动）
+\node[text width=4cm, align=center, font=\small] at (6,4) {认知图 $G(V,E,t)$ \\ 时间 $t$: 迭代次数};  % 调整：原(6,6)，现(6,4)
+\node[text width=3cm, align=center, font=\small] at (-1,4) {节点: 概念 \\ 边权重: 认知能耗};  % 调整：原(-1,6)，现(-1,4)
+
+% 添加能量函数示意（调整位置：向右移动）
+\node[rectangle, draw, rounded corners, fill=yellow!20, minimum width=6cm, minimum height=1.5cm, text width=5.5cm, align=left] at (9,0) {  % 调整：原(6,1.5)，现(7,1)
+    \textbf{认知能耗函数:} \\
+    $E_{ij}(t) = \alpha(1-\text{sim}_{ij}) + \beta\frac{1}{1+H_{ij}(t)} + \gamma\cdot\text{div}_{ij}$ \\
+    $\alpha=0.4,\ \beta=0.4,\ \gamma=0.2$
+};
+
+% 调节参数注释（实际使用时可以移除）
+%\node[red, font=\tiny, align=left] at (0,-3) {
+%    \textbf{可调节参数:} \\
+%    • 节点位置: 修改at(x,y)坐标 \\
+%    • 函数框位置: at(7,1) \\
+%    • 标注位置: 调整at坐标
+%};
+
+\end{tikzpicture}
+\caption{认知图的基本结构：节点表示概念，边表示概念间的关联，边权重表示认知能耗。图中展示了算法、递归、神经网络等概念及其关联，认知能耗函数将能耗分解为语义差异、历史熟练度和结构差异三部分。}
+\label{fig:cognitive_graph_structure}
+\end{figure}
+
 % ========== SUBSECTION 3.2: 几何衍生性质 ==========
 \subsection{几何衍生性质}
 
@@ -381,6 +436,78 @@ E_{ij}(t) = \alpha \cdot (1 - \text{sim}(v_i, v_j)) + \beta \cdot \frac{1}{1 + H
 \textbf{定理4.1.3（认知操作半群）}：基本认知操作的集合在复合操作下构成一个半群。
 
 \textbf{证明}：设 $\mathcal{O}$ 为所有基本认知操作的集合。对于任意两个操作 $o_1, o_2 \in \mathcal{O}$，定义复合操作 $o_2 \circ o_1$ 为先执行 $o_1$ 再执行 $o_2$。由于认知操作的执行具有时序性，复合操作满足结合律但不一定满足交换律。因此，$(\mathcal{O}, \circ)$ 构成一个半群。$\square$
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    scale=0.9,
+    operation/.style={rectangle, draw, rounded corners, minimum width=2.2cm, minimum height=1cm, align=center},
+    op1/.style={fill=blue!20},
+    op2/.style={fill=green!20},
+    op3/.style={fill=orange!20},
+    result/.style={fill=red!20},
+    space/.style={rectangle, draw, rounded corners, fill=gray!10, minimum width=4cm, minimum height=2cm},
+    thick,
+    >=stealth,
+    node distance=1.5cm
+]
+
+% 操作节点（调整垂直位置）
+\node[operation, op1] (tau) at (0,3) {遍历操作 $\tau$};  % 调整：原(0,0)，现(0,3)
+\node[operation, op2, right=of tau] (lambda) {学习操作 $\lambda$};
+\node[operation, op3, right=of lambda] (phi) {遗忘操作 $\phi$};
+
+% 复合操作（调整垂直位置）
+\node[operation, result, below=2cm of lambda] (composite) at (3,0.5) {复合操作 $\phi\circ\lambda\circ\tau$};  % 调整：原below=2.5cm of lambda，现(3,0.5)
+
+% 连接线表示复合过程（调整连接点）
+\draw[->, thick] (tau.south) .. controls (tau.south west) and (composite.north west) .. 
+    node[midway, left, font=\small, yshift=-0.2cm] {结合律: $(\phi\circ\lambda)\circ\tau$} (composite.north west);
+\draw[->, thick] (lambda.south) .. controls (lambda.south) and (composite.north) .. 
+    node[midway, right, font=\small, yshift=0.1cm] {$=$} (composite.north);
+\draw[->, thick] (phi.south) .. controls (phi.south east) and (composite.north east) .. 
+    node[midway, right, font=\small, yshift=-0.2cm] {$\phi\circ(\lambda\circ\tau)$} (composite.north east);
+
+% 单位元（调整位置）
+\node[operation, fill=yellow!20, left=of tau] (id) {恒等操作 $id$};
+\draw[<->, dashed, thick] (id) -- node[midway, above, font=\small] {单位元} (tau);
+
+% 群作用示意（调整位置：向右下移动）
+\node[space] (space) at (7, 1.5) {};  % 调整：原(6,-1)，现(7,1.5)
+\node[circle, draw, fill=white] (state1) at (6.5, 2) {$G_1$};
+\node[circle, draw, fill=white] (state2) at (7.5, 2) {$G_2$};
+\node[circle, draw, fill=white] (state3) at (7, 1) {$G_3$};
+
+\draw[->, thick, blue] (composite.east) -- (space.west) 
+    node[midway, above, font=\small] {群作用 $\alpha$};
+\draw[->, thick, green] (state1) -- node[midway, above, font=\scriptsize] {$\tau$} (state2);
+\draw[->, thick, orange] (state2) -- node[midway, right, font=\scriptsize] {$\lambda$} (state3);
+
+% 标注（调整位置）
+\node[text width=4cm, align=center, font=\small] at (3, -3) {  % 调整：原(2,-4)，现(3,-3)
+    \textbf{认知操作半群 $(\mathcal{O},\circ)$} \\
+    $\bullet$ 封闭性: $o_1\circ o_2 \in \mathcal{O}$ \\
+    $\bullet$ 结合律: $(o_1\circ o_2)\circ o_3 = o_1\circ(o_2\circ o_3)$ \\
+    $\bullet$ 单位元: $id\circ o = o\circ id = o$ \\
+    $\bullet$ 不一定有逆元
+};
+
+% 添加解释性标签
+\node[below=0.5cm of space, font=\small] {认知状态空间 $\mathcal{C}$};
+
+% 调节参数注释（实际使用时可以移除）
+%\node[red, font=\tiny, align=left] at (0,-4) {
+%    \textbf{可调节参数:} \\
+%    • 操作节点垂直位置: 修改at(0,3)的y值 \\
+%    • 复合操作位置: at(3,0.5) \\
+%    • 状态空间位置: at(7,1.5) \\
+%    • 标注框位置: at(3,-3)
+%};
+
+\end{tikzpicture}
+\caption{认知操作的代数结构：基本认知操作构成一个半群，满足封闭性和结合律。图中展示了遍历$\tau$、学习$\lambda$和遗忘$\phi$三个操作的复合过程，以及它们通过群作用$\alpha$对认知状态空间$\mathcal{C}$的影响。认知操作半群为认知过程提供了严格的代数描述。}
+\label{fig:cognitive_semigroup}
+\end{figure}
 
 % ========== SUBSECTION 4.2: 认知对称性与不变性 ==========
 \subsection{认知对称性与不变性}
@@ -793,6 +920,100 @@ E_{ij}(t) = \alpha \cdot (1 - \text{sim}(v_i, v_j)) + \beta \cdot \frac{1}{1 + H
 
 实验观察到的典型案例："强化学习"节点的形成，是对["算法", "机器学习", "深度学习", "奖励", "策略"]等现象级节点的成功压缩，实现了认知范式的跃迁与能耗的骤降。
 
+\begin{figure}[H]
+\centering
+\vspace{0.3cm}  % 增加图形上方的垂直间距
+\begin{subfigure}[b]{0.45\textwidth}
+\centering
+\begin{tikzpicture}[
+    scale=0.7,
+    every node/.style={circle, draw, minimum size=1cm},
+    cluster1/.style={fill=blue!20},
+    cluster2/.style={fill=green!20},
+    other/.style={fill=gray!20},
+    thick
+]
+
+% 压缩前的网络：4个紧密连接的节点
+\node[cluster1] (a1) at (0,0) {A1};
+\node[cluster1] (a2) at (1,1) {A2};
+\node[cluster1] (a3) at (2,0) {A3};
+\node[cluster1] (a4) at (1,-1) {A4};
+
+% 外部节点
+\node[other] (b1) at (-1.5,1.5) {B1};
+\node[other] (b2) at (3.5,1.5) {B2};   % 调整：向右移动
+\node[other] (b3) at (3.5,-1.5) {B3};  % 调整：向右移动
+\node[other] (b4) at (-1.5,-1.5) {B4};
+
+% 内部连接（低能耗）
+\draw[blue, thick] (a1) -- (a2);
+\draw[blue, thick] (a1) -- (a3);
+\draw[blue, thick] (a1) -- (a4);
+\draw[blue, thick] (a2) -- (a3);
+\draw[blue, thick] (a2) -- (a4);
+\draw[blue, thick] (a3) -- (a4);
+
+% 外部连接（高能耗）
+\draw[red, dashed] (b1) -- (a1);
+\draw[red, dashed] (b1) -- (a2);
+\draw[red, dashed] (b2) -- (a2);
+\draw[red, dashed] (b2) -- (a3);
+\draw[red, dashed] (b3) -- (a3);
+\draw[red, dashed] (b3) -- (a4);
+\draw[red, dashed] (b4) -- (a4);
+\draw[red, dashed] (b4) -- (a1);
+
+% 标注 - 调整垂直位置（向上移动）
+\node[text width=3cm, align=center, font=\small] at (1,5.0) {压缩前：4个紧密连接的节点 \\ 内部能耗低，外部能耗高};
+
+% 高亮集群
+\draw[red, thick, rounded corners] (-0.3,-1.3) rectangle (2.3,1.3);
+
+\end{tikzpicture}
+\caption{压缩前：分散结构}
+\end{subfigure}
+\hspace{0.5cm}  % 调整：增加左右子图间距
+\begin{subfigure}[b]{0.45\textwidth}
+\centering
+\begin{tikzpicture}[
+    scale=0.7,
+    every node/.style={circle, draw, minimum size=1cm},
+    macro/.style={fill=blue!20, minimum size=1.5cm},
+    other/.style={fill=gray!20},
+    thick
+]
+
+% 压缩后的宏观节点
+\node[macro] (macro) at (1,0) {\textbf{A}};
+
+% 外部节点
+\node[other] (b1) at (-1.5,1.5) {B1};
+\node[other] (b2) at (3.5,1.5) {B2};   % 调整：向右移动
+\node[other] (b3) at (3.5,-1.5) {B3};  % 调整：向右移动
+\node[other] (b4) at (-1.5,-1.5) {B4};
+
+% 外部连接（优化后）
+\draw[blue, thick] (b1) -- (macro);
+\draw[blue, thick] (b2) -- (macro);
+\draw[blue, thick] (b3) -- (macro);
+\draw[blue, thick] (b4) -- (macro);
+
+% 标注宏观节点内部
+\node[text width=2cm, align=center, font=\scriptsize] at (1,0) {A1 \\ A2 \\ A3 \\ A4};
+
+% 标注 - 调整垂直位置（向上移动）
+\node[text width=3cm, align=center, font=\small] at (1,5.0) {压缩后：宏观节点 \\ 外部连接优化，内部结构封装};
+
+\end{tikzpicture}
+\caption{压缩后：宏观结构}
+\end{subfigure}
+\vspace{0.5cm}  % 增加图形下方的垂直间距
+
+\caption{概念压缩过程示意图：当节点集合$C=\{A1,A2,A3,A4\}$满足压缩条件时，系统将这四个紧密连接的节点压缩为一个宏观节点$A$。(a)压缩前：四个节点各自与外部节点有高能耗连接；(b)压缩后：宏观节点$A$整合了四个节点的功能，仅保留优化后的外部连接，显著降低了认知能耗。压缩条件为：$\frac{1}{|C|}\sum_{v_i\in C}\overline{E_{i,\text{external}}} > \theta_c\cdot(E_{C,\text{internal}}+\overline{E_{C,\text{external}}})$。}
+\label{fig:compression_process}
+\end{figure}
+
 % ========== SUBSECTION 6.2: 概念压缩的认知合理性分析 ==========
 \subsection{概念压缩的认知合理性分析}
 
@@ -874,6 +1095,87 @@ E_{az} + E_{zb} < E_{ab} - \Delta_{\text{threshold}}
 
 \textbf{验证思路}：通过计算认知对称群在不同参数下的特征标，可以检测表示的不可约性变化，这对应系统的相变点。在实验中，我们观察到系统在迭代约3000次时会发生明显的相变，从以局部优化为主的阶段过渡到以全局重构为主的阶段，这对应着创造性洞察的集中涌现。
 
+% \begin{figure}[H]
+% \centering
+% \begin{tikzpicture}[
+%     scale=0.9,
+%     axis/.style={thick, ->, >=stealth},
+%     phase/.style={rectangle, draw, rounded corners, minimum width=2.5cm, minimum height=1.5cm, align=center},
+%     phase1/.style={fill=blue!20},
+%     phase2/.style={fill=green!20},
+%     phase3/.style={fill=red!20},
+%     explanation/.style={rectangle, draw, rounded corners, fill=gray!10, text width=3.5cm, align=left},
+%     thick
+% ]
+
+% % 主图区域（左侧）
+% \begin{scope}[shift={(0,0)}]
+% % 坐标轴
+% \draw[axis] (0,0) -- (10,0) node[right] {迭代次数 $t$};
+% \draw[axis] (0,0) -- (0,6) node[above] {认知能耗 $E(t)$};
+
+% % 标记迭代次数
+% \foreach \x/\text in {2/1000, 4/3000, 6/6000, 8/10000} {
+%     \draw (\x,0.1) -- (\x,-0.1) node[below] {\text};
+% }
+% \node[below] at (5,-0.5) {迭代次数};
+
+% % 能量曲线（分段）
+% % 第一阶段：快速下降
+% \draw[blue, thick] (0,5.5) .. controls (1,4.5) and (1.8,3.8) .. (2,3.5);
+% % 第二阶段：平缓下降（相变期）
+% \draw[green, thick] (2,3.5) .. controls (2.5,3.2) and (3.5,2.8) .. (4,2.5);
+% % 第三阶段：缓慢下降至稳定
+% \draw[red, thick] (4,2.5) .. controls (5,2.0) and (7,1.5) .. (8,1.2);
+
+% % 相变点标注
+% \draw[dashed, thick] (2,0) -- (2,3.5);
+% \draw[dashed, thick] (4,0) -- (4,2.5);
+% \node[circle, fill=white, draw=black, inner sep=1pt] at (2,3.5) {};
+% \node[circle, fill=white, draw=black, inner sep=1pt] at (4,2.5) {};
+
+% % 相标注（简化，移到侧边）
+% \node[phase, phase1] at (1,4.5) {探索阶段};
+% \node[phase, phase2] at (3,3.5) {相变期};
+% \node[phase, phase3] at (6,2.5) {整合阶段};
+
+% % 标注关键点
+% \node[above right, font=\small] at (2,3.8) {第一次相变};
+% \node[above right, font=\small] at (4,2.8) {第二次相变};
+% \end{scope}
+
+% % 解释块区域（右侧）
+% \begin{scope}[shift={(11,0)}]
+% % 阶段解释
+% \node[explanation, phase1] at (0,5) {
+%     \textbf{探索阶段 (0-3000次)} \\
+%     • 广泛建立连接 \\
+%     • 高压缩密度: 9.14/概念 \\
+%     • 快速降低能耗
+% };
+
+% \node[explanation, phase2] at (0,3) {
+%     \textbf{相变期 (3000-6000次)} \\
+%     • 策略根本转变 \\
+%     • 压缩减少: 4.68/概念 \\
+%     • 原理迁移开始出现 \\
+%     • 迁移效率: 0.35-0.45
+% };
+
+% \node[explanation, phase3] at (0,1) {
+%     \textbf{整合阶段 (6000-10000次)} \\
+%     • 精准优化连接 \\
+%     • 极低压缩密度: 0.39/概念 \\
+%     • 高质量迁移 \\
+%     • 认知能耗稳定
+% };
+% \end{scope}
+
+% \end{tikzpicture}
+% \caption{认知能量演化与相变过程：随着迭代次数增加，认知能耗呈现三阶段演化模式。左侧主图展示能耗随迭代次数的变化曲线及相变点；右侧解释块详细说明每个阶段的特征。第一阶段（0-3000次迭代）：广泛探索，高压缩密度（9.14次/概念），快速降低能耗；第二阶段（3000-6000次迭代）：相变期，压缩密度显著下降，原理迁移开始出现；第三阶段（6000-10000次迭代）：深度整合，压缩密度极低（0.39次/概念），但迁移效率和质量提升。相变点对应策略的根本性转变，体现了认知系统在不同复杂度下的自适应优化。}
+% \label{fig:phase_transition}
+% \end{figure}
+
 % ========== SECTION 7: 实验设计与结果分析 ==========
 \section{实验设计与结果分析}
 
@@ -918,6 +1220,128 @@ E_{az} + E_{zb} < E_{ab} - \Delta_{\text{threshold}}
 \bottomrule
 \end{tabular}
 \end{table}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.24\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.5]
+    % 51概念网络示意 - 使用固定位置，避免随机
+    \foreach \x/\y in {0/0, 1/1, -1/1, 1/-1, -1/-1, 0.5/1.5, -0.5/1.5, 0.5/-1.5, -0.5/-1.5, 1.5/0.5, -1.5/0.5, 1.5/-0.5, -1.5/-0.5, 0/2, 0/-2} {
+        \node[circle, fill=blue!50, inner sep=1.5pt] at (\x,\y) {};
+    }
+    % 简单连接模式
+    \foreach \i [count=\xi] in {0,1,-1,0.5,-0.5,1.5,-1.5} {
+        \foreach \j [count=\yi] in {0,1,-1,0.5,-0.5,1.5,-1.5} {
+            \pgfmathsetmacro{\dist}{sqrt((\i-\j)^2 + (\i-\j)^2)}
+            \ifdim \dist pt < 1.5pt
+                \draw[blue!30, very thin] (\i,\i) -- (\j,\j);
+            \fi
+        }
+    }
+    \node[text width=2.5cm, align=center, font=\scriptsize] at (0,-3.5) {51概念网络 \\ 结构简单 \\ 连接密集};
+\end{tikzpicture}
+\caption{51概念}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.24\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.5]
+    % 71概念网络示意 - 三个明显社区
+    % 社区1
+    \foreach \x/\y in {-1.5/1.5, -1/1.5, -1.5/1, -1/1, -0.5/1.5, -1.5/0.5, -1/0.5} {
+        \node[circle, fill=green!50, inner sep=1.2pt] at (\x,\y) {};
+    }
+    % 社区2
+    \foreach \x/\y in {1.5/1.5, 1/1.5, 1.5/1, 1/1, 0.5/1.5, 1.5/0.5, 1/0.5} {
+        \node[circle, fill=blue!50, inner sep=1.2pt] at (\x,\y) {};
+    }
+    % 社区3
+    \foreach \x/\y in {-0.5/-1.5, 0/-1.5, 0.5/-1.5, -0.5/-1, 0/-1, 0.5/-1, 0/-0.5} {
+        \node[circle, fill=red!50, inner sep=1.2pt] at (\x,\y) {};
+    }
+    % 社区内连接
+    \draw[green!30, very thin] (-1.5,1.5) -- (-1,1.5) -- (-1.5,1) -- (-1,1) -- cycle;
+    \draw[blue!30, very thin] (1.5,1.5) -- (1,1.5) -- (1.5,1) -- (1,1) -- cycle;
+    \draw[red!30, very thin] (-0.5,-1.5) -- (0,-1.5) -- (0.5,-1.5) -- (-0.5,-1) -- (0,-1) -- (0.5,-1) -- cycle;
+    \node[text width=2.5cm, align=center, font=\scriptsize] at (0,-3.5) {71概念网络 \\ 社区结构显现 \\ 连接选择性增强};
+\end{tikzpicture}
+\caption{71概念}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.24\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.5]
+    % 91概念网络示意 - 四个清晰社区
+    % 社区1
+    \foreach \x/\y in {-2/2, -1.5/2, -2/1.5, -1.5/1.5, -1/2, -2/1, -1.5/1} {
+        \node[circle, fill=green!50, inner sep=1.1pt] at (\x,\y) {};
+    }
+    % 社区2
+    \foreach \x/\y in {2/2, 1.5/2, 2/1.5, 1.5/1.5, 1/2, 2/1, 1.5/1} {
+        \node[circle, fill=blue!50, inner sep=1.1pt] at (\x,\y) {};
+    }
+    % 社区3
+    \foreach \x/\y in {-2/-2, -1.5/-2, -2/-1.5, -1.5/-1.5, -1/-2, -2/-1, -1.5/-1} {
+        \node[circle, fill=red!50, inner sep=1.1pt] at (\x,\y) {};
+    }
+    % 社区4
+    \foreach \x/\y in {2/-2, 1.5/-2, 2/-1.5, 1.5/-1.5, 1/-2, 2/-1, 1.5/-1} {
+        \node[circle, fill=purple!50, inner sep=1.1pt] at (\x,\y) {};
+    }
+    % 社区内连接紧密
+    \draw[green!30, very thin] (-2,2) -- (-1.5,2) -- (-2,1.5) -- (-1.5,1.5) -- cycle;
+    \draw[blue!30, very thin] (2,2) -- (1.5,2) -- (2,1.5) -- (1.5,1.5) -- cycle;
+    \draw[red!30, very thin] (-2,-2) -- (-1.5,-2) -- (-2,-1.5) -- (-1.5,-1.5) -- cycle;
+    \draw[purple!30, very thin] (2,-2) -- (1.5,-2) -- (2,-1.5) -- (1.5,-1.5) -- cycle;
+    \node[text width=2.5cm, align=center, font=\scriptsize] at (0,-3.5) {91概念网络 \\ 社区结构明显 \\ 连接更精准};
+\end{tikzpicture}
+\caption{91概念}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.24\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.5]
+    % 111概念网络示意 - 层级结构
+    % 中心节点
+    \node[circle, fill=yellow, inner sep=2.5pt] (center) at (0,0) {};
+    
+    % 四个社区围绕中心
+    % 社区1
+    \foreach \x/\y in {-1.5/1.5, -1/1.5, -1.5/1, -1/1, -0.5/1.5, -1.5/0.5} {
+        \node[circle, fill=green!50, inner sep=1pt] at (\x,\y) {};
+        \draw[green!20, very thin] (center) -- (\x,\y);
+    }
+    % 社区2
+    \foreach \x/\y in {1.5/1.5, 1/1.5, 1.5/1, 1/1, 0.5/1.5, 1.5/0.5} {
+        \node[circle, fill=blue!50, inner sep=1pt] at (\x,\y) {};
+        \draw[blue!20, very thin] (center) -- (\x,\y);
+    }
+    % 社区3
+    \foreach \x/\y in {-1.5/-1.5, -1/-1.5, -1.5/-1, -1/-1, -0.5/-1.5, -1.5/-0.5} {
+        \node[circle, fill=red!50, inner sep=1pt] at (\x,\y) {};
+        \draw[red!20, very thin] (center) -- (\x,\y);
+    }
+    % 社区4
+    \foreach \x/\y in {1.5/-1.5, 1/-1.5, 1.5/-1, 1/-1, 0.5/-1.5, 1.5/-0.5} {
+        \node[circle, fill=purple!50, inner sep=1pt] at (\x,\y) {};
+        \draw[purple!20, very thin] (center) -- (\x,\y);
+    }
+    
+    % 社区内连接
+    \draw[green!20, very thin] (-1.5,1.5) -- (-1,1.5) -- (-1.5,1) -- (-1,1) -- cycle;
+    \draw[blue!20, very thin] (1.5,1.5) -- (1,1.5) -- (1.5,1) -- (1,1) -- cycle;
+    \draw[red!20, very thin] (-1.5,-1.5) -- (-1,-1.5) -- (-1.5,-1) -- (-1,-1) -- cycle;
+    \draw[purple!20, very thin] (1.5,-1.5) -- (1,-1.5) -- (1.5,-1) -- (1,-1) -- cycle;
+    
+    \node[text width=2.5cm, align=center, font=\scriptsize] at (0,-3.5) {111概念网络 \\ 层级结构 \\ 中心节点连接社区};
+\end{tikzpicture}
+\caption{111概念}
+\end{subfigure}
+
+\caption{四规模认知网络结构示意图：(a)51概念网络：结构简单，连接相对密集，体现初学者广泛建立连接的特征；(b)71概念网络：开始出现社区结构，连接更有选择性；(c)91概念网络：社区结构明显，连接更精准，体现专业领域知识结构；(d)111概念网络：出现层级结构，中心节点（如"模式识别"、"优化"等原理节点）连接各社区，体现专家级的知识整合。网络结构的演化反映了认知系统随规模增长的自适应调整。}
+\label{fig:network_structures_scales}
+\end{figure}
 
 % ========== SUBSECTION 7.2: 能耗优化性能的规模效应分析 ==========
 \subsection{能耗优化性能的规模效应分析}
@@ -1885,6 +2309,36 @@ self.thresholds = {
 \end{enumerate}
 
 通过这些系统性的深化和扩展，我们期望认知图论不仅能够更好地解释人类认知的本质，更能为构建真正智能的人工系统提供坚实的理论基础。
+
+% ========== SUBSECTION 8.6: 与当前AI前沿的对话：从数据驱动到原理驱动 ==========
+\subsection{与当前AI前沿的对话：从数据驱动到原理驱动}
+
+近期学术界对人工智能发展的反思（如中山大学具身智能讨论会，2024）指出：大模型已逼近人类数据边界，真正的智能应像婴儿在感知行动中自我学习。这一观点与本文的认知图论框架形成了深刻共鸣，并指明了从"开普勒范式"（数据拟合）向"牛顿范式"（原理理解）转变的必要性。
+
+\textbf{数据边界的突破}：当前以大型语言模型为代表的人工智能主要依赖于海量数据的统计关联，本质上是对人类已有知识的重新组合。当训练数据逼近互联网总文本量时，这种模式的局限性日益凸显。本文提出的自然涌现模型则**完全不依赖于大规模训练数据**，仅从"认知时空"和"能量动力学"两个基本公设出发，通过能量最小化原理自发产生概念压缩和原理迁移，实现了真正的**生成性学习**而非数据拟合。
+
+\textbf{婴儿式自我学习}：婴儿的认知发展不是通过"阅读百科全书"实现的，而是在与环境交互中通过**能量优化**构建内部模型。我们的模型模拟了这一过程：系统从初始的随机连接开始，通过反复"遍历"（认知操作）来降低认知能耗，最终自发形成高效的知识结构。这与具身智能强调的"感知-行动循环"在原理上一致。
+
+\textbf{低功耗与小样本的实现}：实验结果明确展示了这一优势。在111概念的复杂认知环境中，自然涌现模型仍实现47.9\%的能耗降低，而传统预设算法仅7.6\%。更重要的是，这种优化是**自发的、无监督的**，不需要针对特定任务的标注数据。这为突破当前AI对大数据和算力的依赖提供了新路径。
+
+\textbf{洞察力与无限任务}：实验中的概念压缩（如"操作系统+数据结构+网络+软件工程"的深度整合）和原理迁移（如"模式识别"在不同领域的桥梁作用）体现了系统的**洞察力**——不是表面的关联，而是深层的原理性理解。这种基于原理的认知框架天然支持**无限任务**，因为它建立的是通用的认知能力而非特定的任务技能。
+
+\textbf{从开普勒到牛顿的范式转变}：
+\begin{itemize}
+\item \textbf{开普勒范式（当前AI）}：基于大量观测数据（第谷的星表）拟合经验规律（开普勒三定律）——对应大模型的海量数据训练
+\item \textbf{牛顿范式（认知图论）}：从少数基本原理（力学定律）推导出普适规律——对应我们从两个公设推导认知现象
+\end{itemize}
+
+本文工作正是这一范式转变的具体实践。我们不是追求更大的模型和更多的数据，而是探索**更基本的认知原理**——能量最小化原理如何驱动认知结构的形成与演化。
+
+\textbf{对未来AI发展的启示}：
+\begin{enumerate}
+\item \textbf{原理优先于数据}：未来的AI系统应该像物理学家一样思考，从第一性原理出发构建理解，而非仅仅拟合数据
+\item \textbf{能量感知的智能}：认知图论的核心贡献是为AI引入了"能耗"这一内在优化目标，使智能系统具有自我优化的内在动力
+\item \textbf{自然的涌现而非刻意的设计}：我们展示了复杂认知功能如何从简单原理中自然涌现，这为构建真正自适应的智能系统提供了蓝图
+\end{enumerate}
+
+当前AI面临的挑战——高能耗、大数据依赖、任务特定性、缺乏真正理解——正是认知图论试图解决的。通过建立能量优化驱动的认知计算理论，我们为构建**更低功耗、更小样本需求、更具洞察力、更通用的智能系统**提供了理论基础。
 
 % ========== SECTION 9: 结论 ==========
 \section{结论}

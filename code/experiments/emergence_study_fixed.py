@@ -1,7 +1,5 @@
 # emergence_study_fixed.py
 import numpy as np
-import matplotlib.pyplot as plt
-from typing import Dict, List, Any
 import time
 import pandas as pd
 from datetime import datetime
