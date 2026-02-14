@@ -88,53 +88,66 @@
 ## 📁 项目结构
 
 ```
-├── README.md                          # 项目说明文档（本文档）
+├── README.md                          # 项目说明文档（英文）
 ├── README_zh.md                       # 中文说明文档
 ├── LICENSE                            # 开源许可证
-├── sesfullu01.py                      # 一键运行脚本（推荐入口）
-├── code/                              # 核心代码目录
-│   ├── main.py                        # 主程序入口
-│   ├── config.py                      # 配置文件（本项目）
+├── requirements.txt                   # Python依赖包列表
+├── .gitignore                         # Git忽略文件配置
+├── config.py                          # 配置文件（全局参数）
+├── run_experiments.py                 # 一键运行脚本（原sesfullu01.py）
+├── src/                               # 源代码目录（原code/）
+│   ├── __init__.py
 │   ├── algebra/                       # 代数验证模块
-│   │   ├── cognitive_semigroup.py     # 认知操作半群
-│   │   ├── cognitive_symmetry.py      # 认知对称性检测
-│   │   ├── group_action.py            # 群作用与轨道理论
-│   │   ├── lie_group_cognitive.py     # 李群演化框架
-│   │   └── algebra_experiments.py     # 代数验证实验
+│   │   ├── __init__.py
+│   │   ├── cognitive_semigroup.py
+│   │   ├── cognitive_symmetry.py
+│   │   ├── group_action.py
+│   │   ├── lie_group_cognitive.py
+│   │   └── algebra_experiments.py
 │   ├── core/                          # 核心模块
-│   │   ├── cognitive_graph.py         # 认知图核心类
-│   │   ├── cognitive_states.py        # 认知状态管理
-│   │   └── semantic_network.py        # 语义网络构建
+│   │   ├── __init__.py
+│   │   ├── cognitive_graph.py
+│   │   ├── cognitive_states.py
+│   │   └── semantic_network.py
 │   ├── emergence/                     # 涌现检测模块
-│   │   ├── detector_fixed.py          # 涌现检测器
-│   │   ├── observer.py                # 涌现观察者
-│   │   ├── universe.py                # 认知宇宙模拟
-│   │   └── metrics.py                 # 涌现指标计算
+│   │   ├── __init__.py
+│   │   ├── detector_fixed.py
+│   │   ├── observer.py
+│   │   ├── universe.py
+│   │   └── metrics.py
 │   ├── experiments/                   # 实验模块
-│   │   ├── emergence_study_fixed.py   # 涌现研究
-│   │   ├── population_study.py        # 群体研究
-│   │   └── batch_experiments.py       # 批量实验
+│   │   ├── __init__.py
+│   │   ├── emergence_study_fixed.py
+│   │   ├── population_study.py
+│   │   └── batch_experiments.py
 │   ├── models/                        # 模型定义
-│   │   ├── enhanced_model.py          # 增强模型（预设算法）
-│   │   ├── qlearning_enhanced.py      # Q-learning模型
-│   │   └── random_network.py          # 随机网络基线
-│   ├── utils/                         # 工具函数
-│   │   ├── visualization.py           # 可视化工具
-│   │   ├── analysis.py                # 数据分析
-│   │   └── individual_variation.py    # 个体差异生成
-│   └── results/                       # 实验结果
-│       ├── 51概念自然涌现.xlsx        # 51概念实验结果
-│       ├── 71概念自然涌现.xlsx        # 71概念实验结果
-│       ├── 91概念自然涌现.xlsx        # 91概念实验结果
-│       ├── 111概念自然涌现.xlsx       # 111概念实验结果
-│       └── batch_experiments/         # 批量实验数据
-├── ariticle/                          # 论文相关文件
-│   ├── CognitiveGraph.tex             # LaTeX论文源码
-│   ├── CognitiveGraph.pdf             # 完整论文PDF
-│   ├── references.bib                 # 参考文献
-│   ├── performance_comparison.png     # 性能对比图
-│   └── scale_effect.png               # 规模效应图
-└── .idea/                             # IDE配置文件
+│   │   ├── __init__.py
+│   │   ├── enhanced_model.py
+│   │   ├── qlearning_enhanced.py
+│   │   └── random_network.py
+│   └── utils/                         # 工具函数
+│       ├── __init__.py
+│       ├── visualization.py
+│       ├── analysis.py
+│       └── individual_variation.py
+├── results/                           # 实验结果（从src/移出）
+│   ├── 51_concepts_emergence.xlsx    # 51概念实验结果（重命名，避免中文）
+│   ├── 71_concepts_emergence.xlsx
+│   ├── 91_concepts_emergence.xlsx
+│   ├── 111_concepts_emergence.xlsx
+│   └── batch_experiments/            # 批量实验数据
+│       ├── config_20260116_174158.json
+│       ├── detailed_results_20260116_174158.csv
+│       ├── performance_comparison.png
+│       ├── scale_effect.png
+│       └── summary_20260116_174158.json
+├── paper/                            # 论文相关文件（原ariticle/）
+│   ├── CognitiveGraph.tex
+│   ├── CognitiveGraph.pdf
+│   ├── references.bib
+│   ├── performance_comparison.png
+│   └── scale_effect.png
+└── .idea/                            # IDE配置文件（建议忽略，不提交）
 ```
 
 ### 关于语义相似度计算的说明

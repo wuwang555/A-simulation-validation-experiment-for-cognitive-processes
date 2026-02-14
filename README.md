@@ -86,22 +86,66 @@ This convergence suggests that I may have identified fundamental principles of i
 ## 📁 Project Structure
 
 ```
-├── README.md                          # Project documentation (this file)
+├── README.md                          # Project documentation (English)
 ├── README_zh.md                       # Chinese documentation
 ├── LICENSE                            # Open source license
-├── sesfullu01.py                      # One-click run script (recommended entry)
-├── code/                              # Core code directory
-│   ├── main.py                        # Main program entry
-│   ├── config.py                      # Configuration file (this project)
+├── requirements.txt                   # Python dependencies list
+├── .gitignore                         # Git ignore file configuration
+├── config.py                          # Configuration file (global parameters)
+├── run_experiments.py                 # One-click run script (formerly sesfullu01.py)
+├── src/                               # Source code directory (formerly code/)
+│   ├── __init__.py
 │   ├── algebra/                       # Algebraic verification module
+│   │   ├── __init__.py
+│   │   ├── cognitive_semigroup.py
+│   │   ├── cognitive_symmetry.py
+│   │   ├── group_action.py
+│   │   ├── lie_group_cognitive.py
+│   │   └── algebra_experiments.py
 │   ├── core/                          # Core modules
+│   │   ├── __init__.py
+│   │   ├── cognitive_graph.py
+│   │   ├── cognitive_states.py
+│   │   └── semantic_network.py
 │   ├── emergence/                     # Emergence detection module
-│   ├── experiments/                   # Experimental modules
+│   │   ├── __init__.py
+│   │   ├── detector_fixed.py
+│   │   ├── observer.py
+│   │   ├── universe.py
+│   │   └── metrics.py
+│   ├── experiments/                   # Experiment modules
+│   │   ├── __init__.py
+│   │   ├── emergence_study_fixed.py
+│   │   ├── population_study.py
+│   │   └── batch_experiments.py
 │   ├── models/                        # Model definitions
-│   ├── utils/                         # Utility functions
-│   └── results/                       # Experimental results
-├── article/                           # Paper-related files
-└── .idea/                             # IDE configuration files
+│   │   ├── __init__.py
+│   │   ├── enhanced_model.py
+│   │   ├── qlearning_enhanced.py
+│   │   └── random_network.py
+│   └── utils/                         # Utility functions
+│       ├── __init__.py
+│       ├── visualization.py
+│       ├── analysis.py
+│       └── individual_variation.py
+├── results/                           # Experimental results (moved out of src/)
+│   ├── 51_concepts_emergence.xlsx    # 51 concepts experimental results (renamed to avoid Chinese)
+│   ├── 71_concepts_emergence.xlsx
+│   ├── 91_concepts_emergence.xlsx
+│   ├── 111_concepts_emergence.xlsx
+│   └── batch_experiments/            # Batch experiment data
+│       ├── config_20260116_174158.json
+│       ├── detailed_results_20260116_174158.csv
+│       ├── performance_comparison.png
+│       ├── scale_effect.png
+│       └── summary_20260116_174158.json
+├── paper/                            # Paper related files (formerly ariticle/)
+│   ├── CognitiveGraph.tex
+│   ├── CognitiveGraph.pdf
+│   ├── references.bib
+│   ├── performance_comparison.png
+│   └── scale_effect.png
+└── .idea/                            # IDE configuration files (recommended to ignore, do not commit)```
 ```
 
 ### About Semantic Similarity Calculation
