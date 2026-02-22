@@ -100,7 +100,6 @@ def run_emergence_study():
 
     try:
         # 尝试导入涌现研究模块
-        # 注意：这里需要根据实际的文件结构调整导入路径
         sys.path.append('experiments')
         from experiments.emergence_study_fixed import EmergenceStudyFixed
 
@@ -115,18 +114,30 @@ def run_emergence_study():
 
         for scale in scales:
             print(f"\n处理 {scale} 概念规模...")
-            results = study.run_pure_emergence_experiment(
-                num_individuals=3,
-                max_iterations=5000,
-                num_concepts=scale
-            )
-            all_results[scale] = results
+            try:
+                results = study.run_pure_emergence_experiment(
+                    num_individuals=3,
+                    max_iterations=5000,
+                    num_concepts=scale
+                )
+                all_results[scale] = results
 
-            # 保存结果
-            output_file = f'results/emergence/emergence_{scale}_concepts.json'
-            with open(output_file, 'w', encoding='utf-8') as f:
-                json.dump(results, f, ensure_ascii=False, indent=2)
-            print(f"✅ 结果已保存到: {output_file}")
+                # 保存结果前，移除不可序列化的 'universe' 字段
+                serializable_results = []
+                for individual in results:
+                    # 创建可序列化的副本，排除 'universe'
+                    serializable_individual = {k: v for k, v in individual.items() if k != 'universe'}
+                    serializable_results.append(serializable_individual)
+
+                output_file = f'results/emergence/emergence_{scale}_concepts.json'
+                with open(output_file, 'w', encoding='utf-8') as f:
+                    json.dump(serializable_results, f, ensure_ascii=False, indent=2)
+                print(f"✅ 结果已保存到: {output_file}")
+            except Exception as e:
+                print(f"❌ 处理规模 {scale} 时出错: {e}")
+                import traceback
+                traceback.print_exc()
+                # 继续下一个规模，不中断整体流程
 
         # 可视化涌现结果
         study.visualize_emergence_results()
@@ -138,9 +149,10 @@ def run_emergence_study():
 
     except Exception as e:
         print(f"❌ 运行涌现研究时出错: {e}")
-        print("⚠️  这可能是因为相关模块未找到，跳过此项实验")
+        print("⚠️  跳过此项实验")
+        import traceback
+        traceback.print_exc()
         return True  # 返回True表示不中断整体流程
-
 
 def run_algebra_experiments():
     """运行代数验证实验"""

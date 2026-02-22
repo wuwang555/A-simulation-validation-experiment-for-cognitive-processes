@@ -9,27 +9,26 @@ from emergence.detector_fixed import EmergenceDetectorFixed
 from utils.individual_variation import IndividualVariation, create_enhanced_individual_params
 from config import *
 import os
-
+import csv
+import networkx as nx
 class EmergenceStudyFixed:
     """修复后的涌现现象研究实验"""
 
     def __init__(self):
         self.results = {}
         self.comparison_data = {}
-        self.excel_data = {
-            'compressions': [],
-            'migrations': []
-        }
+        self.excel_data = {'compressions': [], 'migrations': []}
+        from datetime import datetime
+        self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")   # 统一时间戳
 
     def save_to_excel(self, filename=None):
         """保存涌现数据到Excel"""
         if filename is None:
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             # 修改：确保目录存在
             emergence_dir = "results/emergence"
             os.makedirs(emergence_dir, exist_ok=True)
 
-            filename = f"emergence_results_{timestamp}.xlsx"
+            filename = os.path.join(emergence_dir, f"emergence_results_{self.timestamp}.xlsx")
 
         # 创建DataFrame
         df_compressions = pd.DataFrame(self.excel_data['compressions'])
@@ -84,6 +83,21 @@ class EmergenceStudyFixed:
                 detection_interval=100
             )
             end_time = time.time()
+
+            # 保存能量历史
+            energy_history = universe_enhanced.energy_history
+            energy_file = os.path.join("results/emergence", f"energy_history_{individual_id}_{self.timestamp}.csv")
+            with open(energy_file, 'w', newline='', encoding='utf-8') as f:
+                writer = csv.writer(f)
+                writer.writerow(['iteration', 'energy'])
+                for idx, e in enumerate(energy_history):
+                    writer.writerow([idx, e])
+            print(f"能量历史已保存: {energy_file}")
+
+            # 可选：保存最终网络结构（GraphML）
+            graphml_file = os.path.join("results/emergence", f"network_{individual_id}_{self.timestamp}.graphml")
+            nx.write_graphml(universe_enhanced.G, graphml_file)
+            print(f"网络结构已保存: {graphml_file}")
 
             # 记录到Excel数据结构
             self._record_excel_data(individual_id, observations, universe_enhanced)
@@ -281,6 +295,11 @@ class EmergenceStudyFixed:
             ax4.legend()
 
         plt.tight_layout()
+
+        fig_dir = "results/emergence/figures"
+        os.makedirs(fig_dir, exist_ok=True)
+        plt.savefig(os.path.join(fig_dir, f"emergence_visualization_{self.timestamp}.png"),
+                    dpi=300, bbox_inches='tight')
         plt.show()
 
 
@@ -292,7 +311,7 @@ def main_fixed():
     # 运行纯粹涌现实验
     emergence_results = study.run_pure_emergence_experiment(
         num_individuals=2,
-        max_iterations=3000  # 减少迭代次数以便快速测试
+        max_iterations=8000  # 减少迭代次数以便快速测试
     )
 
     # 可视化结果
