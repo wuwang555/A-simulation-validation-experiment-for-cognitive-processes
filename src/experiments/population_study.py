@@ -1,3 +1,8 @@
+"""
+群体认知实验脚本
+用于运行语义增强的群体实验，模拟多个个体的认知演化。
+"""
+
 import os
 import csv
 from utils.individual_variation import IndividualVariation, create_enhanced_individual_params
@@ -8,7 +13,18 @@ from utils.visualization import *
 
 
 def run_semantic_enhanced_experiment(num_individuals=3, max_iterations=10000, num_concepts=None):
-    """运行语义增强的群体实验 - 新增num_concepts参数"""
+    """运行语义增强的群体实验。
+
+    为多个个体生成随机参数，分别运行认知演化，并保存能量历史和分析结果。
+
+    Args:
+        num_individuals (int): 个体数量。
+        max_iterations (int): 最大迭代次数。
+        num_concepts (int, optional): 概念节点数量。
+
+    Returns:
+        list: 每个个体的结果字典列表。
+    """
     from datetime import datetime
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     population_results = []
@@ -98,7 +114,14 @@ def run_semantic_enhanced_experiment(num_individuals=3, max_iterations=10000, nu
 
 
 def test_enhanced_features(num_concepts=None):
-    """测试增强功能 - 新增num_concepts参数"""
+    """测试增强功能，如相似度计算、蒙特卡洛迭代和智能压缩。
+
+    Args:
+        num_concepts (int, optional): 概念节点数量。
+
+    Returns:
+        EnergyOptimizedCognitiveGraph: 演化后的认知图对象。
+    """
     print("=== 测试增强的认知图模型 ===")
     if num_concepts:
         print(f"概念数量: {num_concepts}")
@@ -160,7 +183,11 @@ def test_enhanced_features(num_concepts=None):
 
 
 def demo_semantic_network(num_concepts=None):
-    """演示语义网络功能 - 新增num_concepts参数"""
+    """演示语义网络功能，包括跨领域路径查找。
+
+    Args:
+        num_concepts (int, optional): 概念节点数量。
+    """
     from core.semantic_network import SemanticConceptNetwork
     from utils.visualization import visualize_semantic_network
 
@@ -198,3 +225,10 @@ def demo_semantic_network(num_concepts=None):
 
     # 可视化语义网络
     semantic_net.visualize_semantic_network()
+
+
+if __name__ == "__main__":
+    # 简单测试：运行一个较小规模的群体实验
+    print("运行群体实验测试（2个个体，500次迭代）")
+    results = run_semantic_enhanced_experiment(num_individuals=2, max_iterations=5000, num_concepts=51)
+    print("测试完成。")

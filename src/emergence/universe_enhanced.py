@@ -1,30 +1,41 @@
-# universe_enhanced.py
-from typing import Dict, Any
-from emergence.universe import CognitiveUniverse
+"""
+增强认知宇宙模块
+-----------------
+继承 CognitiveUniverse，增加 EmergenceDetectorFixed 进行实时涌现检测，
+并支持指定概念数量构建网络。
+"""
+
+from typing import Dict, Any, Optional
 import random
+
+from emergence.universe import CognitiveUniverse
 from emergence.detector_fixed import EmergenceDetectorFixed
 
-class CognitiveUniverseEnhanced(CognitiveUniverse):
-    """增强的认知宇宙，改进涌现观察"""
 
-    def __init__(self, individual_params: Dict[str, Any] = None, network_seed: int = 42, num_concepts: int = None):
-        # 直接调用父类构造函数，传递正确的参数
+class CognitiveUniverseEnhanced(CognitiveUniverse):
+    """增强的认知宇宙，在演化过程中使用 EmergenceDetectorFixed 检测涌现现象。"""
+
+    def __init__(self, individual_params: Optional[Dict[str, Any]] = None,
+                 network_seed: int = 42, num_concepts: Optional[int] = None):
+        """
+        :param individual_params: 个体参数
+        :param network_seed: 随机种子
+        :param num_concepts: 构建语义网络时使用的概念数量
+        """
         super().__init__(individual_params, network_seed)
         self.emergence_detector = EmergenceDetectorFixed()
-        # 使用与emergence_study_fixed.py中一致的键名
         self.observations = {
-            'natural_compressions': [],  # 改为与调用代码一致
-            'natural_migrations': [],    # 改为与调用代码一致
+            'natural_compressions': [],
+            'natural_migrations': [],
             'energy_convergence_phases': []
         }
-        self.num_concepts = num_concepts  # 保存概念数设置
+        self.num_concepts = num_concepts
 
-    def initialize_semantic_network(self):
-        """初始化语义网络 - 重写以支持num_concepts参数"""
+    def initialize_semantic_network(self) -> None:
+        """初始化语义网络，支持指定概念数量。"""
         from core.semantic_network import SemanticConceptNetwork
 
         semantic_net = SemanticConceptNetwork()
-        # 构建语义网络，传入num_concepts参数
         semantic_net.build_comprehensive_network(num_concepts=self.num_concepts)
 
         nodes = list(semantic_net.concept_definitions.keys())
@@ -36,7 +47,6 @@ class CognitiveUniverseEnhanced(CognitiveUniverse):
                 similarity = semantic_net.calculate_semantic_similarity(node1, node2)
 
                 if similarity > 0.1:
-                    # 基于相似度设置初始能量（相似度越高，能量越低）
                     energy = 2.0 - similarity * 1.5
                     energy = max(0.3, min(2.0, energy))
 
@@ -46,7 +56,6 @@ class CognitiveUniverseEnhanced(CognitiveUniverse):
                         'original_weight': energy,
                         'similarity': similarity
                     }))
-                    # 初始化激活时间为0
                     self.last_activation_time[(node1, node2)] = 0
 
         for u, v, attr in initial_edges:
@@ -56,8 +65,13 @@ class CognitiveUniverseEnhanced(CognitiveUniverse):
         print(f"初始全局能量: {self.calculate_network_energy():.3f}")
 
     def evolve_with_emergence_detection(self, iterations: int = 1000,
-                                        detection_interval: int = 200):  # 增加检测间隔
-        """带涌现检测的演化过程"""
+                                        detection_interval: int = 200) -> Dict[str, list]:
+        """带涌现检测的演化过程。
+
+        :param iterations: 迭代次数
+        :param detection_interval: 检测涌现的时间间隔
+        :return: 观察到的涌现事件字典
+        """
         print(f"开始增强演化: {iterations}次迭代，检测间隔: {detection_interval}")
 
         initial_energy = self.calculate_network_energy()
@@ -66,7 +80,6 @@ class CognitiveUniverseEnhanced(CognitiveUniverse):
         for i in range(iterations):
             self.iteration_count += 1
 
-            # 基本操作
             self.basic_energy_optimization()
 
             if random.random() < 0.3:
@@ -75,12 +88,10 @@ class CognitiveUniverseEnhanced(CognitiveUniverse):
             if i % 10 == 0:
                 self.apply_basic_forgetting()
 
-            # 记录能量
             current_energy = self.calculate_network_energy()
             self.energy_history.append(current_energy)
 
-            # 定期检测涌现 - 减少检测频率
-            if i % detection_interval == 0 and i > 200:  # 增加初始不检测的迭代数
+            if i % detection_interval == 0 and i > 200:
                 self._detect_emergence(i)
 
             if i % 500 == 0:
@@ -91,8 +102,8 @@ class CognitiveUniverseEnhanced(CognitiveUniverse):
 
         return self.observations
 
-    def _detect_emergence(self, iteration: int):
-        """检测涌现现象"""
+    def _detect_emergence(self, iteration: int) -> None:
+        """执行涌现检测并记录新事件。"""
         # 检测概念压缩
         compressions = self.emergence_detector.detect_spontaneous_compression(
             self.G, self.energy_history, self.traversal_history
@@ -120,40 +131,47 @@ class CognitiveUniverseEnhanced(CognitiveUniverse):
                 print(f"   路径: {migration['from_node']} -> {migration['to_node']}")
                 print(f"   效率: {migration['efficiency_gain']:.3f}")
 
-    def _is_duplicate_compression(self, new_compression):
-        """检查重复压缩"""
+    def _is_duplicate_compression(self, new_compression: Dict) -> bool:
+        """检查是否已经记录过相同的压缩事件。"""
         for existing in self.observations['natural_compressions']:
             if (existing['center'] == new_compression['center'] and
                     set(existing['related_nodes']) == set(new_compression['related_nodes'])):
                 return True
         return False
 
-    def _is_duplicate_migration(self, new_migration):
-        """增强的重复迁移检查"""
+    def _is_duplicate_migration(self, new_migration: Dict) -> bool:
+        """增强的重复迁移检查，包括反向路径和近期频率。"""
         principle_node = new_migration['principle_node']
         from_node = new_migration['from_node']
         to_node = new_migration['to_node']
 
-        # 1. 完全相同的迁移
+        # 完全相同的迁移
         for existing in self.observations['natural_migrations']:
             if (existing['principle_node'] == principle_node and
                     existing['from_node'] == from_node and
                     existing['to_node'] == to_node):
                 return True
 
-        # 2. 同一原理节点的类似连接（方向相反）
+        # 方向相反的迁移
         for existing in self.observations['natural_migrations']:
             if (existing['principle_node'] == principle_node and
                     existing['from_node'] == to_node and
                     existing['to_node'] == from_node):
                 return True
 
-        # 3. 检查近期是否出现过相同原理节点的迁移
+        # 同一原理节点近期出现过于频繁
         recent_count = 0
-        for existing in self.observations['natural_migrations'][-10:]:  # 最近10个
+        for existing in self.observations['natural_migrations'][-10:]:
             if existing['principle_node'] == principle_node:
                 recent_count += 1
-                if recent_count >= 3:  # 同一原理节点在近期出现太频繁
+                if recent_count >= 3:
                     return True
 
         return False
+
+
+if __name__ == "__main__":
+    enhanced = CognitiveUniverseEnhanced(num_concepts=51)
+    enhanced.initialize_semantic_network()
+    enhanced.evolve_with_emergence_detection(iterations=5000)
+    print("CognitiveUniverseEnhanced 测试完成")

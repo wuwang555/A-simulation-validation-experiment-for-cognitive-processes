@@ -1,4 +1,9 @@
 # emergence_study_fixed.py
+"""
+涌现现象研究实验（修复版本）
+用于观察从两个公设（认知时空和能量动力学）中自然涌现的概念压缩和原理迁移。
+"""
+
 import numpy as np
 import time
 import pandas as pd
@@ -11,10 +16,17 @@ from config import *
 import os
 import csv
 import networkx as nx
+
+
 class EmergenceStudyFixed:
-    """修复后的涌现现象研究实验"""
+    """修复后的涌现现象研究实验类。
+
+    该类负责运行纯粹的涌现实验，记录概念压缩和原理迁移事件，
+    并保存结果到Excel文件。
+    """
 
     def __init__(self):
+        """初始化研究实例，创建结果容器和统一时间戳。"""
         self.results = {}
         self.comparison_data = {}
         self.excel_data = {'compressions': [], 'migrations': []}
@@ -22,7 +34,14 @@ class EmergenceStudyFixed:
         self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")   # 统一时间戳
 
     def save_to_excel(self, filename=None):
-        """保存涌现数据到Excel"""
+        """保存涌现数据到Excel文件。
+
+        Args:
+            filename (str, optional): 保存的文件名。如果为None，自动生成。
+
+        Returns:
+            str: 保存的文件路径。
+        """
         if filename is None:
             # 修改：确保目录存在
             emergence_dir = "results/emergence"
@@ -46,7 +65,18 @@ class EmergenceStudyFixed:
         return filename
 
     def run_pure_emergence_experiment(self, num_individuals=3, max_iterations=None, num_concepts=None):
-        """运行纯粹的涌现观察实验 - 修复版本，新增num_concepts参数"""
+        """运行纯粹的涌现观察实验。
+
+        基于两个公设（认知时空和能量动力学）运行宇宙演化，观察自然涌现的概念压缩和原理迁移。
+
+        Args:
+            num_individuals (int): 个体数量。
+            max_iterations (int, optional): 每个个体的最大迭代次数。
+            num_concepts (int, optional): 概念节点数量。如果为None，使用默认值。
+
+        Returns:
+            list: 每个个体的结果字典列表。
+        """
         if max_iterations is None:
             max_iterations = EXPERIMENT_CONFIG['default_iterations']
 
@@ -130,7 +160,13 @@ class EmergenceStudyFixed:
         return emergence_results
 
     def _record_excel_data(self, individual_id, observations, universe):
-        """记录Excel数据"""
+        """记录压缩和迁移数据到excel_data容器。
+
+        Args:
+            individual_id (str): 个体标识。
+            observations (dict): 观察到的涌现现象字典。
+            universe (CognitiveUniverseEnhanced): 宇宙对象。
+        """
         # 记录概念压缩
         for compression in observations['natural_compressions']:
             self.excel_data['compressions'].append({
@@ -162,7 +198,13 @@ class EmergenceStudyFixed:
             })
 
     def _initialize_universe_network(self, universe):
-        """初始化宇宙网络 - 简化版本"""
+        """初始化宇宙网络。
+
+        尝试使用语义网络初始化，失败时回退到测试网络。
+
+        Args:
+            universe (CognitiveUniverseEnhanced): 宇宙对象。
+        """
         try:
             # 使用增强的语义网络初始化，支持num_concepts参数
             universe.initialize_semantic_network()
@@ -171,7 +213,11 @@ class EmergenceStudyFixed:
             self._create_test_network(universe)
 
     def _create_test_network(self, universe):
-        """创建测试网络"""
+        """创建测试网络用于快速调试。
+
+        Args:
+            universe (CognitiveUniverseEnhanced): 宇宙对象。
+        """
         test_nodes = ["算法", "数据结构", "优化", "递归", "迭代", "抽象", "模式识别",
                       "能量", "学习", "记忆", "思考", "创造", "理解", "应用"]
         universe.G.add_nodes_from(test_nodes)
@@ -198,7 +244,14 @@ class EmergenceStudyFixed:
         print(f"测试网络: {len(test_nodes)}个节点, {universe.G.number_of_edges()}条边")
 
     def _calculate_energy_improvement(self, energy_history):
-        """计算能耗改善百分比"""
+        """计算能耗改善百分比。
+
+        Args:
+            energy_history (list): 能耗历史列表。
+
+        Returns:
+            float: 改善百分比。
+        """
         if len(energy_history) < 2:
             return 0.0
         initial = energy_history[0]
@@ -207,9 +260,12 @@ class EmergenceStudyFixed:
             return 0.0
         return ((initial - final) / initial) * 100
 
-    # 其他方法保持不变...
     def _analyze_emergence_results(self, results):
-        """分析涌现实验结果"""
+        """分析涌现实验结果，打印统计信息。
+
+        Args:
+            results (list): 个体结果列表。
+        """
         print("\n" + "=" * 50)
         print("自然涌现实验结果分析")
         print("=" * 50)
@@ -233,7 +289,10 @@ class EmergenceStudyFixed:
         print(f"  总次数: {sum(migrations)}次")
 
     def visualize_emergence_results(self):
-        """可视化涌现实验结果"""
+        """可视化涌现实验结果，生成能耗改善、涌现数量等图表。"""
+        import matplotlib.pyplot as plt
+        import numpy as np
+
         if 'pure_emergence' not in self.results:
             print("请先运行实验!")
             return
@@ -303,9 +362,8 @@ class EmergenceStudyFixed:
         plt.show()
 
 
-
 def main_fixed():
-    """修复版本的主函数"""
+    """修复版本的主函数，运行涌现实验并可视化。"""
     study = EmergenceStudyFixed()
 
     # 运行纯粹涌现实验

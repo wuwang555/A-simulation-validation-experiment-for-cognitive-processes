@@ -1,7 +1,12 @@
-# 🧠 认知图论：基于能量最小化的认知计算模型 - 一键运行脚本
-# 作者：曾铭佳
-# 版本：2.0
-# 说明：本脚本一键运行认知图论的所有核心实验，包括四规模对比实验、涌现研究、代数验证实验
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+认知图论一键运行脚本。
+
+本脚本自动运行四规模对比实验、涌现研究、代数验证实验和语义网络演示，
+并生成实验总结报告。
+"""
 
 import sys
 import os
@@ -23,7 +28,14 @@ print("=" * 80)
 
 
 def check_dependencies():
-    """检查依赖库"""
+    """
+    检查必要的依赖库是否已安装。
+
+    Returns
+    -------
+    bool
+        所有依赖库都存在返回True，否则返回False。
+    """
     required_libs = ['numpy', 'pandas', 'matplotlib', 'networkx', 'scipy', 'jieba']
     missing_libs = []
 
@@ -43,7 +55,14 @@ def check_dependencies():
 
 
 def create_output_directories():
-    """创建输出目录"""
+    """
+    创建实验输出所需的目录。
+
+    Returns
+    -------
+    bool
+        目录创建成功返回True。
+    """
     directories = [
         'results/',
         'results/batch_experiments/',
@@ -61,7 +80,14 @@ def create_output_directories():
 
 
 def run_batch_experiments():
-    """运行四规模对比实验"""
+    """
+    运行四规模对比实验 (51/71/91/111概念)。
+
+    Returns
+    -------
+    bool
+        实验成功完成返回True，否则返回False。
+    """
     print("\n" + "=" * 80)
     print("1️⃣ 运行四规模对比实验 (51/71/91/111概念)")
     print("=" * 80)
@@ -71,13 +97,10 @@ def run_batch_experiments():
 
         runner = BatchExperimentRunner(output_dir='results/batch_experiments')
 
-        # 运行完整批处理实验
         print("开始运行四规模对比实验...")
         start_time = time.time()
 
         runner.run_full_batch()
-
-        # 生成对比图表
         runner.create_comparison_charts()
 
         elapsed_time = time.time() - start_time
@@ -93,22 +116,25 @@ def run_batch_experiments():
 
 
 def run_emergence_study():
-    """运行涌现研究"""
+    """
+    运行涌现研究，观察概念压缩和原理迁移的自然出现。
+
+    Returns
+    -------
+    bool
+        实验成功完成返回True，否则返回False。
+    """
     print("\n" + "=" * 80)
     print("2️⃣ 运行涌现研究")
     print("=" * 80)
 
     try:
-        # 尝试导入涌现研究模块
-        sys.path.append('experiments')
         from experiments.emergence_study_fixed import EmergenceStudyFixed
 
         print("开始运行涌现研究...")
         start_time = time.time()
 
         study = EmergenceStudyFixed()
-
-        # 运行所有规模的自然涌现实验
         scales = [51, 71, 91, 111]
         all_results = {}
 
@@ -122,10 +148,9 @@ def run_emergence_study():
                 )
                 all_results[scale] = results
 
-                # 保存结果前，移除不可序列化的 'universe' 字段
+                # 移除不可序列化的 'universe' 字段
                 serializable_results = []
                 for individual in results:
-                    # 创建可序列化的副本，排除 'universe'
                     serializable_individual = {k: v for k, v in individual.items() if k != 'universe'}
                     serializable_results.append(serializable_individual)
 
@@ -137,9 +162,7 @@ def run_emergence_study():
                 print(f"❌ 处理规模 {scale} 时出错: {e}")
                 import traceback
                 traceback.print_exc()
-                # 继续下一个规模，不中断整体流程
 
-        # 可视化涌现结果
         study.visualize_emergence_results()
 
         elapsed_time = time.time() - start_time
@@ -149,13 +172,20 @@ def run_emergence_study():
 
     except Exception as e:
         print(f"❌ 运行涌现研究时出错: {e}")
-        print("⚠️  跳过此项实验")
         import traceback
         traceback.print_exc()
-        return True  # 返回True表示不中断整体流程
+        return True  # 不中断整体流程
+
 
 def run_algebra_experiments():
-    """运行代数验证实验"""
+    """
+    运行代数验证实验，验证认知操作半群、Noether型命题等。
+
+    Returns
+    -------
+    bool
+        实验成功完成返回True，否则返回False。
+    """
     print("\n" + "=" * 80)
     print("3️⃣ 运行代数验证实验")
     print("=" * 80)
@@ -182,25 +212,29 @@ def run_algebra_experiments():
 
 
 def run_semantic_network_demo():
-    """运行语义网络演示"""
+    """
+    运行语义网络演示，展示概念间的语义关联。
+
+    Returns
+    -------
+    bool
+        演示成功完成返回True，否则返回False。
+    """
     print("\n" + "=" * 80)
     print("4️⃣ 运行语义网络演示")
     print("=" * 80)
 
     try:
-        # 检查是否有独立的语义网络演示模块
         try:
             from main import demo_semantic_network
             demo_semantic_network()
             return True
-        except:
-            # 如果找不到独立模块，使用内建的语义网络演示
+        except ImportError:
             from core.semantic_network import SemanticConceptNetwork
 
             print("构建语义概念网络...")
             semantic_net = SemanticConceptNetwork()
 
-            # 添加核心概念
             core_definitions = {
                 "牛顿定律": "物体运动的基本定律，描述了力与运动的关系",
                 "微积分": "研究变化和累积的数学分支，包括微分和积分",
@@ -211,10 +245,8 @@ def run_semantic_network_demo():
             for concept, definition in core_definitions.items():
                 semantic_net.add_concept_definition(concept, definition, "predefined")
 
-            # 构建网络
             semantic_net.build_comprehensive_network()
 
-            # 寻找跨领域路径
             print("\n寻找跨领域路径示例:")
             paths = semantic_net.find_cross_domain_paths("牛顿定律", "算法", max_path_length=3)
             if paths:
@@ -223,7 +255,6 @@ def run_semantic_network_demo():
                 print(f"  路径: {' -> '.join(best_path)}")
                 print(f"  相似度: {similarity:.3f}")
 
-            # 可视化网络
             print("\n生成语义网络可视化...")
             semantic_net.visualize_semantic_network()
 
@@ -231,12 +262,18 @@ def run_semantic_network_demo():
 
     except Exception as e:
         print(f"❌ 运行语义网络演示时出错: {e}")
-        print("⚠️  跳过此项演示")
         return True
 
 
 def generate_summary_report():
-    """生成实验总结报告"""
+    """
+    生成实验总结报告，保存为Markdown文件。
+
+    Returns
+    -------
+    str
+        报告文件的路径。
+    """
     print("\n" + "=" * 80)
     print("📊 生成实验总结报告")
     print("=" * 80)
@@ -244,7 +281,7 @@ def generate_summary_report():
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     report_file = f'results/experiment_summary_{timestamp}.md'
 
-    summary = """
+    summary = f"""
 # 🧠 认知图论实验总结报告
 
 ## 📅 实验信息
@@ -281,7 +318,7 @@ def generate_summary_report():
 
 *认知无界，学习无止*
 *探索认知的边界，理解学习的本质*
-""".format(timestamp=timestamp)
+"""
 
     with open(report_file, 'w', encoding='utf-8') as f:
         f.write(summary)
@@ -289,21 +326,20 @@ def generate_summary_report():
     print(f"✅ 实验总结报告已生成: {report_file}")
     print("\n报告内容预览:")
     print("-" * 50)
-    print(summary[:500] + "...")  # 只显示前500字符作为预览
+    print(summary[:500] + "...")
     print("-" * 50)
 
     return report_file
 
 
 def main():
-    """主函数：一键运行所有实验"""
-
-    # 检查依赖
+    """
+    主函数：顺序运行所有实验并生成总结报告。
+    """
     if not check_dependencies():
         print("❌ 依赖库检查失败，请先安装所需依赖")
         return
 
-    # 创建输出目录
     if not create_output_directories():
         print("❌ 目录创建失败")
         return
@@ -312,10 +348,8 @@ def main():
     print("🚀 开始一键运行所有实验")
     print("=" * 80)
 
-    # 记录开始时间
     overall_start_time = time.time()
 
-    # 实验执行状态
     experiment_status = {
         'batch_experiments': False,
         'emergence_study': False,
@@ -324,25 +358,14 @@ def main():
     }
 
     try:
-        # 1. 运行四规模对比实验
         experiment_status['batch_experiments'] = run_batch_experiments()
-
-        # 2. 运行涌现研究
         experiment_status['emergence_study'] = run_emergence_study()
-
-        # 3. 运行代数验证实验
         experiment_status['algebra_experiments'] = run_algebra_experiments()
-
-        # 4. 运行语义网络演示
         experiment_status['semantic_demo'] = run_semantic_network_demo()
 
-        # 计算总耗时
         overall_elapsed_time = time.time() - overall_start_time
-
-        # 生成总结报告
         report_file = generate_summary_report()
 
-        # 显示最终状态
         print("\n" + "=" * 80)
         print("🎉 所有实验运行完成！")
         print("=" * 80)
@@ -355,14 +378,10 @@ def main():
         print(f"\n⏱️  总运行时间: {overall_elapsed_time:.1f}秒")
         print(f"📋 实验总结报告: {report_file}")
 
-        # 成功完成的实验数
         successful_experiments = sum(experiment_status.values())
         total_experiments = len(experiment_status)
+        print(f"\n📊 成功率: {successful_experiments}/{total_experiments} ({successful_experiments / total_experiments * 100:.1f}%)")
 
-        print(
-            f"\n📊 成功率: {successful_experiments}/{total_experiments} ({successful_experiments / total_experiments * 100:.1f}%)")
-
-        # 根据成功情况给出建议
         if successful_experiments == total_experiments:
             print("\n🌟 所有实验均成功完成！")
             print("建议：")
@@ -395,11 +414,9 @@ def main():
 if __name__ == "__main__":
     # 设置中文字体显示
     import matplotlib
-
     matplotlib.rcParams['font.sans-serif'] = ['SimHei', 'DejaVu Sans']
     matplotlib.rcParams['axes.unicode_minus'] = False
 
-    # 运行主函数
     main()
 
     print("\n" + "=" * 80)

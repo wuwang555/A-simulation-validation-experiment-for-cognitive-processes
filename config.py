@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+
+"""
+认知图论配置文件。
+
+包含所有可调整的实验参数、概念定义、状态转移矩阵、能耗参数等。
+"""
+
 import jieba
 import matplotlib.pyplot as plt
 
@@ -29,8 +37,6 @@ MODEL_TYPES = {
         ]
     }
 }
-
-
 
 # ========== 基础认知参数 ==========
 BASE_PARAMETERS = {
@@ -237,71 +243,72 @@ META_STRUCTURE_MAP = {
     "交互": ["通信", "合作", "竞争", "博弈", "交流", "人机交互", "博弈论", "社会认知"],
     "社会": ["制度", "文化", "组织", "群体", "行为", "行为经济学", "制度经济学", "宏观经济学"]
 }
+
 # ========== 认知状态配置 - 基于实证优化 ==========
 STATE_TRANSITION_MATRIX = {
     "FOCUSED": {
-        "EXPLORATORY": 0.35,  # 略微提高探索概率
-        "FATIGUED": 0.08,     # 降低疲劳概率
-        "INSPIRED": 0.22,     # 保持灵感概率
-        "FOCUSED": 0.35       # 调整专注概率
+        "EXPLORATORY": 0.35,
+        "FATIGUED": 0.08,
+        "INSPIRED": 0.22,
+        "FOCUSED": 0.35
     },
     "EXPLORATORY": {
-        "FOCUSED": 0.35,      # 提高转向专注概率
-        "FATIGUED": 0.15,     # 降低疲劳概率
-        "INSPIRED": 0.25,     # 提高灵感概率
-        "EXPLORATORY": 0.25   # 调整探索概率
+        "FOCUSED": 0.35,
+        "FATIGUED": 0.15,
+        "INSPIRED": 0.25,
+        "EXPLORATORY": 0.25
     },
     "FATIGUED": {
-        "FOCUSED": 0.35,      # 提高恢复专注概率
-        "EXPLORATORY": 0.35,  # 提高探索概率
-        "INSPIRED": 0.15,     # 适度灵感概率
-        "FATIGUED": 0.15      # 降低持续疲劳概率
+        "FOCUSED": 0.35,
+        "EXPLORATORY": 0.35,
+        "INSPIRED": 0.15,
+        "FATIGUED": 0.15
     },
     "INSPIRED": {
-        "FOCUSED": 0.45,      # 灵感后更易进入专注
-        "EXPLORATORY": 0.25,  # 保持探索概率
-        "FATIGUED": 0.05,     # 大幅降低疲劳概率
-        "INSPIRED": 0.25      # 调整持续灵感概率
+        "FOCUSED": 0.45,
+        "EXPLORATORY": 0.25,
+        "FATIGUED": 0.05,
+        "INSPIRED": 0.25
     }
 }
 
 STATE_ENERGY_RANGES = {
-    "FOCUSED": (1.6, 2.4),    # 微调范围
+    "FOCUSED": (1.6, 2.4),
     "EXPLORATORY": (1.1, 1.7),
-    "FATIGUED": (0.9, 1.3),   # 提高最低能耗
-    "INSPIRED": (2.2, 3.2)    # 扩展灵感能耗范围
+    "FATIGUED": (0.9, 1.3),
+    "INSPIRED": (2.2, 3.2)
 }
 
 # ========== 网络构建参数 - 基于结果优化 ==========
 NETWORK_CONFIG = {
-    'similarity_threshold': 0.08,      # 降低阈值以建立更多连接
-    'max_expansion_depth': 4,          # 增加扩展深度
-    'max_path_length': 5,              # 增加路径长度
-    'max_paths_to_find': 15,           # 增加路径数量
-    'min_semantic_similarity': 0.05    # 新增：最小语义相似度
+    'similarity_threshold': 0.08,
+    'max_expansion_depth': 4,
+    'max_path_length': 5,
+    'max_paths_to_find': 15,
+    'min_semantic_similarity': 0.05
 }
 
 # ========== 能耗优化参数 - 基于实证调整 ==========
 ENERGY_CONFIG = {
-    'hard_traversal_energy_ratio': 0.65,    # 提高硬遍历能耗比例
-    'soft_traversal_energy_ratio': 0.35,    # 降低软遍历能耗比例
-    'energy_optimization_threshold': 0.25,  # 降低优化阈值
-    'min_energy_threshold': 0.08,           # 降低最小能耗阈值
-    'max_energy_threshold': 2.2,            # 提高最大能耗阈值
-    'migration_quality_weight': 0.7,        # 新增：迁移质量权重
-    'compression_maturity_threshold': 2500  # 新增：压缩成熟度阈值
+    'hard_traversal_energy_ratio': 0.65,
+    'soft_traversal_energy_ratio': 0.35,
+    'energy_optimization_threshold': 0.25,
+    'min_energy_threshold': 0.08,
+    'max_energy_threshold': 2.2,
+    'migration_quality_weight': 0.7,
+    'compression_maturity_threshold': 2500
 }
 
 # ========== 关键词提取配置 - 优化版本 ==========
 KEYWORD_CONFIG = {
-    'top_k': 12,                           # 增加关键词数量
+    'top_k': 12,
     'stop_words': {
         '的', '是', '在', '和', '与', '或', '等', '这个', '那个', '一种',
         '研究', '包括', '通过', '给定', '任何', '两个', '某种', '一个',
-        '各种', '不同', '重要', '主要', '基本', '具有', '进行'  # 新增停用词
+        '各种', '不同', '重要', '主要', '基本', '具有', '进行'
     },
     'min_word_length': 1,
-    'domain_specific_boost': {             # 新增：领域特定词权重
+    'domain_specific_boost': {
         '认知': 1.5, '记忆': 1.3, '学习': 1.3,
         '神经': 1.4, '智能': 1.4, '网络': 1.2
     }
@@ -309,36 +316,32 @@ KEYWORD_CONFIG = {
 
 # ========== 实验参数 - 优化版本 ==========
 EXPERIMENT_CONFIG = {
-    'default_iterations': 12000,           # 增加迭代次数
-    'log_interval': 400,                   # 调整日志间隔
-    'state_update_interval': 80,           # 增加状态更新频率
-    'compression_activation_iteration': 3000,  # 新增：压缩激活迭代
-    'migration_quality_threshold': 0.15    # 新增：迁移质量阈值
+    'default_iterations': 12000,
+    'log_interval': 400,
+    'state_update_interval': 80,
+    'compression_activation_iteration': 3000,
+    'migration_quality_threshold': 0.15
 }
 
 # ========== 跨领域连接偏好配置 ==========
 CROSS_DOMAIN_PREFERENCES = {
-    'physics_to_ai': 0.6,          # 物理到AI的连接偏好
-    'math_to_cognitive': 0.7,      # 数学到认知科学的偏好
-    'principles_to_all': 0.8,      # 原理到所有领域的偏好
-    'ai_to_neuroscience': 0.65,    # AI到神经科学的偏好
-    'philosophy_to_cognitive': 0.75 # 哲学到认知科学的偏好
+    'physics_to_ai': 0.6,
+    'math_to_cognitive': 0.7,
+    'principles_to_all': 0.8,
+    'ai_to_neuroscience': 0.65,
+    'philosophy_to_cognitive': 0.75
 }
-# 建议的新阈值配置
+
+# ========== 涌现阈值配置 ==========
 EMERGENCE_THRESHOLDS = {
-    # 概念压缩 - 提高阈值减少噪声
-    'compression_synergy': 0.65,  # 从0.55提高到0.65
-    'min_cluster_size': 3,  # 从2提高到3
-    'max_cluster_size': 'dynamic',  # 改为动态大小
-    'cluster_cohesion': 0.6,  # 新增内聚性阈值
-
-    # 原理迁移 - 降低阈值增加检测
-    'migration_efficiency': 0.15,  # 从0.25降低到0.15
-    'innovation_significance': 0.1,  # 降低创新显著性阈值
-    'min_path_length': 3,  # 最小路径长度
-    'max_path_length': 6,  # 最大路径长度
-
-    # 置信度阈值
+    'compression_synergy': 0.65,
+    'min_cluster_size': 3,
+    'max_cluster_size': 'dynamic',
+    'cluster_cohesion': 0.6,
+    'migration_efficiency': 0.15,
+    'innovation_significance': 0.1,
+    'min_path_length': 3,
+    'max_path_length': 6,
     'high_confidence_threshold': 0.7,
     'medium_confidence_threshold': 0.5,
     'low_confidence_threshold': 0.3

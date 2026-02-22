@@ -1,7 +1,8 @@
 """
 增强的Q-learning模型 - 解决动态环境问题
-采用更合理的状态表示和奖励机制
+采用更合理的状态表示和奖励机制，使智能体能够学习低能耗路径。
 """
+
 import networkx as nx
 import numpy as np
 import random
@@ -10,9 +11,19 @@ from core.cognitive_graph import BaseCognitiveGraph
 
 
 class EnhancedQLearningCognitiveGraph(BaseCognitiveGraph):
-    """增强的Q-learning认知图模型"""
+    """增强的Q-learning认知图模型。
+
+    该类将认知图建模为强化学习环境，智能体通过遍历网络学习最优路径，
+    目标是最大化累积奖励（即最小化能耗）。
+    """
 
     def __init__(self, individual_params: Dict[str, Any], network_seed: int = 42):
+        """初始化增强Q-learning认知图。
+
+        Args:
+            individual_params (Dict[str, Any]): 个体参数。
+            network_seed (int): 随机种子。
+        """
         super().__init__(individual_params, network_seed)
 
         # Q-learning参数 - 调整以更好地学习
@@ -39,7 +50,14 @@ class EnhancedQLearningCognitiveGraph(BaseCognitiveGraph):
         self.best_paths = {}
 
     def initialize_network(self, num_nodes=51, connection_prob=0.2):
-        """初始化网络"""
+        """初始化网络。
+
+        创建随机图并为边分配随机权重。
+
+        Args:
+            num_nodes (int): 节点数量。
+            connection_prob (float): 边连接概率。
+        """
         # 创建随机图
         self.G = nx.erdos_renyi_graph(num_nodes, connection_prob, seed=self.network_seed)
 
@@ -63,7 +81,10 @@ class EnhancedQLearningCognitiveGraph(BaseCognitiveGraph):
         print(f"状态空间大小: {len(self.state_encoder)}")
 
     def _initialize_state_space(self):
-        """初始化状态空间"""
+        """初始化状态空间。
+
+        状态 = 节点 × 认知状态（探索/专注/疲劳），每个状态对应一个唯一的整数ID。
+        """
         # 状态 = 节点 × 认知状态（简化）
         # 使用特殊分隔符 '|' 来避免与节点名称冲突
         nodes = list(self.G.nodes())
@@ -92,16 +113,37 @@ class EnhancedQLearningCognitiveGraph(BaseCognitiveGraph):
                     self.q_table[state_id, action_idx] = 0.1
 
     def encode_state(self, node, cognitive_state):
-        """编码状态"""
+        """编码状态为整数ID。
+
+        Args:
+            node (str): 当前节点。
+            cognitive_state (str): 认知状态。
+
+        Returns:
+            int: 状态ID。
+        """
         state_key = f"{node}|{cognitive_state}"  # 使用 | 作为分隔符
         return self.state_encoder.get(state_key, 0)
 
     def decode_state(self, state_id):
-        """解码状态"""
+        """解码状态ID为节点和认知状态。
+
+        Args:
+            state_id (int): 状态ID。
+
+        Returns:
+            tuple: (node, cognitive_state)
+        """
         return self.state_decoder.get(state_id, ("未知", "未知"))
 
     def get_cognitive_state_simplified(self):
-        """简化的认知状态判断"""
+        """简化的认知状态判断。
+
+        基于当前迭代次数判断认知状态，用于状态空间。
+
+        Returns:
+            str: 认知状态，'探索'、'专注'或'疲劳'。
+        """
         # 基于当前网络能耗和迭代次数判断认知状态
         if self.iteration_count < 1000:
             return "探索"
@@ -111,7 +153,14 @@ class EnhancedQLearningCognitiveGraph(BaseCognitiveGraph):
             return "疲劳"
 
     def get_possible_actions(self, current_node):
-        """获取可能的动作"""
+        """获取当前节点可能的动作（邻居节点）。
+
+        Args:
+            current_node (str): 当前节点。
+
+        Returns:
+            list: 每个元素为 (action_node, action_idx) 的列表。
+        """
         nodes = list(self.G.nodes())
 
         # 如果当前节点有邻居，优先选择邻居
@@ -123,7 +172,14 @@ class EnhancedQLearningCognitiveGraph(BaseCognitiveGraph):
             return [(node, idx) for idx, node in enumerate(nodes) if node != current_node]
 
     def choose_action(self, state_id):
-        """选择动作 - ε-greedy策略"""
+        """使用ε-greedy策略选择动作。
+
+        Args:
+            state_id (int): 当前状态ID。
+
+        Returns:
+            tuple: (action_node, action_idx)，若无可能动作则返回(None, None)。
+        """
         current_node, cognitive_state = self.decode_state(state_id)
 
         possible_actions = self.get_possible_actions(current_node)
@@ -151,7 +207,19 @@ class EnhancedQLearningCognitiveGraph(BaseCognitiveGraph):
             return best_action, best_idx
 
     def calculate_reward(self, current_node, action_node, cognitive_state):
-        """计算奖励 - 综合考虑多个因素"""
+        """计算奖励。
+
+        奖励函数设计为鼓励低能耗路径，同时考虑认知状态和最近激活情况。
+        对应于论文中能量函数 E_ij(t) 的负相关：低能耗对应高奖励。
+
+        Args:
+            current_node (str): 当前节点。
+            action_node (str): 选择的动作节点。
+            cognitive_state (str): 认知状态。
+
+        Returns:
+            float: 奖励值。
+        """
         if not self.G.has_edge(current_node, action_node):
             return -2.0  # 无效连接的惩罚
 
@@ -177,7 +245,16 @@ class EnhancedQLearningCognitiveGraph(BaseCognitiveGraph):
         return max(-1.0, total_reward)  # 确保奖励不低于-1.0
 
     def update_q_value(self, state_id, action_idx, reward, next_state_id):
-        """更新Q值"""
+        """使用贝尔曼方程更新Q值。
+
+        Q(s,a) ← Q(s,a) + α [r + γ max_a' Q(s',a') - Q(s,a)]
+
+        Args:
+            state_id (int): 当前状态ID。
+            action_idx (int): 动作索引。
+            reward (float): 获得的奖励。
+            next_state_id (int): 下一个状态ID。
+        """
         current_q = self.q_table[state_id, action_idx]
 
         # 下一个状态的最大Q值
@@ -191,7 +268,15 @@ class EnhancedQLearningCognitiveGraph(BaseCognitiveGraph):
         self.q_table[state_id, action_idx] = np.clip(new_q, -5.0, 5.0)
 
     def apply_learning_from_experience(self, current_node, action_node, reward):
-        """从经验中学习 - 调整边权重"""
+        """从经验中学习，调整边权重（模拟Hebbian学习）。
+
+        正奖励降低边权重（能耗），负奖励增加边权重。
+
+        Args:
+            current_node (str): 当前节点。
+            action_node (str): 选择的动作节点。
+            reward (float): 获得的奖励。
+        """
         if not self.G.has_edge(current_node, action_node):
             return
 
@@ -208,7 +293,11 @@ class EnhancedQLearningCognitiveGraph(BaseCognitiveGraph):
         self.last_activation_time[(current_node, action_node)] = self.iteration_count
 
     def qlearning_step(self):
-        """执行一步Q-learning"""
+        """执行一步Q-learning，包括动作选择、奖励计算和Q值更新。
+
+        Returns:
+            float: 获得的奖励。
+        """
         if self.current_q_state is None:
             # 初始化状态
             random_node = random.choice(list(self.G.nodes()))
@@ -252,7 +341,10 @@ class EnhancedQLearningCognitiveGraph(BaseCognitiveGraph):
         return reward
 
     def apply_intelligent_forgetting(self):
-        """智能遗忘机制 - 基于Q值和激活时间"""
+        """智能遗忘机制，基于Q值和激活时间调整边权重。
+
+        长时间未激活的边会逐渐恢复到原始权重，模拟遗忘过程。
+        """
         current_time = self.iteration_count
 
         for u, v in self.G.edges():
@@ -282,7 +374,16 @@ class EnhancedQLearningCognitiveGraph(BaseCognitiveGraph):
                     self.G[u][v]['weight'] = new_weight
 
     def find_best_path(self, start_node, end_node, max_length=5):
-        """寻找最优路径（基于学习到的Q值）"""
+        """基于学习到的Q值寻找最优路径。
+
+        Args:
+            start_node (str): 起始节点。
+            end_node (str): 目标节点。
+            max_length (int): 最大路径长度。
+
+        Returns:
+            tuple: (路径列表, 总Q值)，若无路径则返回 (None, 0)。
+        """
         if start_node not in self.G or end_node not in self.G:
             return None, 0
 
@@ -327,7 +428,14 @@ class EnhancedQLearningCognitiveGraph(BaseCognitiveGraph):
         return path, total_q_value
 
     def enhanced_training(self, max_iterations=5000):
-        """增强的Q-learning训练"""
+        """增强的Q-learning训练主循环。
+
+        Args:
+            max_iterations (int): 最大迭代次数。
+
+        Returns:
+            float: 能耗改善百分比。
+        """
         print(f"开始增强Q-learning训练: {max_iterations}次迭代")
 
         initial_energy = self.calculate_network_energy()
@@ -395,7 +503,11 @@ class EnhancedQLearningCognitiveGraph(BaseCognitiveGraph):
         return total_improvement
 
     def _analyze_q_table(self):
-        """分析Q-table"""
+        """分析Q-table，返回统计信息。
+
+        Returns:
+            dict: Q-table统计信息。
+        """
         if self.q_table is None:
             return {}
 
@@ -417,7 +529,15 @@ class EnhancedQLearningCognitiveGraph(BaseCognitiveGraph):
         return stats
 
     def run_experiment(self, num_nodes=51, max_iterations=5000):
-        """运行完整实验"""
+        """运行完整实验，包括网络初始化、训练和结果收集。
+
+        Args:
+            num_nodes (int): 节点数量。
+            max_iterations (int): 最大迭代次数。
+
+        Returns:
+            dict: 实验结果字典。
+        """
         self.initialize_network(num_nodes)
         improvement = self.enhanced_training(max_iterations)
 
@@ -452,3 +572,12 @@ class EnhancedQLearningCognitiveGraph(BaseCognitiveGraph):
             'path_examples': path_examples,
             'network_stats': self.get_network_stats()
         }
+
+
+if __name__ == "__main__":
+    # 简单测试：创建一个小型网络并运行短时间训练
+    print("测试 EnhancedQLearningCognitiveGraph...")
+    params = {}  # 空参数，使用默认值
+    model = EnhancedQLearningCognitiveGraph(params)
+    result = model.run_experiment(num_nodes=51, max_iterations=8000)
+    print("测试完成。改善率:", result['improvement'])

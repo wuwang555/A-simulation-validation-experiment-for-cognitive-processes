@@ -1,7 +1,11 @@
 # algebra_experiments.py
 """
 代数验证实验 - 验证论文中代数结构的正确性
+
+该模块实现了论文第5节中设计的五组代数验证实验，用于检验认知操作半群、
+Noether型命题、轨道-稳定子定理、李群演化框架以及代数方法的可扩展性。
 """
+
 import os
 import numpy as np
 import networkx as nx
@@ -12,7 +16,10 @@ from algebra.lie_group_cognitive import CognitiveLieGroup
 
 
 class AlgebraValidationExperiments:
-    """代数验证实验管理器"""
+    """代数验证实验管理器。
+
+    该类封装了论文第5节中描述的五组代数验证实验，提供统一的实验运行接口。
+    """
 
     def __init__(self):
         self.results = {}
@@ -20,7 +27,14 @@ class AlgebraValidationExperiments:
         self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     def experiment1_verify_semigroup_properties(self):
-        """实验1：验证认知操作半群性质"""
+        """实验1：验证认知操作半群的结合律性质。
+
+        根据论文定理4.1.3，基本认知操作在复合下应构成半群，满足结合律。
+        该方法对13种操作组合进行结合律验证，并报告结果。
+
+        Returns:
+            dict: 包含结合律验证结果和操作数量的字典。
+        """
         print("=== 实验1：认知操作半群验证 ===")
 
         # 创建测试网络
@@ -66,7 +80,15 @@ class AlgebraValidationExperiments:
         return self.results['experiment1']
 
     def experiment2_verify_noether_theorem(self):
-        """实验2：验证Noether型定理（对称性→守恒量）"""
+        """实验2：验证Noether型命题（对称性→守恒量）。
+
+        根据论文命题4.2.2，认知系统的每一个连续对称性都对应一个守恒量。
+        该方法在三个不同结构的网络上检测对称性并计算守恒量，验证操作前后
+        守恒量的保持情况。
+
+        Returns:
+            dict: 各网络的Noether验证结果。
+        """
         print("\n=== 实验2：Noether定理验证 ===")
 
         # 创建不同结构的网络（现在都是完全图，保证连通）
@@ -152,7 +174,14 @@ class AlgebraValidationExperiments:
         return noether_results
 
     def experiment3_orbit_stabilizer_theorem(self):
-        """实验3：验证轨道-稳定子定理"""
+        """实验3：验证轨道-稳定子定理。
+
+        根据论文定理4.3.3，对于有限群作用有 |轨道| = |群| / |稳定子|。
+        该方法计算认知对称群的大小、稳定子大小和轨道大小，并验证该等式。
+
+        Returns:
+            dict: 包含定理验证结果及误差百分比的字典。
+        """
         print("\n=== 实验3：轨道-稳定子定理验证 ===")
 
         test_network = self._create_test_network()
@@ -196,7 +225,15 @@ class AlgebraValidationExperiments:
         return self.results['experiment3']
 
     def experiment4_lie_group_evolution(self):
-        """实验4：李群演化演示"""
+        """实验4：演示李群演化框架。
+
+        根据论文定理4.4.2，认知状态的演化满足李群方程 dG/dt = A(t)G(t)。
+        该方法使用三种不同的李代数生成元组合（能量优化主导、概念压缩主导、
+        原理迁移主导）演化网络，并记录能耗变化。
+
+        Returns:
+            dict: 包含各策略演化结果（能耗变化轨迹）的字典。
+        """
         print("\n=== 实验4：李群演化演示 ===")
 
         # 创建初始网络
@@ -256,8 +293,6 @@ class AlgebraValidationExperiments:
 
         self.results['experiment4'] = evolution_results
 
-        self.results['experiment4'] = evolution_results
-
         print("李群演化结果（不同生成元组合）：")
         for strategy, result in evolution_results.items():
             print(f"  策略 {strategy}:")
@@ -267,7 +302,14 @@ class AlgebraValidationExperiments:
         return evolution_results
 
     def experiment5_scalability_test(self):
-        """实验5：代数方法的可扩展性测试 - 简化版本"""
+        """实验5：代数方法的可扩展性测试。
+
+        在5,8,10,12,15个节点的网络上测试半群运算和对称性检测的时间消耗，
+        评估代数方法在不同规模网络中的计算效率。
+
+        Returns:
+            dict: 各规模网络的测试结果（运行时间、同构数等）。
+        """
         print("\n=== 实验5：代数方法可扩展性测试 ===")
 
         # 减少测试规模
@@ -337,7 +379,11 @@ class AlgebraValidationExperiments:
         return scalability_results
 
     def run_all_experiments(self):
-        """运行所有代数验证实验"""
+        """运行所有代数验证实验。
+
+        Returns:
+            dict: 包含所有实验结果的总字典。
+        """
         print("=" * 60)
         print("代数结构验证实验套件")
         print("=" * 60)
@@ -354,7 +400,7 @@ class AlgebraValidationExperiments:
         return results
 
     def _generate_summary_report(self):
-        """生成实验总结报告"""
+        """生成实验总结报告（打印到控制台并保存结果文件）。"""
         print("\n" + "=" * 60)
         print("代数验证实验总结报告")
         print("=" * 60)
@@ -442,7 +488,7 @@ class AlgebraValidationExperiments:
         return summary
 
     def _save_results_to_file(self):
-        """保存实验结果到文件"""
+        """将实验结果保存为JSON文件。"""
         import json
         from datetime import datetime
 
@@ -479,7 +525,7 @@ class AlgebraValidationExperiments:
             print(f"结果已保存到备用文件: {simple_filename}")
 
     def _make_serializable(self, obj):
-        """确保对象可JSON序列化"""
+        """确保对象可JSON序列化（递归转换numpy类型等）。"""
         if isinstance(obj, (int, float, str, bool, type(None))):
             return obj
         elif isinstance(obj, dict):
@@ -496,7 +542,11 @@ class AlgebraValidationExperiments:
             return str(obj)
 
     def _create_test_network(self):
-        """创建测试网络 - 完全图实现"""
+        """创建测试用的完全图网络，节点为常见概念。
+
+        Returns:
+            networkx.Graph: 包含10个概念节点的完全图，边权重基于语义相似度计算。
+        """
         nodes = ["算法", "数据结构", "优化", "递归", "迭代",
                  "抽象", "模式识别", "牛顿定律", "能量守恒", "微积分"]
 
@@ -506,7 +556,6 @@ class AlgebraValidationExperiments:
         # 基于语义相似度计算初始能耗
         # 相似度越高，能耗越低
         for u, v in G.edges():
-            # 模拟语义相似度计算（实际应该调用语义网络）
             if u == v:
                 continue
 
@@ -522,7 +571,15 @@ class AlgebraValidationExperiments:
         return G
 
     def _calculate_simple_similarity(self, concept1, concept2):
-        """基于概念名称的简单相似度计算"""
+        """基于概念领域归属的简单相似度计算。
+
+        Args:
+            concept1 (str): 第一个概念名称
+            concept2 (str): 第二个概念名称
+
+        Returns:
+            float: 0~1之间的相似度估计
+        """
         # 如果概念相同
         if concept1 == concept2:
             return 1.0
@@ -562,7 +619,11 @@ class AlgebraValidationExperiments:
         return np.random.uniform(0.2, 0.5)
 
     def _create_physics_dominant_network(self):
-        """创建物理学主导的网络 - 完全图实现"""
+        """创建物理学主导的完全图网络。
+
+        Returns:
+            networkx.Graph: 物理学概念间连接较强（能耗低），与其他领域连接较弱。
+        """
         nodes = ["牛顿定律", "力学", "运动学", "能量守恒", "动量",
                  "万有引力", "摩擦力", "静电力", "优化", "迭代"]
 
@@ -588,7 +649,11 @@ class AlgebraValidationExperiments:
         return G
 
     def _create_math_dominant_network(self):
-        """创建数学主导的网络"""
+        """创建数学主导的网络（非完全图，随机稀疏）。
+
+        Returns:
+            networkx.Graph: 数学概念间连接较强，随机稀疏图。
+        """
         nodes = ["微积分", "几何学", "拓扑学", "线性代数", "概率论",
                  "统计学", "代数", "离散数学", "算法", "数据结构"]
 
@@ -604,7 +669,11 @@ class AlgebraValidationExperiments:
         return G
 
     def _create_balanced_network(self):
-        """创建平衡网络"""
+        """创建平衡网络（随机稀疏）。
+
+        Returns:
+            networkx.Graph: 随机连接，权重均匀分布。
+        """
         nodes = ["算法", "数据结构", "优化", "牛顿定律", "能量守恒",
                  "微积分", "几何学", "递归", "迭代", "抽象"]
 
@@ -621,9 +690,14 @@ class AlgebraValidationExperiments:
         return G
 
     def _initialize_operations(self, semigroup):
-        """初始化认知操作"""
+        """初始化认知操作到半群中。
+
+        Args:
+            semigroup (CognitiveSemigroup): 要添加操作的半群对象。
+        """
 
         def learning_op(network, edge=None, strength=0.1, **kwargs):
+            """学习操作：降低指定边的权重（能耗）。"""
             if edge is None:
                 return network
             u, v = edge
@@ -633,6 +707,7 @@ class AlgebraValidationExperiments:
             return network
 
         def forgetting_op(network, edge=None, strength=0.05, **kwargs):
+            """遗忘操作：增加指定边的权重（能耗）。"""
             if edge is None:
                 return network
             u, v = edge
@@ -642,9 +717,9 @@ class AlgebraValidationExperiments:
             return network
 
         def traversal_op(network, path=None, **kwargs):
+            """遍历操作：降低路径上所有边的权重（模拟熟练度提升）。"""
             if path is None or len(path) < 2:
                 return network
-            # 简化实现：遍历会轻微降低路径上的能耗
             for i in range(len(path) - 1):
                 u, v = path[i], path[i + 1]
                 if network.has_edge(u, v):
@@ -653,9 +728,9 @@ class AlgebraValidationExperiments:
             return network
 
         def compression_op(network, center=None, related_nodes=None, **kwargs):
+            """概念压缩操作：增强中心节点与相关节点的连接（降低能耗）。"""
             if center is None or related_nodes is None:
                 return network
-            # 压缩：中心节点与相关节点的连接增强
             for node in related_nodes:
                 if network.has_edge(center, node):
                     current = network[center][node]['weight']
@@ -663,9 +738,9 @@ class AlgebraValidationExperiments:
             return network
 
         def migration_op(network, principle=None, from_node=None, to_node=None, **kwargs):
+            """原理迁移操作：强化原理节点与两端节点的连接。"""
             if principle is None or from_node is None or to_node is None:
                 return network
-            # 迁移：建立或强化连接
             if network.has_edge(from_node, principle):
                 current = network[from_node][principle]['weight']
                 network[from_node][principle]['weight'] = max(0.05, current * 0.9)
@@ -680,7 +755,6 @@ class AlgebraValidationExperiments:
         semigroup.add_operation("traversal", traversal_op)
         semigroup.add_operation("compression", compression_op)
         semigroup.add_operation("migration", migration_op)
-
 
 # 主程序
 if __name__ == "__main__":

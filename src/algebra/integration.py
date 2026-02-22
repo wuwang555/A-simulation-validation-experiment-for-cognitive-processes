@@ -1,13 +1,29 @@
 # algebra/integration.py
+"""
+代数增强的认知图集成模块
+
+该模块展示了如何将代数结构（半群、对称群）集成到核心认知图类中，
+提供代数性质验证的接口。
+"""
+
 from core.cognitive_graph import BaseCognitiveGraph
 from algebra.cognitive_semigroup import CognitiveSemigroup
 from algebra.cognitive_symmetry import CognitiveSymmetryGroup
 from typing import Dict, Any
 
+
 class AlgebraEnhancedCognitiveGraph(BaseCognitiveGraph):
-    """代数增强的认知图"""
+    """代数增强的认知图。
+
+    在基础认知图的基础上，增加了半群操作管理和对称性分析功能。
+    """
 
     def __init__(self, individual_params: Dict[str, Any], network_seed: int = 42):
+        """
+        Args:
+            individual_params: 个体认知参数。
+            network_seed: 随机种子，用于网络初始化。
+        """
         super().__init__(individual_params, network_seed)
 
         # 初始化代数结构
@@ -18,17 +34,21 @@ class AlgebraEnhancedCognitiveGraph(BaseCognitiveGraph):
         self.symmetry_group = None
 
     def _initialize_cognitive_operations(self):
-        """初始化认知操作到半群中"""
+        """初始化认知操作到半群中。
 
-        # 遍历操作
+        将核心认知操作（遍历、学习、遗忘、压缩、迁移）封装为可调用的函数，
+        并添加到半群。
+        """
+
         def traversal_op(network, path=None, **kwargs):
+            """遍历操作：沿指定路径遍历，记录历史（简化实现）。"""
             if path is None:
                 return network
             # 简化实现：记录遍历历史
             return network
 
-        # 学习操作
         def learning_op(network, edge=None, strength=0.1, **kwargs):
+            """学习操作：降低指定边的权重（能耗）。"""
             if edge is None:
                 return network
             u, v = edge
@@ -37,8 +57,8 @@ class AlgebraEnhancedCognitiveGraph(BaseCognitiveGraph):
                 network[u][v]['weight'] = max(0.05, current * (1 - strength))
             return network
 
-        # 遗忘操作
         def forgetting_op(network, edge=None, strength=0.05, **kwargs):
+            """遗忘操作：增加指定边的权重（能耗）。"""
             if edge is None:
                 return network
             u, v = edge
@@ -47,15 +67,15 @@ class AlgebraEnhancedCognitiveGraph(BaseCognitiveGraph):
                 network[u][v]['weight'] = min(2.0, current * (1 + strength))
             return network
 
-        # 压缩操作
         def compression_op(network, center=None, related_nodes=None, **kwargs):
+            """概念压缩操作：增强中心节点与相关节点的连接（降低能耗）。"""
             if center is None or related_nodes is None:
                 return network
             # 简化实现
             return network
 
-        # 迁移操作
         def migration_op(network, principle=None, from_node=None, to_node=None, **kwargs):
+            """原理迁移操作：强化原理节点与两端节点的连接。"""
             if principle is None or from_node is None or to_node is None:
                 return network
             # 简化实现
@@ -69,7 +89,7 @@ class AlgebraEnhancedCognitiveGraph(BaseCognitiveGraph):
         self.semigroup.add_operation("migration", migration_op)
 
     def initialize_symmetry_analysis(self):
-        """初始化对称性分析"""
+        """初始化对称性分析：检测概念同构并计算守恒量。"""
         self.symmetry_group = CognitiveSymmetryGroup(self.G)
         automorphisms = self.symmetry_group.find_concept_isomorphisms()
         conserved = self.symmetry_group.compute_conserved_quantities()
@@ -78,7 +98,7 @@ class AlgebraEnhancedCognitiveGraph(BaseCognitiveGraph):
         print("守恒量:", conserved)
 
     def verify_algebraic_properties(self):
-        """验证代数性质"""
+        """验证代数性质：结合律、单位元、Noether定理等。"""
         if self.symmetry_group is None:
             self.initialize_symmetry_analysis()
 
@@ -108,3 +128,8 @@ class AlgebraEnhancedCognitiveGraph(BaseCognitiveGraph):
             before_network, after_network, "learning"
         )
         print(f"Noether定理验证（学习操作）: {conserved}")
+
+
+# 简单测试（需在完整环境中运行）
+if __name__ == "__main__":
+    print("此模块需与 core.cognitive_graph 配合使用，无法独立运行。")
