@@ -1,3 +1,9 @@
+"""
+认知图论可视化模块。
+
+提供认知网络、能耗收敛过程、认知状态变化等图形的绘制与保存功能。
+"""
+
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
@@ -10,15 +16,35 @@ _TIMESTAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
 _VIZ_DIR = "results/visualizations"
 os.makedirs(_VIZ_DIR, exist_ok=True)
 
+
 def _auto_save_fig(fig, func_name):
-    """自动保存当前 figure 到指定目录"""
+    """
+    自动保存当前 figure 到指定目录。
+
+    Parameters
+    ----------
+    fig : matplotlib.figure.Figure
+        要保存的图形对象。
+    func_name : str
+        调用函数的名称，用于构造文件名。
+    """
     filename = f"{func_name}_{_TIMESTAMP}.png"
     filepath = os.path.join(_VIZ_DIR, filename)
     fig.savefig(filepath, dpi=300, bbox_inches='tight')
     print(f"📸 图表已保存: {filepath}")
 
+
 def visualize_energy_convergence(energy_history, concept_centers):
-    """可视化能耗收敛过程（自动保存）"""
+    """
+    可视化能耗收敛过程，并标注概念压缩发生的位置。
+
+    Parameters
+    ----------
+    energy_history : list of float
+        每次迭代的平均能耗历史。
+    concept_centers : dict
+        概念压缩中心字典，键为节点名，值为包含 'iteration' 等信息的字典。
+    """
     fig = plt.figure(figsize=(10, 6))
     plt.plot(energy_history, 'b-', alpha=0.7, linewidth=1)
     plt.xlabel('迭代次数')
@@ -41,8 +67,18 @@ def visualize_energy_convergence(energy_history, concept_centers):
     _auto_save_fig(fig, "energy_convergence")
     plt.show()
 
+
 def visualize_cognitive_states(cognitive_energy_history, energy_history):
-    """可视化认知状态变化（自动保存）"""
+    """
+    可视化认知状态变化（主观能耗）与网络能耗演化。
+
+    Parameters
+    ----------
+    cognitive_energy_history : list of dict
+        每个条目应包含 'iteration', 'state', 'energy'。
+    energy_history : list of float
+        网络平均能耗历史。
+    """
     if not cognitive_energy_history:
         return
 
@@ -96,6 +132,7 @@ def visualize_cognitive_states(cognitive_energy_history, energy_history):
     _auto_save_fig(fig, "cognitive_states")
     plt.show()
 
+    # 打印状态统计
     state_counts = {}
     for state in states:
         state_counts[state] = state_counts.get(state, 0) + 1
@@ -105,8 +142,22 @@ def visualize_cognitive_states(cognitive_energy_history, energy_history):
         percentage = (count / len(states)) * 100
         print(f"{state.value}: {count}次 ({percentage:.1f}%)")
 
+
 def visualize_graph(G, concept_centers, title="认知图", figsize=(12, 8)):
-    """可视化认知图（自动保存）"""
+    """
+    可视化认知图，标注概念压缩中心、迁移桥梁，并按能耗着色边。
+
+    Parameters
+    ----------
+    G : networkx.Graph
+        认知网络图对象。
+    concept_centers : dict
+        概念压缩中心字典。
+    title : str, optional
+        图表标题。
+    figsize : tuple, optional
+        图形尺寸。
+    """
     fig = plt.figure(figsize=figsize)
     pos = nx.spring_layout(G, seed=42)
 
@@ -149,7 +200,7 @@ def visualize_graph(G, concept_centers, title="认知图", figsize=(12, 8)):
     _auto_save_fig(fig, "cognitive_graph")
     plt.show()
 
-    # 计算统计信息
+    # 打印网络统计信息
     nodes = G.number_of_nodes()
     edges = G.number_of_edges()
     avg_energy = np.mean([G[u][v]['weight'] for u, v in G.edges()]) if edges > 0 else 0
@@ -164,8 +215,20 @@ def visualize_graph(G, concept_centers, title="认知图", figsize=(12, 8)):
     print(f"  概念压缩中心: {len(concept_centers)}")
     print(f"  迁移桥梁: {migration_bridges}")
 
+
 def visualize_semantic_network(semantic_network, concept_definitions=None, highlight_concepts=None):
-    """可视化语义网络（自动保存）"""
+    """
+    可视化语义概念网络。
+
+    Parameters
+    ----------
+    semantic_network : dict
+        语义网络字典，格式为 {概念: {邻居概念: 相似度, ...}, ...}。
+    concept_definitions : dict, optional
+        概念定义字典，用于获取领域信息。
+    highlight_concepts : list, optional
+        需要高亮显示的概念列表。
+    """
     try:
         G = nx.Graph()
 
@@ -210,7 +273,21 @@ def visualize_semantic_network(semantic_network, concept_definitions=None, highl
 
 
 def get_domain(concept, concept_definitions=None):
-    """获取概念所属领域"""
+    """
+    根据概念定义判断概念所属领域。
+
+    Parameters
+    ----------
+    concept : str
+        概念名称。
+    concept_definitions : dict, optional
+        概念定义字典，用于辅助判断。
+
+    Returns
+    -------
+    str
+        领域名称，如 'physics', 'math', 'cs', 'principles', 'other'。
+    """
     domains = {
         "physics": ["牛顿定律", "力学", "运动学", "能量守恒", "动量", "万有引力", "摩擦力", "静电力"],
         "math": ["微积分", "几何学", "拓扑学", "线性代数", "概率论", "统计学", "代数", "离散数学"],
@@ -222,3 +299,12 @@ def get_domain(concept, concept_definitions=None):
         if concept in concepts:
             return domain
     return "other"
+
+
+if __name__ == "__main__":
+    # 简单测试：创建一个随机图并调用可视化函数
+    G = nx.erdos_renyi_graph(10, 0.2)
+    for u, v in G.edges():
+        G[u][v]['weight'] = np.random.random()
+    concept_centers = {node: {} for node in list(G.nodes())[:2]}
+    visualize_graph(G, concept_centers, title="测试图")

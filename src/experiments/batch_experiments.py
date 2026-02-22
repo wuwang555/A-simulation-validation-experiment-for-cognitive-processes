@@ -11,11 +11,9 @@ import json
 from datetime import datetime
 import pandas as pd
 from pathlib import Path
-
 # 导入实验管理器
 try:
     from main import CognitiveGraphExperimentManager
-
     print("✅ 成功导入实验管理器")
 except ImportError as e:
     print(f"❌ 导入实验管理器失败: {e}")
@@ -23,9 +21,24 @@ except ImportError as e:
 
 
 class BatchExperimentRunner:
-    """批处理实验运行器"""
+    """批处理实验运行器，管理多规模多模型的对比实验。
+
+    该类负责配置、运行和保存所有模型的实验数据，并生成对比图表。
+
+    Attributes:
+        manager (CognitiveGraphExperimentManager): 实验管理器实例。
+        output_dir (Path): 结果输出目录。
+        config (dict): 实验配置参数。
+        results (list): 所有实验结果的列表。
+        summary (dict): 按规模汇总的实验结果。
+    """
 
     def __init__(self, output_dir="../../results/batch_experiments"):
+        """初始化批处理运行器。
+
+        Args:
+            output_dir (str): 结果保存目录，默认为 "../../results/batch_experiments"。
+        """
         self.manager = CognitiveGraphExperimentManager()
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
@@ -44,7 +57,15 @@ class BatchExperimentRunner:
         self.summary = {}
 
     def run_single_experiment(self, model_type, scale):
-        """运行单个实验"""
+        """运行单个实验。
+
+        Args:
+            model_type (str): 模型类型，可选 "random", "qlearning", "traditional", "emergence"。
+            scale (int): 概念规模（节点数）。
+
+        Returns:
+            dict or None: 实验结果的指标字典，失败返回None。
+        """
         print(f"\n{'=' * 60}")
         print(f"运行实验: {model_type.upper()}模型 | 概念规模: {scale}")
         print('=' * 60)
@@ -57,13 +78,11 @@ class BatchExperimentRunner:
                     num_nodes=scale,
                     max_iterations=self.config["iterations"]
                 )
-
             elif model_type == "qlearning":
                 result = self.manager.run_qlearning_model(
                     num_nodes=scale,
                     max_iterations=self.config["iterations"]
                 )
-
             elif model_type == "traditional":
                 result = self.manager.run_preset_algorithm_model(
                     num_concepts=scale
@@ -71,7 +90,6 @@ class BatchExperimentRunner:
                 # 处理列表格式的结果
                 if isinstance(result, list) and len(result) > 0:
                     result = result[0]
-
             elif model_type == "emergence":
                 result = self.manager.run_natural_emergence_model(
                     num_individuals=1,  # 为了速度，只运行1个个体
@@ -101,7 +119,17 @@ class BatchExperimentRunner:
             return None
 
     def _extract_metrics(self, model_type, result, scale, elapsed_time):
-        """从结果中提取关键指标"""
+        """从结果中提取关键指标。
+
+        Args:
+            model_type (str): 模型类型。
+            result (dict): 实验返回的结果字典。
+            scale (int): 概念规模。
+            elapsed_time (float): 运行耗时（秒）。
+
+        Returns:
+            dict: 提取的指标字典。
+        """
         metrics = {
             "model": model_type,
             "scale": scale,
@@ -151,14 +179,12 @@ class BatchExperimentRunner:
                     "q_table_sparsity": q_stats.get('sparsity', 0),
                     "q_table_non_zero": q_stats.get('non_zero_entries', 0)
                 })
-
         elif model_type == "traditional" and isinstance(result, dict):
             # 传统模型可能有认知状态统计
             if 'state_stats' in result:
                 state_stats = result['state_stats']
                 metrics["exploration_ratio"] = state_stats.get('exploration', 0)
                 metrics["inspiration_ratio"] = state_stats.get('inspiration', 0)
-
         elif model_type == "emergence" and isinstance(result, dict):
             # 涌现模型特有指标
             metrics.update({
@@ -169,7 +195,7 @@ class BatchExperimentRunner:
         return metrics
 
     def run_full_batch(self):
-        """运行完整批处理实验"""
+        """运行完整批处理实验（所有规模 × 所有模型）。"""
         print("\n" + "=" * 80)
         print("开始运行完整批处理实验")
         print(f"配置: {self.config['scales']}个规模 × {self.config['models']}个模型")
@@ -210,7 +236,7 @@ class BatchExperimentRunner:
         self.display_summary()
 
     def save_results(self):
-        """保存实验结果到文件"""
+        """保存实验结果到CSV和JSON文件。"""
         timestamp = self.config["timestamp"]
 
         # 保存详细结果到CSV
@@ -246,7 +272,7 @@ class BatchExperimentRunner:
         return csv_path, summary_path
 
     def display_summary(self):
-        """显示实验摘要"""
+        """在控制台显示实验结果摘要表格。"""
         print("\n" + "=" * 80)
         print("实验结果摘要")
         print("=" * 80)
@@ -264,8 +290,7 @@ class BatchExperimentRunner:
                         improvement = metrics.get('improvement', 0)
 
                         # 添加性能指标
-                        scale_row[f"{model}能耗改善(%)"] = f"{improvement:.1f}%" if isinstance(improvement, (
-                        int, float)) else improvement
+                        scale_row[f"{model}能耗改善(%)"] = f"{improvement:.1f}%" if isinstance(improvement, (int, float)) else improvement
 
                         # 添加特殊指标
                         if model == "emergence":
@@ -316,7 +341,7 @@ class BatchExperimentRunner:
                     print(f"    {scale}概念: {imp:.1f}%")
 
     def create_comparison_charts(self):
-        """创建对比图表"""
+        """创建性能对比和规模效应图表（使用matplotlib）。"""
         try:
             import matplotlib.pyplot as plt
             import numpy as np
@@ -412,7 +437,7 @@ class BatchExperimentRunner:
 
 
 def run_specific_combination():
-    """运行特定组合的实验（调试用）"""
+    """运行特定组合的实验（调试用）。"""
     runner = BatchExperimentRunner()
 
     # 测试单个组合
@@ -426,7 +451,7 @@ def run_specific_combination():
 
 
 def main():
-    """主函数"""
+    """主函数，提供交互式菜单选择运行模式。"""
     print("\n" + "=" * 80)
     print("认知图模型批处理实验平台")
     print("=" * 80)

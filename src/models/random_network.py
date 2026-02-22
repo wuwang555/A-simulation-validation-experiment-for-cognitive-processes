@@ -3,6 +3,7 @@
 完全随机地调整网络边权重，无优化目标
 用于建立无智能机制的基线
 """
+
 import networkx as nx
 import numpy as np
 import random
@@ -11,16 +12,32 @@ from core.cognitive_graph import BaseCognitiveGraph
 
 
 class RandomNetworkModel(BaseCognitiveGraph):
-    """随机网络模型 - 无智能基准"""
+    """随机网络模型 - 无智能基准。
+
+    该类完全随机地调整网络权重，没有任何优化目标，用于与其他智能模型进行对比。
+    """
 
     def __init__(self, individual_params: Dict[str, Any], network_seed: int = 42):
+        """初始化随机网络模型。
+
+        Args:
+            individual_params (Dict[str, Any]): 个体参数（实际未使用）。
+            network_seed (int): 随机种子。
+        """
         super().__init__(individual_params, network_seed)
         self.random_weight_std = 0.25  # 增加随机权重调整的标准差
         self.random_activation_prob = 0.2  # 降低随机激活概率
         self.forgetting_enabled = False  # 禁用遗忘机制，使其更"随机"
 
     def initialize_random_network(self, num_nodes=51, connection_prob=0.2):
-        """初始化随机网络"""
+        """初始化随机网络。
+
+        创建Erdos-Renyi随机图，并为边分配随机权重。
+
+        Args:
+            num_nodes (int): 节点数量。
+            connection_prob (float): 边连接概率。
+        """
         # 创建随机图
         self.G = nx.erdos_renyi_graph(num_nodes, connection_prob, seed=self.network_seed)
 
@@ -41,7 +58,10 @@ class RandomNetworkModel(BaseCognitiveGraph):
         print(f"初始平均能耗: {self.calculate_network_energy():.3f}")
 
     def random_weight_adjustment(self):
-        """随机权重调整 - 无智能机制"""
+        """随机权重调整 - 无智能机制。
+
+        随机选择一条边，以50%概率增加或减少其权重。
+        """
         if self.G.number_of_edges() == 0:
             return
 
@@ -68,7 +88,10 @@ class RandomNetworkModel(BaseCognitiveGraph):
             self.last_activation_time[(u, v)] = self.iteration_count
 
     def random_traversal(self):
-        """随机遍历 - 无目标导向"""
+        """随机遍历 - 无目标导向。
+
+        随机选择起点，随机行走若干步，并可能随机调整经过边的权重。
+        """
         nodes = list(self.G.nodes())
         if len(nodes) < 2:
             return
@@ -113,7 +136,10 @@ class RandomNetworkModel(BaseCognitiveGraph):
                         self.G[u][v]['weight'] = new_weight
 
     def random_forgetting(self):
-        """随机遗忘 - 无模式"""
+        """随机遗忘 - 无模式。
+
+        随机选择边，以一定概率向原始权重回归。
+        """
         if not self.forgetting_enabled:
             return
 
@@ -133,7 +159,16 @@ class RandomNetworkModel(BaseCognitiveGraph):
                 self.G[u][v]['weight'] = new_energy
 
     def random_monte_carlo_iteration(self, max_iterations=5000):
-        """随机蒙特卡洛模拟 - 无智能机制"""
+        """随机蒙特卡洛模拟 - 无智能机制。
+
+        主循环，随机选择操作（权重调整、遍历、遗忘）并执行。
+
+        Args:
+            max_iterations (int): 最大迭代次数。
+
+        Returns:
+            float: 能耗变化百分比（可能为负）。
+        """
         print(f"开始随机网络模拟: {max_iterations}次迭代")
         print("注意：这是一个无智能的基准模型，预期性能较差")
 
@@ -173,7 +208,15 @@ class RandomNetworkModel(BaseCognitiveGraph):
         return total_improvement
 
     def run_experiment(self, num_nodes=51, max_iterations=5000):
-        """运行完整实验"""
+        """运行完整实验。
+
+        Args:
+            num_nodes (int): 节点数量。
+            max_iterations (int): 最大迭代次数。
+
+        Returns:
+            dict: 实验结果字典。
+        """
         self.initialize_random_network(num_nodes)
         improvement = self.random_monte_carlo_iteration(max_iterations)
 
@@ -189,3 +232,12 @@ class RandomNetworkModel(BaseCognitiveGraph):
             'network_stats': stats,
             'note': '无智能基准模型，预期性能较差'
         }
+
+
+if __name__ == "__main__":
+    # 简单测试：运行小型随机网络
+    print("测试 RandomNetworkModel...")
+    params = {}
+    model = RandomNetworkModel(params)
+    result = model.run_experiment(num_nodes=51, max_iterations=8000)
+    print("测试完成。改善率:", result['improvement'])

@@ -1,28 +1,57 @@
 # algebra/cognitive_symmetry.py
+"""
+认知对称群模块
+
+根据论文第4.2节，认知对称群是保持认知网络关键性质不变的变换群。
+该模块实现了概念同构检测、守恒量计算以及Noether型命题的验证。
+"""
+
 import networkx as nx
 import numpy as np
-from typing import List, Dict, Set
+from typing import List, Dict, Set, Tuple, Any
 import itertools
 import math
 import random
 
+
 class CognitiveSymmetryGroup:
-    """认知对称群实现"""
+    """认知对称群实现。
+
+    该类负责检测认知网络中的概念同构（节点置换保持边权重），计算守恒量
+    （全局能量、结构熵、分形维数），并验证Noether型命题。
+
+    Attributes:
+        network (nx.Graph): 当前认知网络。
+        automorphisms (List[Dict]): 已找到的自同构列表。
+        conserved_quantities (Dict): 计算得到的守恒量。
+    """
 
     def __init__(self, network: nx.Graph):
+        """
+        Args:
+            network (nx.Graph): 待分析的认知网络。
+        """
         self.network = network
         self.automorphisms = []
         self.conserved_quantities = {}
 
-    def find_concept_isomorphisms(self, max_samples=1000):
-        """寻找概念同构（保持语义的节点置换） - 优化版本"""
+    def find_concept_isomorphisms(self, max_samples=1000) -> List[Dict]:
+        """寻找概念同构（保持语义的节点置换）。
+
+        由于同构检测是NP难问题，对于大规模网络采用随机采样近似。
+
+        Args:
+            max_samples (int): 最大采样次数（用于大规模网络）。
+
+        Returns:
+            List[Dict]: 每个字典表示一个自同构映射 {原节点: 映射节点}。
+        """
         automorphisms = []
         nodes = list(self.network.nodes())
         n = len(nodes)
 
         if n <= 8:
             # 小规模网络：尝试所有排列
-            import itertools
             permutations = itertools.permutations(range(n))
             total_perms = math.factorial(n)
             max_to_check = min(1000, total_perms)  # 最多检查1000个排列
@@ -97,8 +126,17 @@ class CognitiveSymmetryGroup:
         self.automorphisms = automorphisms
         return automorphisms
 
-    def compute_conserved_quantities(self):
-        """计算守恒量"""
+    def compute_conserved_quantities(self) -> Dict[str, float]:
+        """计算认知系统的守恒量。
+
+        根据Noether型命题，对称性对应守恒量。此处计算：
+        - 全局认知能量（总权重）
+        - 结构熵（度分布熵）
+        - 分形维数（聚类系数/平均最短路径）
+
+        Returns:
+            Dict[str, float]: 守恒量名称到值的映射。
+        """
         conserved = {}
 
         # 1. 全局能量守恒（时间平移对称性）
@@ -171,10 +209,21 @@ class CognitiveSymmetryGroup:
         self.conserved_quantities = conserved
         return conserved
 
-    def verify_noether_theorem(self, before_network, after_network,
+    def verify_noether_theorem(self, before_network: nx.Graph, after_network: nx.Graph,
                                transformation_type: str,
-                               tolerance: float = 0.2) -> bool:
-        """验证Noether型定理 - 放宽条件"""
+                               tolerance: float = 0.2) -> Tuple[bool, Dict]:
+        """验证Noether型命题：对称性变换前后守恒量是否保持不变。
+
+        Args:
+            before_network (nx.Graph): 变换前的网络。
+            after_network (nx.Graph): 变换后的网络。
+            transformation_type (str): 变换类型描述（仅用于日志）。
+            tolerance (float): 允许的相对变化阈值。
+
+        Returns:
+            Tuple[bool, Dict]: 第一个元素表示是否所有守恒量保持；
+                第二个元素为各守恒量的详细变化信息。
+        """
         before_group = CognitiveSymmetryGroup(before_network)
         after_group = CognitiveSymmetryGroup(after_network)
 
@@ -213,3 +262,19 @@ class CognitiveSymmetryGroup:
                           f"(变化: {relative_change * 100:.1f}%)")
 
         return all_conserved, conservation_details
+
+
+# 简单测试
+if __name__ == "__main__":
+    G = nx.Graph()
+    nodes = ["A", "B", "C"]
+    G.add_nodes_from(nodes)
+    G.add_edge("A", "B", weight=1.0)
+    G.add_edge("B", "C", weight=1.0)
+    G.add_edge("A", "C", weight=1.0)
+
+    sym = CognitiveSymmetryGroup(G)
+    autos = sym.find_concept_isomorphisms()
+    conserved = sym.compute_conserved_quantities()
+    print(f"找到 {len(autos)} 个自同构")
+    print(f"守恒量: {conserved}")
