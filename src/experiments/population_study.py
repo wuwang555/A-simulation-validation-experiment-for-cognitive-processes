@@ -1,3 +1,5 @@
+import os
+import csv
 from utils.individual_variation import IndividualVariation, create_enhanced_individual_params
 from models.enhanced_model import SemanticEnhancedCognitiveGraph, EnergyOptimizedCognitiveGraph
 from utils.analysis import *
@@ -7,6 +9,9 @@ from utils.visualization import *
 
 def run_semantic_enhanced_experiment(num_individuals=3, max_iterations=10000, num_concepts=None):
     """运行语义增强的群体实验 - 新增num_concepts参数"""
+    from datetime import datetime
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    population_results = []
     base_parameters = {
         'forgetting_rate': 0.002,
         'base_learning_rate': 0.85,
@@ -50,6 +55,17 @@ def run_semantic_enhanced_experiment(num_individuals=3, max_iterations=10000, nu
         initial_energy = initial_stats['avg_energy']
 
         individual_graph.monte_carlo_iteration(max_iterations=max_iterations)
+
+        # 保存能量历史
+        energy_history = individual_graph.cognitive_energy_history
+        energy_file = os.path.join("results/population", f"energy_history_{individual_id}_{timestamp}.csv")
+        os.makedirs("results/population", exist_ok=True)
+        with open(energy_file, 'w', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow(['iteration', 'energy'])
+            for idx, e in enumerate(energy_history):
+                writer.writerow([idx, e])
+        print(f"能量历史已保存: {energy_file}")
 
         # 修复：使用 get_network_stats() 获取最终统计信息
         final_stats = individual_graph.get_network_stats()

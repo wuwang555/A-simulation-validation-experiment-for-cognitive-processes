@@ -16,6 +16,8 @@ class AlgebraValidationExperiments:
 
     def __init__(self):
         self.results = {}
+        from datetime import datetime
+        self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     def experiment1_verify_semigroup_properties(self):
         """实验1：验证认知操作半群性质"""
@@ -237,6 +239,22 @@ class AlgebraValidationExperiments:
                                           if energies[0] > 0 else 0),
                 'energy_trajectory': energies
             }
+
+        # 保存能量轨迹
+        import csv
+        energy_dir = "results/algebra/energy_trajectories"
+        os.makedirs(energy_dir, exist_ok=True)
+        for strategy, result in evolution_results.items():
+            energy_traj = result['energy_trajectory']
+            csv_file = os.path.join(energy_dir, f"lie_evolution_{strategy}_{self.timestamp}.csv")
+            with open(csv_file, 'w', newline='', encoding='utf-8') as f:
+                writer = csv.writer(f)
+                writer.writerow(['time_step', 'avg_energy'])
+                for t, e in enumerate(energy_traj):
+                    writer.writerow([t, e])
+            print(f"能量轨迹已保存: {csv_file}")
+
+        self.results['experiment4'] = evolution_results
 
         self.results['experiment4'] = evolution_results
 

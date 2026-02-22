@@ -196,10 +196,20 @@ class SemanticConceptNetwork:
         return "other"
 
     def visualize_semantic_network(self, highlight_concepts=None):
-        """可视化语义网络"""
         from utils.visualization import visualize_semantic_network
         visualize_semantic_network(self.semantic_network, self.concept_definitions, highlight_concepts)
 
+        # 自动保存图片
+        import matplotlib.pyplot as plt
+        import os
+        from datetime import datetime
+        fig_dir = "results/semantic_network"
+        os.makedirs(fig_dir, exist_ok=True)
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        plt.tight_layout()
+        plt.savefig(os.path.join(fig_dir, f"semantic_network_{timestamp}.png"),
+                    dpi=300, bbox_inches='tight')
+        print(f"语义网络图已保存到 results/semantic_network/")
 
 class MetaStructureSimilarity:
     """基于元结构的相似度计算"""

@@ -1,12 +1,25 @@
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
+import os
+from datetime import datetime
 from core.cognitive_states import CognitiveState
 
+# 获取当前时间戳（只在模块加载时生成一次，确保同一批次实验文件名一致）
+_TIMESTAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
+_VIZ_DIR = "results/visualizations"
+os.makedirs(_VIZ_DIR, exist_ok=True)
+
+def _auto_save_fig(fig, func_name):
+    """自动保存当前 figure 到指定目录"""
+    filename = f"{func_name}_{_TIMESTAMP}.png"
+    filepath = os.path.join(_VIZ_DIR, filename)
+    fig.savefig(filepath, dpi=300, bbox_inches='tight')
+    print(f"📸 图表已保存: {filepath}")
 
 def visualize_energy_convergence(energy_history, concept_centers):
-    """可视化能耗收敛过程"""
-    plt.figure(figsize=(10, 6))
+    """可视化能耗收敛过程（自动保存）"""
+    fig = plt.figure(figsize=(10, 6))
     plt.plot(energy_history, 'b-', alpha=0.7, linewidth=1)
     plt.xlabel('迭代次数')
     plt.ylabel('平均认知能耗')
@@ -25,11 +38,11 @@ def visualize_energy_convergence(energy_history, concept_centers):
         plt.legend(loc='upper right', fontsize=8)
 
     plt.tight_layout()
+    _auto_save_fig(fig, "energy_convergence")
     plt.show()
 
-
 def visualize_cognitive_states(cognitive_energy_history, energy_history):
-    """可视化认知状态变化"""
+    """可视化认知状态变化（自动保存）"""
     if not cognitive_energy_history:
         return
 
@@ -59,7 +72,7 @@ def visualize_cognitive_states(cognitive_energy_history, energy_history):
 
     colors = [state_colors[state] for state in states]
 
-    plt.figure(figsize=(12, 8))
+    fig = plt.figure(figsize=(12, 8))
 
     plt.subplot(2, 1, 1)
     plt.scatter(iterations, energies, c=colors, alpha=0.6)
@@ -80,6 +93,7 @@ def visualize_cognitive_states(cognitive_energy_history, energy_history):
     plt.grid(True, alpha=0.3)
 
     plt.tight_layout()
+    _auto_save_fig(fig, "cognitive_states")
     plt.show()
 
     state_counts = {}
@@ -91,10 +105,9 @@ def visualize_cognitive_states(cognitive_energy_history, energy_history):
         percentage = (count / len(states)) * 100
         print(f"{state.value}: {count}次 ({percentage:.1f}%)")
 
-
 def visualize_graph(G, concept_centers, title="认知图", figsize=(12, 8)):
-    """可视化认知图"""
-    plt.figure(figsize=figsize)
+    """可视化认知图（自动保存）"""
+    fig = plt.figure(figsize=figsize)
     pos = nx.spring_layout(G, seed=42)
 
     node_colors = []
@@ -133,6 +146,7 @@ def visualize_graph(G, concept_centers, title="认知图", figsize=(12, 8)):
     plt.title(title, fontsize=16, fontfamily='SimHei')
     plt.axis('off')
     plt.tight_layout()
+    _auto_save_fig(fig, "cognitive_graph")
     plt.show()
 
     # 计算统计信息
@@ -150,9 +164,8 @@ def visualize_graph(G, concept_centers, title="认知图", figsize=(12, 8)):
     print(f"  概念压缩中心: {len(concept_centers)}")
     print(f"  迁移桥梁: {migration_bridges}")
 
-
 def visualize_semantic_network(semantic_network, concept_definitions=None, highlight_concepts=None):
-    """可视化语义网络"""
+    """可视化语义网络（自动保存）"""
     try:
         G = nx.Graph()
 
@@ -175,7 +188,7 @@ def visualize_semantic_network(semantic_network, concept_definitions=None, highl
 
         node_colors = [domain_colors[G.nodes[node].get('domain', 'other')] for node in G.nodes()]
 
-        plt.figure(figsize=(16, 12))
+        fig = plt.figure(figsize=(16, 12))
         pos = nx.spring_layout(G, k=3, iterations=50)
 
         nx.draw_networkx_nodes(G, pos, node_color=node_colors, node_size=500, alpha=0.9)
@@ -189,6 +202,7 @@ def visualize_semantic_network(semantic_network, concept_definitions=None, highl
         plt.title("语义概念网络", fontsize=16, fontfamily='SimHei')
         plt.axis('off')
         plt.tight_layout()
+        _auto_save_fig(fig, "semantic_network")
         plt.show()
 
     except ImportError:
