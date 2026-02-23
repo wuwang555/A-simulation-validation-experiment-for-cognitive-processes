@@ -14,6 +14,8 @@ from typing import Dict, Any, List, Optional, Tuple
 
 from core.cognitive_states import CognitiveState, CognitiveStateManager
 
+np.random.seed(42)
+random.seed(42)
 
 class BaseCognitiveGraph:
     """基础认知图类，实现能量动力学驱动的认知网络演化。

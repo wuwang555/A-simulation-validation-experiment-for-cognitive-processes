@@ -11,6 +11,7 @@ import networkx as nx
 from typing import List, Tuple, Dict
 from scipy.linalg import expm
 
+np.random.seed(42)
 
 class LieAlgebraGenerator:
     """李代数生成元，对应基本认知操作。

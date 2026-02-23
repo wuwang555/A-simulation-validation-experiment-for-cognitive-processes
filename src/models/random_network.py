@@ -10,6 +10,8 @@ import random
 from typing import Dict, Any
 from core.cognitive_graph import BaseCognitiveGraph
 
+np.random.seed(42)
+random.seed(42)
 
 class RandomNetworkModel(BaseCognitiveGraph):
     """随机网络模型 - 无智能基准。

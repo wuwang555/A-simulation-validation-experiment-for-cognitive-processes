@@ -12,7 +12,7 @@ from typing import List, Dict, Any
 # 从配置文件导入状态转移矩阵和能耗范围
 from config import STATE_TRANSITION_MATRIX, STATE_ENERGY_RANGES
 
-
+random.seed(42)
 class CognitiveState(Enum):
     """认知状态枚举，对应四种典型认知状态。"""
     FOCUSED = "专注状态"

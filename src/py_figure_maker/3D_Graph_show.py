@@ -10,6 +10,8 @@ import time
 import sys
 import os
 
+np.random.seed(42)
+random.seed(42)
 # 添加项目路径以便导入config
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
