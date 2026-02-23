@@ -223,6 +223,8 @@ class EmergenceStudyFixed:
         universe.G.add_nodes_from(test_nodes)
 
         import random
+        np.random.seed(42)
+        random.seed(42)
         # 创建更有意义的连接
         connections = [
             ("算法", "数据结构"), ("算法", "优化"), ("递归", "迭代"),

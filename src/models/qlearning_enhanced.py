@@ -9,7 +9,8 @@ import random
 from typing import Dict, Any, List, Tuple
 from core.cognitive_graph import BaseCognitiveGraph
 
-
+np.random.seed(42)
+random.seed(42)
 class EnhancedQLearningCognitiveGraph(BaseCognitiveGraph):
     """增强的Q-learning认知图模型。
 

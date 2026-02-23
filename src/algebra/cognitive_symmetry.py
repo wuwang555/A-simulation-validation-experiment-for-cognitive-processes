@@ -13,6 +13,8 @@ import itertools
 import math
 import random
 
+np.random.seed(42)
+random.seed(42)
 
 class CognitiveSymmetryGroup:
     """认知对称群实现。

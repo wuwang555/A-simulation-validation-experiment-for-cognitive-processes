@@ -126,6 +126,8 @@ class AlgebraValidationExperiments:
 
                 # 随机选择一个学习操作
                 import random
+                np.random.seed(42)
+                random.seed(42)
                 edges = list(before_net.edges())
                 if edges:
                     u, v = random.choice(edges)

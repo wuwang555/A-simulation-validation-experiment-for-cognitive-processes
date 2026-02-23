@@ -12,6 +12,8 @@ from emergence.universe import CognitiveUniverse
 from emergence.detector_fixed import EmergenceDetectorFixed
 
 
+random.seed(42)
+
 class CognitiveUniverseEnhanced(CognitiveUniverse):
     """增强的认知宇宙，在演化过程中使用 EmergenceDetectorFixed 检测涌现现象。"""
 

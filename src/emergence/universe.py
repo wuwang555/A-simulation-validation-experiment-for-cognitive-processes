@@ -13,6 +13,8 @@ from typing import Dict, Any, List, Optional
 
 from config import BASE_PARAMETERS
 
+np.random.seed(42)
+random.seed(42)
 
 class PureEnergyDynamics:
     """纯粹的能量动力学，只实现两个公设：全局能量计算和局部变化尝试。"""

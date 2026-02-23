@@ -1,0 +1,3105 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key id="d3" for="edge" attr.name="similarity" attr.type="double"/>
+<key id="d2" for="edge" attr.name="original_weight" attr.type="double"/>
+<key id="d1" for="edge" attr.name="traversal_count" attr.type="long"/>
+<key id="d0" for="edge" attr.name="weight" attr.type="double"/>
+<graph edgedefault="undirected"><node id="牛顿定律"/>
+<node id="力学"/>
+<node id="运动学"/>
+<node id="能量守恒"/>
+<node id="动量"/>
+<node id="万有引力"/>
+<node id="摩擦力"/>
+<node id="静电力"/>
+<node id="电磁学"/>
+<node id="热力学"/>
+<node id="相对论"/>
+<node id="量子力学"/>
+<node id="量子场论"/>
+<node id="统计力学"/>
+<node id="宇宙学"/>
+<node id="微积分"/>
+<node id="几何学"/>
+<node id="拓扑学"/>
+<node id="线性代数"/>
+<node id="概率论"/>
+<node id="统计学"/>
+<node id="代数"/>
+<node id="离散数学"/>
+<node id="微分几何"/>
+<node id="代数学"/>
+<node id="数学分析"/>
+<node id="组合数学"/>
+<node id="数论"/>
+<node id="复变函数"/>
+<node id="实分析"/>
+<node id="泛函分析"/>
+<node id="算法"/>
+<node id="数据结构"/>
+<node id="机器学习"/>
+<node id="神经网络"/>
+<node id="计算机视觉"/>
+<node id="自然语言处理"/>
+<node id="数据库"/>
+<node id="操作系统"/>
+<node id="软件工程"/>
+<node id="计算机网络"/>
+<node id="编译原理"/>
+<node id="人机交互"/>
+<node id="信息安全"/>
+<node id="分布式系统"/>
+<node id="云计算"/>
+<node id="物联网"/>
+<node id="深度学习"/>
+<node id="强化学习"/>
+<node id="生成对抗网络"/>
+<node id="注意力机制"/>
+<edge source="牛顿定律" target="力学">
+  <data key="d0">0.12551191467508943</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="牛顿定律" target="运动学">
+  <data key="d0">0.1395290523445888</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="牛顿定律" target="能量守恒">
+  <data key="d0">0.1053746917274251</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="牛顿定律" target="动量">
+  <data key="d0">0.11025709272762746</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="牛顿定律" target="万有引力">
+  <data key="d0">0.1437788477355632</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4333333333333333</data>
+  <data key="d3">0.37777777777777777</data>
+</edge>
+<edge source="牛顿定律" target="摩擦力">
+  <data key="d0">0.16914834495045675</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="牛顿定律" target="静电力">
+  <data key="d0">0.13829764124493943</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="牛顿定律" target="电磁学">
+  <data key="d0">0.18518357474972455</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="牛顿定律" target="热力学">
+  <data key="d0">0.19648635043241455</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="牛顿定律" target="相对论">
+  <data key="d0">0.16353530040056144</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="牛顿定律" target="量子力学">
+  <data key="d0">0.12760223847654742</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4333333333333333</data>
+  <data key="d3">0.37777777777777777</data>
+</edge>
+<edge source="牛顿定律" target="量子场论">
+  <data key="d0">0.20704608674389963</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="牛顿定律" target="统计力学">
+  <data key="d0">0.2862526165145476</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="牛顿定律" target="宇宙学">
+  <data key="d0">0.11923567457761218</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="力学" target="运动学">
+  <data key="d0">0.13225348891085972</data>
+  <data key="d1">0</data>
+  <data key="d2">0.9500000000000002</data>
+  <data key="d3">0.7</data>
+</edge>
+<edge source="力学" target="能量守恒">
+  <data key="d0">0.1276538805362991</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="力学" target="动量">
+  <data key="d0">0.10780516787218042</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3590909090909091</data>
+  <data key="d3">0.42727272727272725</data>
+</edge>
+<edge source="力学" target="万有引力">
+  <data key="d0">0.12331117123302482</data>
+  <data key="d1">0</data>
+  <data key="d2">1.445</data>
+  <data key="d3">0.37</data>
+</edge>
+<edge source="力学" target="摩擦力">
+  <data key="d0">0.14270229476383267</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="力学" target="静电力">
+  <data key="d0">0.1648307463317132</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="力学" target="电磁学">
+  <data key="d0">0.1536201310619838</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="力学" target="热力学">
+  <data key="d0">0.10876940864791718</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="力学" target="相对论">
+  <data key="d0">0.1863740727147862</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4625</data>
+  <data key="d3">0.35833333333333334</data>
+</edge>
+<edge source="力学" target="量子力学">
+  <data key="d0">0.156681868797314</data>
+  <data key="d1">0</data>
+  <data key="d2">1.445</data>
+  <data key="d3">0.37</data>
+</edge>
+<edge source="力学" target="量子场论">
+  <data key="d0">0.21020645554867357</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="力学" target="统计力学">
+  <data key="d0">0.12100863385838714</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="力学" target="宇宙学">
+  <data key="d0">0.19082610835291303</data>
+  <data key="d1">0</data>
+  <data key="d2">1.445</data>
+  <data key="d3">0.37</data>
+</edge>
+<edge source="力学" target="微积分">
+  <data key="d0">0.22730936485511447</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="力学" target="几何学">
+  <data key="d0">0.1244445078170857</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8225</data>
+  <data key="d3">0.11833333333333332</data>
+</edge>
+<edge source="力学" target="拓扑学">
+  <data key="d0">0.176356965295792</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8225</data>
+  <data key="d3">0.11833333333333332</data>
+</edge>
+<edge source="力学" target="线性代数">
+  <data key="d0">0.1013867220615255</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="力学" target="概率论">
+  <data key="d0">0.19232613802986664</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="力学" target="代数">
+  <data key="d0">0.28484806731685397</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="力学" target="离散数学">
+  <data key="d0">0.2127940960496549</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="力学" target="微分几何">
+  <data key="d0">0.0997619727245598</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="力学" target="代数学">
+  <data key="d0">0.24573120247459765</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="力学" target="数学分析">
+  <data key="d0">0.3029167446385244</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="力学" target="组合数学">
+  <data key="d0">0.22585539132268176</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="力学" target="数论">
+  <data key="d0">0.1903154332299392</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="力学" target="复变函数">
+  <data key="d0">0.13348704340887524</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="力学" target="实分析">
+  <data key="d0">0.32403527733769466</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="力学" target="泛函分析">
+  <data key="d0">0.21311351910892615</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="力学" target="机器学习">
+  <data key="d0">0.1837300565771562</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8225</data>
+  <data key="d3">0.11833333333333332</data>
+</edge>
+<edge source="力学" target="编译原理">
+  <data key="d0">0.1467450175500383</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="运动学" target="能量守恒">
+  <data key="d0">0.17521487822877438</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="运动学" target="动量">
+  <data key="d0">0.18281698387675072</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="运动学" target="万有引力">
+  <data key="d0">0.16118426588294063</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4333333333333333</data>
+  <data key="d3">0.37777777777777777</data>
+</edge>
+<edge source="运动学" target="摩擦力">
+  <data key="d0">0.11234049707328642</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="运动学" target="静电力">
+  <data key="d0">0.17523869349620325</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="运动学" target="电磁学">
+  <data key="d0">0.16045590166329482</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="运动学" target="热力学">
+  <data key="d0">0.15431564781849272</data>
+  <data key="d1">0</data>
+  <data key="d2">1.25</data>
+  <data key="d3">0.5</data>
+</edge>
+<edge source="运动学" target="相对论">
+  <data key="d0">0.3274763129766084</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4545454545454546</data>
+  <data key="d3">0.36363636363636365</data>
+</edge>
+<edge source="运动学" target="量子力学">
+  <data key="d0">0.1477702929916071</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4333333333333333</data>
+  <data key="d3">0.37777777777777777</data>
+</edge>
+<edge source="运动学" target="量子场论">
+  <data key="d0">0.3722588672132473</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="运动学" target="统计力学">
+  <data key="d0">0.13857377945313107</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="运动学" target="宇宙学">
+  <data key="d0">0.11076371037691177</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4333333333333333</data>
+  <data key="d3">0.37777777777777777</data>
+</edge>
+<edge source="运动学" target="微积分">
+  <data key="d0">0.10431834894089496</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="运动学" target="几何学">
+  <data key="d0">0.20272807385648375</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="运动学" target="拓扑学">
+  <data key="d0">0.28748424325865146</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="运动学" target="线性代数">
+  <data key="d0">0.2733859118046234</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="运动学" target="概率论">
+  <data key="d0">0.15323222710375986</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="运动学" target="代数">
+  <data key="d0">0.22379778658027213</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="运动学" target="离散数学">
+  <data key="d0">0.4000922409023367</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="运动学" target="微分几何">
+  <data key="d0">0.16461901447599447</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="运动学" target="代数学">
+  <data key="d0">0.322205796161031</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="运动学" target="数学分析">
+  <data key="d0">0.16605752184190742</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="运动学" target="组合数学">
+  <data key="d0">0.203473287696259</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="运动学" target="数论">
+  <data key="d0">0.21602288836656877</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="运动学" target="复变函数">
+  <data key="d0">0.2923895228596263</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="运动学" target="实分析">
+  <data key="d0">0.1839535982067054</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="运动学" target="泛函分析">
+  <data key="d0">0.2585006244674076</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="运动学" target="机器学习">
+  <data key="d0">0.16277211160752644</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="运动学" target="编译原理">
+  <data key="d0">0.2623182235559828</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="能量守恒" target="动量">
+  <data key="d0">0.10564054804997765</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="能量守恒" target="万有引力">
+  <data key="d0">0.15076400928550626</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="能量守恒" target="摩擦力">
+  <data key="d0">0.13137781677751212</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="能量守恒" target="静电力">
+  <data key="d0">0.21403646758185144</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="能量守恒" target="电磁学">
+  <data key="d0">0.20302672328511437</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="能量守恒" target="热力学">
+  <data key="d0">0.19753551803287447</data>
+  <data key="d1">0</data>
+  <data key="d2">1.445</data>
+  <data key="d3">0.37</data>
+</edge>
+<edge source="能量守恒" target="相对论">
+  <data key="d0">0.14078380241428906</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="能量守恒" target="量子力学">
+  <data key="d0">0.12561627481030752</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="能量守恒" target="量子场论">
+  <data key="d0">0.21348041844789986</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4625</data>
+  <data key="d3">0.35833333333333334</data>
+</edge>
+<edge source="能量守恒" target="统计力学">
+  <data key="d0">0.17754845004755263</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="能量守恒" target="宇宙学">
+  <data key="d0">0.28425663346147667</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="能量守恒" target="物联网">
+  <data key="d0">0.11034611482796118</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="动量" target="万有引力">
+  <data key="d0">0.13813677887389858</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="动量" target="摩擦力">
+  <data key="d0">0.21639425761280096</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="动量" target="静电力">
+  <data key="d0">0.39984505130460635</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="动量" target="电磁学">
+  <data key="d0">0.22142924366331598</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="动量" target="热力学">
+  <data key="d0">0.12633907328787353</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="动量" target="相对论">
+  <data key="d0">0.19283308545675854</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4692307692307693</data>
+  <data key="d3">0.3538461538461538</data>
+</edge>
+<edge source="动量" target="量子力学">
+  <data key="d0">0.19263452092731667</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="动量" target="量子场论">
+  <data key="d0">0.24682427117780825</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="动量" target="统计力学">
+  <data key="d0">0.3940351561271915</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="动量" target="宇宙学">
+  <data key="d0">0.2991964129482439</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="万有引力" target="摩擦力">
+  <data key="d0">0.23406628818148026</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4333333333333333</data>
+  <data key="d3">0.37777777777777777</data>
+</edge>
+<edge source="万有引力" target="静电力">
+  <data key="d0">0.16413692858628529</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4</data>
+  <data key="d3">0.39999999999999997</data>
+</edge>
+<edge source="万有引力" target="电磁学">
+  <data key="d0">0.24418871698729916</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="万有引力" target="热力学">
+  <data key="d0">0.19361072231665824</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="万有引力" target="相对论">
+  <data key="d0">0.20607069272402298</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="万有引力" target="量子力学">
+  <data key="d0">0.2442125082674477</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="万有引力" target="量子场论">
+  <data key="d0">0.2771080731912422</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="万有引力" target="统计力学">
+  <data key="d0">0.2436981475372776</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="万有引力" target="宇宙学">
+  <data key="d0">0.38533165758674415</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="万有引力" target="人机交互">
+  <data key="d0">0.34136014018965244</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="摩擦力" target="静电力">
+  <data key="d0">0.1516623698470024</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4</data>
+  <data key="d3">0.39999999999999997</data>
+</edge>
+<edge source="摩擦力" target="电磁学">
+  <data key="d0">0.1911123276638855</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="摩擦力" target="热力学">
+  <data key="d0">0.1801079390043729</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="摩擦力" target="相对论">
+  <data key="d0">0.32159826760745286</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="摩擦力" target="量子力学">
+  <data key="d0">0.2915593330440246</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="摩擦力" target="量子场论">
+  <data key="d0">0.10059227400278586</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="摩擦力" target="统计力学">
+  <data key="d0">0.1032579905143925</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="摩擦力" target="宇宙学">
+  <data key="d0">0.23968633960003935</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="摩擦力" target="人机交互">
+  <data key="d0">0.16323500945724428</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="静电力" target="电磁学">
+  <data key="d0">0.12498041008100097</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2</data>
+  <data key="d3">0.5333333333333333</data>
+</edge>
+<edge source="静电力" target="热力学">
+  <data key="d0">0.405270494295035</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="静电力" target="相对论">
+  <data key="d0">0.1697078215949492</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="静电力" target="量子力学">
+  <data key="d0">0.2297897388979007</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="静电力" target="量子场论">
+  <data key="d0">0.24016882766062442</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="静电力" target="统计力学">
+  <data key="d0">0.2601097142530284</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="静电力" target="宇宙学">
+  <data key="d0">0.21507330887830972</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="静电力" target="人机交互">
+  <data key="d0">0.2632720351304336</data>
+  <data key="d1">0</data>
+  <data key="d2">1.735</data>
+  <data key="d3">0.17666666666666664</data>
+</edge>
+<edge source="电磁学" target="热力学">
+  <data key="d0">0.17972370035071217</data>
+  <data key="d1">0</data>
+  <data key="d2">1.25</data>
+  <data key="d3">0.5</data>
+</edge>
+<edge source="电磁学" target="相对论">
+  <data key="d0">0.19749341771802925</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="电磁学" target="量子力学">
+  <data key="d0">0.12519420820490623</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4333333333333333</data>
+  <data key="d3">0.37777777777777777</data>
+</edge>
+<edge source="电磁学" target="量子场论">
+  <data key="d0">0.1332921838899739</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="电磁学" target="统计力学">
+  <data key="d0">0.21305969075941278</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="电磁学" target="宇宙学">
+  <data key="d0">0.1119209111560381</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4333333333333333</data>
+  <data key="d3">0.37777777777777777</data>
+</edge>
+<edge source="电磁学" target="微积分">
+  <data key="d0">0.13144473329665637</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="电磁学" target="几何学">
+  <data key="d0">0.12278688339797808</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="电磁学" target="拓扑学">
+  <data key="d0">0.11788885614546697</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="电磁学" target="线性代数">
+  <data key="d0">0.21094275765914888</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="电磁学" target="概率论">
+  <data key="d0">0.14247822235487584</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="电磁学" target="代数">
+  <data key="d0">0.1801753215932127</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="电磁学" target="离散数学">
+  <data key="d0">0.20381355883550148</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="电磁学" target="微分几何">
+  <data key="d0">0.23247434932649472</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="电磁学" target="代数学">
+  <data key="d0">0.1465184712229612</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="电磁学" target="数学分析">
+  <data key="d0">0.21006977874395028</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="电磁学" target="组合数学">
+  <data key="d0">0.1942524049923548</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="电磁学" target="数论">
+  <data key="d0">0.28758239830890653</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="电磁学" target="复变函数">
+  <data key="d0">0.18238558791042667</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="电磁学" target="实分析">
+  <data key="d0">0.2100097865335464</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="电磁学" target="泛函分析">
+  <data key="d0">0.1194944226895472</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="电磁学" target="机器学习">
+  <data key="d0">0.13501671161552856</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="电磁学" target="编译原理">
+  <data key="d0">0.1996651506725211</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="热力学" target="相对论">
+  <data key="d0">0.23097069948644888</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="热力学" target="量子力学">
+  <data key="d0">0.1783226515621017</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4187500000000002</data>
+  <data key="d3">0.38749999999999996</data>
+</edge>
+<edge source="热力学" target="量子场论">
+  <data key="d0">0.2396712625285028</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="热力学" target="统计力学">
+  <data key="d0">0.16382557944504433</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="热力学" target="宇宙学">
+  <data key="d0">0.26995990860942054</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4187500000000002</data>
+  <data key="d3">0.38749999999999996</data>
+</edge>
+<edge source="热力学" target="微积分">
+  <data key="d0">0.18049180347924756</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="热力学" target="几何学">
+  <data key="d0">0.11523981141597149</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="热力学" target="拓扑学">
+  <data key="d0">0.24059361817350006</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="热力学" target="线性代数">
+  <data key="d0">0.17295112269217555</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="热力学" target="概率论">
+  <data key="d0">0.25391614911180704</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="热力学" target="代数">
+  <data key="d0">0.15889291342986736</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="热力学" target="离散数学">
+  <data key="d0">0.17684699990499775</data>
+  <data key="d1">0</data>
+  <data key="d2">1.76</data>
+  <data key="d3">0.15999999999999998</data>
+</edge>
+<edge source="热力学" target="微分几何">
+  <data key="d0">0.19362092229634112</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="热力学" target="代数学">
+  <data key="d0">0.12334223587980629</data>
+  <data key="d1">0</data>
+  <data key="d2">1.76</data>
+  <data key="d3">0.15999999999999998</data>
+</edge>
+<edge source="热力学" target="数学分析">
+  <data key="d0">0.1698641111463445</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="热力学" target="组合数学">
+  <data key="d0">0.29864340003052064</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="热力学" target="数论">
+  <data key="d0">0.1711359143385345</data>
+  <data key="d1">0</data>
+  <data key="d2">1.76</data>
+  <data key="d3">0.15999999999999998</data>
+</edge>
+<edge source="热力学" target="复变函数">
+  <data key="d0">0.24746797400767545</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="热力学" target="实分析">
+  <data key="d0">0.2965209980758876</data>
+  <data key="d1">0</data>
+  <data key="d2">1.76</data>
+  <data key="d3">0.15999999999999998</data>
+</edge>
+<edge source="热力学" target="泛函分析">
+  <data key="d0">0.4648120080211232</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="热力学" target="机器学习">
+  <data key="d0">0.27387315104182036</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="热力学" target="编译原理">
+  <data key="d0">0.3658936584932732</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="相对论" target="量子力学">
+  <data key="d0">0.4197937074494968</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="相对论" target="量子场论">
+  <data key="d0">0.18210282468258623</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4625</data>
+  <data key="d3">0.35833333333333334</data>
+</edge>
+<edge source="相对论" target="统计力学">
+  <data key="d0">0.3331115837811521</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="相对论" target="宇宙学">
+  <data key="d0">0.18439584751971624</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="量子力学" target="量子场论">
+  <data key="d0">0.13389794598705895</data>
+  <data key="d1">0</data>
+  <data key="d2">1.445</data>
+  <data key="d3">0.37</data>
+</edge>
+<edge source="量子力学" target="统计力学">
+  <data key="d0">0.19674869735919304</data>
+  <data key="d1">0</data>
+  <data key="d2">1.445</data>
+  <data key="d3">0.37</data>
+</edge>
+<edge source="量子力学" target="宇宙学">
+  <data key="d0">0.16502250586937792</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="量子场论" target="统计力学">
+  <data key="d0">0.10449142554077157</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="量子场论" target="宇宙学">
+  <data key="d0">0.17166958704528856</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="量子场论" target="物联网">
+  <data key="d0">0.11685264651668234</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="统计力学" target="宇宙学">
+  <data key="d0">0.21057166878271757</data>
+  <data key="d1">0</data>
+  <data key="d2">1.445</data>
+  <data key="d3">0.37</data>
+</edge>
+<edge source="统计力学" target="微积分">
+  <data key="d0">0.313172601627668</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="统计力学" target="几何学">
+  <data key="d0">0.22472027643347264</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8225</data>
+  <data key="d3">0.11833333333333332</data>
+</edge>
+<edge source="统计力学" target="拓扑学">
+  <data key="d0">0.10098085265708237</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8225</data>
+  <data key="d3">0.11833333333333332</data>
+</edge>
+<edge source="统计力学" target="线性代数">
+  <data key="d0">0.2454855399077222</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="统计力学" target="概率论">
+  <data key="d0">0.20332877281123768</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="统计力学" target="代数">
+  <data key="d0">0.10016447557793723</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="统计力学" target="离散数学">
+  <data key="d0">0.17598292270779853</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="统计力学" target="微分几何">
+  <data key="d0">0.29836486185826094</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="统计力学" target="代数学">
+  <data key="d0">0.20288719686929435</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="统计力学" target="数学分析">
+  <data key="d0">0.27301831175042807</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="统计力学" target="组合数学">
+  <data key="d0">0.2808273325331824</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="统计力学" target="数论">
+  <data key="d0">0.19442110111746483</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="统计力学" target="复变函数">
+  <data key="d0">0.274027746031608</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="统计力学" target="实分析">
+  <data key="d0">0.21636680272189626</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="统计力学" target="泛函分析">
+  <data key="d0">0.2188570805135165</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="统计力学" target="机器学习">
+  <data key="d0">0.19295718488449123</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8225</data>
+  <data key="d3">0.11833333333333332</data>
+</edge>
+<edge source="统计力学" target="软件工程">
+  <data key="d0">0.24222592856551506</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="统计力学" target="编译原理">
+  <data key="d0">0.1793683451448436</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="统计力学" target="强化学习">
+  <data key="d0">0.34679705887813445</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="宇宙学" target="微积分">
+  <data key="d0">0.2712283818380417</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="宇宙学" target="几何学">
+  <data key="d0">0.218774806497762</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="宇宙学" target="拓扑学">
+  <data key="d0">0.3444273482607427</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="宇宙学" target="线性代数">
+  <data key="d0">0.20246815756771025</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="宇宙学" target="概率论">
+  <data key="d0">0.2303272092345372</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="宇宙学" target="代数">
+  <data key="d0">0.17545272779321505</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="宇宙学" target="离散数学">
+  <data key="d0">0.35921795981227395</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="宇宙学" target="微分几何">
+  <data key="d0">0.23225306970003234</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="宇宙学" target="代数学">
+  <data key="d0">0.1781643175801172</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="宇宙学" target="数学分析">
+  <data key="d0">0.43263845125287537</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="宇宙学" target="组合数学">
+  <data key="d0">0.2730995115903632</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="宇宙学" target="数论">
+  <data key="d0">0.23290004186221677</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="宇宙学" target="复变函数">
+  <data key="d0">0.28520398572443284</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="宇宙学" target="实分析">
+  <data key="d0">0.22467554878826557</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="宇宙学" target="泛函分析">
+  <data key="d0">0.34807388684839724</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="宇宙学" target="机器学习">
+  <data key="d0">0.47563048685769904</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="宇宙学" target="编译原理">
+  <data key="d0">0.3977745828557706</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="微积分" target="几何学">
+  <data key="d0">0.13182257846966</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3590909090909091</data>
+  <data key="d3">0.42727272727272725</data>
+</edge>
+<edge source="微积分" target="拓扑学">
+  <data key="d0">0.10111259992380428</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3590909090909091</data>
+  <data key="d3">0.42727272727272725</data>
+</edge>
+<edge source="微积分" target="线性代数">
+  <data key="d0">0.10176424525504289</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="微积分" target="概率论">
+  <data key="d0">0.15471186961891178</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="微积分" target="统计学">
+  <data key="d0">0.11338589360252246</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4545454545454546</data>
+  <data key="d3">0.36363636363636365</data>
+</edge>
+<edge source="微积分" target="代数">
+  <data key="d0">0.21186871422633718</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="微积分" target="离散数学">
+  <data key="d0">0.20830204510880465</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="微积分" target="微分几何">
+  <data key="d0">0.13624413450266418</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="微积分" target="代数学">
+  <data key="d0">0.183357171585397</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="微积分" target="数学分析">
+  <data key="d0">0.10229965872553493</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="微积分" target="组合数学">
+  <data key="d0">0.09088465751133132</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="微积分" target="数论">
+  <data key="d0">0.2317414992511118</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="微积分" target="复变函数">
+  <data key="d0">0.11512182095489572</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="微积分" target="实分析">
+  <data key="d0">0.11147711634233522</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="微积分" target="泛函分析">
+  <data key="d0">0.1147093889895832</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="微积分" target="机器学习">
+  <data key="d0">0.31657990158480515</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8225</data>
+  <data key="d3">0.11833333333333332</data>
+</edge>
+<edge source="微积分" target="编译原理">
+  <data key="d0">0.2094220974527308</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="几何学" target="拓扑学">
+  <data key="d0">0.10526420026441348</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2636363636363637</data>
+  <data key="d3">0.49090909090909085</data>
+</edge>
+<edge source="几何学" target="线性代数">
+  <data key="d0">0.10737386114640345</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2349999999999999</data>
+  <data key="d3">0.51</data>
+</edge>
+<edge source="几何学" target="概率论">
+  <data key="d0">0.20003693033402478</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3590909090909091</data>
+  <data key="d3">0.42727272727272725</data>
+</edge>
+<edge source="几何学" target="统计学">
+  <data key="d0">0.10789886910935223</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4625</data>
+  <data key="d3">0.35833333333333334</data>
+</edge>
+<edge source="几何学" target="代数">
+  <data key="d0">0.2916068146322424</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="几何学" target="离散数学">
+  <data key="d0">0.2231610629421782</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="几何学" target="微分几何">
+  <data key="d0">0.12933625855454353</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3590909090909091</data>
+  <data key="d3">0.42727272727272725</data>
+</edge>
+<edge source="几何学" target="代数学">
+  <data key="d0">0.16433732722135003</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="几何学" target="数学分析">
+  <data key="d0">0.10683803673624577</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="几何学" target="组合数学">
+  <data key="d0">0.10003967857148087</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3590909090909091</data>
+  <data key="d3">0.42727272727272725</data>
+</edge>
+<edge source="几何学" target="数论">
+  <data key="d0">0.1965970660477717</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="几何学" target="复变函数">
+  <data key="d0">0.40679948460973525</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="几何学" target="实分析">
+  <data key="d0">0.3041319127647709</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="几何学" target="泛函分析">
+  <data key="d0">0.387211794853249</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2349999999999999</data>
+  <data key="d3">0.51</data>
+</edge>
+<edge source="几何学" target="机器学习">
+  <data key="d0">0.20308688847336692</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8292307692307692</data>
+  <data key="d3">0.11384615384615385</data>
+</edge>
+<edge source="几何学" target="编译原理">
+  <data key="d0">0.24503953853219484</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="拓扑学" target="线性代数">
+  <data key="d0">0.1549038758644145</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2349999999999999</data>
+  <data key="d3">0.51</data>
+</edge>
+<edge source="拓扑学" target="概率论">
+  <data key="d0">0.3547526502410195</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3590909090909091</data>
+  <data key="d3">0.42727272727272725</data>
+</edge>
+<edge source="拓扑学" target="统计学">
+  <data key="d0">0.12852786159611704</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4625</data>
+  <data key="d3">0.35833333333333334</data>
+</edge>
+<edge source="拓扑学" target="代数">
+  <data key="d0">0.10283608184870326</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="拓扑学" target="离散数学">
+  <data key="d0">0.2245839925011274</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="拓扑学" target="微分几何">
+  <data key="d0">0.10858190382378942</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3590909090909091</data>
+  <data key="d3">0.42727272727272725</data>
+</edge>
+<edge source="拓扑学" target="代数学">
+  <data key="d0">0.1445482680867702</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="拓扑学" target="数学分析">
+  <data key="d0">0.3234152654197818</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="拓扑学" target="组合数学">
+  <data key="d0">0.1489729528623374</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3590909090909091</data>
+  <data key="d3">0.42727272727272725</data>
+</edge>
+<edge source="拓扑学" target="数论">
+  <data key="d0">0.10008170201346203</data>
+  <data key="d1">0</data>
+  <data key="d2">1.15625</data>
+  <data key="d3">0.5625</data>
+</edge>
+<edge source="拓扑学" target="复变函数">
+  <data key="d0">0.33793167918366646</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="拓扑学" target="实分析">
+  <data key="d0">0.1503286062261069</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="拓扑学" target="泛函分析">
+  <data key="d0">0.3078760317989588</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2349999999999999</data>
+  <data key="d3">0.51</data>
+</edge>
+<edge source="拓扑学" target="机器学习">
+  <data key="d0">0.34682990800170854</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8292307692307692</data>
+  <data key="d3">0.11384615384615385</data>
+</edge>
+<edge source="拓扑学" target="编译原理">
+  <data key="d0">0.26603148108342217</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="线性代数" target="概率论">
+  <data key="d0">0.16366399904085455</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="线性代数" target="统计学">
+  <data key="d0">0.10520622034150418</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4545454545454546</data>
+  <data key="d3">0.36363636363636365</data>
+</edge>
+<edge source="线性代数" target="代数">
+  <data key="d0">0.21911909901109095</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="线性代数" target="离散数学">
+  <data key="d0">0.2789111875081243</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="线性代数" target="微分几何">
+  <data key="d0">0.1013638246794189</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="线性代数" target="代数学">
+  <data key="d0">0.1690150765292465</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="线性代数" target="数学分析">
+  <data key="d0">0.11632264160016628</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="线性代数" target="组合数学">
+  <data key="d0">0.20074169139177328</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="线性代数" target="数论">
+  <data key="d0">0.18175335990173253</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="线性代数" target="复变函数">
+  <data key="d0">0.16127906167559036</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="线性代数" target="实分析">
+  <data key="d0">0.10050898152847523</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="线性代数" target="泛函分析">
+  <data key="d0">0.1046717654609423</data>
+  <data key="d1">0</data>
+  <data key="d2">1.0250000000000001</data>
+  <data key="d3">0.6499999999999999</data>
+</edge>
+<edge source="线性代数" target="机器学习">
+  <data key="d0">0.2355038196601661</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8225</data>
+  <data key="d3">0.11833333333333332</data>
+</edge>
+<edge source="线性代数" target="编译原理">
+  <data key="d0">0.3738215198046823</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="概率论" target="统计学">
+  <data key="d0">0.17017386496379677</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4545454545454546</data>
+  <data key="d3">0.36363636363636365</data>
+</edge>
+<edge source="概率论" target="代数">
+  <data key="d0">0.2889657126781374</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="概率论" target="离散数学">
+  <data key="d0">0.33669758253567816</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="概率论" target="微分几何">
+  <data key="d0">0.15785034533804077</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="概率论" target="代数学">
+  <data key="d0">0.14204425934402712</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="概率论" target="数学分析">
+  <data key="d0">0.14140282791527078</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="概率论" target="组合数学">
+  <data key="d0">0.1705071721823942</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="概率论" target="数论">
+  <data key="d0">0.1960599061611113</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="概率论" target="复变函数">
+  <data key="d0">0.20387581554024378</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="概率论" target="实分析">
+  <data key="d0">0.21439628510085995</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="概率论" target="泛函分析">
+  <data key="d0">0.25468649645494273</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="概率论" target="机器学习">
+  <data key="d0">0.1561649574697854</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8225</data>
+  <data key="d3">0.11833333333333332</data>
+</edge>
+<edge source="概率论" target="编译原理">
+  <data key="d0">0.21572998869792231</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="统计学" target="代数">
+  <data key="d0">0.1830412707093378</data>
+  <data key="d1">0</data>
+  <data key="d2">1.445</data>
+  <data key="d3">0.37</data>
+</edge>
+<edge source="统计学" target="离散数学">
+  <data key="d0">0.15772996922700588</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4333333333333333</data>
+  <data key="d3">0.37777777777777777</data>
+</edge>
+<edge source="统计学" target="微分几何">
+  <data key="d0">0.36744601504471464</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4545454545454546</data>
+  <data key="d3">0.36363636363636365</data>
+</edge>
+<edge source="统计学" target="代数学">
+  <data key="d0">0.15403786167277692</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4333333333333333</data>
+  <data key="d3">0.37777777777777777</data>
+</edge>
+<edge source="统计学" target="数学分析">
+  <data key="d0">0.3856652524095336</data>
+  <data key="d1">0</data>
+  <data key="d2">1.445</data>
+  <data key="d3">0.37</data>
+</edge>
+<edge source="统计学" target="组合数学">
+  <data key="d0">0.15601538827406183</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4545454545454546</data>
+  <data key="d3">0.36363636363636365</data>
+</edge>
+<edge source="统计学" target="数论">
+  <data key="d0">0.12086424690344054</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4333333333333333</data>
+  <data key="d3">0.37777777777777777</data>
+</edge>
+<edge source="统计学" target="复变函数">
+  <data key="d0">0.16563622373072281</data>
+  <data key="d1">0</data>
+  <data key="d2">1.445</data>
+  <data key="d3">0.37</data>
+</edge>
+<edge source="统计学" target="实分析">
+  <data key="d0">0.23827265783678483</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4333333333333333</data>
+  <data key="d3">0.37777777777777777</data>
+</edge>
+<edge source="统计学" target="泛函分析">
+  <data key="d0">0.23419254381629165</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4545454545454546</data>
+  <data key="d3">0.36363636363636365</data>
+</edge>
+<edge source="统计学" target="数据结构">
+  <data key="d0">0.255295156831173</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="统计学" target="计算机视觉">
+  <data key="d0">0.12590152315496295</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="统计学" target="数据库">
+  <data key="d0">0.2153490212954487</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="代数" target="离散数学">
+  <data key="d0">0.1592554484474474</data>
+  <data key="d1">0</data>
+  <data key="d2">1.25</data>
+  <data key="d3">0.5</data>
+</edge>
+<edge source="代数" target="微分几何">
+  <data key="d0">0.16637476636132809</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="代数" target="代数学">
+  <data key="d0">0.1727303543989413</data>
+  <data key="d1">0</data>
+  <data key="d2">1.25</data>
+  <data key="d3">0.5</data>
+</edge>
+<edge source="代数" target="数学分析">
+  <data key="d0">0.27370979315625094</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="代数" target="组合数学">
+  <data key="d0">0.1290450982678204</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="代数" target="数论">
+  <data key="d0">0.2038169796917848</data>
+  <data key="d1">0</data>
+  <data key="d2">1.25</data>
+  <data key="d3">0.5</data>
+</edge>
+<edge source="代数" target="复变函数">
+  <data key="d0">0.2061898717535708</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="代数" target="实分析">
+  <data key="d0">0.25680613585673445</data>
+  <data key="d1">0</data>
+  <data key="d2">1.25</data>
+  <data key="d3">0.5</data>
+</edge>
+<edge source="代数" target="泛函分析">
+  <data key="d0">0.10217173465064038</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="代数" target="机器学习">
+  <data key="d0">0.21173753804961298</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="代数" target="编译原理">
+  <data key="d0">0.30301604714077746</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="离散数学" target="微分几何">
+  <data key="d0">0.18557224463038027</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="离散数学" target="代数学">
+  <data key="d0">0.11537209976349834</data>
+  <data key="d1">0</data>
+  <data key="d2">0.9199999999999999</data>
+  <data key="d3">0.72</data>
+</edge>
+<edge source="离散数学" target="数学分析">
+  <data key="d0">0.1581668738909449</data>
+  <data key="d1">0</data>
+  <data key="d2">1.25</data>
+  <data key="d3">0.5</data>
+</edge>
+<edge source="离散数学" target="组合数学">
+  <data key="d0">0.1709762658855094</data>
+  <data key="d1">0</data>
+  <data key="d2">0.8500000000000001</data>
+  <data key="d3">0.7666666666666666</data>
+</edge>
+<edge source="离散数学" target="数论">
+  <data key="d0">0.19418760771823876</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2</data>
+  <data key="d3">0.5333333333333333</data>
+</edge>
+<edge source="离散数学" target="复变函数">
+  <data key="d0">0.107781064041731</data>
+  <data key="d1">0</data>
+  <data key="d2">1.25</data>
+  <data key="d3">0.5</data>
+</edge>
+<edge source="离散数学" target="实分析">
+  <data key="d0">0.12502015943072126</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2</data>
+  <data key="d3">0.5333333333333333</data>
+</edge>
+<edge source="离散数学" target="泛函分析">
+  <data key="d0">0.15309581360815622</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="离散数学" target="机器学习">
+  <data key="d0">0.3015141264529026</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="离散数学" target="编译原理">
+  <data key="d0">0.41907361998569964</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="微分几何" target="代数学">
+  <data key="d0">0.1442253941729515</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="微分几何" target="数学分析">
+  <data key="d0">0.22097076831230822</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="微分几何" target="组合数学">
+  <data key="d0">0.14814116149768494</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="微分几何" target="数论">
+  <data key="d0">0.2091634649621151</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="微分几何" target="复变函数">
+  <data key="d0">0.16022693508947589</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="微分几何" target="实分析">
+  <data key="d0">0.21756933379541646</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="微分几何" target="泛函分析">
+  <data key="d0">0.21239584003595072</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="微分几何" target="机器学习">
+  <data key="d0">0.28659831336277913</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8225</data>
+  <data key="d3">0.11833333333333332</data>
+</edge>
+<edge source="微分几何" target="编译原理">
+  <data key="d0">0.341107925505625</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="代数学" target="数学分析">
+  <data key="d0">0.18626928852196986</data>
+  <data key="d1">0</data>
+  <data key="d2">1.25</data>
+  <data key="d3">0.5</data>
+</edge>
+<edge source="代数学" target="组合数学">
+  <data key="d0">0.10019434349302288</data>
+  <data key="d1">0</data>
+  <data key="d2">1.1</data>
+  <data key="d3">0.6</data>
+</edge>
+<edge source="代数学" target="数论">
+  <data key="d0">0.1703008176940031</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2</data>
+  <data key="d3">0.5333333333333333</data>
+</edge>
+<edge source="代数学" target="复变函数">
+  <data key="d0">0.21716995478771717</data>
+  <data key="d1">0</data>
+  <data key="d2">1.25</data>
+  <data key="d3">0.5</data>
+</edge>
+<edge source="代数学" target="实分析">
+  <data key="d0">0.1586701221486324</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2</data>
+  <data key="d3">0.5333333333333333</data>
+</edge>
+<edge source="代数学" target="泛函分析">
+  <data key="d0">0.12630369106917796</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="代数学" target="机器学习">
+  <data key="d0">0.19214799140555452</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="代数学" target="编译原理">
+  <data key="d0">0.21713626107469605</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="数学分析" target="组合数学">
+  <data key="d0">0.1560325301695158</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="数学分析" target="数论">
+  <data key="d0">0.12739464101979314</data>
+  <data key="d1">0</data>
+  <data key="d2">1.25</data>
+  <data key="d3">0.5</data>
+</edge>
+<edge source="数学分析" target="复变函数">
+  <data key="d0">0.31487625515487233</data>
+  <data key="d1">0</data>
+  <data key="d2">1.1</data>
+  <data key="d3">0.6</data>
+</edge>
+<edge source="数学分析" target="实分析">
+  <data key="d0">0.28432565498857776</data>
+  <data key="d1">0</data>
+  <data key="d2">1.0250000000000001</data>
+  <data key="d3">0.6499999999999999</data>
+</edge>
+<edge source="数学分析" target="泛函分析">
+  <data key="d0">0.20365527002629474</data>
+  <data key="d1">0</data>
+  <data key="d2">1.15625</data>
+  <data key="d3">0.5625</data>
+</edge>
+<edge source="数学分析" target="机器学习">
+  <data key="d0">0.1289017695299227</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="数学分析" target="编译原理">
+  <data key="d0">0.250499710921113</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="组合数学" target="数论">
+  <data key="d0">0.12327944086050678</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="组合数学" target="复变函数">
+  <data key="d0">0.17697538653615252</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="组合数学" target="实分析">
+  <data key="d0">0.26882935192273677</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="组合数学" target="泛函分析">
+  <data key="d0">0.11030103079030225</data>
+  <data key="d1">0</data>
+  <data key="d2">1.34</data>
+  <data key="d3">0.43999999999999995</data>
+</edge>
+<edge source="组合数学" target="机器学习">
+  <data key="d0">0.3257401057844011</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8225</data>
+  <data key="d3">0.11833333333333332</data>
+</edge>
+<edge source="组合数学" target="编译原理">
+  <data key="d0">0.2852687226286319</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="数论" target="复变函数">
+  <data key="d0">0.11204705239555961</data>
+  <data key="d1">0</data>
+  <data key="d2">1.25</data>
+  <data key="d3">0.5</data>
+</edge>
+<edge source="数论" target="实分析">
+  <data key="d0">0.27610750574374665</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2</data>
+  <data key="d3">0.5333333333333333</data>
+</edge>
+<edge source="数论" target="泛函分析">
+  <data key="d0">0.1629510759342875</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="数论" target="机器学习">
+  <data key="d0">0.3375717001559256</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="数论" target="编译原理">
+  <data key="d0">0.17373820687558672</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="复变函数" target="实分析">
+  <data key="d0">0.1869805543753617</data>
+  <data key="d1">0</data>
+  <data key="d2">1.0250000000000001</data>
+  <data key="d3">0.6499999999999999</data>
+</edge>
+<edge source="复变函数" target="泛函分析">
+  <data key="d0">0.32109885788316644</data>
+  <data key="d1">0</data>
+  <data key="d2">1.15625</data>
+  <data key="d3">0.5625</data>
+</edge>
+<edge source="复变函数" target="机器学习">
+  <data key="d0">0.43051402108735604</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="复变函数" target="编译原理">
+  <data key="d0">0.3382393158167383</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="实分析" target="泛函分析">
+  <data key="d0">0.18223642349886687</data>
+  <data key="d1">0</data>
+  <data key="d2">1.1</data>
+  <data key="d3">0.6</data>
+</edge>
+<edge source="实分析" target="机器学习">
+  <data key="d0">0.3070421389248961</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="实分析" target="编译原理">
+  <data key="d0">0.35165633607263735</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="泛函分析" target="机器学习">
+  <data key="d0">0.42138213764226307</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8225</data>
+  <data key="d3">0.11833333333333332</data>
+</edge>
+<edge source="泛函分析" target="编译原理">
+  <data key="d0">0.19136420060739914</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="算法" target="数据结构">
+  <data key="d0">0.10504026673729852</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="算法" target="机器学习">
+  <data key="d0">0.1</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="算法" target="神经网络">
+  <data key="d0">0.12130987889320882</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4333333333333333</data>
+  <data key="d3">0.37777777777777777</data>
+</edge>
+<edge source="算法" target="计算机视觉">
+  <data key="d0">0.10767477397004967</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="算法" target="自然语言处理">
+  <data key="d0">0.1379205733042407</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="算法" target="数据库">
+  <data key="d0">0.10490321847091726</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="算法" target="操作系统">
+  <data key="d0">0.13515299694333796</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="算法" target="软件工程">
+  <data key="d0">0.19316833037495654</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="算法" target="计算机网络">
+  <data key="d0">0.1171822304479144</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="算法" target="编译原理">
+  <data key="d0">0.10514635479370409</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="算法" target="人机交互">
+  <data key="d0">0.11513392817868982</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="算法" target="信息安全">
+  <data key="d0">0.14349816205554866</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="算法" target="分布式系统">
+  <data key="d0">0.1</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="算法" target="云计算">
+  <data key="d0">0.1784912018183095</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="算法" target="物联网">
+  <data key="d0">0.10105468093256861</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="数据结构" target="机器学习">
+  <data key="d0">0.1794964843674911</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4545454545454546</data>
+  <data key="d3">0.36363636363636365</data>
+</edge>
+<edge source="数据结构" target="神经网络">
+  <data key="d0">0.11264164975134563</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="数据结构" target="计算机视觉">
+  <data key="d0">0.16856374362531867</data>
+  <data key="d1">0</data>
+  <data key="d2">1.445</data>
+  <data key="d3">0.37</data>
+</edge>
+<edge source="数据结构" target="自然语言处理">
+  <data key="d0">0.10414176361097546</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4333333333333333</data>
+  <data key="d3">0.37777777777777777</data>
+</edge>
+<edge source="数据结构" target="数据库">
+  <data key="d0">0.15914793899927443</data>
+  <data key="d1">0</data>
+  <data key="d2">1.2875</data>
+  <data key="d3">0.475</data>
+</edge>
+<edge source="数据结构" target="操作系统">
+  <data key="d0">0.10334169000123924</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="数据结构" target="软件工程">
+  <data key="d0">0.1262127792023025</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="数据结构" target="计算机网络">
+  <data key="d0">0.39010076577604963</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4187500000000002</data>
+  <data key="d3">0.38749999999999996</data>
+</edge>
+<edge source="数据结构" target="编译原理">
+  <data key="d0">0.21738067239664383</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="数据结构" target="人机交互">
+  <data key="d0">0.19741652495375261</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4187500000000002</data>
+  <data key="d3">0.38749999999999996</data>
+</edge>
+<edge source="数据结构" target="信息安全">
+  <data key="d0">0.1342061454803336</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="数据结构" target="分布式系统">
+  <data key="d0">0.1887224563845671</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="数据结构" target="云计算">
+  <data key="d0">0.20121591320008958</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="数据结构" target="物联网">
+  <data key="d0">0.25360827714684664</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="数据结构" target="注意力机制">
+  <data key="d0">0.23590929950608308</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="机器学习" target="神经网络">
+  <data key="d0">0.1492481096431273</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="机器学习" target="计算机视觉">
+  <data key="d0">0.19012028414686052</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4625</data>
+  <data key="d3">0.35833333333333334</data>
+</edge>
+<edge source="机器学习" target="自然语言处理">
+  <data key="d0">0.13947714155067603</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4545454545454546</data>
+  <data key="d3">0.36363636363636365</data>
+</edge>
+<edge source="机器学习" target="数据库">
+  <data key="d0">0.16995393820837462</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="机器学习" target="操作系统">
+  <data key="d0">0.12250171621438861</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="机器学习" target="软件工程">
+  <data key="d0">0.12224966339413175</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="机器学习" target="计算机网络">
+  <data key="d0">0.16354162308538056</data>
+  <data key="d1">0</data>
+  <data key="d2">1.445</data>
+  <data key="d3">0.37</data>
+</edge>
+<edge source="机器学习" target="编译原理">
+  <data key="d0">0.2194452048252278</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4545454545454546</data>
+  <data key="d3">0.36363636363636365</data>
+</edge>
+<edge source="机器学习" target="人机交互">
+  <data key="d0">0.2110642301031932</data>
+  <data key="d1">0</data>
+  <data key="d2">1.445</data>
+  <data key="d3">0.37</data>
+</edge>
+<edge source="机器学习" target="信息安全">
+  <data key="d0">0.13949486381840637</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="机器学习" target="分布式系统">
+  <data key="d0">0.18262719767941554</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="机器学习" target="云计算">
+  <data key="d0">0.27772371660151474</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="机器学习" target="物联网">
+  <data key="d0">0.11705649931361405</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="机器学习" target="深度学习">
+  <data key="d0">0.3187265247131139</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="机器学习" target="生成对抗网络">
+  <data key="d0">0.23268145360449924</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8225</data>
+  <data key="d3">0.11833333333333332</data>
+</edge>
+<edge source="机器学习" target="注意力机制">
+  <data key="d0">0.22779208225644512</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8145454545454545</data>
+  <data key="d3">0.12363636363636363</data>
+</edge>
+<edge source="神经网络" target="计算机视觉">
+  <data key="d0">0.2640257288607745</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="神经网络" target="自然语言处理">
+  <data key="d0">0.10485278737723787</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="神经网络" target="数据库">
+  <data key="d0">0.13967700461584953</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="神经网络" target="操作系统">
+  <data key="d0">0.21429500360513873</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="神经网络" target="软件工程">
+  <data key="d0">0.10297395700708581</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="神经网络" target="计算机网络">
+  <data key="d0">0.15147637747914436</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="神经网络" target="编译原理">
+  <data key="d0">0.11667511188463223</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="神经网络" target="人机交互">
+  <data key="d0">0.10512045137279773</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="神经网络" target="信息安全">
+  <data key="d0">0.16138018605713222</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="神经网络" target="分布式系统">
+  <data key="d0">0.1812933561752581</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="神经网络" target="云计算">
+  <data key="d0">0.24131092486139494</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="神经网络" target="物联网">
+  <data key="d0">0.2586652395905282</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="神经网络" target="深度学习">
+  <data key="d0">0.29958401098112275</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="神经网络" target="生成对抗网络">
+  <data key="d0">0.21343923418179347</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="计算机视觉" target="自然语言处理">
+  <data key="d0">0.11673297796476037</data>
+  <data key="d1">0</data>
+  <data key="d2">1.3166666666666669</data>
+  <data key="d3">0.4555555555555555</data>
+</edge>
+<edge source="计算机视觉" target="数据库">
+  <data key="d0">0.22762266547729082</data>
+  <data key="d1">0</data>
+  <data key="d2">1.445</data>
+  <data key="d3">0.37</data>
+</edge>
+<edge source="计算机视觉" target="操作系统">
+  <data key="d0">0.1526602294491795</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="计算机视觉" target="软件工程">
+  <data key="d0">0.2444968016390455</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="计算机视觉" target="计算机网络">
+  <data key="d0">0.22831305996860934</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4333333333333333</data>
+  <data key="d3">0.37777777777777777</data>
+</edge>
+<edge source="计算机视觉" target="编译原理">
+  <data key="d0">0.20969045468588426</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="计算机视觉" target="人机交互">
+  <data key="d0">0.10666305795814204</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4333333333333333</data>
+  <data key="d3">0.37777777777777777</data>
+</edge>
+<edge source="计算机视觉" target="信息安全">
+  <data key="d0">0.3258051865210107</data>
+  <data key="d1">0</data>
+  <data key="d2">1.375</data>
+  <data key="d3">0.41666666666666663</data>
+</edge>
+<edge source="计算机视觉" target="分布式系统">
+  <data key="d0">0.16461280791633007</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="计算机视觉" target="云计算">
+  <data key="d0">0.25246346862343977</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="计算机视觉" target="物联网">
+  <data key="d0">0.15695466699140176</data>
+  <data key="d1">0</data>
+  <data key="d2">1.445</data>
+  <data key="d3">0.37</data>
+</edge>
+<edge source="计算机视觉" target="深度学习">
+  <data key="d0">0.2379343379070648</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="计算机视觉" target="注意力机制">
+  <data key="d0">0.13675868847037456</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="自然语言处理" target="数据库">
+  <data key="d0">0.13711898690245755</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="自然语言处理" target="操作系统">
+  <data key="d0">0.10377169527370124</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="自然语言处理" target="软件工程">
+  <data key="d0">0.10383942407357796</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="自然语言处理" target="计算机网络">
+  <data key="d0">0.1441622452518426</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4187500000000002</data>
+  <data key="d3">0.38749999999999996</data>
+</edge>
+<edge source="自然语言处理" target="编译原理">
+  <data key="d0">0.18289488267541784</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="自然语言处理" target="人机交互">
+  <data key="d0">0.1253692022667807</data>
+  <data key="d1">0</data>
+  <data key="d2">1.25</data>
+  <data key="d3">0.5</data>
+</edge>
+<edge source="自然语言处理" target="信息安全">
+  <data key="d0">0.14052738959264519</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4625</data>
+  <data key="d3">0.35833333333333334</data>
+</edge>
+<edge source="自然语言处理" target="分布式系统">
+  <data key="d0">0.11955903575978896</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="自然语言处理" target="云计算">
+  <data key="d0">0.14342084005993858</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="自然语言处理" target="物联网">
+  <data key="d0">0.1353551918180008</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4333333333333333</data>
+  <data key="d3">0.37777777777777777</data>
+</edge>
+<edge source="自然语言处理" target="深度学习">
+  <data key="d0">0.2683438853118746</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="自然语言处理" target="注意力机制">
+  <data key="d0">0.17913533633905895</data>
+  <data key="d1">0</data>
+  <data key="d2">1.6475</data>
+  <data key="d3">0.235</data>
+</edge>
+<edge source="数据库" target="操作系统">
+  <data key="d0">0.12343363950928889</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="数据库" target="软件工程">
+  <data key="d0">0.19027523640070393</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="数据库" target="计算机网络">
+  <data key="d0">0.11900973852537076</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4187500000000002</data>
+  <data key="d3">0.38749999999999996</data>
+</edge>
+<edge source="数据库" target="编译原理">
+  <data key="d0">0.1476967567020614</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="数据库" target="人机交互">
+  <data key="d0">0.2708180347538143</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="数据库" target="信息安全">
+  <data key="d0">0.10377749395612278</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4625</data>
+  <data key="d3">0.35833333333333334</data>
+</edge>
+<edge source="数据库" target="分布式系统">
+  <data key="d0">0.4878850977163473</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="数据库" target="云计算">
+  <data key="d0">0.25823886489125786</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="数据库" target="物联网">
+  <data key="d0">0.21922251267788861</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="操作系统" target="软件工程">
+  <data key="d0">0.15984853359764015</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="操作系统" target="计算机网络">
+  <data key="d0">0.2932666261590779</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="操作系统" target="编译原理">
+  <data key="d0">0.37412897179371835</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="操作系统" target="人机交互">
+  <data key="d0">0.30552489479215345</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="操作系统" target="信息安全">
+  <data key="d0">0.26876836850058006</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="操作系统" target="分布式系统">
+  <data key="d0">0.2072873510973512</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="操作系统" target="云计算">
+  <data key="d0">0.24690806018647016</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="操作系统" target="物联网">
+  <data key="d0">0.13456318393855954</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="软件工程" target="计算机网络">
+  <data key="d0">0.10437998417902111</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="软件工程" target="编译原理">
+  <data key="d0">0.1197933144202059</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="软件工程" target="人机交互">
+  <data key="d0">0.11914940382426571</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="软件工程" target="信息安全">
+  <data key="d0">0.24004811025462625</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="软件工程" target="分布式系统">
+  <data key="d0">0.24449191341736387</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="软件工程" target="云计算">
+  <data key="d0">0.6140981430035635</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="软件工程" target="物联网">
+  <data key="d0">0.16316862724909184</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="软件工程" target="强化学习">
+  <data key="d0">0.14090172233531134</data>
+  <data key="d1">0</data>
+  <data key="d2">1.805</data>
+  <data key="d3">0.13</data>
+</edge>
+<edge source="计算机网络" target="编译原理">
+  <data key="d0">0.24868639806985843</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="计算机网络" target="人机交互">
+  <data key="d0">0.17840731085509867</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4</data>
+  <data key="d3">0.39999999999999997</data>
+</edge>
+<edge source="计算机网络" target="信息安全">
+  <data key="d0">0.37354114501513225</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="计算机网络" target="分布式系统">
+  <data key="d0">0.13254066071765147</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="计算机网络" target="云计算">
+  <data key="d0">0.18770836964200788</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="计算机网络" target="物联网">
+  <data key="d0">0.22969216844062001</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="计算机网络" target="注意力机制">
+  <data key="d0">0.2514468684835791</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="编译原理" target="人机交互">
+  <data key="d0">0.24873346088485182</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="编译原理" target="信息安全">
+  <data key="d0">0.1494546540349666</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="编译原理" target="分布式系统">
+  <data key="d0">0.18884481101351258</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="编译原理" target="云计算">
+  <data key="d0">0.26390020120825725</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="编译原理" target="物联网">
+  <data key="d0">0.2861787375468203</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="人机交互" target="信息安全">
+  <data key="d0">0.2563396239318531</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="人机交互" target="分布式系统">
+  <data key="d0">0.16301441974487776</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="人机交互" target="云计算">
+  <data key="d0">0.4289789497757062</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="人机交互" target="物联网">
+  <data key="d0">0.14159817037874858</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="人机交互" target="注意力机制">
+  <data key="d0">0.4007400521288368</data>
+  <data key="d1">0</data>
+  <data key="d2">1.77875</data>
+  <data key="d3">0.1475</data>
+</edge>
+<edge source="信息安全" target="分布式系统">
+  <data key="d0">0.16909575667708107</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="信息安全" target="云计算">
+  <data key="d0">0.23670551810334814</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="信息安全" target="物联网">
+  <data key="d0">0.1592167538200743</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4625</data>
+  <data key="d3">0.35833333333333334</data>
+</edge>
+<edge source="信息安全" target="深度学习">
+  <data key="d0">0.2631053410157416</data>
+  <data key="d1">0</data>
+  <data key="d2">1.8225</data>
+  <data key="d3">0.11833333333333332</data>
+</edge>
+<edge source="分布式系统" target="云计算">
+  <data key="d0">0.28870204973328173</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="分布式系统" target="物联网">
+  <data key="d0">0.5026738597182497</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="云计算" target="物联网">
+  <data key="d0">0.24563258934477902</data>
+  <data key="d1">0</data>
+  <data key="d2">1.4333333333333333</data>
+  <data key="d3">0.37777777777777777</data>
+</edge>
+<edge source="物联网" target="深度学习">
+  <data key="d0">0.2462092317324258</data>
+  <data key="d1">0</data>
+  <data key="d2">1.7933333333333334</data>
+  <data key="d3">0.13777777777777778</data>
+</edge>
+<edge source="深度学习" target="强化学习">
+  <data key="d0">0.1977104017168571</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="深度学习" target="生成对抗网络">
+  <data key="d0">0.15980273028792433</data>
+  <data key="d1">0</data>
+  <data key="d2">1.445</data>
+  <data key="d3">0.37</data>
+</edge>
+<edge source="深度学习" target="注意力机制">
+  <data key="d0">0.339999824174739</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="强化学习" target="生成对抗网络">
+  <data key="d0">0.1295222565447651</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="强化学习" target="注意力机制">
+  <data key="d0">0.10721078274792675</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+<edge source="生成对抗网络" target="注意力机制">
+  <data key="d0">0.1717493443239929</data>
+  <data key="d1">0</data>
+  <data key="d2">1.55</data>
+  <data key="d3">0.3</data>
+</edge>
+</graph></graphml>
