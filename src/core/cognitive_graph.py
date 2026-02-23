@@ -236,7 +236,7 @@ class BaseCognitiveGraph:
 
         return min(forgetting_factor, 0.1)
 
-    def monte_carlo_iteration(self, max_iterations: int = 5000) -> None:
+    def monte_carlo_iteration(self, max_iterations: int = 10000) -> None:
         """执行蒙特卡洛模拟，迭代演化认知网络。
 
         每步迭代包括：

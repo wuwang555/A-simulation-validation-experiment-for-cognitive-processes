@@ -1,0 +1,369 @@
+卷 Windows 的文件夹 PATH 列表
+卷序列号为 BA16-3293
+C:.
+|   .gitignore
+|   config.py
+|   emergence_results_20260214_191918.xlsx
+|   emergence_results_20260214_192116.xlsx
+|   LICENSE
+|   project_structure.txt
+|   README.md
+|   README_zh.md
+|   requirements.txt
+|   run_experiments.py
+|   
++---.idea
+|   |   .gitignore
+|   |   .name
+|   |   misc.xml
+|   |   modules.xml
+|   |   vcs.xml
+|   |   workspace.xml
+|   |   侠义认知图论.iml
+|   |   
+|   \---inspectionProfiles
+|           profiles_settings.xml
+|           
++---.pytest_cache
+|   |   .gitignore
+|   |   CACHEDIR.TAG
+|   |   README.md
+|   |   
+|   \---v
+|       \---cache
+|               lastfailed
+|               nodeids
+|               stepwise
+|               
++---logs
+|       reproducibility_20260224_022346.log
+|       
++---paper
+|       CognitiveGraph.aux
+|       CognitiveGraph.bbl
+|       CognitiveGraph.blg
+|       CognitiveGraph.log
+|       CognitiveGraph.out
+|       CognitiveGraph.pdf
+|       CognitiveGraph.synctex.gz
+|       CognitiveGraph.tex
+|       performance_comparison.png
+|       references.bib
+|       scale_effect.png
+|       概念压缩代码简化图.drawio
+|       概念压缩代码简化图.png
+|       概念压缩理论图.drawio
+|       概念压缩理论图.png
+|       概念压缩的例子.png
+|       概念压缩贝叶斯和代数图论的例子.png
+|       第二章思维导图.png
+|       认知的几何与动力学图论.docx
+|       认知的几何与动力学图论2.docx
+|       远离迁移代数逻辑图.drawio
+|       远离迁移代数逻辑图.png
+|       
++---results
+|   |   111_concepts.xlsx
+|   |   51_concepts.xlsx
+|   |   71_concepts.xlsx
+|   |   91_concepts.xlsx
+|   |   DATA_DICTIONARY.md
+|   |   experiment_summary_20260224_010312.md
+|   |   experiment_summary_20260224_012630.md
+|   |   experiment_summary_20260224_023350.md
+|   |   
+|   +---algebra
+|   |   |   algebra_validation_results_20260224_010305.json
+|   |   |   algebra_validation_results_20260224_012625.json
+|   |   |   algebra_validation_results_20260224_023325.json
+|   |   |   
+|   |   \---energy_trajectories
+|   |           lie_evolution_strategy_0_20260224_010304.csv
+|   |           lie_evolution_strategy_0_20260224_012625.csv
+|   |           lie_evolution_strategy_0_20260224_023325.csv
+|   |           lie_evolution_strategy_1_20260224_010304.csv
+|   |           lie_evolution_strategy_1_20260224_012625.csv
+|   |           lie_evolution_strategy_1_20260224_023325.csv
+|   |           lie_evolution_strategy_2_20260224_010304.csv
+|   |           lie_evolution_strategy_2_20260224_012625.csv
+|   |           lie_evolution_strategy_2_20260224_023325.csv
+|   |           
+|   +---batch_experiments
+|   |       config_20260224_005149.json
+|   |       config_20260224_011655.json
+|   |       config_20260224_022347.json
+|   |       detailed_results_20260224_005149.csv
+|   |       detailed_results_20260224_011655.csv
+|   |       detailed_results_20260224_022347.csv
+|   |       performance_comparison_20260224_005149.png
+|   |       performance_comparison_20260224_011655.png
+|   |       performance_comparison_20260224_022347.png
+|   |       scale_effect_20260224_005149.png
+|   |       scale_effect_20260224_011655.png
+|   |       scale_effect_20260224_022347.png
+|   |       summary_20260224_005149.json
+|   |       summary_20260224_011655.json
+|   |       summary_20260224_022347.json
+|   |       
+|   +---emergence
+|   |   |   emergence_111_concepts.json
+|   |   |   emergence_51_concepts.json
+|   |   |   emergence_71_concepts.json
+|   |   |   emergence_91_concepts.json
+|   |   |   emergence_results_20260224_005237.xlsx
+|   |   |   emergence_results_20260224_005354.xlsx
+|   |   |   emergence_results_20260224_005539.xlsx
+|   |   |   emergence_results_20260224_010018.xlsx
+|   |   |   emergence_results_20260224_010043.xlsx
+|   |   |   emergence_results_20260224_011745.xlsx
+|   |   |   emergence_results_20260224_011903.xlsx
+|   |   |   emergence_results_20260224_012048.xlsx
+|   |   |   emergence_results_20260224_012338.xlsx
+|   |   |   emergence_results_20260224_012402.xlsx
+|   |   |   emergence_results_20260224_022433.xlsx
+|   |   |   emergence_results_20260224_022557.xlsx
+|   |   |   emergence_results_20260224_022750.xlsx
+|   |   |   emergence_results_20260224_023035.xlsx
+|   |   |   emergence_results_20260224_023102.xlsx
+|   |   |   energy_history_涌现个体_1_20260224_005237.csv
+|   |   |   energy_history_涌现个体_1_20260224_005354.csv
+|   |   |   energy_history_涌现个体_1_20260224_005539.csv
+|   |   |   energy_history_涌现个体_1_20260224_010018.csv
+|   |   |   energy_history_涌现个体_1_20260224_010043.csv
+|   |   |   energy_history_涌现个体_1_20260224_011745.csv
+|   |   |   energy_history_涌现个体_1_20260224_011903.csv
+|   |   |   energy_history_涌现个体_1_20260224_012048.csv
+|   |   |   energy_history_涌现个体_1_20260224_012338.csv
+|   |   |   energy_history_涌现个体_1_20260224_012402.csv
+|   |   |   energy_history_涌现个体_1_20260224_022433.csv
+|   |   |   energy_history_涌现个体_1_20260224_022557.csv
+|   |   |   energy_history_涌现个体_1_20260224_022750.csv
+|   |   |   energy_history_涌现个体_1_20260224_023035.csv
+|   |   |   energy_history_涌现个体_1_20260224_023102.csv
+|   |   |   energy_history_涌现个体_2_20260224_010043.csv
+|   |   |   energy_history_涌现个体_2_20260224_012402.csv
+|   |   |   energy_history_涌现个体_2_20260224_023102.csv
+|   |   |   energy_history_涌现个体_3_20260224_010043.csv
+|   |   |   energy_history_涌现个体_3_20260224_012402.csv
+|   |   |   energy_history_涌现个体_3_20260224_023102.csv
+|   |   |   network_涌现个体_1_20260224_005237.graphml
+|   |   |   network_涌现个体_1_20260224_005354.graphml
+|   |   |   network_涌现个体_1_20260224_005539.graphml
+|   |   |   network_涌现个体_1_20260224_010018.graphml
+|   |   |   network_涌现个体_1_20260224_010043.graphml
+|   |   |   network_涌现个体_1_20260224_011745.graphml
+|   |   |   network_涌现个体_1_20260224_011903.graphml
+|   |   |   network_涌现个体_1_20260224_012048.graphml
+|   |   |   network_涌现个体_1_20260224_012338.graphml
+|   |   |   network_涌现个体_1_20260224_012402.graphml
+|   |   |   network_涌现个体_1_20260224_022433.graphml
+|   |   |   network_涌现个体_1_20260224_022557.graphml
+|   |   |   network_涌现个体_1_20260224_022750.graphml
+|   |   |   network_涌现个体_1_20260224_023035.graphml
+|   |   |   network_涌现个体_1_20260224_023102.graphml
+|   |   |   network_涌现个体_2_20260224_010043.graphml
+|   |   |   network_涌现个体_2_20260224_012402.graphml
+|   |   |   network_涌现个体_2_20260224_023102.graphml
+|   |   |   network_涌现个体_3_20260224_010043.graphml
+|   |   |   network_涌现个体_3_20260224_012402.graphml
+|   |   |   network_涌现个体_3_20260224_023102.graphml
+|   |   |   
+|   |   \---figures
+|   |           emergence_visualization_20260224_005237.png
+|   |           emergence_visualization_20260224_005354.png
+|   |           emergence_visualization_20260224_005539.png
+|   |           emergence_visualization_20260224_010018.png
+|   |           emergence_visualization_20260224_010043.png
+|   |           emergence_visualization_20260224_011745.png
+|   |           emergence_visualization_20260224_011903.png
+|   |           emergence_visualization_20260224_012048.png
+|   |           emergence_visualization_20260224_012338.png
+|   |           emergence_visualization_20260224_012402.png
+|   |           emergence_visualization_20260224_022433.png
+|   |           emergence_visualization_20260224_022557.png
+|   |           emergence_visualization_20260224_022750.png
+|   |           emergence_visualization_20260224_023035.png
+|   |           emergence_visualization_20260224_023102.png
+|   |           
+|   +---population
+|   |       energy_history_个体_1_20260224_005157.csv
+|   |       energy_history_个体_1_20260224_005255.csv
+|   |       energy_history_个体_1_20260224_005419.csv
+|   |       energy_history_个体_1_20260224_005659.csv
+|   |       energy_history_个体_1_20260224_011706.csv
+|   |       energy_history_个体_1_20260224_011803.csv
+|   |       energy_history_个体_1_20260224_011927.csv
+|   |       energy_history_个体_1_20260224_012126.csv
+|   |       energy_history_个体_1_20260224_022354.csv
+|   |       energy_history_个体_1_20260224_022454.csv
+|   |       energy_history_个体_1_20260224_022626.csv
+|   |       energy_history_个体_1_20260224_022824.csv
+|   |       energy_history_个体_2_20260224_005157.csv
+|   |       energy_history_个体_2_20260224_005255.csv
+|   |       energy_history_个体_2_20260224_005419.csv
+|   |       energy_history_个体_2_20260224_005659.csv
+|   |       energy_history_个体_2_20260224_011706.csv
+|   |       energy_history_个体_2_20260224_011803.csv
+|   |       energy_history_个体_2_20260224_011927.csv
+|   |       energy_history_个体_2_20260224_012126.csv
+|   |       energy_history_个体_2_20260224_022354.csv
+|   |       energy_history_个体_2_20260224_022454.csv
+|   |       energy_history_个体_2_20260224_022626.csv
+|   |       energy_history_个体_2_20260224_022824.csv
+|   |       
+|   +---semantic_network
+|   |       semantic_network_20260224_010312.png
+|   |       semantic_network_20260224_012630.png
+|   |       semantic_network_20260224_023350.png
+|   |       
+|   \---visualizations
+|           cognitive_graph_20260224_005149.png
+|           cognitive_graph_20260224_011655.png
+|           cognitive_graph_20260224_022347.png
+|           cognitive_states_20260224_005149.png
+|           cognitive_states_20260224_011655.png
+|           cognitive_states_20260224_022347.png
+|           semantic_network_20260224_005149.png
+|           semantic_network_20260224_011655.png
+|           semantic_network_20260224_022347.png
+|           
++---src
+|   |   main.py
+|   |   
+|   +---.idea
+|   |   |   .gitignore
+|   |   |   code.iml
+|   |   |   misc.xml
+|   |   |   modules.xml
+|   |   |   vcs.xml
+|   |   |   workspace.xml
+|   |   |   
+|   |   \---inspectionProfiles
+|   |           profiles_settings.xml
+|   |           
+|   +---.pytest_cache
+|   |   |   .gitignore
+|   |   |   CACHEDIR.TAG
+|   |   |   README.md
+|   |   |   
+|   |   \---v
+|   |       \---cache
+|   |               nodeids
+|   |               stepwise
+|   |               
+|   +---algebra
+|   |   |   algebra_experiments.py
+|   |   |   cognitive_semigroup.py
+|   |   |   cognitive_symmetry.py
+|   |   |   group_action.py
+|   |   |   integration.py
+|   |   |   lie_group_cognitive.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           algebra_experiments.cpython-312.pyc
+|   |           cognitive_semigroup.cpython-312.pyc
+|   |           cognitive_symmetry.cpython-312.pyc
+|   |           group_action.cpython-312.pyc
+|   |           lie_group_cognitive.cpython-312.pyc
+|   |           __init__.cpython-312.pyc
+|   |           
+|   +---core
+|   |   |   cognitive_graph.py
+|   |   |   cognitive_states.py
+|   |   |   semantic_network.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           cognitive_graph.cpython-312.pyc
+|   |           cognitive_states.cpython-312.pyc
+|   |           semantic_network.cpython-312.pyc
+|   |           __init__.cpython-312.pyc
+|   |           
+|   +---emergence
+|   |   |   detector_fixed.py
+|   |   |   metrics.py
+|   |   |   observer.py
+|   |   |   universe.py
+|   |   |   universe_enhanced.py
+|   |   |   __init__.py
+|   |   |   
+|   |   +---.pytest_cache
+|   |   |   |   .gitignore
+|   |   |   |   CACHEDIR.TAG
+|   |   |   |   README.md
+|   |   |   |   
+|   |   |   \---v
+|   |   |       \---cache
+|   |   |               lastfailed
+|   |   |               nodeids
+|   |   |               stepwise
+|   |   |               
+|   |   \---__pycache__
+|   |           detector_fixed.cpython-312.pyc
+|   |           metrics.cpython-312.pyc
+|   |           observer.cpython-312.pyc
+|   |           test_emergence_fixed.cpython-312-pytest-7.4.4.pyc
+|   |           universe.cpython-312.pyc
+|   |           universe_enhanced.cpython-312.pyc
+|   |           __init__.cpython-312.pyc
+|   |           
+|   +---experiments
+|   |   |   batch_experiments.py
+|   |   |   emergence_study_fixed.py
+|   |   |   population_study.py
+|   |   |   __init__.py
+|   |   |   
+|   |   +---.pytest_cache
+|   |   |   |   .gitignore
+|   |   |   |   CACHEDIR.TAG
+|   |   |   |   README.md
+|   |   |   |   
+|   |   |   \---v
+|   |   |       \---cache
+|   |   |               nodeids
+|   |   |               stepwise
+|   |   |               
+|   |   \---__pycache__
+|   |           batch_experiments.cpython-312.pyc
+|   |           emergence_study_fixed.cpython-312.pyc
+|   |           population_study.cpython-312-pytest-7.4.4.pyc
+|   |           population_study.cpython-312.pyc
+|   |           __init__.cpython-312.pyc
+|   |           
+|   +---models
+|   |   |   enhanced_model.py
+|   |   |   qlearning_enhanced.py
+|   |   |   random_network.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           enhanced_model.cpython-312.pyc
+|   |           qlearning_enhanced.cpython-312.pyc
+|   |           random_network.cpython-312.pyc
+|   |           __init__.cpython-312.pyc
+|   |           
+|   +---py_figure_maker
+|   |       3D_Graph_show.py
+|   |       
+|   +---utils
+|   |   |   analysis.py
+|   |   |   individual_variation.py
+|   |   |   visualization.py
+|   |   |   __init__.py
+|   |   |   
+|   |   \---__pycache__
+|   |           analysis.cpython-312.pyc
+|   |           individual_variation.cpython-312.pyc
+|   |           visualization.cpython-312.pyc
+|   |           __init__.cpython-312.pyc
+|   |           
+|   \---__pycache__
+|           main.cpython-312.pyc
+|           test_energy_optimized.cpython-312-pytest-7.4.4.pyc
+|           
+\---__pycache__
+        config.cpython-312.pyc
+        sesfullu01.cpython-312-pytest-7.4.4.pyc
+        text_addman03.cpython-312-pytest-7.4.4.pyc
+        
