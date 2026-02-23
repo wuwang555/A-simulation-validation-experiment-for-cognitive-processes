@@ -1,0 +1,218 @@
+{
+  "experiment1": {
+    "associativity": {
+      "(learning∘forgetting)∘traversal": "True",
+      "(compression∘migration)∘learning": "True",
+      "(traversal∘learning)∘forgetting": "True"
+    },
+    "operation_count": 13,
+    "note": "单位元检查暂时跳过（半群不一定要求单位元）"
+  },
+  "experiment2": {
+    "network_0": {
+      "automorphisms_count": 0,
+      "conserved_quantities": {
+        "total_energy": 37.122248388776654,
+        "structural_entropy": -1.000000082690371e-10,
+        "fractal_dimension": 0.3601996836422884
+      },
+      "noether_theorem_holds": [
+        true,
+        {
+          "total_energy": {
+            "before": 37.122248388776654,
+            "after": 37.00598922267531,
+            "relative_change": 0.0031317921501891805,
+            "conserved": true
+          },
+          "structural_entropy": {
+            "before": -1.000000082690371e-10,
+            "after": -1.000000082690371e-10,
+            "relative_change": 0.0,
+            "conserved": "True"
+          },
+          "fractal_dimension": {
+            "before": 0.3601996836422884,
+            "after": 0.35956025832033145,
+            "relative_change": 0.0017751967894339988,
+            "conserved": "True"
+          }
+        }
+      ],
+      "energy_before": 37.122248388776654,
+      "energy_after": 37.00598922267531
+    },
+    "network_1": {
+      "automorphisms_count": 0,
+      "conserved_quantities": {
+        "total_energy": 19.322593128347297,
+        "structural_entropy": 0.5004024233381879,
+        "fractal_dimension": 0.0
+      },
+      "noether_theorem_holds": [
+        true,
+        {
+          "total_energy": {
+            "before": 19.322593128347297,
+            "after": 19.261003070230746,
+            "relative_change": 0.003187463385863801,
+            "conserved": true
+          },
+          "structural_entropy": {
+            "before": 0.5004024233381879,
+            "after": 0.5004024233381879,
+            "relative_change": 0.0,
+            "conserved": "True"
+          },
+          "fractal_dimension": {
+            "before": 0.0,
+            "after": 0.0,
+            "relative_change": Infinity,
+            "conserved": true
+          }
+        }
+      ],
+      "energy_before": 19.322593128347297,
+      "energy_after": 19.261003070230746
+    },
+    "network_2": {
+      "automorphisms_count": 0,
+      "conserved_quantities": {
+        "total_energy": 26.272498728719196,
+        "structural_entropy": 1.504788283181191,
+        "fractal_dimension": 0.26270973103187345
+      },
+      "noether_theorem_holds": [
+        true,
+        {
+          "total_energy": {
+            "before": 26.272498728719196,
+            "after": 26.15340495490895,
+            "relative_change": 0.004533020442401272,
+            "conserved": true
+          },
+          "structural_entropy": {
+            "before": 1.504788283181191,
+            "after": 1.504788283181191,
+            "relative_change": 0.0,
+            "conserved": "True"
+          },
+          "fractal_dimension": {
+            "before": 0.26270973103187345,
+            "after": 0.2626953300924284,
+            "relative_change": 5.481692432359909e-05,
+            "conserved": "True"
+          }
+        }
+      ],
+      "energy_before": 26.272498728719196,
+      "energy_after": 26.15340495490895
+    }
+  },
+  "experiment3": {
+    "automorphism_group_size": 0,
+    "orbit_size_actual": 0,
+    "stabilizer_size": 0,
+    "orbit_size_expected": 0.0,
+    "theorem_holds": "True",
+    "error_percentage": 0
+  },
+  "experiment4": {
+    "strategy_0": {
+      "generator_coeffs": {
+        "E": 0.7,
+        "C": 0.2,
+        "M": 0.1
+      },
+      "initial_energy": 1.1339687367928266,
+      "final_energy": 0.7237174880345686,
+      "energy_change_percent": 36.17835619688781,
+      "energy_trajectory": [
+        1.1339687367928266,
+        1.100138930271454,
+        1.035712178945796,
+        0.9464399217635312,
+        0.8397471133964142,
+        0.7237174880345686
+      ]
+    },
+    "strategy_1": {
+      "generator_coeffs": {
+        "E": 0.3,
+        "C": 0.6,
+        "M": 0.1
+      },
+      "initial_energy": 1.1339687367928266,
+      "final_energy": 0.9174994695938958,
+      "energy_change_percent": 19.089526913340222,
+      "energy_trajectory": [
+        1.1339687367928266,
+        1.118035726865632,
+        1.0868721510898842,
+        1.041783651693921,
+        0.9845890206030506,
+        0.9174994695938958
+      ]
+    },
+    "strategy_2": {
+      "generator_coeffs": {
+        "E": 0.2,
+        "C": 0.2,
+        "M": 0.6
+      },
+      "initial_energy": 1.1339687367928266,
+      "final_energy": 0.9149881191458147,
+      "energy_change_percent": 19.310992494056666,
+      "energy_trajectory": [
+        1.1339687367928266,
+        1.1180674863441178,
+        1.086853298175296,
+        1.0414626935667266,
+        0.9835100147124141,
+        0.9149881191458147
+      ]
+    }
+  },
+  "experiment5": {
+    "5": {
+      "nodes": 5,
+      "edges": 10,
+      "semigroup_operation_time": 0.0,
+      "symmetry_detection_time": 0.0060062408447265625,
+      "symmetry_detection_success": true,
+      "automorphisms_count": 2
+    },
+    "8": {
+      "nodes": 8,
+      "edges": 28,
+      "semigroup_operation_time": 0.0,
+      "symmetry_detection_time": 0.05800008773803711,
+      "symmetry_detection_success": true,
+      "automorphisms_count": 1
+    },
+    "10": {
+      "nodes": 10,
+      "edges": 45,
+      "semigroup_operation_time": 0.0,
+      "symmetry_detection_time": 0.005992412567138672,
+      "symmetry_detection_success": true,
+      "automorphisms_count": 0
+    },
+    "12": {
+      "nodes": 12,
+      "edges": 66,
+      "semigroup_operation_time": 0.0,
+      "symmetry_detection_time": 0.005998849868774414,
+      "symmetry_detection_success": true,
+      "automorphisms_count": 0
+    },
+    "15": {
+      "nodes": 15,
+      "edges": 105,
+      "semigroup_operation_time": 0.0,
+      "symmetry_detection_time": 0.007992267608642578,
+      "symmetry_detection_success": true,
+      "automorphisms_count": 0
+    }
+  }
+}

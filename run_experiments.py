@@ -2,39 +2,127 @@
 # -*- coding: utf-8 -*-
 
 """
-认知图论一键运行脚本。
-
+认知图论一键运行脚本（增强可复现性版）。
 本脚本自动运行四规模对比实验、涌现研究、代数验证实验和语义网络演示，
-并生成实验总结报告。
+并生成详细的运行日志，确保实验结果可复现。
 """
 
 import sys
 import os
 import time
 import json
+import platform
+import logging
+import random
 from datetime import datetime
 from pathlib import Path
+
+# 设置随机种子（确保可复现）
+import numpy as np
+np.random.seed(42)
+random.seed(42)
 
 # 添加项目根目录到路径
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-print("=" * 80)
-print("🧠 认知图论：基于能量最小化的认知计算模型")
-print("=" * 80)
-print("作者：曾铭佳")
-print("版本：2.0")
-print("时间：2025年12月")
-print("=" * 80)
+# 导入依赖库（用于记录版本）
+import networkx as nx
+try:
+    import pandas as pd
+except ImportError:
+    pd = None
+try:
+    import matplotlib
+except ImportError:
+    matplotlib = None
+try:
+    import scipy
+except ImportError:
+    scipy = None
+try:
+    import jieba
+except ImportError:
+    jieba = None
 
 
-def check_dependencies():
+def setup_logging():
+    """配置日志记录器，同时输出到控制台和文件"""
+    # 创建 logs 目录
+    Path("logs").mkdir(parents=True, exist_ok=True)
+
+    # 日志文件名包含时间戳，避免覆盖
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    log_file = f"logs/reproducibility_{timestamp}.log"
+
+    # 配置根 logger
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+
+    # 移除已有的 handlers（防止重复）
+    if logger.hasHandlers():
+        logger.handlers.clear()
+
+    # 文件 handler
+    file_handler = logging.FileHandler(log_file, mode='w', encoding='utf-8')
+    file_handler.setLevel(logging.INFO)
+
+    # 控制台 handler
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO)
+
+    # 定义格式
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    file_handler.setFormatter(formatter)
+    console_handler.setFormatter(formatter)
+
+    logger.addHandler(file_handler)
+    logger.addHandler(console_handler)
+
+    return logger
+
+
+def log_environment(logger):
+    """记录系统环境和依赖版本信息"""
+    logger.info("=== 环境信息 ===")
+    logger.info(f"当前时间: {datetime.now()}")
+    logger.info(f"Python 版本: {sys.version}")
+    logger.info(f"平台信息: {platform.platform()}")
+    logger.info(f"CPU 信息: {platform.processor()}")
+    logger.info(f"机器类型: {platform.machine()}")
+    logger.info(f"Python 解释器路径: {sys.executable}")
+    logger.info(f"系统路径: {sys.path}")
+
+    logger.info("=== 依赖版本 ===")
+    logger.info(f"numpy: {np.__version__}")
+    if pd:
+        logger.info(f"pandas: {pd.__version__}")
+    if matplotlib:
+        logger.info(f"matplotlib: {matplotlib.__version__}")
+    logger.info(f"networkx: {nx.__version__}")
+    if scipy:
+        logger.info(f"scipy: {scipy.__version__}")
+    if jieba:
+        # jieba 可能没有 __version__ 属性
+        logger.info(f"jieba: {getattr(jieba, '__version__', 'unknown')}")
+
+    # 记录实验的关键参数（从论文中提取，具体模块内部可能还有额外参数）
+    logger.info("=== 实验参数 ===")
+    logger.info("概念规模: [51, 71, 91, 111]")
+    logger.info("迭代次数: 10000")
+    logger.info("个体数量: 3")
+    logger.info("语义相似度阈值: 0.08")
+    logger.info("压缩协同性阈值: 0.76")
+    logger.info("迁移效率阈值: 0.35")
+    logger.info("集群内聚性阈值: 0.7")
+    logger.info("最小连接强度: 0.5")
+    logger.info("学习率: 0.85")
+    logger.info("认知温度 T: 1.0")
+    logger.info("随机种子: 42")
+
+
+def check_dependencies(logger):
     """
-    检查必要的依赖库是否已安装。
-
-    Returns
-    -------
-    bool
-        所有依赖库都存在返回True，否则返回False。
+    检查必要的依赖库是否已安装，并记录版本。
     """
     required_libs = ['numpy', 'pandas', 'matplotlib', 'networkx', 'scipy', 'jieba']
     missing_libs = []
@@ -46,22 +134,19 @@ def check_dependencies():
             missing_libs.append(lib)
 
     if missing_libs:
+        logger.error(f"缺少依赖库: {', '.join(missing_libs)}")
         print(f"❌ 缺少依赖库: {', '.join(missing_libs)}")
         print("请安装: pip install " + " ".join(missing_libs))
         return False
 
+    logger.info("✅ 所有依赖库加载成功")
     print("✅ 所有依赖库加载成功")
     return True
 
 
-def create_output_directories():
+def create_output_directories(logger):
     """
     创建实验输出所需的目录。
-
-    Returns
-    -------
-    bool
-        目录创建成功返回True。
     """
     directories = [
         'results/',
@@ -74,64 +159,52 @@ def create_output_directories():
 
     for dir_path in directories:
         Path(dir_path).mkdir(parents=True, exist_ok=True)
+        logger.info(f"📁 创建目录: {dir_path}")
         print(f"📁 创建目录: {dir_path}")
 
     return True
 
 
-def run_batch_experiments():
+def run_batch_experiments(logger):
     """
     运行四规模对比实验 (51/71/91/111概念)。
-
-    Returns
-    -------
-    bool
-        实验成功完成返回True，否则返回False。
     """
-    print("\n" + "=" * 80)
-    print("1️⃣ 运行四规模对比实验 (51/71/91/111概念)")
-    print("=" * 80)
+    logger.info("\n" + "=" * 80)
+    logger.info("1️⃣ 运行四规模对比实验 (51/71/91/111概念)")
+    logger.info("=" * 80)
 
     try:
         from experiments.batch_experiments import BatchExperimentRunner
 
         runner = BatchExperimentRunner(output_dir='results/batch_experiments')
 
-        print("开始运行四规模对比实验...")
+        logger.info("开始运行四规模对比实验...")
         start_time = time.time()
 
         runner.run_full_batch()
         runner.create_comparison_charts()
 
         elapsed_time = time.time() - start_time
-        print(f"✅ 四规模对比实验完成! 耗时: {elapsed_time:.1f}秒")
-
+        logger.info(f"✅ 四规模对比实验完成! 耗时: {elapsed_time:.1f}秒")
         return True
 
     except Exception as e:
-        print(f"❌ 运行四规模对比实验时出错: {e}")
-        import traceback
-        traceback.print_exc()
+        logger.exception(f"❌ 运行四规模对比实验时出错: {e}")
         return False
 
 
-def run_emergence_study():
+def run_emergence_study(logger):
     """
     运行涌现研究，观察概念压缩和原理迁移的自然出现。
-
-    Returns
-    -------
-    bool
-        实验成功完成返回True，否则返回False。
     """
-    print("\n" + "=" * 80)
-    print("2️⃣ 运行涌现研究")
-    print("=" * 80)
+    logger.info("\n" + "=" * 80)
+    logger.info("2️⃣ 运行涌现研究")
+    logger.info("=" * 80)
 
     try:
         from experiments.emergence_study_fixed import EmergenceStudyFixed
 
-        print("开始运行涌现研究...")
+        logger.info("开始运行涌现研究...")
         start_time = time.time()
 
         study = EmergenceStudyFixed()
@@ -139,11 +212,11 @@ def run_emergence_study():
         all_results = {}
 
         for scale in scales:
-            print(f"\n处理 {scale} 概念规模...")
+            logger.info(f"\n处理 {scale} 概念规模...")
             try:
                 results = study.run_pure_emergence_experiment(
                     num_individuals=3,
-                    max_iterations=5000,
+                    max_iterations=10000,
                     num_concepts=scale
                 )
                 all_results[scale] = results
@@ -157,72 +230,54 @@ def run_emergence_study():
                 output_file = f'results/emergence/emergence_{scale}_concepts.json'
                 with open(output_file, 'w', encoding='utf-8') as f:
                     json.dump(serializable_results, f, ensure_ascii=False, indent=2)
-                print(f"✅ 结果已保存到: {output_file}")
+                logger.info(f"✅ 结果已保存到: {output_file}")
             except Exception as e:
-                print(f"❌ 处理规模 {scale} 时出错: {e}")
-                import traceback
-                traceback.print_exc()
+                logger.exception(f"❌ 处理规模 {scale} 时出错: {e}")
 
         study.visualize_emergence_results()
 
         elapsed_time = time.time() - start_time
-        print(f"✅ 涌现研究完成! 耗时: {elapsed_time:.1f}秒")
-
+        logger.info(f"✅ 涌现研究完成! 耗时: {elapsed_time:.1f}秒")
         return True
 
     except Exception as e:
-        print(f"❌ 运行涌现研究时出错: {e}")
-        import traceback
-        traceback.print_exc()
+        logger.exception(f"❌ 运行涌现研究时出错: {e}")
         return True  # 不中断整体流程
 
 
-def run_algebra_experiments():
+def run_algebra_experiments(logger):
     """
     运行代数验证实验，验证认知操作半群、Noether型命题等。
-
-    Returns
-    -------
-    bool
-        实验成功完成返回True，否则返回False。
     """
-    print("\n" + "=" * 80)
-    print("3️⃣ 运行代数验证实验")
-    print("=" * 80)
+    logger.info("\n" + "=" * 80)
+    logger.info("3️⃣ 运行代数验证实验")
+    logger.info("=" * 80)
 
     try:
         from algebra.algebra_experiments import AlgebraValidationExperiments
 
-        print("开始运行代数验证实验...")
+        logger.info("开始运行代数验证实验...")
         start_time = time.time()
 
         experiments = AlgebraValidationExperiments()
         all_results = experiments.run_all_experiments()
 
         elapsed_time = time.time() - start_time
-        print(f"✅ 代数验证实验完成! 耗时: {elapsed_time:.1f}秒")
-
+        logger.info(f"✅ 代数验证实验完成! 耗时: {elapsed_time:.1f}秒")
         return True
 
     except Exception as e:
-        print(f"❌ 运行代数验证实验时出错: {e}")
-        import traceback
-        traceback.print_exc()
+        logger.exception(f"❌ 运行代数验证实验时出错: {e}")
         return False
 
 
-def run_semantic_network_demo():
+def run_semantic_network_demo(logger):
     """
     运行语义网络演示，展示概念间的语义关联。
-
-    Returns
-    -------
-    bool
-        演示成功完成返回True，否则返回False。
     """
-    print("\n" + "=" * 80)
-    print("4️⃣ 运行语义网络演示")
-    print("=" * 80)
+    logger.info("\n" + "=" * 80)
+    logger.info("4️⃣ 运行语义网络演示")
+    logger.info("=" * 80)
 
     try:
         try:
@@ -232,7 +287,7 @@ def run_semantic_network_demo():
         except ImportError:
             from core.semantic_network import SemanticConceptNetwork
 
-            print("构建语义概念网络...")
+            logger.info("构建语义概念网络...")
             semantic_net = SemanticConceptNetwork()
 
             core_definitions = {
@@ -247,36 +302,31 @@ def run_semantic_network_demo():
 
             semantic_net.build_comprehensive_network()
 
-            print("\n寻找跨领域路径示例:")
+            logger.info("\n寻找跨领域路径示例:")
             paths = semantic_net.find_cross_domain_paths("牛顿定律", "算法", max_path_length=3)
             if paths:
                 best_path, similarity = paths[0]
-                print(f"牛顿定律 -> 算法:")
-                print(f"  路径: {' -> '.join(best_path)}")
-                print(f"  相似度: {similarity:.3f}")
+                logger.info(f"牛顿定律 -> 算法:")
+                logger.info(f"  路径: {' -> '.join(best_path)}")
+                logger.info(f"  相似度: {similarity:.3f}")
 
-            print("\n生成语义网络可视化...")
+            logger.info("\n生成语义网络可视化...")
             semantic_net.visualize_semantic_network()
 
             return True
 
     except Exception as e:
-        print(f"❌ 运行语义网络演示时出错: {e}")
+        logger.exception(f"❌ 运行语义网络演示时出错: {e}")
         return True
 
 
-def generate_summary_report():
+def generate_summary_report(logger):
     """
     生成实验总结报告，保存为Markdown文件。
-
-    Returns
-    -------
-    str
-        报告文件的路径。
     """
-    print("\n" + "=" * 80)
-    print("📊 生成实验总结报告")
-    print("=" * 80)
+    logger.info("\n" + "=" * 80)
+    logger.info("📊 生成实验总结报告")
+    logger.info("=" * 80)
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     report_file = f'results/experiment_summary_{timestamp}.md'
@@ -305,6 +355,9 @@ def generate_summary_report():
 - `results/algebra/` - 代数验证实验数据
 - `results/visualizations/` - 可视化图表
 
+## 数据说明
+具体的数据说明可见`results/DATA_DICTIONARY.md`
+
 ## 🚀 下一步建议
 1. 查看具体实验结果文件
 2. 调整参数重新运行特定实验
@@ -323,30 +376,43 @@ def generate_summary_report():
     with open(report_file, 'w', encoding='utf-8') as f:
         f.write(summary)
 
-    print(f"✅ 实验总结报告已生成: {report_file}")
-    print("\n报告内容预览:")
-    print("-" * 50)
-    print(summary[:500] + "...")
-    print("-" * 50)
+    logger.info(f"✅ 实验总结报告已生成: {report_file}")
+    logger.info("\n报告内容预览:")
+    logger.info("-" * 50)
+    logger.info(summary[:500] + "...")
+    logger.info("-" * 50)
 
     return report_file
 
 
 def main():
-    """
-    主函数：顺序运行所有实验并生成总结报告。
-    """
-    if not check_dependencies():
-        print("❌ 依赖库检查失败，请先安装所需依赖")
+    """主函数：顺序运行所有实验并生成总结报告。"""
+    # 配置日志
+    logger = setup_logging()
+    logger.info("=" * 80)
+    logger.info("🧠 认知图论：基于能量最小化的认知计算模型")
+    logger.info("=" * 80)
+    logger.info("作者：曾铭佳")
+    logger.info("版本：2.0")
+    logger.info("时间：2025年12月")
+    logger.info("=" * 80)
+
+    # 记录环境信息
+    log_environment(logger)
+
+    # 检查依赖
+    if not check_dependencies(logger):
+        logger.error("❌ 依赖库检查失败，请先安装所需依赖")
         return
 
-    if not create_output_directories():
-        print("❌ 目录创建失败")
+    # 创建输出目录
+    if not create_output_directories(logger):
+        logger.error("❌ 目录创建失败")
         return
 
-    print("\n" + "=" * 80)
-    print("🚀 开始一键运行所有实验")
-    print("=" * 80)
+    logger.info("\n" + "=" * 80)
+    logger.info("🚀 开始一键运行所有实验")
+    logger.info("=" * 80)
 
     overall_start_time = time.time()
 
@@ -358,57 +424,58 @@ def main():
     }
 
     try:
-        experiment_status['batch_experiments'] = run_batch_experiments()
-        experiment_status['emergence_study'] = run_emergence_study()
-        experiment_status['algebra_experiments'] = run_algebra_experiments()
-        experiment_status['semantic_demo'] = run_semantic_network_demo()
+        experiment_status['batch_experiments'] = run_batch_experiments(logger)
+        experiment_status['emergence_study'] = run_emergence_study(logger)
+        experiment_status['algebra_experiments'] = run_algebra_experiments(logger)
+        experiment_status['semantic_demo'] = run_semantic_network_demo(logger)
 
         overall_elapsed_time = time.time() - overall_start_time
-        report_file = generate_summary_report()
+        report_file = generate_summary_report(logger)
 
-        print("\n" + "=" * 80)
-        print("🎉 所有实验运行完成！")
-        print("=" * 80)
+        logger.info("\n" + "=" * 80)
+        logger.info("🎉 所有实验运行完成！")
+        logger.info("=" * 80)
 
-        print(f"\n📈 实验完成状态:")
+        logger.info("\n📈 实验完成状态:")
         for experiment, status in experiment_status.items():
             status_symbol = "✅" if status else "❌"
-            print(f"  {status_symbol} {experiment}")
+            logger.info(f"  {status_symbol} {experiment}")
 
-        print(f"\n⏱️  总运行时间: {overall_elapsed_time:.1f}秒")
-        print(f"📋 实验总结报告: {report_file}")
+        logger.info(f"\n⏱️  总运行时间: {overall_elapsed_time:.1f}秒")
+        logger.info(f"📋 实验总结报告: {report_file}")
 
         successful_experiments = sum(experiment_status.values())
         total_experiments = len(experiment_status)
-        print(f"\n📊 成功率: {successful_experiments}/{total_experiments} ({successful_experiments / total_experiments * 100:.1f}%)")
+        logger.info(f"\n📊 成功率: {successful_experiments}/{total_experiments} ({successful_experiments / total_experiments * 100:.1f}%)")
 
         if successful_experiments == total_experiments:
-            print("\n🌟 所有实验均成功完成！")
-            print("建议：")
-            print("  1. 查看 results/ 目录下的详细结果")
-            print("  2. 运行 analysis.py 进行数据分析")
-            print("  3. 修改 config.py 调整参数重新实验")
+            logger.info("\n🌟 所有实验均成功完成！")
+            logger.info("建议：")
+            logger.info("  1. 查看 results/ 目录下的详细结果")
+            logger.info("  2. 运行 analysis.py 进行数据分析")
+            logger.info("  3. 修改 config.py 调整参数重新实验")
         elif successful_experiments >= 2:
-            print("\n⚠️  部分实验完成，建议检查失败项目")
+            logger.info("\n⚠️  部分实验完成，建议检查失败项目")
         else:
-            print("\n❌ 多数实验失败，请检查环境和依赖")
+            logger.info("\n❌ 多数实验失败，请检查环境和依赖")
 
-        print("\n" + "=" * 80)
-        print("💡 提示：")
-        print("  1. 如需重新运行特定实验，请参考 main.py")
-        print("  2. 查看 README.md 获取详细项目说明")
-        print("  3. 实验结果可用于生成论文图表")
-        print("=" * 80)
+        logger.info("\n" + "=" * 80)
+        logger.info("💡 提示：")
+        logger.info("  1. 如需重新运行特定实验，请参考 main.py")
+        logger.info("  2. 查看 README.md 获取详细项目说明")
+        logger.info("  3. 实验结果可用于生成论文图表")
+        logger.info("=" * 80)
 
     except KeyboardInterrupt:
-        print("\n\n⏹️  实验被用户中断")
+        logger.warning("\n\n⏹️  实验被用户中断")
         overall_elapsed_time = time.time() - overall_start_time
-        print(f"已运行时间: {overall_elapsed_time:.1f}秒")
+        logger.info(f"已运行时间: {overall_elapsed_time:.1f}秒")
 
     except Exception as e:
-        print(f"\n❌ 运行实验时发生未预期错误: {e}")
-        import traceback
-        traceback.print_exc()
+        logger.exception(f"\n❌ 运行实验时发生未预期错误: {e}")
+
+    # 关闭日志文件（可选）
+    logging.shutdown()
 
 
 if __name__ == "__main__":

@@ -175,5 +175,5 @@ class CognitiveUniverseEnhanced(CognitiveUniverse):
 if __name__ == "__main__":
     enhanced = CognitiveUniverseEnhanced(num_concepts=51)
     enhanced.initialize_semantic_network()
-    enhanced.evolve_with_emergence_detection(iterations=5000)
+    enhanced.evolve_with_emergence_detection(iterations=10000)
     print("CognitiveUniverseEnhanced 测试完成")

@@ -230,5 +230,5 @@ def demo_semantic_network(num_concepts=None):
 if __name__ == "__main__":
     # 简单测试：运行一个较小规模的群体实验
     print("运行群体实验测试（2个个体，500次迭代）")
-    results = run_semantic_enhanced_experiment(num_individuals=2, max_iterations=5000, num_concepts=51)
+    results = run_semantic_enhanced_experiment(num_individuals=2, max_iterations=10000, num_concepts=51)
     print("测试完成。")
