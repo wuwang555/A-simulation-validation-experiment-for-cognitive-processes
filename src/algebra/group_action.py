@@ -41,20 +41,18 @@ class GroupActionOnCognitiveSpace:
         Returns:
             nx.Graph: 置换后的新网络。
         """
-        # 创建新图
         new_network = nx.Graph()
-
-        # 添加节点
+        # 添加节点（使用置换后的名称）
         for node in network.nodes():
             new_node = permutation.get(node, node)
             new_network.add_node(new_node)
-
-        # 添加边（应用置换）
+        # 添加边（保持权重）
         for u, v, data in network.edges(data=True):
             new_u = permutation.get(u, u)
             new_v = permutation.get(v, v)
-            new_network.add_edge(new_u, new_v, **data)
-
+            # 深拷贝边数据，避免引用
+            new_data = data.copy()
+            new_network.add_edge(new_u, new_v, **new_data)
         return new_network
 
     def compute_orbit(self, network: nx.Graph) -> List[nx.Graph]:
@@ -70,22 +68,17 @@ class GroupActionOnCognitiveSpace:
         if network_hash in self.orbits_cache:
             return self.orbits_cache[network_hash]
 
-        orbit = []
-        for automorphism in self.group.automorphisms:
-            transformed_network = self.apply_group_element(network, automorphism)
-            orbit.append(transformed_network)
+        orbit_set = set()  # 存储哈希值，避免重复
+        orbit_networks = []
+        for g in self.group.automorphisms:
+            transformed = self.apply_group_element(network, g)
+            h = self._network_hash(transformed)
+            if h not in orbit_set:
+                orbit_set.add(h)
+                orbit_networks.append(transformed)
 
-        # 去重
-        unique_orbit = []
-        seen_hashes = set()
-        for net in orbit:
-            net_hash = self._network_hash(net)
-            if net_hash not in seen_hashes:
-                seen_hashes.add(net_hash)
-                unique_orbit.append(net)
-
-        self.orbits_cache[network_hash] = unique_orbit
-        return unique_orbit
+        self.orbits_cache[network_hash] = orbit_networks
+        return orbit_networks
 
     def compute_stabilizer(self, network: nx.Graph) -> List[Dict]:
         """计算认知状态的稳定子群（使网络保持不变的群元素）。
@@ -101,10 +94,10 @@ class GroupActionOnCognitiveSpace:
             return self.stabilizers_cache[network_hash]
 
         stabilizer = []
-        for automorphism in self.group.automorphisms:
-            transformed_network = self.apply_group_element(network, automorphism)
-            if self._networks_equal(network, transformed_network):
-                stabilizer.append(automorphism)
+        for g in self.group.automorphisms:
+            transformed = self.apply_group_element(network, g)
+            if self._networks_equal(network, transformed):
+                stabilizer.append(g)
 
         self.stabilizers_cache[network_hash] = stabilizer
         return stabilizer
@@ -118,13 +111,18 @@ class GroupActionOnCognitiveSpace:
         Returns:
             bool: 定理是否成立（在给定容差内）。
         """
-        orbit = self.compute_orbit(network)
+        if len(self.group.automorphisms) == 0:
+            raise ValueError("群为空，无法验证定理")
         stabilizer = self.compute_stabilizer(network)
-
-        expected_orbit_size = len(self.group.automorphisms) / max(1, len(stabilizer))
-        actual_orbit_size = len(orbit)
-
-        return np.isclose(expected_orbit_size, actual_orbit_size, rtol=0.1)
+        if len(stabilizer) == 0:
+            # 理论上至少应有恒等映射，若没有，说明实现有误
+            raise ValueError("稳定子为空，可能自同构检测遗漏恒等映射")
+        orbit = self.compute_orbit(network)
+        expected = len(self.group.automorphisms) / len(stabilizer)
+        # 期望值应为整数（根据拉格朗日定理）
+        if not expected.is_integer():
+            return False
+        return len(orbit) == int(expected)
 
     def _network_hash(self, network: nx.Graph) -> str:
         """生成网络的简单哈希表示（用于缓存和去重）。
@@ -139,30 +137,29 @@ class GroupActionOnCognitiveSpace:
                         for u, v in network.edges()])
         return str(edges)
 
-    def _networks_equal(self, net1: nx.Graph, net2: nx.Graph) -> bool:
+    def _networks_equal(self, G1: nx.Graph, G2: nx.Graph, rtol: float = 1e-5) -> bool:
         """比较两个网络是否相等（考虑节点、边和权重）。
 
         Args:
-            net1 (nx.Graph): 网络1。
-            net2 (nx.Graph): 网络2。
+            G1 (nx.Graph): 网络1。
+            G2 (nx.Graph): 网络2。
 
         Returns:
             bool: 如果网络结构及权重完全相同返回True。
         """
-        if net1.number_of_nodes() != net2.number_of_nodes():
+        if set(G1.nodes()) != set(G2.nodes()):
             return False
-
-        if net1.number_of_edges() != net2.number_of_edges():
+        if G1.number_of_edges() != G2.number_of_edges():
             return False
 
         # 比较边和权重
-        for u, v, w1 in net1.edges(data='weight'):
-            if not net2.has_edge(u, v):
+        for u, v in G1.edges():
+            if not G2.has_edge(u, v):
                 return False
-            w2 = net2[u][v]['weight']
-            if not np.isclose(w1, w2, rtol=1e-5):
+            w1 = G1[u][v].get('weight', 0.0)
+            w2 = G2[u][v].get('weight', 0.0)
+            if not np.isclose(w1, w2, rtol=rtol):
                 return False
-
         return True
 
 

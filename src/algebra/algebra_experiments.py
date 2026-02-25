@@ -71,7 +71,8 @@ class AlgebraValidationExperiments:
         print(f"操作数量: {len(semigroup.operations)}")
         print(f"结合律验证结果:")
         for key, value in associativity_results.items():
-            print(f"  {key}: {value}")
+            safe_key = key.replace('∘', 'o')   # 替换特殊字符
+            print(f"  {safe_key}: {value}")
 
         # 检查是否所有结合律验证都通过
         all_passed = all(associativity_results.values())
@@ -191,16 +192,35 @@ class AlgebraValidationExperiments:
 
         # 找到所有同构
         automorphisms = symmetry_group.find_concept_isomorphisms()
+        if len(automorphisms) == 0:
+            print("错误：未找到任何自同构（包括恒等映射），无法验证定理。")
+            self.results['experiment3'] = {'error': 'No automorphisms found'}
+            return self.results['experiment3']
 
         # 初始化群作用
         group_action = GroupActionOnCognitiveSpace(symmetry_group)
+
+        # 调试：检查恒等映射是否在稳定子中
+        identity = {node: node for node in test_network.nodes()}
+        transformed_identity = group_action.apply_group_element(test_network, identity)
+        print("恒等映射变换后与原网络相等？",
+              group_action._networks_equal(test_network, transformed_identity))
 
         # 计算轨道和稳定子
         orbit = group_action.compute_orbit(test_network)
         stabilizer = group_action.compute_stabilizer(test_network)
 
-        # 验证定理 |轨道| = |群| / |稳定子|
-        theorem_holds = group_action.verify_orbit_stabilizer_theorem(test_network)
+        print(f"群大小: {len(automorphisms)}")
+        print(f"稳定子大小: {len(stabilizer)}")
+        if stabilizer:
+            print("稳定子中的自同构示例:", stabilizer[0])
+        print(f"轨道大小: {len(orbit)}")
+        try:
+            # 验证定理 |轨道| = |群| / |稳定子|
+            theorem_holds = group_action.verify_orbit_stabilizer_theorem(test_network)
+        except ValueError as e:
+            print(f"定理验证失败: {e}")
+            theorem_holds = False
 
         # 计算理论值和实际值
         expected_size = len(automorphisms) / max(1, len(stabilizer))
@@ -373,7 +393,7 @@ class AlgebraValidationExperiments:
         print("网络规模 | 半群运算时间(s) | 对称性检测时间(s) | 同构数 | 检测成功")
         print("-" * 70)
         for size, result in scalability_results.items():
-            success = "✓" if result['symmetry_detection_success'] else "✗"
+            success = "Y" if result['symmetry_detection_success'] else "N"
             print(f"{size:8d} | {result['semigroup_operation_time']:14.4f} | "
                   f"{result['symmetry_detection_time']:16.4f} | "
                   f"{result['automorphisms_count']:8d} | {success}")
@@ -775,7 +795,8 @@ if __name__ == "__main__":
         success_count = 0
         total_experiments = 5
 
-        if experiments.results.get('experiment1', {}).get('all_passed', False):
+        exp1 = experiments.results.get('experiment1', {})
+        if exp1.get('associativity') and all(exp1['associativity'].values()):
             success_count += 1
         if any(r.get('noether_theorem_holds', False) for r in experiments.results.get('experiment2', {}).values()):
             success_count += 1
