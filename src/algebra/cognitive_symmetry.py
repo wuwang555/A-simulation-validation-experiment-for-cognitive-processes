@@ -42,6 +42,10 @@ class CognitiveSymmetryGroup:
         """寻找概念同构（保持语义的节点置换）。
 
         由于同构检测是NP难问题，对于大规模网络采用随机采样近似。
+        策略说明：
+        - 节点数 ≤ 8：穷举全排列，但限制最多检查1000个（实际可能小于全排列数）。
+        - 节点数 9~12：使用 networkx 的 GraphMatcher 精确搜索。
+        - 节点数 > 12：随机采样排列，快速度序列过滤后验证同构性。
 
         Args:
             max_samples (int): 最大采样次数（用于大规模网络）。
@@ -57,7 +61,7 @@ class CognitiveSymmetryGroup:
         if n <= 8:
             permutations = itertools.permutations(range(n))
             total_perms = math.factorial(n)
-            max_to_check = min(1000, total_perms)  # 最多检查1000个（全排列数可能很大，但≤8时最大40320）
+            max_to_check = min(1000, total_perms)  # 最多检查1000个
             checked = 0
             for perm in permutations:
                 if checked >= max_to_check:
@@ -110,7 +114,15 @@ class CognitiveSymmetryGroup:
         return automorphisms
 
     def _is_isomorphism(self, perm, nodes):
-        """检查排列 perm 是否保持边和权重（用于穷举和随机采样）"""
+        """检查排列 perm 是否保持边和权重（用于穷举和随机采样）。
+
+        Args:
+            perm (tuple): 节点的索引排列。
+            nodes (list): 节点列表。
+
+        Returns:
+            bool: 如果是自同构返回True。
+        """
         # 随机抽样部分边以加速（但恒等映射一定能通过）
         edges_to_check = list(self.network.edges())
         if len(edges_to_check) > 20:
@@ -127,7 +139,15 @@ class CognitiveSymmetryGroup:
         return True
 
     def _random_sample_automorphisms(self, nodes, max_samples):
-        """随机采样排列，寻找自同构（不含恒等映射，因为概率太低）"""
+        """随机采样排列，寻找自同构（不含恒等映射，因为概率太低）。
+
+        Args:
+            nodes (list): 节点列表。
+            max_samples (int): 最大采样次数。
+
+        Returns:
+            list: 找到的自同构映射列表。
+        """
         n = len(nodes)
         automorphisms = []
         degree_seq = [self.network.degree(node) for node in nodes]
@@ -146,9 +166,9 @@ class CognitiveSymmetryGroup:
         """计算认知系统的守恒量。
 
         根据Noether型命题，对称性对应守恒量。此处计算：
-        - 全局认知能量（总权重）
-        - 结构熵（度分布熵）
-        - 分形维数（聚类系数/平均最短路径）
+        - 全局认知能量（总权重）——对应时间平移对称性
+        - 结构熵（度分布熵）——对应概念置换对称性
+        - 分形维数（聚类系数/平均最短路径）——对应尺度变换对称性
 
         Returns:
             Dict[str, float]: 守恒量名称到值的映射。
@@ -238,7 +258,7 @@ class CognitiveSymmetryGroup:
 
         Returns:
             Tuple[bool, Dict]: 第一个元素表示是否所有守恒量保持；
-                第二个元素为各守恒量的详细变化信息。
+                第二个元素为各守恒量的详细变化信息，包含 before、after、relative_change 和 conserved。
         """
         before_group = CognitiveSymmetryGroup(before_network)
         after_group = CognitiveSymmetryGroup(after_network)

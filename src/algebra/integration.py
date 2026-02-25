@@ -3,7 +3,7 @@
 代数增强的认知图集成模块
 
 该模块展示了如何将代数结构（半群、对称群）集成到核心认知图类中，
-提供代数性质验证的接口。
+提供代数性质验证的接口。继承自 core.cognitive_graph.BaseCognitiveGraph。
 """
 
 from core.cognitive_graph import BaseCognitiveGraph
@@ -16,12 +16,18 @@ class AlgebraEnhancedCognitiveGraph(BaseCognitiveGraph):
     """代数增强的认知图。
 
     在基础认知图的基础上，增加了半群操作管理和对称性分析功能。
+    可用于实时验证认知操作的代数性质（结合律、单位元）以及检测
+    概念同构与守恒量。
+
+    Attributes:
+        semigroup (CognitiveSemigroup): 认知操作半群实例。
+        symmetry_group (CognitiveSymmetryGroup): 认知对称群实例（懒初始化）。
     """
 
     def __init__(self, individual_params: Dict[str, Any], network_seed: int = 42):
         """
         Args:
-            individual_params: 个体认知参数。
+            individual_params: 个体认知参数，传递给父类。
             network_seed: 随机种子，用于网络初始化。
         """
         super().__init__(individual_params, network_seed)
@@ -37,7 +43,7 @@ class AlgebraEnhancedCognitiveGraph(BaseCognitiveGraph):
         """初始化认知操作到半群中。
 
         将核心认知操作（遍历、学习、遗忘、压缩、迁移）封装为可调用的函数，
-        并添加到半群。
+        并添加到半群。这些操作函数与父类中的实际逻辑相对应（此处为简化实现）。
         """
 
         def traversal_op(network, path=None, **kwargs):
