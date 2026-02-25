@@ -227,7 +227,9 @@ def run_emergence_study(logger):
                     serializable_individual = {k: v for k, v in individual.items() if k != 'universe'}
                     serializable_results.append(serializable_individual)
 
-                output_file = f'results/emergence/emergence_{scale}_concepts.json'
+                # 生成带时间戳的文件名
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                output_file = f'results/emergence/emergence_{scale}_concepts_{timestamp}.json'
                 with open(output_file, 'w', encoding='utf-8') as f:
                     json.dump(serializable_results, f, ensure_ascii=False, indent=2)
                 logger.info(f"✅ 结果已保存到: {output_file}")
@@ -243,7 +245,6 @@ def run_emergence_study(logger):
     except Exception as e:
         logger.exception(f"❌ 运行涌现研究时出错: {e}")
         return True  # 不中断整体流程
-
 
 def run_algebra_experiments(logger):
     """

@@ -4,6 +4,9 @@
 
 该模块实现了论文第5节中设计的五组代数验证实验，用于检验认知操作半群、
 Noether型命题、轨道-稳定子定理、李群演化框架以及代数方法的可扩展性。
+
+每个实验对应论文中的一个子节，实验结果用于支撑定理4.1.3、命题4.2.2、
+定理4.3.3和定理4.4.2。
 """
 
 import os
@@ -19,6 +22,8 @@ class AlgebraValidationExperiments:
     """代数验证实验管理器。
 
     该类封装了论文第5节中描述的五组代数验证实验，提供统一的实验运行接口。
+    每个实验方法均返回包含关键指标的结果字典，最终可通过 run_all_experiments()
+    执行全部实验并生成总结报告。
     """
 
     def __init__(self):
@@ -30,10 +35,16 @@ class AlgebraValidationExperiments:
         """实验1：验证认知操作半群的结合律性质。
 
         根据论文定理4.1.3，基本认知操作在复合下应构成半群，满足结合律。
-        该方法对13种操作组合进行结合律验证，并报告结果。
+        该方法对5种基本操作（学习、遗忘、遍历、压缩、迁移）进行组合，
+        在测试网络上验证结合律 (a∘b)∘c = a∘(b∘c)。
 
         Returns:
-            dict: 包含结合律验证结果和操作数量的字典。
+            dict: 包含结合律验证结果和操作数量的字典，例如：
+                {
+                    'associativity': {'(learning∘forgetting)∘traversal': True, ...},
+                    'operation_count': 5,
+                    'note': '单位元检查暂时跳过（半群不一定要求单位元）'
+                }
         """
         print("=== 实验1：认知操作半群验证 ===")
 
@@ -44,7 +55,7 @@ class AlgebraValidationExperiments:
         semigroup = CognitiveSemigroup()
         self._initialize_operations(semigroup)
 
-        # 验证结合律
+        # 验证结合律：选取三个不同的操作组合进行测试
         test_combinations = [
             ("learning", "forgetting", "traversal"),
             ("compression", "migration", "learning"),
@@ -88,7 +99,17 @@ class AlgebraValidationExperiments:
         守恒量的保持情况。
 
         Returns:
-            dict: 各网络的Noether验证结果。
+            dict: 各网络的Noether验证结果，结构如：
+                {
+                    'network_0': {
+                        'automorphisms_count': int,
+                        'conserved_quantities': {...},
+                        'noether_theorem_holds': bool,
+                        'energy_before': float,
+                        'energy_after': float
+                    },
+                    ...
+                }
         """
         print("\n=== 实验2：Noether定理验证 ===")
 
@@ -107,9 +128,8 @@ class AlgebraValidationExperiments:
             if not nx.is_connected(network):
                 print(f"警告：网络{i + 1}不连通，尝试修复...")
                 # 如果由于权重过大导致不连通，降低权重阈值
-                # 在我们的完全图模型中，这不应该发生，但以防万一
                 for u, v in network.edges():
-                    if network[u][v]['weight'] > 5.0:  # 降低过高权重
+                    if network[u][v]['weight'] > 5.0:
                         network[u][v]['weight'] = 2.0
 
             symmetry_group = CognitiveSymmetryGroup(network)
@@ -122,7 +142,6 @@ class AlgebraValidationExperiments:
                 conserved = symmetry_group.compute_conserved_quantities()
 
                 # 验证操作前后守恒量不变
-                # 先执行学习操作
                 before_net = network.copy()
 
                 # 随机选择一个学习操作
@@ -183,7 +202,15 @@ class AlgebraValidationExperiments:
         该方法计算认知对称群的大小、稳定子大小和轨道大小，并验证该等式。
 
         Returns:
-            dict: 包含定理验证结果及误差百分比的字典。
+            dict: 包含定理验证结果及误差百分比的字典，例如：
+                {
+                    'automorphism_group_size': int,
+                    'orbit_size_actual': int,
+                    'stabilizer_size': int,
+                    'orbit_size_expected': float,
+                    'theorem_holds': bool,
+                    'error_percentage': float
+                }
         """
         print("\n=== 实验3：轨道-稳定子定理验证 ===")
 
@@ -254,7 +281,17 @@ class AlgebraValidationExperiments:
         原理迁移主导）演化网络，并记录能耗变化。
 
         Returns:
-            dict: 包含各策略演化结果（能耗变化轨迹）的字典。
+            dict: 包含各策略演化结果（能耗变化轨迹）的字典，例如：
+                {
+                    'strategy_0': {
+                        'generator_coeffs': {'E': 0.7, 'C': 0.2, 'M': 0.1},
+                        'initial_energy': float,
+                        'final_energy': float,
+                        'energy_change_percent': float,
+                        'energy_trajectory': list
+                    },
+                    ...
+                }
         """
         print("\n=== 实验4：李群演化演示 ===")
 
@@ -330,7 +367,8 @@ class AlgebraValidationExperiments:
         评估代数方法在不同规模网络中的计算效率。
 
         Returns:
-            dict: 各规模网络的测试结果（运行时间、同构数等）。
+            dict: 各规模网络的测试结果，包含节点数、边数、半群运算时间、
+                  对称性检测时间、同构数等。
         """
         print("\n=== 实验5：代数方法可扩展性测试 ===")
 
@@ -404,7 +442,7 @@ class AlgebraValidationExperiments:
         """运行所有代数验证实验。
 
         Returns:
-            dict: 包含所有实验结果的总字典。
+            dict: 包含所有实验结果的总字典，键为实验名称，值为对应实验结果。
         """
         print("=" * 60)
         print("代数结构验证实验套件")
@@ -547,7 +585,14 @@ class AlgebraValidationExperiments:
             print(f"结果已保存到备用文件: {simple_filename}")
 
     def _make_serializable(self, obj):
-        """确保对象可JSON序列化（递归转换numpy类型等）。"""
+        """确保对象可JSON序列化（递归转换numpy类型等）。
+
+        Args:
+            obj: 任意对象。
+
+        Returns:
+            可JSON序列化的Python基本类型。
+        """
         if isinstance(obj, (int, float, str, bool, type(None))):
             return obj
         elif isinstance(obj, dict):
@@ -778,6 +823,7 @@ class AlgebraValidationExperiments:
         semigroup.add_operation("compression", compression_op)
         semigroup.add_operation("migration", migration_op)
 
+
 # 主程序
 if __name__ == "__main__":
     print("开始代数验证实验...\n")
@@ -815,5 +861,4 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"\n实验运行出错: {e}")
         import traceback
-
         traceback.print_exc()

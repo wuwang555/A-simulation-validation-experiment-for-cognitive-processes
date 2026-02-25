@@ -1,0 +1,178 @@
+{
+  "51": {
+    "random": {
+      "model": "random",
+      "scale": 51.0,
+      "elapsed_time": 4.1724395751953125,
+      "iterations": 10000.0,
+      "improvement": -61.69818530473346,
+      "num_nodes": 51.0,
+      "num_edges": 0.0,
+      "avg_energy": 2.233013398110137
+    },
+    "qlearning": {
+      "model": "qlearning",
+      "scale": 51.0,
+      "elapsed_time": 3.7817270755767822,
+      "iterations": 10000.0,
+      "improvement": 14.516926015602886,
+      "num_nodes": 51.0,
+      "num_edges": 0.0,
+      "avg_energy": 0.8362918152676381,
+      "q_table_sparsity": 0.8139177239523261,
+      "q_table_non_zero": 1452.0
+    },
+    "traditional": {
+      "model": "traditional",
+      "scale": 51.0,
+      "elapsed_time": 40.58191728591919,
+      "iterations": 10000.0,
+      "improvement": 22.788192918913733,
+      "compression_centers": 11.0,
+      "migration_bridges": 3.0
+    },
+    "emergence": {
+      "model": "emergence",
+      "scale": 51.0,
+      "elapsed_time": 8.443028688430786,
+      "iterations": 10000.0,
+      "improvement": 86.85484859010764,
+      "compression_centers": 471.0,
+      "migration_bridges": 0.0,
+      "compression_frequency": 0.0,
+      "migration_frequency": 0.0
+    }
+  },
+  "71": {
+    "random": {
+      "model": "random",
+      "scale": 71.0,
+      "elapsed_time": 5.86540412902832,
+      "iterations": 10000.0,
+      "improvement": -31.550969174816178,
+      "num_nodes": 71.0,
+      "num_edges": 0.0,
+      "avg_energy": 1.8323578133819558
+    },
+    "qlearning": {
+      "model": "qlearning",
+      "scale": 71.0,
+      "elapsed_time": 4.479175806045532,
+      "iterations": 10000.0,
+      "improvement": 7.327317609762317,
+      "num_nodes": 71.0,
+      "num_edges": 0.0,
+      "avg_energy": 0.9104932910778775,
+      "q_table_sparsity": 0.8139258083713549,
+      "q_table_non_zero": 2814.0
+    },
+    "traditional": {
+      "model": "traditional",
+      "scale": 71.0,
+      "elapsed_time": 59.25746440887451,
+      "iterations": 10000.0,
+      "improvement": 15.534651395552338,
+      "compression_centers": 6.0,
+      "migration_bridges": 1.0
+    },
+    "emergence": {
+      "model": "emergence",
+      "scale": 71.0,
+      "elapsed_time": 10.784178256988525,
+      "iterations": 10000.0,
+      "improvement": 72.29338902220671,
+      "compression_centers": 332.0,
+      "migration_bridges": 3.0,
+      "compression_frequency": 0.0,
+      "migration_frequency": 0.0
+    }
+  },
+  "91": {
+    "random": {
+      "model": "random",
+      "scale": 91.0,
+      "elapsed_time": 9.839609622955322,
+      "iterations": 10000.0,
+      "improvement": -18.199752924924418,
+      "num_nodes": 91.0,
+      "num_edges": 0.0,
+      "avg_energy": 1.650851766377915
+    },
+    "qlearning": {
+      "model": "qlearning",
+      "scale": 91.0,
+      "elapsed_time": 3.825096368789673,
+      "iterations": 10000.0,
+      "improvement": 4.0026902551713945,
+      "num_nodes": 91.0,
+      "num_edges": 0.0,
+      "avg_energy": 0.9521168282542695,
+      "q_table_sparsity": 0.8065451032483999,
+      "q_table_non_zero": 4806.0
+    },
+    "traditional": {
+      "model": "traditional",
+      "scale": 91.0,
+      "elapsed_time": 83.62473511695862,
+      "iterations": 10000.0,
+      "improvement": 12.155991927388369,
+      "compression_centers": 4.0,
+      "migration_bridges": 4.0
+    },
+    "emergence": {
+      "model": "emergence",
+      "scale": 91.0,
+      "elapsed_time": 15.921789407730103,
+      "iterations": 10000.0,
+      "improvement": 61.445510157160186,
+      "compression_centers": 301.0,
+      "migration_bridges": 3.0,
+      "compression_frequency": 0.0,
+      "migration_frequency": 0.0
+    }
+  },
+  "111": {
+    "random": {
+      "model": "random",
+      "scale": 111.0,
+      "elapsed_time": 12.368099212646484,
+      "iterations": 10000.0,
+      "improvement": -12.854385219577932,
+      "num_nodes": 111.0,
+      "num_edges": 0.0,
+      "avg_energy": 1.5785157968019388
+    },
+    "qlearning": {
+      "model": "qlearning",
+      "scale": 111.0,
+      "elapsed_time": 4.938033819198608,
+      "iterations": 10000.0,
+      "improvement": 2.8933908053880373,
+      "num_nodes": 111.0,
+      "num_edges": 0.0,
+      "avg_energy": 0.9678553542789179,
+      "q_table_sparsity": 0.8013148283418554,
+      "q_table_non_zero": 7344.0
+    },
+    "traditional": {
+      "model": "traditional",
+      "scale": 111.0,
+      "elapsed_time": 131.99124884605408,
+      "iterations": 10000.0,
+      "improvement": 7.5621566136868505,
+      "compression_centers": 5.0,
+      "migration_bridges": 5.0
+    },
+    "emergence": {
+      "model": "emergence",
+      "scale": 111.0,
+      "elapsed_time": 21.062154531478882,
+      "iterations": 10000.0,
+      "improvement": 47.91721216104601,
+      "compression_centers": 43.0,
+      "migration_bridges": 1.0,
+      "compression_frequency": 0.0,
+      "migration_frequency": 0.0
+    }
+  }
+}

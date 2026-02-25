@@ -1,5 +1,3 @@
-¾í Windows µÄÎÄ¼þ¼Ð PATH ÁÐ±í
-¾íÐòÁÐºÅÎª BA16-3293
 C:.
 |   .gitignore
 |   config.py
@@ -19,7 +17,7 @@ C:.
 |   |   modules.xml
 |   |   vcs.xml
 |   |   workspace.xml
-|   |   ÏÀÒåÈÏÖªÍ¼ÂÛ.iml
+|   |   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÖªÍ¼ï¿½ï¿½.iml
 |   |   
 |   \---inspectionProfiles
 |           profiles_settings.xml
@@ -50,17 +48,17 @@ C:.
 |       performance_comparison.png
 |       references.bib
 |       scale_effect.png
-|       ¸ÅÄîÑ¹Ëõ´úÂë¼ò»¯Í¼.drawio
-|       ¸ÅÄîÑ¹Ëõ´úÂë¼ò»¯Í¼.png
-|       ¸ÅÄîÑ¹ËõÀíÂÛÍ¼.drawio
-|       ¸ÅÄîÑ¹ËõÀíÂÛÍ¼.png
-|       ¸ÅÄîÑ¹ËõµÄÀý×Ó.png
-|       ¸ÅÄîÑ¹Ëõ±´Ò¶Ë¹ºÍ´úÊýÍ¼ÂÛµÄÀý×Ó.png
-|       µÚ¶þÕÂË¼Î¬µ¼Í¼.png
-|       ÈÏÖªµÄ¼¸ºÎÓë¶¯Á¦Ñ§Í¼ÂÛ.docx
-|       ÈÏÖªµÄ¼¸ºÎÓë¶¯Á¦Ñ§Í¼ÂÛ2.docx
-|       Ô¶ÀëÇ¨ÒÆ´úÊýÂß¼­Í¼.drawio
-|       Ô¶ÀëÇ¨ÒÆ´úÊýÂß¼­Í¼.png
+|       ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼.drawio
+|       ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼.png
+|       ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼.drawio
+|       ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼.png
+|       ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.png
+|       ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½Ò¶Ë¹ï¿½Í´ï¿½ï¿½ï¿½Í¼ï¿½Ûµï¿½ï¿½ï¿½ï¿½ï¿½.png
+|       ï¿½Ú¶ï¿½ï¿½ï¿½Ë¼Î¬ï¿½ï¿½Í¼.png
+|       ï¿½ï¿½Öªï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ë¶¯ï¿½ï¿½Ñ§Í¼ï¿½ï¿½.docx
+|       ï¿½ï¿½Öªï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ë¶¯ï¿½ï¿½Ñ§Í¼ï¿½ï¿½2.docx
+|       Ô¶ï¿½ï¿½Ç¨ï¿½Æ´ï¿½ï¿½ï¿½ï¿½ß¼ï¿½Í¼.drawio
+|       Ô¶ï¿½ï¿½Ç¨ï¿½Æ´ï¿½ï¿½ï¿½ï¿½ß¼ï¿½Í¼.png
 |       
 +---results
 |   |   111_concepts.xlsx
@@ -125,48 +123,48 @@ C:.
 |   |   |   emergence_results_20260224_022750.xlsx
 |   |   |   emergence_results_20260224_023035.xlsx
 |   |   |   emergence_results_20260224_023102.xlsx
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_1_20260224_005237.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_1_20260224_005354.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_1_20260224_005539.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_1_20260224_010018.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_1_20260224_010043.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_1_20260224_011745.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_1_20260224_011903.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_1_20260224_012048.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_1_20260224_012338.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_1_20260224_012402.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_1_20260224_022433.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_1_20260224_022557.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_1_20260224_022750.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_1_20260224_023035.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_1_20260224_023102.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_2_20260224_010043.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_2_20260224_012402.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_2_20260224_023102.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_3_20260224_010043.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_3_20260224_012402.csv
-|   |   |   energy_history_Ó¿ÏÖ¸öÌå_3_20260224_023102.csv
-|   |   |   network_Ó¿ÏÖ¸öÌå_1_20260224_005237.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_1_20260224_005354.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_1_20260224_005539.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_1_20260224_010018.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_1_20260224_010043.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_1_20260224_011745.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_1_20260224_011903.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_1_20260224_012048.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_1_20260224_012338.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_1_20260224_012402.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_1_20260224_022433.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_1_20260224_022557.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_1_20260224_022750.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_1_20260224_023035.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_1_20260224_023102.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_2_20260224_010043.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_2_20260224_012402.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_2_20260224_023102.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_3_20260224_010043.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_3_20260224_012402.graphml
-|   |   |   network_Ó¿ÏÖ¸öÌå_3_20260224_023102.graphml
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_005237.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_005354.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_005539.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_010018.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_010043.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_011745.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_011903.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_012048.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_012338.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_012402.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_022433.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_022557.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_022750.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_023035.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_023102.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_2_20260224_010043.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_2_20260224_012402.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_2_20260224_023102.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_3_20260224_010043.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_3_20260224_012402.csv
+|   |   |   energy_history_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_3_20260224_023102.csv
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_005237.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_005354.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_005539.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_010018.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_010043.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_011745.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_011903.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_012048.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_012338.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_012402.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_022433.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_022557.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_022750.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_023035.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_1_20260224_023102.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_2_20260224_010043.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_2_20260224_012402.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_2_20260224_023102.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_3_20260224_010043.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_3_20260224_012402.graphml
+|   |   |   network_Ó¿ï¿½Ö¸ï¿½ï¿½ï¿½_3_20260224_023102.graphml
 |   |   |   
 |   |   \---figures
 |   |           emergence_visualization_20260224_005237.png
@@ -186,30 +184,30 @@ C:.
 |   |           emergence_visualization_20260224_023102.png
 |   |           
 |   +---population
-|   |       energy_history_¸öÌå_1_20260224_005157.csv
-|   |       energy_history_¸öÌå_1_20260224_005255.csv
-|   |       energy_history_¸öÌå_1_20260224_005419.csv
-|   |       energy_history_¸öÌå_1_20260224_005659.csv
-|   |       energy_history_¸öÌå_1_20260224_011706.csv
-|   |       energy_history_¸öÌå_1_20260224_011803.csv
-|   |       energy_history_¸öÌå_1_20260224_011927.csv
-|   |       energy_history_¸öÌå_1_20260224_012126.csv
-|   |       energy_history_¸öÌå_1_20260224_022354.csv
-|   |       energy_history_¸öÌå_1_20260224_022454.csv
-|   |       energy_history_¸öÌå_1_20260224_022626.csv
-|   |       energy_history_¸öÌå_1_20260224_022824.csv
-|   |       energy_history_¸öÌå_2_20260224_005157.csv
-|   |       energy_history_¸öÌå_2_20260224_005255.csv
-|   |       energy_history_¸öÌå_2_20260224_005419.csv
-|   |       energy_history_¸öÌå_2_20260224_005659.csv
-|   |       energy_history_¸öÌå_2_20260224_011706.csv
-|   |       energy_history_¸öÌå_2_20260224_011803.csv
-|   |       energy_history_¸öÌå_2_20260224_011927.csv
-|   |       energy_history_¸öÌå_2_20260224_012126.csv
-|   |       energy_history_¸öÌå_2_20260224_022354.csv
-|   |       energy_history_¸öÌå_2_20260224_022454.csv
-|   |       energy_history_¸öÌå_2_20260224_022626.csv
-|   |       energy_history_¸öÌå_2_20260224_022824.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_1_20260224_005157.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_1_20260224_005255.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_1_20260224_005419.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_1_20260224_005659.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_1_20260224_011706.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_1_20260224_011803.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_1_20260224_011927.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_1_20260224_012126.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_1_20260224_022354.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_1_20260224_022454.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_1_20260224_022626.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_1_20260224_022824.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_2_20260224_005157.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_2_20260224_005255.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_2_20260224_005419.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_2_20260224_005659.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_2_20260224_011706.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_2_20260224_011803.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_2_20260224_011927.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_2_20260224_012126.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_2_20260224_022354.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_2_20260224_022454.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_2_20260224_022626.csv
+|   |       energy_history_ï¿½ï¿½ï¿½ï¿½_2_20260224_022824.csv
 |   |       
 |   +---semantic_network
 |   |       semantic_network_20260224_010312.png

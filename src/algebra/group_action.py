@@ -15,10 +15,12 @@ class GroupActionOnCognitiveSpace:
     """群在认知状态空间上的作用。
 
     该类封装了对称群对认知网络的作用，包括计算轨道、稳定子以及验证
-    轨道-稳定子定理。
+    轨道-稳定子定理（定理4.3.3）。
 
     Attributes:
         group (CognitiveSymmetryGroup): 关联的认知对称群。
+        orbits_cache (dict): 缓存已计算的轨道，键为网络的哈希值。
+        stabilizers_cache (dict): 缓存已计算的稳定子。
     """
 
     def __init__(self, symmetry_group: 'CognitiveSymmetryGroup'):
@@ -58,6 +60,8 @@ class GroupActionOnCognitiveSpace:
     def compute_orbit(self, network: nx.Graph) -> List[nx.Graph]:
         """计算认知状态的轨道（群作用下的所有像）。
 
+        轨道定义为 { g·network | g ∈ 群 }。
+
         Args:
             network (nx.Graph): 初始网络。
 
@@ -83,6 +87,8 @@ class GroupActionOnCognitiveSpace:
     def compute_stabilizer(self, network: nx.Graph) -> List[Dict]:
         """计算认知状态的稳定子群（使网络保持不变的群元素）。
 
+        稳定子定义为 { g ∈ 群 | g·network = network }。
+
         Args:
             network (nx.Graph): 初始网络。
 
@@ -105,11 +111,16 @@ class GroupActionOnCognitiveSpace:
     def verify_orbit_stabilizer_theorem(self, network: nx.Graph) -> bool:
         """验证轨道-稳定子定理：|轨道| = |群| / |稳定子|。
 
+        定理4.3.3：对于有限群作用，有 |O_G| = |G| / |Stab(G)|。
+
         Args:
             network (nx.Graph): 初始网络。
 
         Returns:
-            bool: 定理是否成立（在给定容差内）。
+            bool: 定理是否成立（在整数意义下）。
+
+        Raises:
+            ValueError: 如果群为空或稳定子为空（至少应有恒等映射）。
         """
         if len(self.group.automorphisms) == 0:
             raise ValueError("群为空，无法验证定理")

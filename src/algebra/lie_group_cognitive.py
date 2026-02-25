@@ -90,6 +90,7 @@ class CognitiveLieGroup:
 
         根据演化方程 dG/dt = A(t)G(t)，其中 A(t) 由生成元线性组合得到。
         采用指数映射进行离散时间演化：G(t+Δt) = exp(Δt * A) G(t)。
+        此处 Δt 固定为 0.1。
 
         Args:
             initial_network (nx.Graph): 初始认知网络。

@@ -19,15 +19,16 @@ class CognitiveOperation:
 
     Attributes:
         name (str): 操作名称（如"learning"）。
-        operation (Callable): 具体的操作函数。
+        operation (Callable): 具体的操作函数，签名应为
+            func(network: nx.Graph, **kwargs) -> nx.Graph。
     """
 
     def __init__(self, name: str, operation_func: Callable):
         """
         Args:
             name (str): 操作名称。
-            operation_func (Callable): 操作函数，签名应为
-                func(network: nx.Graph, **kwargs) -> nx.Graph。
+            operation_func (Callable): 操作函数，应接受 network 和任意关键字参数，
+                返回变换后的 network。
         """
         self.name = name
         self.operation = operation_func
@@ -37,7 +38,7 @@ class CognitiveOperation:
 
         Args:
             network (nx.Graph): 输入认知网络。
-            **kwargs: 传递给操作函数的额外参数。
+            **kwargs: 传递给操作函数的额外参数（如学习率、路径等）。
 
         Returns:
             nx.Graph: 变换后的网络。
@@ -52,7 +53,11 @@ class CognitiveSemigroup:
     """认知操作半群 - 代数实现。
 
     该类维护一个操作字典，并提供操作复合与结合律验证的功能。
-    操作复合定义为 (op2 ∘ op1)(G) = op2(op1(G))。
+    操作复合定义为 (op2 ∘ op1)(G) = op2(op1(G))，即先执行 op1，再执行 op2。
+
+    Attributes:
+        operations (dict): 操作名称到 CognitiveOperation 对象的映射。
+        composition_table (dict): 缓存已创建的复合操作，键为 (op1, op2)。
     """
 
     def __init__(self):
@@ -63,7 +68,7 @@ class CognitiveSemigroup:
         """添加一个认知操作到半群中。
 
         Args:
-            name (str): 操作名称。
+            name (str): 操作名称，应唯一。
             operation_func (Callable): 操作函数。
 
         Returns:
@@ -99,6 +104,8 @@ class CognitiveSemigroup:
 
     def verify_associativity(self, op1: str, op2: str, op3: str, test_network: nx.Graph) -> bool:
         """验证结合律：(op3 ∘ op2) ∘ op1 = op3 ∘ (op2 ∘ op1)。
+
+        通过比较两种复合方式作用在 test_network 上的总能耗是否近似相等来判断。
 
         Args:
             op1 (str): 第一个操作名称。
