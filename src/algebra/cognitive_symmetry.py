@@ -10,6 +10,7 @@ import networkx as nx
 import numpy as np
 from typing import List, Dict, Set, Tuple, Any
 import itertools
+from networkx.algorithms.isomorphism import GraphMatcher
 import math
 import random
 
@@ -48,84 +49,97 @@ class CognitiveSymmetryGroup:
         Returns:
             List[Dict]: 每个字典表示一个自同构映射 {原节点: 映射节点}。
         """
-        automorphisms = []
         nodes = list(self.network.nodes())
         n = len(nodes)
+        automorphisms = []
 
+        # ---------- 策略1：小规模网络（≤8），穷举全排列 ----------
         if n <= 8:
-            # 小规模网络：尝试所有排列
             permutations = itertools.permutations(range(n))
             total_perms = math.factorial(n)
-            max_to_check = min(1000, total_perms)  # 最多检查1000个排列
-        else:
-            # 大规模网络：随机采样
-            max_to_check = max_samples
-
-        checked = 0
-        isomorphisms_found = 0
-
-        # 先计算节点的度序列，快速筛选
-        degree_sequence = [self.network.degree(node) for node in nodes]
-
-        while checked < max_to_check and isomorphisms_found < 50:  # 最多找50个同构
-            if n <= 8:
-                try:
-                    perm = next(permutations)
-                except StopIteration:
+            max_to_check = min(1000, total_perms)  # 最多检查1000个（全排列数可能很大，但≤8时最大40320）
+            checked = 0
+            for perm in permutations:
+                if checked >= max_to_check:
                     break
-            else:
-                # 随机生成排列
-                perm = list(range(n))
-                np.random.shuffle(perm)
+                checked += 1
+                # 快速筛选：度序列匹配
+                if [self.network.degree(nodes[i]) for i in perm] != [self.network.degree(nodes[i]) for i in range(n)]:
+                    continue
+                if self._is_isomorphism(perm, nodes):
+                    mapping = {nodes[i]: nodes[perm[i]] for i in range(n)}
+                    automorphisms.append(mapping)
+            # 穷举后添加恒等映射（以防万一，但理论上穷举会找到它）
+            identity = {node: node for node in nodes}
+            if identity not in automorphisms:
+                automorphisms.append(identity)
+            print(f"穷举检查了 {checked} 个排列，找到 {len(automorphisms)} 个自同构")
+            return automorphisms
 
-            checked += 1
+        # ---------- 策略2：中等规模（9 ≤ n ≤ 12），使用 GraphMatcher 精确搜索 ----------
+        if 9 <= n <= 12:
+            try:
+                # 定义边匹配函数：边权重需近似相等
+                def edge_match(e1_attr, e2_attr):
+                    return np.isclose(e1_attr.get('weight', 0), e2_attr.get('weight', 0), rtol=0.2)
 
-            # 快速检查：度序列必须匹配
-            perm_degrees = [degree_sequence[i] for i in perm]
-            if degree_sequence != perm_degrees:
-                continue
+                GM = GraphMatcher(self.network, self.network,
+                                  node_match=lambda n1, n2: True,  # 节点无额外属性，总是匹配
+                                  edge_match=edge_match)
 
-            # 详细检查置换是否保持连接关系
-            is_isomorphism = True
-            # 只检查部分连接以减少计算量
-            check_edges = min(20, n * (n - 1) // 2)
+                for mapping in GM.isomorphisms_iter():
+                    # mapping 已经是 {原节点: 映射节点} 的字典，直接添加
+                    automorphisms.append(mapping)
 
-            edges_to_check = []
-            if len(list(self.network.edges())) <= check_edges:
-                edges_to_check = list(self.network.edges())
-            else:
-                # 随机选择边检查
-                edges = list(self.network.edges())
-                edges_to_check = random.sample(edges, check_edges)
+            except Exception as e:
+                print(f"GraphMatcher 出错: {e}，回退到随机采样")
+                automorphisms = self._random_sample_automorphisms(nodes, max_samples)
 
-            for u, v in edges_to_check:
-                i = nodes.index(u)
-                j = nodes.index(v)
-                v1, v2 = nodes[perm[i]], nodes[perm[j]]
+        # ---------- 策略3：大规模网络（>12），随机采样 + 强制恒等 ----------
+        automorphisms = self._random_sample_automorphisms(nodes, max_samples)
+        # 确保恒等映射已加入
+        nodes = list(self.network.nodes())
+        identity = {node: node for node in nodes}
+        if identity not in automorphisms:
+            automorphisms.append(identity)
+            print("强制加入了恒等映射（因随机采样可能漏掉）")
 
-                # 检查边是否存在
-                has_edge_original = self.network.has_edge(u, v)
-                has_edge_permuted = self.network.has_edge(v1, v2)
-
-                if has_edge_original != has_edge_permuted:
-                    is_isomorphism = False
-                    break
-
-                # 如果边存在，检查权重是否相近
-                if has_edge_original:
-                    w_original = self.network[u][v]['weight']
-                    w_permuted = self.network[v1][v2]['weight']
-                    if not np.isclose(w_original, w_permuted, rtol=0.2):  # 放宽容差
-                        is_isomorphism = False
-                        break
-
-            if is_isomorphism:
-                permutation_map = {nodes[i]: nodes[perm[i]] for i in range(n)}
-                automorphisms.append(permutation_map)
-                isomorphisms_found += 1
-
-        print(f"检查了 {checked} 个置换，找到 {len(automorphisms)} 个同构")
+        # 关键：将结果保存到实例属性
         self.automorphisms = automorphisms
+
+        return automorphisms
+
+    def _is_isomorphism(self, perm, nodes):
+        """检查排列 perm 是否保持边和权重（用于穷举和随机采样）"""
+        # 随机抽样部分边以加速（但恒等映射一定能通过）
+        edges_to_check = list(self.network.edges())
+        if len(edges_to_check) > 20:
+            edges_to_check = random.sample(edges_to_check, 20)
+        for u, v in edges_to_check:
+            i, j = nodes.index(u), nodes.index(v)
+            v1, v2 = nodes[perm[i]], nodes[perm[j]]
+            if not self.network.has_edge(v1, v2):
+                return False
+            w_orig = self.network[u][v]['weight']
+            w_perm = self.network[v1][v2]['weight']
+            if not np.isclose(w_orig, w_perm, rtol=0.2):
+                return False
+        return True
+
+    def _random_sample_automorphisms(self, nodes, max_samples):
+        """随机采样排列，寻找自同构（不含恒等映射，因为概率太低）"""
+        n = len(nodes)
+        automorphisms = []
+        degree_seq = [self.network.degree(node) for node in nodes]
+        for _ in range(max_samples):
+            perm = list(range(n))
+            random.shuffle(perm)
+            # 快速度序列过滤
+            if [degree_seq[i] for i in perm] != degree_seq:
+                continue
+            if self._is_isomorphism(perm, nodes):
+                mapping = {nodes[i]: nodes[perm[i]] for i in range(n)}
+                automorphisms.append(mapping)
         return automorphisms
 
     def compute_conserved_quantities(self) -> Dict[str, float]:
