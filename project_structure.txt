@@ -9,7 +9,8 @@ C:.
 |   README_zh.md
 |   requirements.txt
 |   run_experiments.py
-|   
+|   run_potential_analysis.py
+|   run_potential_analysis_en.py
 +---.idea
 |   |   .gitignore
 |   |   .name
@@ -17,7 +18,7 @@ C:.
 |   |   modules.xml
 |   |   vcs.xml
 |   |   workspace.xml
-|   |   ������֪ͼ��.iml
+|   |         ֪ͼ  .iml
 |   |   
 |   \---inspectionProfiles
 |           profiles_settings.xml
@@ -48,17 +49,6 @@ C:.
 |       performance_comparison.png
 |       references.bib
 |       scale_effect.png
-|       ����ѹ�������ͼ.drawio
-|       ����ѹ�������ͼ.png
-|       ����ѹ������ͼ.drawio
-|       ����ѹ������ͼ.png
-|       ����ѹ��������.png
-|       ����ѹ����Ҷ˹�ʹ���ͼ�۵�����.png
-|       �ڶ���˼ά��ͼ.png
-|       ��֪�ļ����붯��ѧͼ��.docx
-|       ��֪�ļ����붯��ѧͼ��2.docx
-|       Զ��Ǩ�ƴ����߼�ͼ.drawio
-|       Զ��Ǩ�ƴ����߼�ͼ.png
 |       
 +---results
 |   |   111_concepts.xlsx
@@ -110,105 +100,41 @@ C:.
 |   |   |   emergence_91_concepts.json
 |   |   |   emergence_results_20260224_005237.xlsx
 |   |   |   emergence_results_20260224_005354.xlsx
-|   |   |   emergence_results_20260224_005539.xlsx
-|   |   |   emergence_results_20260224_010018.xlsx
-|   |   |   emergence_results_20260224_010043.xlsx
-|   |   |   emergence_results_20260224_011745.xlsx
-|   |   |   emergence_results_20260224_011903.xlsx
-|   |   |   emergence_results_20260224_012048.xlsx
-|   |   |   emergence_results_20260224_012338.xlsx
-|   |   |   emergence_results_20260224_012402.xlsx
-|   |   |   emergence_results_20260224_022433.xlsx
-|   |   |   emergence_results_20260224_022557.xlsx
-|   |   |   emergence_results_20260224_022750.xlsx
-|   |   |   emergence_results_20260224_023035.xlsx
-|   |   |   emergence_results_20260224_023102.xlsx
-|   |   |   energy_history_ӿ�ָ���_1_20260224_005237.csv
-|   |   |   energy_history_ӿ�ָ���_1_20260224_005354.csv
-|   |   |   energy_history_ӿ�ָ���_1_20260224_005539.csv
-|   |   |   energy_history_ӿ�ָ���_1_20260224_010018.csv
-|   |   |   energy_history_ӿ�ָ���_1_20260224_010043.csv
-|   |   |   energy_history_ӿ�ָ���_1_20260224_011745.csv
-|   |   |   energy_history_ӿ�ָ���_1_20260224_011903.csv
-|   |   |   energy_history_ӿ�ָ���_1_20260224_012048.csv
-|   |   |   energy_history_ӿ�ָ���_1_20260224_012338.csv
-|   |   |   energy_history_ӿ�ָ���_1_20260224_012402.csv
-|   |   |   energy_history_ӿ�ָ���_1_20260224_022433.csv
-|   |   |   energy_history_ӿ�ָ���_1_20260224_022557.csv
-|   |   |   energy_history_ӿ�ָ���_1_20260224_022750.csv
-|   |   |   energy_history_ӿ�ָ���_1_20260224_023035.csv
-|   |   |   energy_history_ӿ�ָ���_1_20260224_023102.csv
-|   |   |   energy_history_ӿ�ָ���_2_20260224_010043.csv
-|   |   |   energy_history_ӿ�ָ���_2_20260224_012402.csv
-|   |   |   energy_history_ӿ�ָ���_2_20260224_023102.csv
-|   |   |   energy_history_ӿ�ָ���_3_20260224_010043.csv
-|   |   |   energy_history_ӿ�ָ���_3_20260224_012402.csv
-|   |   |   energy_history_ӿ�ָ���_3_20260224_023102.csv
-|   |   |   network_ӿ�ָ���_1_20260224_005237.graphml
-|   |   |   network_ӿ�ָ���_1_20260224_005354.graphml
-|   |   |   network_ӿ�ָ���_1_20260224_005539.graphml
-|   |   |   network_ӿ�ָ���_1_20260224_010018.graphml
-|   |   |   network_ӿ�ָ���_1_20260224_010043.graphml
-|   |   |   network_ӿ�ָ���_1_20260224_011745.graphml
-|   |   |   network_ӿ�ָ���_1_20260224_011903.graphml
-|   |   |   network_ӿ�ָ���_1_20260224_012048.graphml
-|   |   |   network_ӿ�ָ���_1_20260224_012338.graphml
-|   |   |   network_ӿ�ָ���_1_20260224_012402.graphml
-|   |   |   network_ӿ�ָ���_1_20260224_022433.graphml
-|   |   |   network_ӿ�ָ���_1_20260224_022557.graphml
-|   |   |   network_ӿ�ָ���_1_20260224_022750.graphml
-|   |   |   network_ӿ�ָ���_1_20260224_023035.graphml
-|   |   |   network_ӿ�ָ���_1_20260224_023102.graphml
-|   |   |   network_ӿ�ָ���_2_20260224_010043.graphml
-|   |   |   network_ӿ�ָ���_2_20260224_012402.graphml
-|   |   |   network_ӿ�ָ���_2_20260224_023102.graphml
-|   |   |   network_ӿ�ָ���_3_20260224_010043.graphml
-|   |   |   network_ӿ�ָ���_3_20260224_012402.graphml
-|   |   |   network_ӿ�ָ���_3_20260224_023102.graphml
-|   |   |   
 |   |   \---figures
 |   |           emergence_visualization_20260224_005237.png
 |   |           emergence_visualization_20260224_005354.png
-|   |           emergence_visualization_20260224_005539.png
-|   |           emergence_visualization_20260224_010018.png
-|   |           emergence_visualization_20260224_010043.png
-|   |           emergence_visualization_20260224_011745.png
-|   |           emergence_visualization_20260224_011903.png
-|   |           emergence_visualization_20260224_012048.png
-|   |           emergence_visualization_20260224_012338.png
-|   |           emergence_visualization_20260224_012402.png
-|   |           emergence_visualization_20260224_022433.png
-|   |           emergence_visualization_20260224_022557.png
-|   |           emergence_visualization_20260224_022750.png
-|   |           emergence_visualization_20260224_023035.png
-|   |           emergence_visualization_20260224_023102.png
 |   |           
 |   +---population
-|   |       energy_history_����_1_20260224_005157.csv
-|   |       energy_history_����_1_20260224_005255.csv
-|   |       energy_history_����_1_20260224_005419.csv
-|   |       energy_history_����_1_20260224_005659.csv
-|   |       energy_history_����_1_20260224_011706.csv
-|   |       energy_history_����_1_20260224_011803.csv
-|   |       energy_history_����_1_20260224_011927.csv
-|   |       energy_history_����_1_20260224_012126.csv
-|   |       energy_history_����_1_20260224_022354.csv
-|   |       energy_history_����_1_20260224_022454.csv
-|   |       energy_history_����_1_20260224_022626.csv
-|   |       energy_history_����_1_20260224_022824.csv
-|   |       energy_history_����_2_20260224_005157.csv
-|   |       energy_history_����_2_20260224_005255.csv
-|   |       energy_history_����_2_20260224_005419.csv
-|   |       energy_history_����_2_20260224_005659.csv
-|   |       energy_history_����_2_20260224_011706.csv
-|   |       energy_history_����_2_20260224_011803.csv
-|   |       energy_history_����_2_20260224_011927.csv
-|   |       energy_history_����_2_20260224_012126.csv
-|   |       energy_history_����_2_20260224_022354.csv
-|   |       energy_history_����_2_20260224_022454.csv
-|   |       energy_history_����_2_20260224_022626.csv
-|   |       energy_history_����_2_20260224_022824.csv
+|   |       energy_history_    _1_20260224_005157.csv
+|   |       energy_history_    _1_20260224_005255.csv
+|   |       energy_history_    _1_20260224_005419.csv
+|   |       energy_history_    _1_20260224_005659.csv
+|   |       energy_history_    _1_20260224_011706.csv
+|   |      
+|   +---add_scan
+|   |       threshold_scan_plot.png
+|   |       threshold_scan_results.json
 |   |       
+|   +---potential_analysis
+|   |      emergence_51_ind0_20260314_010343.json
+|   |      emergence_51_ind1_20260314_010343.json
+|   |      emergence_51_ind2_20260314_010343.json
+|   |      emergence_71_ind0_20260314_010409.json
+|   |      emergence_71_ind1_20260314_010409.json
+|   |      emergence_71_ind2_20260314_010410.json
+|   |      emergence_91_ind0_20260314_010445.json
+|   |      emergence_91_ind1_20260314_010445.json
+|   |      emergence_91_ind2_20260314_010445.json
+|   |      emergence_111_ind0_20260314_010540.json
+|   |      emergence_111_ind1_20260314_010540.json
+|   |      emergence_111_ind2_20260314_010540.json
+|   |      potential_summary_20260314_010541.json
+|   |      potential_dist_scale51.png
+|   |      potential_dist_scale71.png
+|   |      potential_dist_scale91.png
+|   |      potential_dist_scale111.png
+|   |      potential_trend.png
+|   |      
 |   +---semantic_network
 |   |       semantic_network_20260224_010312.png
 |   |       semantic_network_20260224_012630.png
@@ -310,6 +236,8 @@ C:.
 |   |   |   batch_experiments.py
 |   |   |   emergence_study_fixed.py
 |   |   |   population_study.py
+|   |   |   threshold_scan.py
+|   |   |   threshold_scan_temp.json
 |   |   |   __init__.py
 |   |   |   
 |   |   +---.pytest_cache

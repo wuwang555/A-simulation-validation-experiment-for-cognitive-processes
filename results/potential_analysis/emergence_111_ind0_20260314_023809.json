@@ -1,0 +1,716 @@
+{
+  "individual_id": "涌现个体_1",
+  "parameters": {
+    "forgetting_rate": 0.001849448142616835,
+    "base_learning_rate": 0.9266214320896858,
+    "hard_traversal_bias": 0.04639878836228101,
+    "soft_traversal_bias": 0.019731696839407314,
+    "compression_bias": -0.02063888157345381,
+    "migration_bias": -0.03440054796637974,
+    "learning_rate_variation": 0.05580836121681995,
+    "energy_variation": 0.05897313615284866,
+    "focus_bias": 0.060301519867529046,
+    "exploration_bias": -0.06494431796394846,
+    "fatigue_resistance": 0.177657951349999,
+    "inspiration_frequency": 0.08376875410060264
+  },
+  "observations": {
+    "natural_compressions": [
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "神经可塑性",
+          "镜像神经元"
+        ],
+        "energy_synergy": 0.9230533554030826,
+        "cohesion": 1.0,
+        "emergence_strength": 0.8702493399542582,
+        "cluster_size": 2,
+        "avg_connection_strength": 0.5102159887561353,
+        "compression_potential": 0.7419879287916947,
+        "detection_iteration": 2000
+      },
+      {
+        "center": "镜像神经元",
+        "related_nodes": [
+          "神经可塑性",
+          "功能磁共振"
+        ],
+        "energy_synergy": 0.9748690085543239,
+        "cohesion": 1.0,
+        "emergence_strength": 0.8174607025662971,
+        "cluster_size": 2,
+        "avg_connection_strength": 0.5085772701991027,
+        "compression_potential": 0.8266793504134263,
+        "detection_iteration": 2000
+      },
+      {
+        "center": "镜像神经元",
+        "related_nodes": [
+          "突触",
+          "功能磁共振"
+        ],
+        "energy_synergy": 0.9604755380415164,
+        "cohesion": 1.0,
+        "emergence_strength": 0.7881426614124549,
+        "cluster_size": 2,
+        "avg_connection_strength": 0.5193517296876909,
+        "compression_potential": 0.8479023423977019,
+        "detection_iteration": 2200
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "脑电图",
+          "神经可塑性"
+        ],
+        "energy_synergy": 0.9818859682105512,
+        "cohesion": 1.0,
+        "emergence_strength": 0.8278991237964987,
+        "cluster_size": 2,
+        "avg_connection_strength": 0.5082881609183573,
+        "compression_potential": 0.8512439436136408,
+        "detection_iteration": 2700
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "脑电图",
+          "神经可塑性",
+          "前额叶皮层"
+        ],
+        "energy_synergy": 0.9096553080629435,
+        "cohesion": 1.0,
+        "emergence_strength": 0.7951188146411053,
+        "cluster_size": 3,
+        "avg_connection_strength": 0.5266900443353384,
+        "compression_potential": 0.8696132834278903,
+        "detection_iteration": 3300
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "突触",
+          "脑电图",
+          "神经可塑性"
+        ],
+        "energy_synergy": 0.9547026819840483,
+        "cohesion": 1.0,
+        "emergence_strength": 0.8086330268174368,
+        "cluster_size": 3,
+        "avg_connection_strength": 0.5267435686856883,
+        "compression_potential": 0.9500739986668776,
+        "detection_iteration": 3600
+      },
+      {
+        "center": "镜像神经元",
+        "related_nodes": [
+          "功能磁共振",
+          "神经可塑性",
+          "突触"
+        ],
+        "energy_synergy": 0.9955169615080024,
+        "cohesion": 1.0,
+        "emergence_strength": 0.8153217551190673,
+        "cluster_size": 3,
+        "avg_connection_strength": 0.5368476882521228,
+        "compression_potential": 0.9022611233269219,
+        "detection_iteration": 3800
+      },
+      {
+        "center": "镜像神经元",
+        "related_nodes": [
+          "神经可塑性",
+          "功能磁共振",
+          "突触",
+          "抽象"
+        ],
+        "energy_synergy": 0.9418517023134119,
+        "cohesion": 1.0,
+        "emergence_strength": 0.7950555106940236,
+        "cluster_size": 4,
+        "avg_connection_strength": 0.5398503268187201,
+        "compression_potential": 0.8606482791891282,
+        "detection_iteration": 3900
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "突触",
+          "神经可塑性",
+          "脑电图",
+          "迭代"
+        ],
+        "energy_synergy": 0.9352955049910714,
+        "cohesion": 1.0,
+        "emergence_strength": 0.7972553181639882,
+        "cluster_size": 4,
+        "avg_connection_strength": 0.5341161881417149,
+        "compression_potential": 0.909264058276679,
+        "detection_iteration": 4000
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "突触",
+          "神经可塑性",
+          "前额叶皮层"
+        ],
+        "energy_synergy": 0.9855426388154171,
+        "cohesion": 1.0,
+        "emergence_strength": 0.8178850138668473,
+        "cluster_size": 3,
+        "avg_connection_strength": 0.5443160191716966,
+        "compression_potential": 0.7549265439925408,
+        "detection_iteration": 4100
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "突触",
+          "神经可塑性",
+          "前额叶皮层",
+          "变换"
+        ],
+        "energy_synergy": 0.9306858434430585,
+        "cohesion": 1.0,
+        "emergence_strength": 0.7958724196995842,
+        "cluster_size": 4,
+        "avg_connection_strength": 0.545722611798366,
+        "compression_potential": 0.7078416786448816,
+        "detection_iteration": 4200
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "突触",
+          "神经可塑性",
+          "前额叶皮层",
+          "变换",
+          "镜像神经元"
+        ],
+        "energy_synergy": 0.9563610514450258,
+        "cohesion": 1.0,
+        "emergence_strength": 0.824241648766841,
+        "cluster_size": 5,
+        "avg_connection_strength": 0.534198184906781,
+        "compression_potential": 0.7347193945878094,
+        "detection_iteration": 4600
+      },
+      {
+        "center": "镜像神经元",
+        "related_nodes": [
+          "神经可塑性",
+          "功能磁共振",
+          "突触",
+          "神经元"
+        ],
+        "energy_synergy": 0.9617691379891466,
+        "cohesion": 1.0,
+        "emergence_strength": 0.8310307413967439,
+        "cluster_size": 4,
+        "avg_connection_strength": 0.5389227360873973,
+        "compression_potential": 0.8186857237835063,
+        "detection_iteration": 4600
+      },
+      {
+        "center": "镜像神经元",
+        "related_nodes": [
+          "功能磁共振",
+          "神经可塑性",
+          "突触",
+          "海马体"
+        ],
+        "energy_synergy": 0.9444194463528639,
+        "cohesion": 1.0,
+        "emergence_strength": 0.795825833905859,
+        "cluster_size": 4,
+        "avg_connection_strength": 0.5395722166890744,
+        "compression_potential": 0.8300202121395527,
+        "detection_iteration": 4700
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "突触",
+          "神经可塑性",
+          "迭代",
+          "脑电图",
+          "功能磁共振"
+        ],
+        "energy_synergy": 0.8964807497568348,
+        "cohesion": 1.0,
+        "emergence_strength": 0.7822775582603837,
+        "cluster_size": 5,
+        "avg_connection_strength": 0.5536580407646297,
+        "compression_potential": 0.8647433227246009,
+        "detection_iteration": 4800
+      },
+      {
+        "center": "镜像神经元",
+        "related_nodes": [
+          "功能磁共振",
+          "神经可塑性",
+          "抽象",
+          "突触",
+          "海马体"
+        ],
+        "energy_synergy": 0.9929872286186934,
+        "cohesion": 1.0,
+        "emergence_strength": 0.8078961685856081,
+        "cluster_size": 5,
+        "avg_connection_strength": 0.5381695087084645,
+        "compression_potential": 0.8365357968333877,
+        "detection_iteration": 4800
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "突触",
+          "变换",
+          "迭代",
+          "神经可塑性",
+          "脑电图",
+          "功能磁共振"
+        ],
+        "energy_synergy": 0.8747873042867074,
+        "cohesion": 1.0,
+        "emergence_strength": 0.7735473023971233,
+        "cluster_size": 6,
+        "avg_connection_strength": 0.5501496335025868,
+        "compression_potential": 0.8254613453313948,
+        "detection_iteration": 4900
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "突触",
+          "迭代",
+          "神经可塑性",
+          "功能磁共振",
+          "前额叶皮层",
+          "变换"
+        ],
+        "energy_synergy": 0.8803306083560671,
+        "cohesion": 1.0,
+        "emergence_strength": 0.7752102936179313,
+        "cluster_size": 6,
+        "avg_connection_strength": 0.569458732407876,
+        "compression_potential": 0.7907887506355732,
+        "detection_iteration": 5100
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "突触",
+          "迭代",
+          "神经可塑性",
+          "功能磁共振",
+          "前额叶皮层"
+        ],
+        "energy_synergy": 0.9007405763569781,
+        "cohesion": 1.0,
+        "emergence_strength": 0.7835555062404268,
+        "cluster_size": 5,
+        "avg_connection_strength": 0.5763088803366658,
+        "compression_potential": 0.8149938729627562,
+        "detection_iteration": 5200
+      },
+      {
+        "center": "镜像神经元",
+        "related_nodes": [
+          "神经可塑性",
+          "功能磁共振",
+          "海马体",
+          "神经元",
+          "抽象",
+          "突触"
+        ],
+        "energy_synergy": 0.9872751253624048,
+        "cohesion": 1.0,
+        "emergence_strength": 0.8245158709420548,
+        "cluster_size": 6,
+        "avg_connection_strength": 0.5484648631768989,
+        "compression_potential": 0.8018641770173115,
+        "detection_iteration": 5300
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "突触",
+          "功能磁共振",
+          "神经可塑性",
+          "迭代",
+          "前额叶皮层",
+          "镜像神经元"
+        ],
+        "energy_synergy": 0.909916789769907,
+        "cohesion": 1.0,
+        "emergence_strength": 0.8040861480420831,
+        "cluster_size": 6,
+        "avg_connection_strength": 0.5711087500094204,
+        "compression_potential": 0.8010575300027736,
+        "detection_iteration": 5400
+      },
+      {
+        "center": "镜像神经元",
+        "related_nodes": [
+          "神经可塑性",
+          "功能磁共振",
+          "海马体",
+          "神经元",
+          "抽象"
+        ],
+        "energy_synergy": 0.9886920499939914,
+        "cohesion": 1.0,
+        "emergence_strength": 0.8306076149981974,
+        "cluster_size": 5,
+        "avg_connection_strength": 0.5526572958362316,
+        "compression_potential": 0.8050263654926819,
+        "detection_iteration": 5400
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "突触",
+          "功能磁共振",
+          "前额叶皮层",
+          "神经可塑性",
+          "迭代",
+          "海马体"
+        ],
+        "energy_synergy": 0.9286203166365441,
+        "cohesion": 1.0,
+        "emergence_strength": 0.7896972061020742,
+        "cluster_size": 6,
+        "avg_connection_strength": 0.5746447529664294,
+        "compression_potential": 0.8028617717784629,
+        "detection_iteration": 5600
+      },
+      {
+        "center": "镜像神经元",
+        "related_nodes": [
+          "功能磁共振",
+          "神经可塑性",
+          "抽象",
+          "迭代",
+          "海马体"
+        ],
+        "energy_synergy": 0.9675537180205026,
+        "cohesion": 1.0,
+        "emergence_strength": 0.8002661154061508,
+        "cluster_size": 5,
+        "avg_connection_strength": 0.5627486587008466,
+        "compression_potential": 0.858089170707453,
+        "detection_iteration": 5600
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "突触",
+          "海马体",
+          "功能磁共振",
+          "前额叶皮层",
+          "神经可塑性",
+          "脑电图"
+        ],
+        "energy_synergy": 0.9258843007216986,
+        "cohesion": 1.0,
+        "emergence_strength": 0.7888764013276206,
+        "cluster_size": 6,
+        "avg_connection_strength": 0.5716996944171012,
+        "compression_potential": 0.7597668346735281,
+        "detection_iteration": 5900
+      },
+      {
+        "center": "镜像神经元",
+        "related_nodes": [
+          "神经可塑性",
+          "功能磁共振",
+          "迭代",
+          "抽象"
+        ],
+        "energy_synergy": 0.9403892255231597,
+        "cohesion": 1.0,
+        "emergence_strength": 0.7946167676569478,
+        "cluster_size": 4,
+        "avg_connection_strength": 0.5662078998441766,
+        "compression_potential": 0.8551122990944668,
+        "detection_iteration": 6000
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "突触",
+          "前额叶皮层",
+          "海马体",
+          "功能磁共振",
+          "镜像神经元",
+          "神经可塑性"
+        ],
+        "energy_synergy": 0.937932561573032,
+        "cohesion": 1.0,
+        "emergence_strength": 0.8124908795830206,
+        "cluster_size": 6,
+        "avg_connection_strength": 0.5690688387541065,
+        "compression_potential": 0.7747975974863712,
+        "detection_iteration": 6200
+      },
+      {
+        "center": "镜像神经元",
+        "related_nodes": [
+          "神经可塑性",
+          "功能磁共振",
+          "迭代",
+          "神经元",
+          "抽象"
+        ],
+        "energy_synergy": 0.9670127764242827,
+        "cohesion": 1.0,
+        "emergence_strength": 0.8241038329272847,
+        "cluster_size": 5,
+        "avg_connection_strength": 0.5636596430343214,
+        "compression_potential": 0.8334403611902408,
+        "detection_iteration": 6200
+      },
+      {
+        "center": "镜像神经元",
+        "related_nodes": [
+          "神经可塑性",
+          "功能磁共振",
+          "迭代",
+          "神经元",
+          "抽象",
+          "突触"
+        ],
+        "energy_synergy": 0.9809584994238036,
+        "cohesion": 1.0,
+        "emergence_strength": 0.8226208831604744,
+        "cluster_size": 6,
+        "avg_connection_strength": 0.5562668701384293,
+        "compression_potential": 0.8613103225598318,
+        "detection_iteration": 6300
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "突触",
+          "海马体",
+          "前额叶皮层",
+          "功能磁共振",
+          "镜像神经元",
+          "神经编码"
+        ],
+        "energy_synergy": 0.9601931005109489,
+        "cohesion": 1.0,
+        "emergence_strength": 0.821391263486618,
+        "cluster_size": 6,
+        "avg_connection_strength": 0.5641021030263288,
+        "compression_potential": 0.8415875917313328,
+        "detection_iteration": 6500
+      },
+      {
+        "center": "镜像神经元",
+        "related_nodes": [
+          "迭代",
+          "功能磁共振",
+          "神经可塑性",
+          "抽象",
+          "神经编码"
+        ],
+        "energy_synergy": 0.9038118314907354,
+        "cohesion": 1.0,
+        "emergence_strength": 0.792572120875792,
+        "cluster_size": 5,
+        "avg_connection_strength": 0.5901800236947782,
+        "compression_potential": 0.8031267126207303,
+        "detection_iteration": 6800
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "突触",
+          "功能磁共振",
+          "海马体",
+          "前额叶皮层",
+          "神经编码",
+          "神经递质"
+        ],
+        "energy_synergy": 0.9460688312099976,
+        "cohesion": 1.0,
+        "emergence_strength": 0.810487316029666,
+        "cluster_size": 6,
+        "avg_connection_strength": 0.5886659300598146,
+        "compression_potential": 0.7676788623219177,
+        "detection_iteration": 6900
+      },
+      {
+        "center": "镜像神经元",
+        "related_nodes": [
+          "迭代",
+          "功能磁共振",
+          "神经可塑性",
+          "抽象",
+          "突触"
+        ],
+        "energy_synergy": 0.9216257636694077,
+        "cohesion": 1.0,
+        "emergence_strength": 0.7864877291008223,
+        "cluster_size": 5,
+        "avg_connection_strength": 0.5892704307571606,
+        "compression_potential": 0.8399516037926174,
+        "detection_iteration": 6900
+      },
+      {
+        "center": "镜像神经元",
+        "related_nodes": [
+          "迭代",
+          "功能磁共振",
+          "神经可塑性",
+          "抽象",
+          "突触",
+          "神经编码"
+        ],
+        "energy_synergy": 0.9393002461110586,
+        "cohesion": 1.0,
+        "emergence_strength": 0.7996472166904603,
+        "cluster_size": 6,
+        "avg_connection_strength": 0.5795895048891395,
+        "compression_potential": 0.8226228793678774,
+        "detection_iteration": 7000
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "突触",
+          "功能磁共振",
+          "海马体",
+          "前额叶皮层",
+          "神经编码",
+          "抽象"
+        ],
+        "energy_synergy": 0.9145864556550442,
+        "cohesion": 1.0,
+        "emergence_strength": 0.7877092700298466,
+        "cluster_size": 6,
+        "avg_connection_strength": 0.5930024615928838,
+        "compression_potential": 0.778835106813767,
+        "detection_iteration": 7100
+      },
+      {
+        "center": "镜像神经元",
+        "related_nodes": [
+          "迭代",
+          "功能磁共振",
+          "抽象",
+          "神经可塑性",
+          "神经编码",
+          "神经元"
+        ],
+        "energy_synergy": 0.9235488962597858,
+        "cohesion": 1.0,
+        "emergence_strength": 0.8149218117350785,
+        "cluster_size": 6,
+        "avg_connection_strength": 0.5864041814278417,
+        "compression_potential": 0.794100191157111,
+        "detection_iteration": 7300
+      },
+      {
+        "center": "镜像神经元",
+        "related_nodes": [
+          "迭代",
+          "功能磁共振",
+          "神经编码",
+          "前额叶皮层",
+          "抽象",
+          "神经可塑性"
+        ],
+        "energy_synergy": 0.8870019853630345,
+        "cohesion": 1.0,
+        "emergence_strength": 0.7839577384660533,
+        "cluster_size": 6,
+        "avg_connection_strength": 0.5926488729727688,
+        "compression_potential": 0.820619933851633,
+        "detection_iteration": 7400
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "抽象",
+          "功能磁共振",
+          "突触",
+          "前额叶皮层",
+          "海马体",
+          "镜像神经元"
+        ],
+        "energy_synergy": 0.9056411991514883,
+        "cohesion": 1.0,
+        "emergence_strength": 0.7916923597454464,
+        "cluster_size": 6,
+        "avg_connection_strength": 0.6163310115995103,
+        "compression_potential": 0.7709235386239277,
+        "detection_iteration": 8400
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "功能磁共振",
+          "抽象",
+          "镜像神经元",
+          "突触",
+          "前额叶皮层",
+          "迭代"
+        ],
+        "energy_synergy": 0.8543815189897208,
+        "cohesion": 1.0,
+        "emergence_strength": 0.7763144556969162,
+        "cluster_size": 6,
+        "avg_connection_strength": 0.622916289938183,
+        "compression_potential": 0.8437713147518652,
+        "detection_iteration": 8800
+      },
+      {
+        "center": "神经元",
+        "related_nodes": [
+          "功能磁共振",
+          "突触",
+          "镜像神经元",
+          "抽象",
+          "神经可塑性",
+          "迭代"
+        ],
+        "energy_synergy": 0.8653928776050923,
+        "cohesion": 1.0,
+        "emergence_strength": 0.7907289743926387,
+        "cluster_size": 6,
+        "avg_connection_strength": 0.6359414458215213,
+        "compression_potential": 0.8153838070100766,
+        "detection_iteration": 9300
+      }
+    ],
+    "natural_migrations": [
+      {
+        "type": "first_principles_migration",
+        "principle_node": "迭代",
+        "from_node": "生成对抗网络",
+        "to_node": "迭代",
+        "efficiency_gain": 0.3520880411334712,
+        "path": [
+          "生成对抗网络",
+          "神经网络",
+          "迭代"
+        ],
+        "emergence_iteration": 8600,
+        "domain_span": 2,
+        "detection_iteration": 8600
+      }
+    ],
+    "energy_convergence_phases": []
+  },
+  "final_energy": 0.8927383825492058,
+  "initial_energy": 1.6565735472614174,
+  "energy_improvement": 46.109342140284326,
+  "compression_count": 40,
+  "migration_count": 1,
+  "computation_time": 18.169777631759644
+}

@@ -122,6 +122,7 @@ class EmergenceDetectorFixed:
                     energy_sync > self.thresholds['energy_sync_threshold']):
 
                 if not self._is_duplicate_compression(center, selected_neighbors):
+                    potential = self._compute_compression_potential(center, selected_neighbors, network)
                     compression_candidates.append({
                         'center': center,
                         'related_nodes': selected_neighbors,
@@ -129,7 +130,8 @@ class EmergenceDetectorFixed:
                         'cohesion': cohesion,
                         'emergence_strength': emergence_strength,
                         'cluster_size': len(selected_neighbors),
-                        'avg_connection_strength': np.mean([s for _, s in connection_strengths[:cluster_size]])
+                        'avg_connection_strength': np.mean([s for _, s in connection_strengths[:cluster_size]]),
+                        'compression_potential': potential  # 新增字段
                     })
 
         return compression_candidates[:10]
@@ -414,6 +416,37 @@ class EmergenceDetectorFixed:
             return True
         self.compression_history[key] = True
         return False
+
+    def _compute_compression_potential(self, center: str, neighbors: List[str], network: nx.Graph) -> float:
+        """计算集群压缩势 Φ = 内部平均能耗 / 外部平均能耗"""
+        cluster_nodes = {center} | set(neighbors)
+        internal_energy = 0.0
+        internal_count = 0
+        external_energy = 0.0
+        external_count = 0
+        processed_edges = set()
+
+        for v in cluster_nodes:
+            for u in network.neighbors(v):
+                edge = tuple(sorted((v, u)))
+                if edge in processed_edges:
+                    continue
+                processed_edges.add(edge)
+                weight = network[v][u]['weight']
+                if u in cluster_nodes:
+                    internal_energy += weight
+                    internal_count += 1
+                else:
+                    external_energy += weight
+                    external_count += 1
+
+        avg_internal = internal_energy / internal_count if internal_count > 0 else 0.0
+        avg_external = external_energy / external_count if external_count > 0 else None
+
+        if avg_external is None or avg_external == 0:
+            # 无外部连接时压缩势无定义，设为 None（JSON 序列化为 null）
+            return None
+        return avg_internal / avg_external
 
 
 if __name__ == "__main__":
