@@ -22,3 +22,6 @@ ENV/
 .idea/
 logs/*
 !logs/example.log
+paper/*
+!paper/Manuscript
+src/py_figure_maker/*

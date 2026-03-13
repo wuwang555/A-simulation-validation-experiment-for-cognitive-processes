@@ -1,0 +1,103 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.1.2 Chrome/138.0.7204.243 Electron/37.4.0 Safari/537.36" version="28.1.2">
+  <diagram name="第 1 页" id="fg03w4xnah_t5LZSFkB5">
+    <mxGraphModel dx="1011" dy="602" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0" adaptiveColors="simple">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-81" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;startArrow=blockThin;startFill=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="agpx5FbKU6uG8ci9YiTa-74" target="agpx5FbKU6uG8ci9YiTa-76">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-84" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;startArrow=blockThin;startFill=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="agpx5FbKU6uG8ci9YiTa-74" target="agpx5FbKU6uG8ci9YiTa-79">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-74" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;声音可以分解为不同频率的叠加（光学）&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="320" y="510" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-80" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;startArrow=blockThin;startFill=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="agpx5FbKU6uG8ci9YiTa-76" target="agpx5FbKU6uG8ci9YiTa-79">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-76" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;傅里叶变换/频谱分析（数学与信号处理）&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="390" y="440" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-79" value="&lt;font style=&quot;color: rgb(0, 0, 0); font-size: 10px;&quot;&gt;图像处理中的频域滤波（计算机视觉）&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="460" y="510" width="70" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-82" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;0.24&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=-30;" vertex="1" parent="1">
+          <mxGeometry x="335" y="465" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-83" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;0.13&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=30;" vertex="1" parent="1">
+          <mxGeometry x="470.00063509461097" y="465.00038105676657" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-85" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;0.76&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="410.00063509461097" y="520.0003810567666" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-86" value="&lt;font color=&quot;#000000&quot;&gt;t&lt;sub&gt;0&lt;/sub&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="420" y="600" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-87" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;startArrow=blockThin;startFill=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="agpx5FbKU6uG8ci9YiTa-89" target="agpx5FbKU6uG8ci9YiTa-91">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-88" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;startArrow=blockThin;startFill=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="agpx5FbKU6uG8ci9YiTa-89" target="agpx5FbKU6uG8ci9YiTa-92">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-89" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;声音可以分解为不同频率的叠加（光学）&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="560" y="510" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-90" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;startArrow=blockThin;startFill=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="agpx5FbKU6uG8ci9YiTa-91" target="agpx5FbKU6uG8ci9YiTa-92">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-91" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;傅里叶变换/频谱分析（数学与信号处理）&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="630" y="440" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-92" value="&lt;font style=&quot;color: rgb(0, 0, 0); font-size: 10px;&quot;&gt;图像处理中的频域滤波（计算机视觉）&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="510" width="70" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-93" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;0.15&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=-30;" vertex="1" parent="1">
+          <mxGeometry x="575" y="465" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-94" value="&lt;font color=&quot;#000000&quot;&gt;0.10&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=30;" vertex="1" parent="1">
+          <mxGeometry x="710.000635094611" y="465.0003810567666" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-95" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;0.51&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="650.000635094611" y="520.0003810567666" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-96" value="&lt;font color=&quot;#000000&quot;&gt;t&lt;span style=&quot;font-size: 10px;&quot;&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;/span&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="660" y="590" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-97" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;startArrow=blockThin;startFill=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="agpx5FbKU6uG8ci9YiTa-99" target="agpx5FbKU6uG8ci9YiTa-101">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-98" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;startArrow=blockThin;startFill=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="agpx5FbKU6uG8ci9YiTa-99" target="agpx5FbKU6uG8ci9YiTa-102">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-99" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;声音可以分解为不同频率的叠加（光学）&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="510" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-100" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;startArrow=blockThin;startFill=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="agpx5FbKU6uG8ci9YiTa-101" target="agpx5FbKU6uG8ci9YiTa-102">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-101" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;傅里叶变换/频谱分析（数学与信号处理）&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="910" y="440" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-102" value="&lt;font style=&quot;color: rgb(0, 0, 0); font-size: 10px;&quot;&gt;图像处理中的频域滤波（计算机视觉）&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="980" y="510" width="70" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-103" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;0.10&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=-30;" vertex="1" parent="1">
+          <mxGeometry x="855" y="465" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-104" value="&lt;font color=&quot;#000000&quot;&gt;0.11&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=30;" vertex="1" parent="1">
+          <mxGeometry x="990.000635094611" y="465.0003810567666" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-105" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;0.13&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="930.000635094611" y="520.0003810567666" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-106" value="&lt;font color=&quot;#000000&quot;&gt;t&lt;span style=&quot;font-size: 10px;&quot;&gt;&lt;sub&gt;n&lt;/sub&gt;&lt;/span&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="940" y="590" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="agpx5FbKU6uG8ci9YiTa-107" value="&lt;font style=&quot;font-size: 33px;&quot; color=&quot;#000000&quot;&gt;......&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="760" y="510" width="80" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
