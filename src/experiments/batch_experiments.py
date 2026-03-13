@@ -340,7 +340,105 @@ class BatchExperimentRunner:
                 for scale, imp in sorted(improvements_by_scale.items()):
                     print(f"    {scale}概念: {imp:.1f}%")
 
-    def create_comparison_charts(self):
+    def create_comparison_charts(self): # 英文
+        """创建性能对比和规模效应图表（使用matplotlib）。"""
+        try:
+            import matplotlib.pyplot as plt
+            import numpy as np
+
+            print("\n📊 正在生成对比图表...")
+
+            # 准备数据
+            scales = self.config["scales"]
+            models = self.config["models"]
+
+            # 性能对比柱状图
+            fig1, ax1 = plt.subplots(figsize=(12, 8))
+
+            bar_width = 0.2
+            x = np.arange(len(scales))
+
+            model_colors = {
+                "random": "#999999",
+                "qlearning": "#4C72B0",
+                "traditional": "#55A868",
+                "emergence": "#C44E52"
+            }
+
+            # 英文标签
+            model_labels = {
+                "random": "Random Network",
+                "qlearning": "Enhanced Q-learning",
+                "traditional": "Traditional Mechanism Design",
+                "emergence": "Natural Emergence"
+            }
+
+            for i, model in enumerate(models):
+                improvements = []
+                for scale in scales:
+                    if scale in self.summary and model in self.summary[scale]:
+                        imp = self.summary[scale][model].get('improvement', 0)
+                        improvements.append(float(imp) if isinstance(imp, (int, float)) else 0)
+                    else:
+                        improvements.append(0)
+
+                ax1.bar(x + i * bar_width, improvements, bar_width,
+                        label=model_labels[model], color=model_colors[model], alpha=0.8)
+
+            ax1.set_xlabel('Concept Scale', fontsize=12)
+            ax1.set_ylabel('Energy Improvement (%)', fontsize=12)
+            ax1.set_title('Performance Comparison of Different Models at Various Concept Scales', fontsize=14,
+                          fontweight='bold')
+            ax1.set_xticks(x + bar_width * 1.5)
+            # 英文刻度标签
+            ax1.set_xticklabels([f"Scale {s}" for s in scales])
+            ax1.legend()
+            ax1.grid(True, alpha=0.3)
+
+            plt.tight_layout()
+            chart_path1 = self.output_dir / f"performance_comparison_{self.config['timestamp']}.png"
+            plt.savefig(chart_path1, dpi=300)
+            print(f"✅ 性能对比图已保存: {chart_path1}")
+
+            # 规模效应折线图
+            fig2, ax2 = plt.subplots(figsize=(10, 6))
+
+            for model in ["traditional", "emergence"]:
+                scales_list = []
+                improvements_list = []
+
+                for scale in scales:
+                    if scale in self.summary and model in self.summary[scale]:
+                        imp = self.summary[scale][model].get('improvement', 0)
+                        if isinstance(imp, (int, float)):
+                            scales_list.append(scale)
+                            improvements_list.append(imp)
+
+                if scales_list and improvements_list:
+                    ax2.plot(scales_list, improvements_list,
+                             marker='o', linewidth=2, markersize=8,
+                             label=model_labels[model])
+
+            ax2.set_xlabel('Concept Scale', fontsize=12)
+            ax2.set_ylabel('Energy Improvement (%)', fontsize=12)
+            ax2.set_title('Scale Effect Analysis of Cognitive Models', fontsize=14, fontweight='bold')
+            ax2.legend()
+            ax2.grid(True, alpha=0.3)
+
+            plt.tight_layout()
+            chart_path2 = self.output_dir / f"scale_effect_{self.config['timestamp']}.png"
+            plt.savefig(chart_path2, dpi=300)
+            print(f"✅ 规模效应图已保存: {chart_path2}")
+
+            plt.show()
+
+        except ImportError:
+            print("⚠️  Matplotlib未安装，跳过图表生成")
+            print("   请运行: pip install matplotlib")
+        except Exception as e:
+            print(f"❌ 生成图表时出错: {e}")
+
+    def create_comparison_charts_zh(self): # 中文
         """创建性能对比和规模效应图表（使用matplotlib）。"""
         try:
             import matplotlib.pyplot as plt
@@ -434,7 +532,6 @@ class BatchExperimentRunner:
             print("   请运行: pip install matplotlib")
         except Exception as e:
             print(f"❌ 生成图表时出错: {e}")
-
 
 def run_specific_combination():
     """运行特定组合的实验（调试用）。"""
