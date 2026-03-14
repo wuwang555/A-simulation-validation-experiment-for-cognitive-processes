@@ -15,9 +15,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from datetime import datetime
 from pathlib import Path
-import random
-random.seed(42)
-np.random.seed(42)
+
 # 添加项目根目录到路径
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
@@ -31,7 +29,7 @@ except ImportError:
 
 def setup_logging():
     """配置日志"""
-    Path("logs").mkdir(exist_ok=True)
+    Path("../../logs").mkdir(exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     log_file = f"logs/potential_analysis_{timestamp}.log"
 
@@ -55,7 +53,7 @@ def setup_logging():
 def run_potential_analysis(logger):
     """运行四规模涌现研究，保存详细结果并分析压缩势"""
     scales = [51, 71, 91, 111]
-    output_dir = Path("results/potential_analysis")
+    output_dir = Path("../../results/analysis/potential_analysis")
     output_dir.mkdir(parents=True, exist_ok=True)
 
     all_stats = {}
@@ -116,9 +114,9 @@ def run_potential_analysis(logger):
         if all_potentials:
             plt.figure(figsize=(8,5))
             plt.hist(all_potentials, bins=20, edgecolor='black', alpha=0.7)
-            plt.xlabel('压缩势 Φ = 内部平均能耗 / 外部平均能耗')
-            plt.ylabel('频次')
-            plt.title(f'概念规模 {scale} 的压缩势分布')
+            plt.xlabel('Compression Potential Φ = Internal Avg Energy / External Avg Energy')
+            plt.ylabel('Frequency')
+            plt.title(f'Distribution of Compression Potential (Scale {scale})')
             plt.grid(True, alpha=0.3)
             hist_file = output_dir / f"potential_dist_scale{scale}.png"
             plt.savefig(hist_file, dpi=150)
@@ -139,9 +137,9 @@ def run_potential_analysis(logger):
     if means:
         plt.figure(figsize=(8,5))
         plt.plot(scales_list[:len(means)], means, marker='o', linestyle='-', linewidth=2)
-        plt.xlabel('概念规模')
-        plt.ylabel('平均压缩势 Φ')
-        plt.title('压缩势随概念规模的变化')
+        plt.xlabel('Concept Scale')
+        plt.ylabel('Average Compression Potential Φ')
+        plt.title('Variation of Compression Potential with Scale')
         plt.grid(True, alpha=0.3)
         trend_file = output_dir / "potential_trend.png"
         plt.savefig(trend_file, dpi=150)
@@ -162,7 +160,7 @@ def main():
 
 
 if __name__ == "__main__":
-    # 设置中文字体
+    # 设置中文字体（保留以备可能的中文日志，但不影响英文标签）
     import matplotlib
     matplotlib.rcParams['font.sans-serif'] = ['SimHei', 'DejaVu Sans']
     matplotlib.rcParams['axes.unicode_minus'] = False

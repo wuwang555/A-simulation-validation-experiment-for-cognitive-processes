@@ -125,10 +125,10 @@ if __name__ == "__main__":
 
     # 保存结果到JSON文件（键转为字符串）
     str_key_results = {str(k): v for k, v in results.items()}
-    with open('../../results/add_scan/threshold_scan_results.json', 'w', encoding='utf-8') as f:
+    with open('../../results/analysis/add_scan/threshold_scan_results.json', 'w', encoding='utf-8') as f:
         json.dump(str_key_results, f, indent=2)
     print("结果已保存至 threshold_scan_results.json")
 
     # 也可以保存为npz格式（但需要字符串键，这里为兼容性跳过）
     # 绘制曲线
-    plot_scan_results(results, save_path='../../results/add_scan/threshold_scan_plot.png')
+    plot_scan_results(results, save_path='../../results/analysis/add_scan/threshold_scan_plot.png')
