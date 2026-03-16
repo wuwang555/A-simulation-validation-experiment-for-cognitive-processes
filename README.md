@@ -49,6 +49,14 @@ Algebraic verification experiments (5 sets) confirmed the computational feasibil
 
 We conducted systematic comparative experiments on networks of 51, 71, 91, and 111 concepts, covering interdisciplinary knowledge from physics, mathematics, computer science, and cognitive science. Each scale underwent 10,000 iterations. The experiments compared four paradigms: Random Network Baseline, Simple Q-learning, Preset Algorithm Model (simulating traditional cognitive computing), and Natural Emergence Model (our model).
 
+### Objective Metrics for Quantitative Validation
+To strengthen the empirical foundation of the model, we compute a set of objective, reproducible metrics that characterize the system’s macroscopic behavior and its sensitivity to key parameters:
+
+* **Compression threshold scan (阈值扫描)：** Sweep the compression synergy threshold (0.5–0.9) and count detected compressions to verify that observed phenomena are not artifacts of a single threshold choice. (See `src/analysis/threshold_scan.py`, results in `results/analysis/add_scan/`.)
+* **Compression potential (压缩势)：** For each compression event, compute the ratio of internal to external average energy (Φ) and analyze its distribution across scales. (See `src/analysis/run_potential_analysis.py` / `src/analysis/run_potential_analysis_en.py`, results in `results/analysis/potential_analysis/`.)
+* **Energy decline rate fitting (能耗下降速率拟合)：** Fit the energy trajectory over iterations to power-law / exponential curves, extracting decay exponents and fit quality to quantify how efficiently the system minimizes energy. (See `analyze_wallas_phases.py`, results in `results/analysis/objective_metrics/`.)
+* **Zipf-like frequency distribution (Zipf 检验)：** Test whether the frequency of concept participation in compression events follows a Zipf/power-law distribution, analogous to word-frequency laws in human language. (Also in `analyze_wallas_phases.py`.)
+
 ### Energy Optimization Performance
 
 | Concept Scale | Natural Emergence Model | Preset Algorithm Model | Relative Advantage |
@@ -124,6 +132,11 @@ python src/experiments/emergence_study_fixed.py --size 111
 
 # Run algebraic verification experiments
 python src/algebra/algebra_experiments.py
+
+# Run objective metric analyses (threshold scan, compression potential, energy decline & Zipf)
+python src/analysis/threshold_scan.py
+python src/analysis/run_potential_analysis.py
+python analyze_wallas_phases.py
 ```
 
 ### View Results

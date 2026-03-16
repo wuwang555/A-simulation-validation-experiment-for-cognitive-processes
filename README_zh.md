@@ -52,6 +52,14 @@
 
 我们在 51、71、91、111 概念网络上进行了系统性对比实验，涵盖物理学、数学、计算机科学、认知科学等跨领域知识，每个规模均运行10,000次迭代。实验对比了四种范式：随机网络基线、简单Q-learning、预设算法模型（模拟传统认知计算）、自然涌现模型（本文模型）。
 
+### 客观指标与定量验证
+为增强模型的可解释性与可复现性，我们设计了一套客观的定量指标来刻画系统宏观行为与参数敏感性：
+
+* **压缩阈值扫描（threshold scan）：** 扫描压缩协同性阈值（0.5–0.9），记录不同阈值下的压缩事件数量，确保所观察现象不是由单一阈值设定造成的。（见 `src/analysis/threshold_scan.py`，结果保存在 `results/analysis/add_scan/`。）
+* **压缩势（compression potential）：** 计算每次压缩事件内部平均能耗与外部平均能耗之比 Φ，分析其分布和规模依赖性。（见 `src/analysis/run_potential_analysis.py` / `src/analysis/run_potential_analysis_en.py`，结果保存在 `results/analysis/potential_analysis/`。）
+* **能耗下降速率拟合：** 对能耗随迭代的演化曲线进行幂律/指数拟合，提取衰减指数和拟合优度，量化能耗优化效率。（见 `analyze_wallas_phases.py`，结果保存在 `results/analysis/objective_metrics/`。）
+* **Zipf 分布检验：** 检验压缩事件中概念出现频率是否符合 Zipf/幂律分布，类似自然语言词频规律。（同样由 `analyze_wallas_phases.py` 生成。）
+
 ### 能耗优化性能
 
 | 概念规模 | 自然涌现模型 | 预设算法模型 | 相对优势 |
@@ -127,6 +135,11 @@ python src/experiments/emergence_study_fixed.py --size 111
 
 # 运行代数验证实验
 python src/algebra/algebra_experiments.py
+
+# 运行客观指标分析（阈值扫描、压缩势、能耗衰减拟合、Zipf 检验）
+python src/analysis/threshold_scan.py
+python src/analysis/run_potential_analysis.py
+python analyze_wallas_phases.py
 ```
 
 ### 查看结果

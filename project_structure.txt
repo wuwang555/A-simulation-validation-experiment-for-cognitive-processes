@@ -232,12 +232,17 @@ C:.
 |   |           universe_enhanced.cpython-312.pyc
 |   |           __init__.cpython-312.pyc
 |   |           
+|   +---analysis
+|   |   |   run_potential_analysis.py
+|   |   |   run_potential_analysis_en.py
+|   |   |   threshold_scan.py
+|   |   |   threshold_scan_temp.json
+|   |   |   __init__.py
+|   |   
 |   +---experiments
 |   |   |   batch_experiments.py
 |   |   |   emergence_study_fixed.py
 |   |   |   population_study.py
-|   |   |   threshold_scan.py
-|   |   |   threshold_scan_temp.json
 |   |   |   __init__.py
 |   |   |   
 |   |   +---.pytest_cache
