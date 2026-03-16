@@ -323,7 +323,7 @@ F(G) = \sum_{e_{ij} \in E} E_{ij} - T \cdot S(G) + R(G)
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-    scale=1.0,
+    scale=1.2,  % 稍微放大以增加间距
     every node/.style={circle, draw, minimum size=1.2cm},
     concept/.style={fill=blue!20},
     energy/.style={fill=red!20},
@@ -331,31 +331,31 @@ F(G) = \sum_{e_{ij} \in E} E_{ij} - T \cdot S(G) + R(G)
     >=stealth
 ]
 
-% 定义节点位置
-\node[concept] (v1) at (-2,1) {算法};
-\node[concept] (v2) at (1,2) {递归};
-\node[concept] (v3) at (3,1) {神经网络};
-\node[concept] (v4) at (0,-2) {模式识别};
-\node[concept] (v5) at (4,-2) {优化};
-\node[energy] (v6) at (7,-3) {认知能耗};
+% 定义节点位置（调整间距，避免重叠）
+\node[concept] (v1) at (-3,1) {算法};  % 左移
+\node[concept] (v2) at (0,2) {递归};   % 上移
+\node[concept] (v3) at (3,1) {神经网络};  % 右移
+\node[concept] (v4) at (-1,-2) {模式识别};  % 左下
+\node[concept] (v5) at (4,-2) {优化};   % 右下
+\node[energy] (v6) at (8,-3) {认知能耗};  % 右移更多
 
-% 连接边并标注权重
-\draw[->] (v1) -- node[midway, above left] {0.85} (v2);
+% 连接边并标注权重（使用弯曲边避免交叉）
+\draw[->] (v1) -- node[midway, above] {0.85} (v2);
 \draw[->] (v1) -- node[midway, above] {0.78} (v3);
 \draw[->] (v2) -- node[midway, right] {0.92} (v3);
-\draw[->] (v2) -- node[midway, left] {0.67} (v4);
+\draw[->] (v2) to[out=270, in=90] node[midway, left] {0.67} (v4);  % 弯曲边
 \draw[->] (v3) -- node[midway, right] {0.81} (v5);
-\draw[->] (v4) -- node[midway, below] {0.74} (v5);
+\draw[->] (v4) to[out=0, in=180] node[midway, below] {0.74} (v5);  % 弯曲边
 \draw[->] (v5) -- node[midway, right] {0.63} (v6);
-\draw[->] (v1) .. controls (-1,1) and (-1,-1) .. node[midway, left] {0.45} (v4);
-\draw[->] (v3) .. controls (5,1) and (5,-1) .. node[midway, right] {0.58} (v5);
+\draw[->] (v1) to[out=270, in=180] node[midway, left] {0.45} (v4);  % 弯曲边
+\draw[->] (v3) to[out=270, in=0] node[midway, right] {0.58} (v5);   % 弯曲边
 
-% 标注
-\node[text width=4cm, align=center, font=\small] at (6,4) {认知图 $G(V,E,t)$ \\ 时间 $t$: 迭代次数};
-\node[text width=3cm, align=center, font=\small] at (-1,4) {节点: 概念 \\ 边权重: 认知能耗};
+% 标注（调整位置，避免遮挡）
+\node[text width=4cm, align=center, font=\small] at (5,4) {认知图 $G(V,E,t)$ \\ 时间 $t$: 迭代次数};  % 右移
+\node[text width=3cm, align=center, font=\small] at (-2,4) {节点: 概念 \\ 边权重: 认知能耗};  % 左移
 
-% 能量函数示意
-\node[rectangle, draw, rounded corners, fill=yellow!20, minimum width=6cm, minimum height=1.5cm, text width=5.5cm, align=left] at (7,1) {
+% 能量函数示意（调整位置到右上，避免与节点冲突）
+\node[rectangle, draw, rounded corners, fill=yellow!20, minimum width=6cm, minimum height=1.5cm, text width=5.5cm, align=left] at (6.5,1) {
     \textbf{认知能耗函数:} \\
     $E_{ij}(t) = \alpha(1-\text{sim}_{ij}) + \beta\frac{1}{1+H_{ij}(t)} + \gamma\cdot\text{div}_{ij}$ \\
     $\alpha=0.4,\ \beta=0.4,\ \gamma=0.2$
@@ -488,8 +488,8 @@ E_{ij}(t) = \alpha \cdot (1 - \text{sim}(v_i, v_j)) + \beta \cdot \frac{1}{1 + H
 
 % 群作用示意
 \node[space] (space) at (9, -3.5) {};
-\node[circle, draw, fill=white] (state1) at (8.5, -4) {$G_1$};
-\node[circle, draw, fill=white] (state2) at (9.5, -4) {$G_2$};
+\node[circle, draw, fill=white] (state1) at (8, -4) {$G_1$};
+\node[circle, draw, fill=white] (state2) at (10, -4) {$G_2$};
 \node[circle, draw, fill=white] (state3) at (9, -3) {$G_3$};
 
 \draw[->, thick, blue] (composite.east) -- (space.west) 
