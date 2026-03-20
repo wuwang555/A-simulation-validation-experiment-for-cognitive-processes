@@ -1,0 +1,17 @@
+{
+  "iterations": 10000,
+  "repetitions": 1,
+  "models": [
+    "random",
+    "qlearning",
+    "traditional",
+    "emergence"
+  ],
+  "scales": [
+    51,
+    71,
+    91,
+    111
+  ],
+  "timestamp": "20260320_105541"
+}
