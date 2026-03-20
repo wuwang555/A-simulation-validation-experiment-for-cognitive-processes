@@ -8,13 +8,10 @@
 
 本项目的核心贡献在于：
 
-整合多学科概念：融合认知科学、数学物理、计算机科学，为知识表征、学习与创造性思维提供一个统一解释框架。
-
-发现新颖认知规律：通过四规模（51/71/91/111概念）模拟实验，观察到概念压缩密度随知识规模急剧下降、111概念处出现策略相变等与人类学习轨迹高度吻合的现象。
-
-代码完整验证：完全基于基础科学库（numpy/networkx等）实现，无任何黑盒依赖，所有现象均可复现、可追踪。
-
-实践落地探索：另有一个基于本理论的个性化教育原型系统，通过问卷获取认知参数，驱动认知网络演化，为学习者提供自适应建议（见 ‘基于认知的个性化教育实验’仓库）。
+- **整合多学科概念**：融合认知科学、数学物理、计算机科学，为知识表征、学习与创造性思维提供一个统一解释框架。
+- **发现新颖认知规律**：通过四规模（51/71/91/111概念）模拟实验，观察到概念压缩密度随知识规模急剧下降、111概念处出现策略相变等与人类学习轨迹高度吻合的现象。
+- **代码完整验证**：完全基于基础科学库（numpy/networkx等）实现，无任何黑盒依赖，所有现象均可复现、可追踪。
+- **实践落地探索**：另有一个基于本理论的个性化教育原型系统，通过问卷获取认知参数，驱动认知网络演化，为学习者提供自适应建议（见『基于认知的个性化教育实验』仓库）。
 
 ---
 
@@ -44,7 +41,7 @@
 - 认知对称群 $\mathcal{G}$ 刻画了网络的不变性，Noether型命题指出连续对称性对应守恒量（如能量、结构熵）。
 - 连续时间演化可用**李群方程** $\frac{dG(t)}{dt}=A(t)G(t)$ 描述，为分析认知过程的平滑性提供了理论工具。
 
-代数验证实验（5组）证实了上述结构的计算可行性，详见论文第5节及 `src/algebra/` 模块，但还是需要通过严格的数学推导才能严格证实。
+代数验证实验（5组）证实了上述结构的计算可行性，详见论文第5节及 `src/algebra/` 模块。但严格的数学推导仍需进一步展开。
 
 ---
 
@@ -55,10 +52,10 @@
 ### 客观指标与定量验证
 为增强模型的可解释性与可复现性，我们设计了一套客观的定量指标来刻画系统宏观行为与参数敏感性：
 
-* **压缩阈值扫描（threshold scan）：** 扫描压缩协同性阈值（0.5–0.9），记录不同阈值下的压缩事件数量，确保所观察现象不是由单一阈值设定造成的。（见 `src/analysis/threshold_scan.py`，结果保存在 `results/analysis/add_scan/`。）
-* **压缩势（compression potential）：** 计算每次压缩事件内部平均能耗与外部平均能耗之比 Φ，分析其分布和规模依赖性。（见 `src/analysis/run_potential_analysis.py` / `src/analysis/run_potential_analysis_en.py`，结果保存在 `results/analysis/potential_analysis/`。）
-* **能耗下降速率拟合：** 对能耗随迭代的演化曲线进行幂律/指数拟合，提取衰减指数和拟合优度，量化能耗优化效率。（见 `analyze_wallas_phases.py`，结果保存在 `results/analysis/objective_metrics/`。）
-* **Zipf 分布检验：** 检验压缩事件中概念出现频率是否符合 Zipf/幂律分布，类似自然语言词频规律。（同样由 `analyze_wallas_phases.py` 生成。）
+* **压缩阈值扫描（threshold scan）**：扫描压缩协同性阈值（0.5–0.9），记录不同阈值下的压缩事件数量，确保所观察现象不是由单一阈值设定造成的。（见 `src/analysis/threshold_scan.py`，结果保存在 `results/analysis/add_scan/`。）
+* **压缩势（compression potential）**：计算每次压缩事件内部平均能耗与外部平均能耗之比 Φ，分析其分布和规模依赖性。（见 `src/analysis/run_potential_analysis.py` / `src/analysis/run_potential_analysis_en.py`，结果保存在 `results/analysis/potential_analysis/`。）
+* **能耗下降速率拟合**：对能耗随迭代的演化曲线进行幂律/指数拟合，提取衰减指数和拟合优度，量化能耗优化效率。（由 `src/analysis/__init__.py` 中的相关函数支持，结果保存在 `results/analysis/objective_metrics/`。）
+* **Zipf 分布检验**：检验压缩事件中概念出现频率是否符合 Zipf/幂律分布，类似自然语言词频规律。（同样由分析模块生成。）
 
 ### 能耗优化性能
 
@@ -110,7 +107,7 @@
 3. **模拟学习过程**：运行能量最小化演化，观察概念压缩与迁移的发生。
 4. **学习路径生成**：根据演化结果，推荐适合的学习路径（如“您可尝试通过‘模式识别’理解新概念‘元认知’”）。
 
-> 当前建议层为接口设计，可接入外部大模型生成自然语言解释，系统仅提供结构化推荐。代码见‘基于认知的个性化教育实验’的仓库。
+> 当前建议层为接口设计，可接入外部大模型生成自然语言解释，系统仅提供结构化推荐。代码见『基于认知的个性化教育实验』仓库。
 
 ---
 
@@ -118,7 +115,7 @@
 
 ### 环境要求
 - Python 3.9+
-- 仅需基础库（`numpy`, `pandas`, `matplotlib`, `networkx`, `scipy`），无需深度学习框架，保证轻量可复现。
+- 仅需基础库（`numpy`, `pandas`, `matplotlib`, `networkx`, `scipy`, `openpyxl`, `jieba`），无需深度学习框架，保证轻量可复现。
 
 ### 安装依赖
 ```bash
@@ -136,16 +133,19 @@ python src/experiments/emergence_study_fixed.py --size 111
 # 运行代数验证实验
 python src/algebra/algebra_experiments.py
 
-# 运行客观指标分析（阈值扫描、压缩势、能耗衰减拟合、Zipf 检验）
+# 运行客观指标分析（阈值扫描、压缩势分析）
 python src/analysis/threshold_scan.py
-python src/analysis/run_potential_analysis.py
-python analyze_wallas_phases.py
+python src/analysis/run_potential_analysis.py   # 中文版本
+python src/analysis/run_potential_analysis_en.py # 英文版本
 ```
 
 ### 查看结果
 实验结果保存在 `results/` 目录下：
 - `51_concepts.xlsx` 等文件：各规模压缩/迁移详细记录。
 - `batch_experiments/`：批量实验配置、汇总图表（性能对比图、规模效应曲线）。
+- `analysis/add_scan/`：阈值扫描结果。
+- `analysis/potential_analysis/`：压缩势分布图与统计摘要。
+- `emergence/`：涌现检测详细记录。
 - `visualizations/`：认知网络演化图、状态分布图等。
 
 论文核心图表（`performance_comparison.png`, `scale_effect.png`）位于 `paper/` 目录，可直接用于学术展示。
@@ -161,7 +161,7 @@ python analyze_wallas_phases.py
 ├── requirements.txt                     # 依赖清单
 ├── .gitignore                           # Git忽略配置
 ├── config.py                            # 全局配置文件（概念集、阈值、参数）
-├── run_experiments.py                   # 一键运行脚本（原sesfullu01.py）
+├── run_experiments.py                   # 一键运行脚本
 ├── logs/                                # 运行日志（可复现性校验）
 │   └── reproducibility_*.log
 ├── paper/                               # 论文LaTeX源码与图表
@@ -178,6 +178,9 @@ python analyze_wallas_phases.py
 │   ├── algebra/                          # 代数验证结果
 │   ├── batch_experiments/                 # 批量实验汇总
 │   ├── emergence/                         # 涌现检测详细记录
+│   ├── analysis/                          # 客观指标分析结果
+│   │   ├── add_scan/                      # 阈值扫描
+│   │   └── potential_analysis/            # 压缩势分析
 │   ├── population/                         # 种群演化能量轨迹
 │   ├── semantic_network/                   # 语义网络可视化
 │   └── visualizations/                     # 其他图片
@@ -190,6 +193,10 @@ python analyze_wallas_phases.py
     │   ├── group_action.py
     │   ├── lie_group_cognitive.py
     │   └── algebra_experiments.py
+    ├── analysis/                           # 客观指标分析模块
+    │   ├── threshold_scan.py
+    │   ├── run_potential_analysis.py
+    │   └── run_potential_analysis_en.py
     ├── core/                               # 核心认知图模型
     │   ├── cognitive_graph.py
     │   ├── cognitive_states.py
@@ -207,6 +214,8 @@ python analyze_wallas_phases.py
     │   ├── enhanced_model.py
     │   ├── qlearning_enhanced.py
     │   └── random_network.py
+    ├── py_figure_maker/                     # 3D可视化工具
+    │   └── 3D_Graph_show.py
     └── utils/                               # 工具函数
         ├── visualization.py
         ├── analysis.py
@@ -224,7 +233,7 @@ python analyze_wallas_phases.py
   title={认知的几何、代数与动力学：基于能耗最小化原理的统一图论模型},
   author={曾铭佳},
   journal={arXiv preprint},
-  year={2025}
+  year={2026}
 }
 ```
 
@@ -233,7 +242,7 @@ python analyze_wallas_phases.py
 ## 联系与致谢
 
 **作者**：曾铭佳（大二本科生，暨南大学）  
-**邮箱**：2024100846@qq.com 
+**邮箱**：2024100846@qq.com  
 项目持续更新中，欢迎讨论、建议、合作！
 
 **致谢**：感谢 Karl Friston 的自由能原理提供的哲学基础，Gärdenfors 的概念空间理论带来的几何启发，以及所有在思维碰撞中给予启发的朋友。本项目所有代码均为独立实现，部分语义处理参考了另一个中文元结构分析项目。

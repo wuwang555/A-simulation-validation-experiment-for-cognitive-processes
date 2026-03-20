@@ -52,10 +52,10 @@ We conducted systematic comparative experiments on networks of 51, 71, 91, and 1
 ### Objective Metrics for Quantitative Validation
 To strengthen the empirical foundation of the model, we compute a set of objective, reproducible metrics that characterize the system’s macroscopic behavior and its sensitivity to key parameters:
 
-* **Compression threshold scan (阈值扫描)：** Sweep the compression synergy threshold (0.5–0.9) and count detected compressions to verify that observed phenomena are not artifacts of a single threshold choice. (See `src/analysis/threshold_scan.py`, results in `results/analysis/add_scan/`.)
-* **Compression potential (压缩势)：** For each compression event, compute the ratio of internal to external average energy (Φ) and analyze its distribution across scales. (See `src/analysis/run_potential_analysis.py` / `src/analysis/run_potential_analysis_en.py`, results in `results/analysis/potential_analysis/`.)
-* **Energy decline rate fitting (能耗下降速率拟合)：** Fit the energy trajectory over iterations to power-law / exponential curves, extracting decay exponents and fit quality to quantify how efficiently the system minimizes energy. (See `analyze_wallas_phases.py`, results in `results/analysis/objective_metrics/`.)
-* **Zipf-like frequency distribution (Zipf 检验)：** Test whether the frequency of concept participation in compression events follows a Zipf/power-law distribution, analogous to word-frequency laws in human language. (Also in `analyze_wallas_phases.py`.)
+* **Compression threshold scan:** Sweep the compression synergy threshold (0.5–0.9) and count detected compressions to verify that observed phenomena are not artifacts of a single threshold choice. (See `src/analysis/threshold_scan.py`, results in `results/analysis/add_scan/`.)
+* **Compression potential:** For each compression event, compute the ratio of internal to external average energy (Φ) and analyze its distribution across scales. (See `src/analysis/run_potential_analysis.py` / `src/analysis/run_potential_analysis_en.py`, results in `results/analysis/potential_analysis/`.)
+* **Energy decline rate fitting:** Fit the energy trajectory over iterations to power-law / exponential curves, extracting decay exponents and fit quality to quantify how efficiently the system minimizes energy. (Implemented in the analysis module; results in `results/analysis/objective_metrics/`.)
+* **Zipf-like frequency distribution:** Test whether the frequency of concept participation in compression events follows a Zipf/power-law distribution, analogous to word-frequency laws in human language. (Also part of the analysis pipeline.)
 
 ### Energy Optimization Performance
 
@@ -115,7 +115,7 @@ Based on Cognitive Graph Theory, we developed a simple education system prototyp
 
 ### Environment Requirements
 *   Python 3.9+
-*   Requires only basic libraries (`numpy`, `pandas`, `matplotlib`, `networkx`, `scipy`). No deep learning frameworks are needed, ensuring lightweight and reproducible code.
+*   Requires only basic libraries (`numpy`, `pandas`, `matplotlib`, `networkx`, `scipy`, `openpyxl`, `jieba`). No deep learning frameworks are needed, ensuring lightweight and reproducible code.
 
 ### Install Dependencies
 ```bash
@@ -133,16 +133,19 @@ python src/experiments/emergence_study_fixed.py --size 111
 # Run algebraic verification experiments
 python src/algebra/algebra_experiments.py
 
-# Run objective metric analyses (threshold scan, compression potential, energy decline & Zipf)
+# Run objective metric analyses (threshold scan, compression potential)
 python src/analysis/threshold_scan.py
-python src/analysis/run_potential_analysis.py
-python analyze_wallas_phases.py
+python src/analysis/run_potential_analysis.py   # Chinese version
+python src/analysis/run_potential_analysis_en.py # English version
 ```
 
 ### View Results
 Experimental results are saved in the `results/` directory:
 *   Files like `51_concepts.xlsx`: Detailed records of compression/transfer for each scale.
 *   `batch_experiments/`: Batch experiment configurations, summary charts (performance comparison plots, scale effect curves).
+*   `analysis/add_scan/`: Threshold scan results.
+*   `analysis/potential_analysis/`: Compression potential distribution plots and summary statistics.
+*   `emergence/`: Detailed emergence detection records.
 *   `visualizations/`: Cognitive network evolution diagrams, state distribution plots, etc.
 
 Key paper figures (`performance_comparison.png`, `scale_effect.png`) are located in the `paper/` directory and are ready for academic presentation.
@@ -153,12 +156,12 @@ Key paper figures (`performance_comparison.png`, `scale_effect.png`) are located
 
 ```
 ├── README.md                           # English documentation
-├── README_zh.md                        # Chinese documentation (this document)
+├── README_zh.md                        # Chinese documentation
 ├── LICENSE                              # MIT License
 ├── requirements.txt                     # Dependency list
 ├── .gitignore                           # Git ignore configuration
 ├── config.py                            # Global configuration file (concept sets, thresholds, parameters)
-├── run_experiments.py                   # One-click run script (originally sesfullu01.py)
+├── run_experiments.py                   # One-click run script
 ├── logs/                                # Run logs (reproducibility check)
 │   └── reproducibility_*.log
 ├── paper/                               # Paper LaTeX source and figures
@@ -175,6 +178,9 @@ Key paper figures (`performance_comparison.png`, `scale_effect.png`) are located
 │   ├── algebra/                         # Algebraic verification results
 │   ├── batch_experiments/                # Batch experiment summaries
 │   ├── emergence/                        # Detailed emergence detection records
+│   ├── analysis/                         # Objective metric analysis results
+│   │   ├── add_scan/                     # Threshold scan
+│   │   └── potential_analysis/           # Compression potential analysis
 │   ├── population/                       # Population evolution energy trajectories
 │   ├── semantic_network/                  # Semantic network visualizations
 │   └── visualizations/                    # Other images
@@ -187,6 +193,10 @@ Key paper figures (`performance_comparison.png`, `scale_effect.png`) are located
     │   ├── group_action.py
     │   ├── lie_group_cognitive.py
     │   └── algebra_experiments.py
+    ├── analysis/                          # Objective metric analysis module
+    │   ├── threshold_scan.py
+    │   ├── run_potential_analysis.py
+    │   └── run_potential_analysis_en.py
     ├── core/                              # Core cognitive graph model
     │   ├── cognitive_graph.py
     │   ├── cognitive_states.py
@@ -204,6 +214,8 @@ Key paper figures (`performance_comparison.png`, `scale_effect.png`) are located
     │   ├── enhanced_model.py
     │   ├── qlearning_enhanced.py
     │   └── random_network.py
+    ├── py_figure_maker/                    # 3D visualization tools
+    │   └── 3D_Graph_show.py
     └── utils/                              # Utility functions
         ├── visualization.py
         ├── analysis.py
@@ -221,7 +233,7 @@ If you find this work interesting or useful, please consider citing our paper (p
   title={The Geometry, Algebra, and Dynamics of Cognition: A Unified Graph Model Based on the Principle of Energy Minimization},
   author={Zeng, Mingjia},
   journal={arXiv preprint},
-  year={2025}
+  year={2026}
 }
 ```
 
@@ -229,8 +241,8 @@ If you find this work interesting or useful, please consider citing our paper (p
 
 ## Contact and Acknowledgments
 
-**Author:** Mingjia Zeng (Second-year Undergraduate, [University Name])
-**Email:** 2024100846@qq.com
+**Author:** Mingjia Zeng (Second-year Undergraduate, Jinan University)  
+**Email:** 2024100846@qq.com  
 The project is continuously updated. Discussions, suggestions, and collaborations are welcome!
 
 **Acknowledgments:** Thanks to Karl Friston's free energy principle for its philosophical foundation, Gärdenfors' theory of conceptual spaces for geometric inspiration, and all friends who provided inspiration through intellectual exchange. All code in this project was implemented independently. Part of the semantic processing referenced another Chinese meta-structure analysis project.
@@ -244,8 +256,8 @@ Feel free to submit suggestions, report issues, or discuss collaboration possibi
 
 ## Core Philosophy
 
-> **Cognition knows no bounds, learning has no end.**
-> Technology is merely a tool for understanding the world; true intelligence lies not in computational power, but in the insight into underlying principles.
+> **Cognition knows no bounds, learning has no end.**  
+> Technology is merely a tool for understanding the world; true intelligence lies not in computational power, but in the insight into underlying principles.  
 > Energy minimization is not just an optimization strategy, but a fundamental law of cognitive organization.
 
 > **Our exploration aligns with the frontiers of science:** The cognitive graph model, built independently from self-observation, strikingly coincides with key consensuses reached by top global scholars through different paths. This suggests that profound thinking about the nature of cognition is a core driving force for advancing artificial intelligence.
