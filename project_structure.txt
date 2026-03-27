@@ -1,300 +1,133 @@
 C:.
-|   .gitignore
-|   config.py
-|   emergence_results_20260214_191918.xlsx
-|   emergence_results_20260214_192116.xlsx
-|   LICENSE
-|   project_structure.txt
-|   README.md
-|   README_zh.md
-|   requirements.txt
-|   run_experiments.py
-|   run_potential_analysis.py
-|   run_potential_analysis_en.py
-+---.idea
-|   |   .gitignore
-|   |   .name
-|   |   misc.xml
-|   |   modules.xml
-|   |   vcs.xml
-|   |   workspace.xml
-|   |         ֪ͼ  .iml
-|   |   
-|   \---inspectionProfiles
-|           profiles_settings.xml
-|           
-+---.pytest_cache
-|   |   .gitignore
-|   |   CACHEDIR.TAG
-|   |   README.md
-|   |   
-|   \---v
-|       \---cache
-|               lastfailed
-|               nodeids
-|               stepwise
-|               
-+---logs
-|       reproducibility_20260224_022346.log
-|       
-+---paper
-|       CognitiveGraph.aux
-|       CognitiveGraph.bbl
-|       CognitiveGraph.blg
-|       CognitiveGraph.log
-|       CognitiveGraph.out
-|       CognitiveGraph.pdf
-|       CognitiveGraph.synctex.gz
-|       CognitiveGraph.tex
-|       performance_comparison.png
-|       references.bib
-|       scale_effect.png
-|       
-+---results
-|   |   111_concepts.xlsx
-|   |   51_concepts.xlsx
-|   |   71_concepts.xlsx
-|   |   91_concepts.xlsx
-|   |   DATA_DICTIONARY.md
-|   |   experiment_summary_20260224_010312.md
-|   |   experiment_summary_20260224_012630.md
-|   |   experiment_summary_20260224_023350.md
-|   |   
-|   +---algebra
-|   |   |   algebra_validation_results_20260224_010305.json
-|   |   |   algebra_validation_results_20260224_012625.json
-|   |   |   algebra_validation_results_20260224_023325.json
-|   |   |   
-|   |   \---energy_trajectories
-|   |           lie_evolution_strategy_0_20260224_010304.csv
-|   |           lie_evolution_strategy_0_20260224_012625.csv
-|   |           lie_evolution_strategy_0_20260224_023325.csv
-|   |           lie_evolution_strategy_1_20260224_010304.csv
-|   |           lie_evolution_strategy_1_20260224_012625.csv
-|   |           lie_evolution_strategy_1_20260224_023325.csv
-|   |           lie_evolution_strategy_2_20260224_010304.csv
-|   |           lie_evolution_strategy_2_20260224_012625.csv
-|   |           lie_evolution_strategy_2_20260224_023325.csv
-|   |           
-|   +---batch_experiments
-|   |       config_20260224_005149.json
-|   |       config_20260224_011655.json
-|   |       config_20260224_022347.json
-|   |       detailed_results_20260224_005149.csv
-|   |       detailed_results_20260224_011655.csv
-|   |       detailed_results_20260224_022347.csv
-|   |       performance_comparison_20260224_005149.png
-|   |       performance_comparison_20260224_011655.png
-|   |       performance_comparison_20260224_022347.png
-|   |       scale_effect_20260224_005149.png
-|   |       scale_effect_20260224_011655.png
-|   |       scale_effect_20260224_022347.png
-|   |       summary_20260224_005149.json
-|   |       summary_20260224_011655.json
-|   |       summary_20260224_022347.json
-|   |       
-|   +---emergence
-|   |   |   emergence_111_concepts.json
-|   |   |   emergence_51_concepts.json
-|   |   |   emergence_71_concepts.json
-|   |   |   emergence_91_concepts.json
-|   |   |   emergence_results_20260224_005237.xlsx
-|   |   |   emergence_results_20260224_005354.xlsx
-|   |   \---figures
-|   |           emergence_visualization_20260224_005237.png
-|   |           emergence_visualization_20260224_005354.png
-|   |           
-|   +---population
-|   |       energy_history_    _1_20260224_005157.csv
-|   |       energy_history_    _1_20260224_005255.csv
-|   |       energy_history_    _1_20260224_005419.csv
-|   |       energy_history_    _1_20260224_005659.csv
-|   |       energy_history_    _1_20260224_011706.csv
-|   |      
-|   +---add_scan
-|   |       threshold_scan_plot.png
-|   |       threshold_scan_results.json
-|   |       
-|   +---potential_analysis
-|   |      emergence_51_ind0_20260314_010343.json
-|   |      emergence_51_ind1_20260314_010343.json
-|   |      emergence_51_ind2_20260314_010343.json
-|   |      emergence_71_ind0_20260314_010409.json
-|   |      emergence_71_ind1_20260314_010409.json
-|   |      emergence_71_ind2_20260314_010410.json
-|   |      emergence_91_ind0_20260314_010445.json
-|   |      emergence_91_ind1_20260314_010445.json
-|   |      emergence_91_ind2_20260314_010445.json
-|   |      emergence_111_ind0_20260314_010540.json
-|   |      emergence_111_ind1_20260314_010540.json
-|   |      emergence_111_ind2_20260314_010540.json
-|   |      potential_summary_20260314_010541.json
-|   |      potential_dist_scale51.png
-|   |      potential_dist_scale71.png
-|   |      potential_dist_scale91.png
-|   |      potential_dist_scale111.png
-|   |      potential_trend.png
-|   |      
-|   +---semantic_network
-|   |       semantic_network_20260224_010312.png
-|   |       semantic_network_20260224_012630.png
-|   |       semantic_network_20260224_023350.png
-|   |       
-|   \---visualizations
-|           cognitive_graph_20260224_005149.png
-|           cognitive_graph_20260224_011655.png
-|           cognitive_graph_20260224_022347.png
-|           cognitive_states_20260224_005149.png
-|           cognitive_states_20260224_011655.png
-|           cognitive_states_20260224_022347.png
-|           semantic_network_20260224_005149.png
-|           semantic_network_20260224_011655.png
-|           semantic_network_20260224_022347.png
-|           
-+---src
-|   |   main.py
-|   |   
-|   +---.idea
-|   |   |   .gitignore
-|   |   |   code.iml
-|   |   |   misc.xml
-|   |   |   modules.xml
-|   |   |   vcs.xml
-|   |   |   workspace.xml
-|   |   |   
-|   |   \---inspectionProfiles
-|   |           profiles_settings.xml
-|   |           
-|   +---.pytest_cache
-|   |   |   .gitignore
-|   |   |   CACHEDIR.TAG
-|   |   |   README.md
-|   |   |   
-|   |   \---v
-|   |       \---cache
-|   |               nodeids
-|   |               stepwise
-|   |               
-|   +---algebra
-|   |   |   algebra_experiments.py
-|   |   |   cognitive_semigroup.py
-|   |   |   cognitive_symmetry.py
-|   |   |   group_action.py
-|   |   |   integration.py
-|   |   |   lie_group_cognitive.py
-|   |   |   __init__.py
-|   |   |   
-|   |   \---__pycache__
-|   |           algebra_experiments.cpython-312.pyc
-|   |           cognitive_semigroup.cpython-312.pyc
-|   |           cognitive_symmetry.cpython-312.pyc
-|   |           group_action.cpython-312.pyc
-|   |           lie_group_cognitive.cpython-312.pyc
-|   |           __init__.cpython-312.pyc
-|   |           
-|   +---core
-|   |   |   cognitive_graph.py
-|   |   |   cognitive_states.py
-|   |   |   semantic_network.py
-|   |   |   __init__.py
-|   |   |   
-|   |   \---__pycache__
-|   |           cognitive_graph.cpython-312.pyc
-|   |           cognitive_states.cpython-312.pyc
-|   |           semantic_network.cpython-312.pyc
-|   |           __init__.cpython-312.pyc
-|   |           
-|   +---emergence
-|   |   |   detector_fixed.py
-|   |   |   metrics.py
-|   |   |   observer.py
-|   |   |   universe.py
-|   |   |   universe_enhanced.py
-|   |   |   __init__.py
-|   |   |   
-|   |   +---.pytest_cache
-|   |   |   |   .gitignore
-|   |   |   |   CACHEDIR.TAG
-|   |   |   |   README.md
-|   |   |   |   
-|   |   |   \---v
-|   |   |       \---cache
-|   |   |               lastfailed
-|   |   |               nodeids
-|   |   |               stepwise
-|   |   |               
-|   |   \---__pycache__
-|   |           detector_fixed.cpython-312.pyc
-|   |           metrics.cpython-312.pyc
-|   |           observer.cpython-312.pyc
-|   |           test_emergence_fixed.cpython-312-pytest-7.4.4.pyc
-|   |           universe.cpython-312.pyc
-|   |           universe_enhanced.cpython-312.pyc
-|   |           __init__.cpython-312.pyc
-|   |           
-|   +---analysis
-|   |   |   run_potential_analysis.py
-|   |   |   run_potential_analysis_en.py
-|   |   |   threshold_scan.py
-|   |   |   threshold_scan_temp.json
-|   |   |   __init__.py
-|   |   
-|   +---experiments
-|   |   |   batch_experiments.py
-|   |   |   emergence_study_fixed.py
-|   |   |   population_study.py
-|   |   |   __init__.py
-|   |   |   
-|   |   +---.pytest_cache
-|   |   |   |   .gitignore
-|   |   |   |   CACHEDIR.TAG
-|   |   |   |   README.md
-|   |   |   |   
-|   |   |   \---v
-|   |   |       \---cache
-|   |   |               nodeids
-|   |   |               stepwise
-|   |   |               
-|   |   \---__pycache__
-|   |           batch_experiments.cpython-312.pyc
-|   |           emergence_study_fixed.cpython-312.pyc
-|   |           population_study.cpython-312-pytest-7.4.4.pyc
-|   |           population_study.cpython-312.pyc
-|   |           __init__.cpython-312.pyc
-|   |           
-|   +---models
-|   |   |   enhanced_model.py
-|   |   |   qlearning_enhanced.py
-|   |   |   random_network.py
-|   |   |   __init__.py
-|   |   |   
-|   |   \---__pycache__
-|   |           enhanced_model.cpython-312.pyc
-|   |           qlearning_enhanced.cpython-312.pyc
-|   |           random_network.cpython-312.pyc
-|   |           __init__.cpython-312.pyc
-|   |           
-|   +---py_figure_maker
-|   |       3D_Graph_show.py
-|   |       
-|   +---utils
-|   |   |   analysis.py
-|   |   |   individual_variation.py
-|   |   |   visualization.py
-|   |   |   __init__.py
-|   |   |   
-|   |   \---__pycache__
-|   |           analysis.cpython-312.pyc
-|   |           individual_variation.cpython-312.pyc
-|   |           visualization.cpython-312.pyc
-|   |           __init__.cpython-312.pyc
-|   |           
-|   \---__pycache__
-|           main.cpython-312.pyc
-|           test_energy_optimized.cpython-312-pytest-7.4.4.pyc
-|           
-\---__pycache__
-        config.cpython-312.pyc
-        sesfullu01.cpython-312-pytest-7.4.4.pyc
-        text_addman03.cpython-312-pytest-7.4.4.pyc
-        
+│  .gitignore
+│  config.py
+│  LICENSE
+│  README.md
+│  README_zh.md
+│  requirements.txt
+│  run_experiments.py
+│
+├─paper
+│  └─Manuscript
+│      │  CognitiveGraph.tex
+│      │  references.bib
+│      │
+│      └─figures
+│              cognitive_graph_three_stages.png
+│              cognitive_graph_three_stages_zh.png
+│
+├─results
+│  │  111_concepts.xlsx
+│  │  51_concepts.xlsx
+│  │  71_concepts.xlsx
+│  │  91_concepts.xlsx
+│  │  DATA_DICTIONARY.md
+│  │
+│  ├─algebra
+│  │      algebra_validation_results_20260320_111020.json
+│  │
+│  ├─analysis
+│  │  ├─add_scan
+│  │  │      threshold_scan_plot.png
+│  │  │      threshold_scan_results.json
+│  │  │
+│  │  ├─objective_metrics
+│  │  │  │  individual_summary_20260320_111042.json
+│  │  │  │  zipf_center_result_20260320_111042.json
+│  │  │  │  zipf_node_total_result_20260320_111042.json
+│  │  │  │
+│  │  │  └─figures
+│  │  │          energy_rate_scale51_ind0_20260320_111042.png
+│  │  │          zipf_center_20260320_111042.png
+│  │  │          zipf_node_total_20260320_111042.png
+│  │  │
+│  │  └─potential_analysis
+│  │          potential_dist_scale51.png
+│  │          potential_dist_scale71.png
+│  │          potential_dist_scale91.png
+│  │          potential_dist_scale111.png
+│  │          potential_trend.png
+│  │
+│  ├─batch_experiments
+│  │      config_20260320_105541.json
+│  │      detailed_results_20260320_105541.csv
+│  │      summary_20260320_105541.json
+│  │
+│  ├─emergence
+│  │  │  emergence_51_concepts_20260320_110735.json
+│  │  │  emergence_71_concepts_20260320_110811.json
+│  │  │  emergence_91_concepts_20260320_110901.json
+│  │  │  emergence_111_concepts_20260320_111015.json
+│  │  │
+│  │  └─figures
+│  │          emergence_visualization_20260320_110633.png
+│  │          emergence_visualization_20260320_110711.png
+│  │
+│  ├─population
+│  │      energy_history_个体_1_20260320_105557.csv
+│  │      energy_history_个体_2_20260320_105557.csv
+│  │
+│  ├─semantic_network
+│  │      semantic_network_20260320_111029.png
+│  │
+│  └─visualizations
+│          cognitive_graph_20260320_105541.png
+│          cognitive_states_20260320_105541.png
+│          semantic_network_20260320_105541.png
+│
+└─src
+    │  main.py
+    │
+    ├─algebra
+    │      algebra_experiments.py
+    │      cognitive_semigroup.py
+    │      cognitive_symmetry.py
+    │      group_action.py
+    │      integration.py
+    │      lie_group_cognitive.py
+    │      __init__.py
+    │
+    ├─analysis
+    │      analyze_wallas_phases.py
+    │      benchmark_with_without_detection.py
+    │      run_potential_analysis.py
+    │      run_potential_analysis_en.py
+    │      threshold_scan.py
+    │      __init__.py
+    │
+    ├─core
+    │      cognitive_graph.py
+    │      cognitive_states.py
+    │      semantic_network.py
+    │      __init__.py
+    │
+    ├─emergence
+    │      detector_fixed.py
+    │      metrics.py
+    │      observer.py
+    │      universe.py
+    │      universe_enhanced.py
+    │      __init__.py
+    │
+    ├─experiments
+    │      batch_experiments.py
+    │      emergence_study_fixed.py
+    │      population_study.py
+    │      __init__.py
+    │
+    ├─models
+    │      enhanced_model.py
+    │      qlearning_enhanced.py
+    │      random_network.py
+    │      __init__.py
+    │
+    ├─py_figure_maker
+    │      3D_Graph_show.py
+    │      concept_compress_show2.py
+    │      Graphical_Abstract.py
+    │
+    └─utils
+            analysis.py
+            individual_variation.py
+            visualization.py
+            __init__.py
