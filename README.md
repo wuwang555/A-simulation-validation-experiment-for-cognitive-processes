@@ -165,63 +165,77 @@ Key paper figures (`performance_comparison.png`, `scale_effect.png`) are located
 ├── logs/                                # Run logs (reproducibility check)
 │   └── reproducibility_*.log
 ├── paper/                               # Paper LaTeX source and figures
-│   ├── CognitiveGraph.tex
-│   ├── CognitiveGraph.pdf
-│   ├── references.bib
-│   ├── performance_comparison.png       # Figure 7.1 Performance comparison of four models
-│   └── scale_effect.png                 # Figure 7.2 Scale effect curve
-├── results/                             # Experiment outputs
+│   └── Manuscript/                      # Manuscript source files
+│       ├── CognitiveGraph.tex
+│       ├── references.bib
+│       └── figures/
+│           ├── cognitive_graph_three_stages.png
+│           └── cognitive_graph_three_stages_zh.png
+├── results/                             # Experiment outputs (only core files)
+│   ├── DATA_DICTIONARY.md                # Data dictionary
 │   ├── 111_concepts.xlsx                # Emergence results for 111 concepts
 │   ├── 91_concepts.xlsx
 │   ├── 71_concepts.xlsx
 │   ├── 51_concepts.xlsx
-│   ├── algebra/                         # Algebraic verification results
-│   ├── batch_experiments/                # Batch experiment summaries
-│   ├── emergence/                        # Detailed emergence detection records
-│   ├── analysis/                         # Objective metric analysis results
-│   │   ├── add_scan/                     # Threshold scan
-│   │   └── potential_analysis/           # Compression potential analysis
-│   ├── population/                       # Population evolution energy trajectories
-│   ├── semantic_network/                  # Semantic network visualizations
-│   └── visualizations/                    # Other images
+│   ├── algebra/                         # Algebraic verification results (single file)
+│   ├── analysis/                        # Objective metric analysis results
+│   │   ├── add_scan/                    # Threshold scan results
+│   │   ├── objective_metrics/           # Summary metrics and figures
+│   │   └── potential_analysis/          # Compression potential distribution plots
+│   ├── batch_experiments/               # Batch experiment summaries (single configuration)
+│   ├── emergence/                       # Emergence detection records (single run)
+│   ├── population/                      # Population evolution energy trajectories (single run)
+│   ├── semantic_network/                # Semantic network visualizations
+│   └── visualizations/                  # Cognitive network evolution diagrams
 └── src/                                  # Source code main directory
     ├── __init__.py
     ├── main.py                            # Program entry point
     ├── algebra/                           # Algebraic structure module
+    │   ├── algebra_experiments.py
     │   ├── cognitive_semigroup.py
     │   ├── cognitive_symmetry.py
     │   ├── group_action.py
+    │   ├── integration.py
     │   ├── lie_group_cognitive.py
-    │   └── algebra_experiments.py
+    │   └── __init__.py
     ├── analysis/                          # Objective metric analysis module
-    │   ├── threshold_scan.py
+    │   ├── analyze_wallas_phases.py
+    │   ├── benchmark_with_without_detection.py
     │   ├── run_potential_analysis.py
-    │   └── run_potential_analysis_en.py
+    │   ├── run_potential_analysis_en.py
+    │   ├── threshold_scan.py
+    │   └── __init__.py
     ├── core/                              # Core cognitive graph model
     │   ├── cognitive_graph.py
     │   ├── cognitive_states.py
-    │   └── semantic_network.py
+    │   ├── semantic_network.py
+    │   └── __init__.py
     ├── emergence/                          # Emergence detection and observation
     │   ├── detector_fixed.py
+    │   ├── metrics.py
     │   ├── observer.py
     │   ├── universe.py
-    │   └── metrics.py
+    │   ├── universe_enhanced.py
+    │   └── __init__.py
     ├── experiments/                        # Experiment workflows
+    │   ├── batch_experiments.py
     │   ├── emergence_study_fixed.py
     │   ├── population_study.py
-    │   └── batch_experiments.py
+    │   └── __init__.py
     ├── models/                             # Comparison model implementations
     │   ├── enhanced_model.py
     │   ├── qlearning_enhanced.py
-    │   └── random_network.py
+    │   ├── random_network.py
+    │   └── __init__.py
     ├── py_figure_maker/                    # 3D visualization tools
-    │   └── 3D_Graph_show.py
+    │   ├── 3D_Graph_show.py
+    │   ├── concept_compress_show2.py
+    │   └── Graphical_Abstract.py
     └── utils/                              # Utility functions
-        ├── visualization.py
         ├── analysis.py
-        └── individual_variation.py
-```
-
+        ├── individual_variation.py
+        ├── visualization.py
+        └── __init__.py
 ---
 
 ## Citation

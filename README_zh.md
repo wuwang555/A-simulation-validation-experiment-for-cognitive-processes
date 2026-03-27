@@ -164,62 +164,78 @@ python src/analysis/run_potential_analysis_en.py # 英文版本
 ├── run_experiments.py                   # 一键运行脚本
 ├── logs/                                # 运行日志（可复现性校验）
 │   └── reproducibility_*.log
-├── paper/                               # 论文LaTeX源码与图表
-│   ├── CognitiveGraph.tex
-│   ├── CognitiveGraph.pdf
-│   ├── references.bib
-│   ├── performance_comparison.png       # 图7.1 四模型性能对比
-│   └── scale_effect.png                 # 图7.2 规模效应曲线
-├── results/                              # 实验输出
+├── paper/                               # 论文相关文件
+│   └── Manuscript/                      # 论文LaTeX源码与图表
+│       ├── CognitiveGraph.tex
+│       ├── references.bib
+│       └── figures/
+│           ├── cognitive_graph_three_stages.png
+│           └── cognitive_graph_three_stages_zh.png
+├── results/                              # 实验输出（仅保留核心文件）
+│   ├── DATA_DICTIONARY.md                # 数据字典
 │   ├── 111_concepts.xlsx                 # 111概念涌现结果
 │   ├── 91_concepts.xlsx
 │   ├── 71_concepts.xlsx
 │   ├── 51_concepts.xlsx
-│   ├── algebra/                          # 代数验证结果
-│   ├── batch_experiments/                 # 批量实验汇总
-│   ├── emergence/                         # 涌现检测详细记录
-│   ├── analysis/                          # 客观指标分析结果
-│   │   ├── add_scan/                      # 阈值扫描
-│   │   └── potential_analysis/            # 压缩势分析
-│   ├── population/                         # 种群演化能量轨迹
-│   ├── semantic_network/                   # 语义网络可视化
-│   └── visualizations/                     # 其他图片
+│   ├── algebra/                          # 代数验证结果（单文件）
+│   ├── analysis/                         # 客观指标分析结果
+│   │   ├── add_scan/                     # 阈值扫描结果
+│   │   ├── objective_metrics/            # 客观指标汇总与图表
+│   │   └── potential_analysis/           # 压缩势分布图
+│   ├── batch_experiments/                # 批量实验汇总（单配置）
+│   ├── emergence/                        # 涌现检测记录（单组结果）
+│   ├── population/                       # 种群演化能量轨迹（单次）
+│   ├── semantic_network/                 # 语义网络可视化
+│   └── visualizations/                   # 认知网络演化图
 └── src/                                   # 源代码主目录
     ├── __init__.py
     ├── main.py                             # 程序入口
     ├── algebra/                            # 代数结构模块
+    │   ├── algebra_experiments.py
     │   ├── cognitive_semigroup.py
     │   ├── cognitive_symmetry.py
     │   ├── group_action.py
+    │   ├── integration.py
     │   ├── lie_group_cognitive.py
-    │   └── algebra_experiments.py
+    │   └── __init__.py
     ├── analysis/                           # 客观指标分析模块
-    │   ├── threshold_scan.py
+    │   ├── analyze_wallas_phases.py
+    │   ├── benchmark_with_without_detection.py
     │   ├── run_potential_analysis.py
-    │   └── run_potential_analysis_en.py
+    │   ├── run_potential_analysis_en.py
+    │   ├── threshold_scan.py
+    │   └── __init__.py
     ├── core/                               # 核心认知图模型
     │   ├── cognitive_graph.py
     │   ├── cognitive_states.py
-    │   └── semantic_network.py
+    │   ├── semantic_network.py
+    │   └── __init__.py
     ├── emergence/                           # 涌现检测与观察
     │   ├── detector_fixed.py
+    │   ├── metrics.py
     │   ├── observer.py
     │   ├── universe.py
-    │   └── metrics.py
+    │   ├── universe_enhanced.py
+    │   └── __init__.py
     ├── experiments/                         # 实验流程
+    │   ├── batch_experiments.py
     │   ├── emergence_study_fixed.py
     │   ├── population_study.py
-    │   └── batch_experiments.py
+    │   └── __init__.py
     ├── models/                              # 对比模型实现
     │   ├── enhanced_model.py
     │   ├── qlearning_enhanced.py
-    │   └── random_network.py
+    │   ├── random_network.py
+    │   └── __init__.py
     ├── py_figure_maker/                     # 3D可视化工具
-    │   └── 3D_Graph_show.py
+    │   ├── 3D_Graph_show.py
+    │   ├── concept_compress_show2.py
+    │   └── Graphical_Abstract.py
     └── utils/                               # 工具函数
-        ├── visualization.py
         ├── analysis.py
-        └── individual_variation.py
+        ├── individual_variation.py
+        ├── visualization.py
+        └── __init__.py
 ```
 
 ---
