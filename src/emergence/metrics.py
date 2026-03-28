@@ -1,7 +1,8 @@
 """
-自然涌现指标计算模块
+Natural Emergence Metrics Calculation Module
 ----------------------
-定义 NaturalEmergenceMetrics 类，用于计算压缩涌现、迁移涌现、能量优化和结构演化等指标。
+Define NaturalEmergenceMetrics class for calculating metrics of compression emergence, migration emergence,
+energy optimization, and structural evolution.
 """
 
 import numpy as np
@@ -11,7 +12,7 @@ from collections import defaultdict
 
 
 class NaturalEmergenceMetrics:
-    """自然涌现指标计算类（精简版本）。"""
+    """Natural Emergence Metrics Calculation Class (Simplified Version)."""
 
     def __init__(self):
         self.metric_history = defaultdict(list)
@@ -19,17 +20,18 @@ class NaturalEmergenceMetrics:
     def calculate_emergence_metrics(self, network_history: List[Any],
                                     traversal_history: List[Any],
                                     energy_history: List[float]) -> Dict[str, float]:
-        """计算综合涌现指标。
+        """Calculate comprehensive emergence metrics.
 
-        :param network_history: 网络快照历史（每个元素为 networkx.Graph 或包含 'network' 键的字典）
-        :param traversal_history: 遍历历史记录
-        :param energy_history: 能耗历史列表
-        :return: 包含压缩涌现、迁移涌现、能量优化、结构演化及综合强度的字典
+        :param network_history: History of network snapshots (each element is a networkx.Graph or a dict containing 'network')
+        :param traversal_history: Traversal history records
+        :param energy_history: List of energy history
+        :return: Dictionary containing compression emergence, migration emergence, energy optimization,
+                 structural evolution, and overall emergence strength
         """
         if len(network_history) < 2:
             return {}
 
-        # 获取当前和初始网络
+        # Get current and initial networks
         current_net = network_history[-1] if hasattr(network_history[-1], 'nodes') else network_history[-1]['network']
         previous_net = network_history[0] if hasattr(network_history[0], 'nodes') else network_history[0]['network']
 
@@ -51,7 +53,7 @@ class NaturalEmergenceMetrics:
         return metrics
 
     def _measure_compression(self, current_net: nx.Graph, previous_net: nx.Graph) -> float:
-        """测量概念压缩涌现强度：基于聚类系数和模块度的增量。"""
+        """Measure concept compression emergence strength: based on increments in clustering coefficient and modularity."""
         try:
             current_clustering = nx.average_clustering(current_net)
             previous_clustering = nx.average_clustering(previous_net)
@@ -66,7 +68,7 @@ class NaturalEmergenceMetrics:
             return 0.0
 
     def _measure_migration(self, traversal_history: List[Any], network: nx.Graph) -> float:
-        """测量原理迁移涌现强度：基于跨领域路径和高效路径的比例。"""
+        """Measure principle migration emergence strength: based on ratio of cross-domain paths and efficient paths."""
         if len(traversal_history) < 10:
             return 0.0
 
@@ -92,7 +94,7 @@ class NaturalEmergenceMetrics:
         return min(1.0, (cross_domain_ratio * 0.6 + efficiency_ratio * 0.4) * 2)
 
     def _measure_energy_optimization(self, energy_history: List[float]) -> float:
-        """测量能量优化效果：基于近期能量降低率和稳定性。"""
+        """Measure energy optimization effect: based on recent energy reduction rate and stability."""
         if len(energy_history) < 50:
             return 0.0
 
@@ -115,7 +117,7 @@ class NaturalEmergenceMetrics:
         return min(1.0, max(0, reduction_rate) * 0.7 + stability * 0.3)
 
     def _measure_structural_evolution(self, current_net: nx.Graph, previous_net: nx.Graph) -> float:
-        """测量结构演化：基于小世界指数和网络密度的变化。"""
+        """Measure structural evolution: based on changes in small-world index and network density."""
         try:
             current_sw = self._small_world_index(current_net)
             previous_sw = self._small_world_index(previous_net)
@@ -130,7 +132,7 @@ class NaturalEmergenceMetrics:
             return 0.0
 
     def _compute_modularity(self, network: nx.Graph) -> float:
-        """简化版模块度计算：使用连通分量作为社区。"""
+        """Simplified modularity calculation: use connected components as communities."""
         try:
             components = list(nx.connected_components(network))
             if len(components) < 2:
@@ -140,7 +142,7 @@ class NaturalEmergenceMetrics:
             return 0.0
 
     def _small_world_index(self, network: nx.Graph) -> float:
-        """简化版小世界指数：平均聚类系数 / 平均最短路径长度（取最大连通分量）。"""
+        """Simplified small-world index: average clustering coefficient / average shortest path length (using largest connected component)."""
         try:
             clustering = nx.average_clustering(network)
             if nx.is_connected(network):
@@ -154,7 +156,7 @@ class NaturalEmergenceMetrics:
             return 0.0
 
     def _extract_path(self, traversal: Any):
-        """从遍历记录中提取路径。"""
+        """Extract path from traversal record."""
         if isinstance(traversal, (list, tuple)) and len(traversal) > 0:
             return traversal[0] if isinstance(traversal[0], list) else [traversal[0]]
         elif isinstance(traversal, dict) and 'path' in traversal:
@@ -162,7 +164,7 @@ class NaturalEmergenceMetrics:
         return None
 
     def _compute_path_efficiency(self, path: List[str], network: nx.Graph) -> float:
-        """计算路径效率：1 / (平均能耗 + 0.1)。"""
+        """Compute path efficiency: 1 / (average energy + 0.1)."""
         total_energy = 0
         valid_edges = 0
         for i in range(len(path)-1):
@@ -175,20 +177,20 @@ class NaturalEmergenceMetrics:
         return 1.0 / (avg_energy + 0.1)
 
     def _infer_domain(self, concept: str) -> str:
-        """简单领域推断。"""
-        if '力' in concept or '能量' in concept or '运动' in concept:
+        """Simple domain inference."""
+        if 'force' in concept or 'energy' in concept or 'motion' in concept:
             return 'physics'
-        elif '积分' in concept or '几何' in concept or '代数' in concept:
+        elif 'calculus' in concept or 'geometry' in concept or 'algebra' in concept:
             return 'math'
-        elif '算法' in concept or '数据' in concept or '网络' in concept:
+        elif 'algorithm' in concept or 'data' in concept or 'network' in concept:
             return 'cs'
-        elif '优化' in concept or '迭代' in concept or '抽象' in concept:
+        elif 'optimization' in concept or 'iteration' in concept or 'abstraction' in concept:
             return 'principles'
         else:
             return 'other'
 
     def get_metric_trends(self) -> Dict[str, float]:
-        """获取各指标的趋势（均值和斜率）。"""
+        """Get trends for each metric (mean and slope)."""
         if not self.metric_history['emergence']:
             return {}
 
@@ -201,7 +203,7 @@ class NaturalEmergenceMetrics:
         return trends
 
     def _compute_trend(self, values: List[float]) -> float:
-        """计算线性趋势斜率。"""
+        """Compute linear trend slope."""
         if len(values) < 2:
             return 0.0
         x = np.arange(len(values))
@@ -210,4 +212,4 @@ class NaturalEmergenceMetrics:
 
 if __name__ == "__main__":
     metrics = NaturalEmergenceMetrics()
-    print("NaturalEmergenceMetrics 初始化成功")
+    print("NaturalEmergenceMetrics initialized successfully")

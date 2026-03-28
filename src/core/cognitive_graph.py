@@ -1,8 +1,9 @@
 """
-认知图基础模块
+Cognitive Graph Base Module
 ----------------
-定义 BaseCognitiveGraph 类，实现认知网络的动态演化，包括遍历、遗忘、压缩、迁移等核心操作，
-并整合认知状态管理器以模拟主观能耗变化。
+Define the BaseCognitiveGraph class, implementing the dynamic evolution of the cognitive network, including traversal,
+forgetting, compression, migration and other core operations, and integrating a cognitive state manager to simulate
+subjective energy changes.
 """
 
 import networkx as nx
@@ -18,44 +19,45 @@ np.random.seed(42)
 random.seed(42)
 
 class BaseCognitiveGraph:
-    """基础认知图类，实现能量动力学驱动的认知网络演化。
+    """Base cognitive graph class, implementing energy dynamics-driven cognitive network evolution.
 
-    该类封装了认知图的核心数据结构（无向图）及操作方法。网络中的边权重表示认知能耗，
-    通过遍历、遗忘、压缩、迁移等操作实现全局能耗的最小化。同时集成了认知状态管理器，
-    模拟主观认知状态（专注、探索、疲劳、灵感）对行为策略的影响。
+    This class encapsulates the core data structure (undirected graph) and operation methods of the cognitive graph.
+    Edge weights represent cognitive energy. Through operations such as traversal, forgetting, compression, and migration,
+    global energy minimization is achieved. It also integrates a cognitive state manager to simulate the influence of
+    subjective cognitive states (focus, exploration, fatigue, inspiration) on behavioral strategies.
 
-    :param individual_params: 个体参数字典，包含遗忘率、学习率、各类偏置等。
-    :param network_seed: 随机种子，用于结果可重复。
+    :param individual_params: Dictionary of individual parameters, including forgetting rate, learning rate, biases, etc.
+    :param network_seed: Random seed for reproducibility.
     """
 
     def __init__(self, individual_params: Dict[str, Any], network_seed: int = 42):
         self.G = nx.Graph()
-        self.traversal_history = []          # 记录遍历路径及类型
-        self.concept_centers = {}             # 记录已压缩的概念中心
+        self.traversal_history = []          # Record traversal paths and types
+        self.concept_centers = {}             # Record compressed concept centers
         self.iteration_count = 0
-        self.energy_history = []              # 网络平均能耗历史
+        self.energy_history = []              # Network average energy history
 
-        # 状态管理
+        # State management
         self.state_manager = CognitiveStateManager()
 
-        # 个体参数
+        # Individual parameters
         self.individual_params = individual_params
         self._setup_parameters(individual_params)
 
-        self.last_activation_time = {}        # 记录每条边最后被激活的时刻
+        self.last_activation_time = {}        # Record last activation time for each edge
         self.network_seed = network_seed
 
     def _setup_parameters(self, individual_params: Dict[str, Any]) -> None:
-        """从参数字典中解析个体认知参数。
+        """Parse individual cognitive parameters from the parameter dictionary.
 
-        :param individual_params: 包含以下键值的字典：
-            - forgetting_rate: 遗忘率
-            - base_learning_rate: 基础学习率
-            - hard_traversal_bias: 硬遍历偏置
-            - soft_traversal_bias: 软遍历偏置
-            - compression_bias: 压缩偏置
-            - migration_bias: 迁移偏置
-            - learning_rate_variation: 学习率变异系数
+        :param individual_params: Dictionary containing the following keys:
+            - forgetting_rate: Forgetting rate
+            - base_learning_rate: Base learning rate
+            - hard_traversal_bias: Hard traversal bias
+            - soft_traversal_bias: Soft traversal bias
+            - compression_bias: Compression bias
+            - migration_bias: Migration bias
+            - learning_rate_variation: Learning rate variation coefficient
         """
         self.forgetting_rate = individual_params.get('forgetting_rate', 0.002)
         self.base_learning_rate = individual_params.get('base_learning_rate', 0.85)
@@ -65,39 +67,39 @@ class BaseCognitiveGraph:
         self.migration_bias = individual_params.get('migration_bias', 0.0)
         self.learning_rate_variation = individual_params.get('learning_rate_variation', 0.1)
 
-        # 硬遍历和软遍历的能耗分配策略
+        # Energy allocation strategy for hard and soft traversal
         self.hard_traversal_energy_ratio = 0.6
         self.soft_traversal_energy_ratio = 0.4
 
     @property
     def current_state(self) -> CognitiveState:
-        """当前认知状态（枚举值）。"""
+        """Current cognitive state (enum value)."""
         return self.state_manager.current_state
 
     @property
     def subjective_energy(self) -> float:
-        """主观认知能耗，反映个体当前的认知资源水平。"""
+        """Subjective cognitive energy, reflecting the individual's current cognitive resource level."""
         return self.state_manager.subjective_energy
 
     @property
     def cognitive_energy_history(self) -> List[Dict]:
-        """认知状态变化历史记录。"""
+        """History of cognitive state changes."""
         return self.state_manager.cognitive_energy_history
 
     def update_cognitive_state(self) -> None:
-        """根据状态转移矩阵更新认知状态，并记录历史。"""
+        """Update cognitive state according to the transition matrix and record history."""
         self.state_manager.update_cognitive_state()
 
     def _update_subjective_energy(self) -> None:
-        """根据当前状态更新主观能耗值。"""
+        """Update subjective energy value based on current state."""
         self.state_manager._update_subjective_energy()
 
     def can_traverse_edge(self, edge_energy: float, traversal_type: str) -> Tuple[bool, float]:
-        """判断在当前主观能耗下是否能够遍历某条边。
+        """Determine whether an edge can be traversed given the current subjective energy.
 
-        :param edge_energy: 边当前的能耗（权重）
-        :param traversal_type: 遍历类型，'hard' 或 'soft'
-        :return: (是否可遍历, 剩余能量余额)
+        :param edge_energy: Current energy (weight) of the edge
+        :param traversal_type: Traversal type, 'hard' or 'soft'
+        :return: (whether traversable, remaining energy balance)
         """
         if traversal_type == "hard":
             required_energy = edge_energy * 0.8
@@ -109,15 +111,15 @@ class BaseCognitiveGraph:
         return available_energy >= required_energy, available_energy - required_energy
 
     def traverse_path(self, path: List[str], traversal_type: str = "hard") -> None:
-        """沿着指定路径执行遍历，更新边权重（学习效应），并记录历史。
+        """Traverse along the specified path, update edge weights (learning effect), and record history.
 
-        遍历会降低路径上各边的能耗，学习率受遍历类型、节点相似度及个体差异共同影响。
-        遍历后根据能量余额调整认知状态。
+        Traversal reduces the energy of edges along the path; the learning rate is influenced by traversal type,
+        node similarity, and individual differences. After traversal, adjust cognitive state based on energy balance.
 
-        :param path: 节点列表，表示遍历路径
-        :param traversal_type: 遍历类型，'hard' 或 'soft'
+        :param path: List of nodes representing the traversal path
+        :param traversal_type: Traversal type, 'hard' or 'soft'
         """
-        # 随机更新认知状态
+        # Randomly update cognitive state
         if random.random() < 0.1:
             self.update_cognitive_state()
 
@@ -129,7 +131,7 @@ class BaseCognitiveGraph:
 
         can_traverse, energy_balance = self.can_traverse_edge(total_required_energy, traversal_type)
 
-        # 小概率强行遍历（模拟认知资源透支）
+        # Small chance to force traversal (simulating cognitive resource overdraft)
         if not can_traverse:
             if random.random() < 0.2 and self.current_state != CognitiveState.FATIGUED:
                 can_traverse = True
@@ -152,7 +154,7 @@ class BaseCognitiveGraph:
                     self.G[u][v]['traversal_count'] = 0
                 self.G[u][v]['traversal_count'] += 1
 
-                similarity = 0.5   # 默认相似度，实际应由语义网络提供
+                similarity = 0.5   # Default similarity; actual should be provided by semantic network
                 base_rate = self.base_learning_rate
 
                 individual_learning_variation = np.random.uniform(
@@ -174,10 +176,10 @@ class BaseCognitiveGraph:
         self._post_traversal_state_update(traversal_type, energy_balance)
 
     def _post_traversal_state_update(self, traversal_type: str, energy_balance: float) -> None:
-        """遍历后根据能量余额更新认知状态。
+        """Update cognitive state after traversal based on energy balance.
 
-        :param traversal_type: 遍历类型
-        :param energy_balance: 遍历后剩余能量（可正可负）
+        :param traversal_type: Traversal type
+        :param energy_balance: Remaining energy after traversal (can be positive or negative)
         """
         if energy_balance > 0.3:
             if traversal_type == "hard" and random.random() < 0.4:
@@ -191,7 +193,7 @@ class BaseCognitiveGraph:
         self._update_subjective_energy()
 
     def _apply_forgetting(self) -> None:
-        """应用遗忘机制，增加长时间未激活边的能耗（向原始权重恢复）。"""
+        """Apply forgetting mechanism, increase energy of edges inactive for a long time (return to original weight)."""
         current_time = self.iteration_count
 
         for u, v in self.G.edges():
@@ -213,17 +215,17 @@ class BaseCognitiveGraph:
 
     def forgetting_function(self, current_time: int, last_activation_time: int,
                             current_energy: float, similarity: float) -> float:
-        """计算遗忘因子，基于指数衰减模型。
+        """Calculate forgetting factor based on an exponential decay model.
 
         .. math::
             forget\_factor = (1 - e^{-\\Delta t / 500}) \\times
             (0.5 + 0.5 \\cdot \\frac{E}{2.0}) \\times (1 - 0.5 \\cdot sim) \\times forgetting\_rate
 
-        :param current_time: 当前迭代次数
-        :param last_activation_time: 上次激活时间
-        :param current_energy: 边当前能耗
-        :param similarity: 两端节点的语义相似度
-        :return: 遗忘因子（0~0.1之间）
+        :param current_time: Current iteration count
+        :param last_activation_time: Last activation time
+        :param current_energy: Current edge energy
+        :param similarity: Semantic similarity of the two endpoint nodes
+        :return: Forgetting factor (between 0 and 0.1)
         """
         time_gap = current_time - last_activation_time
 
@@ -237,17 +239,17 @@ class BaseCognitiveGraph:
         return min(forgetting_factor, 0.1)
 
     def monte_carlo_iteration(self, max_iterations: int = 10000) -> None:
-        """执行蒙特卡洛模拟，迭代演化认知网络。
+        """Perform Monte Carlo simulation, iteratively evolving the cognitive network.
 
-        每步迭代包括：
-            1. 定期更新认知状态
-            2. 应用遗忘机制
-            3. 根据当前状态选择操作（硬遍历、软遍历、压缩、迁移）
-            4. 记录网络能耗历史
+        Each iteration includes:
+            1. Periodic cognitive state update
+            2. Apply forgetting mechanism
+            3. Select operation (hard traversal, soft traversal, compression, migration) based on current state
+            4. Record network energy history
 
-        :param max_iterations: 最大迭代次数
+        :param max_iterations: Maximum number of iterations
         """
-        print(f"初始认知状态: {self.current_state.value}, 主观能耗: {self.subjective_energy:.2f}")
+        print(f"Initial cognitive state: {self.current_state.value}, subjective energy: {self.subjective_energy:.2f}")
 
         for iteration in range(max_iterations):
             self.iteration_count += 1
@@ -273,15 +275,16 @@ class BaseCognitiveGraph:
 
             if iteration % 500 == 0:
                 stats = self.get_network_stats()
-                print(f"迭代 {iteration}, 状态: {self.current_state.value}, "
-                      f"主观能耗: {self.subjective_energy:.2f}, 网络能耗: {current_avg_energy:.3f}")
+                print(f"Iteration {iteration}, State: {self.current_state.value}, "
+                      f"Subjective energy: {self.subjective_energy:.2f}, Network energy: {current_avg_energy:.3f}")
 
     def _select_operation_based_on_state(self) -> str:
-        """根据当前认知状态选择下一步操作类型。
+        """Select the next operation type based on the current cognitive state.
 
-        状态-操作概率映射由预定义字典决定，不同状态下各操作的概率不同。
+        State-operation probability mapping is defined by a predefined dictionary, with different probabilities
+        for each operation under different states.
 
-        :return: 操作名称字符串
+        :return: Operation name string
         """
         state_operations = {
             CognitiveState.FOCUSED: {
@@ -320,7 +323,7 @@ class BaseCognitiveGraph:
         return "hard_traversal"
 
     def _state_based_hard_traversal(self) -> None:
-        """基于当前状态发起硬遍历：寻找并遍历一条低能耗路径。"""
+        """Initiate hard traversal based on current state: find and traverse a low-energy path."""
         available_nodes = list(self.G.nodes())
         if not available_nodes:
             return
@@ -330,7 +333,7 @@ class BaseCognitiveGraph:
             self.traverse_path(path, "hard")
 
     def _state_based_soft_traversal(self) -> None:
-        """基于当前状态发起软遍历：随机游走探索新路径。"""
+        """Initiate soft traversal based on current state: random walk to explore new paths."""
         available_nodes = list(self.G.nodes())
         if not available_nodes:
             return
@@ -340,11 +343,11 @@ class BaseCognitiveGraph:
             self.traverse_path(path, "soft")
 
     def _find_hard_traversal_path(self, start_node: str, max_length: int) -> Optional[List[str]]:
-        """寻找硬遍历路径：优先选择能耗较低的边，且要求能量允许。
+        """Find a hard traversal path: prioritize edges with lower energy, ensuring energy allowance.
 
-        :param start_node: 起始节点
-        :param max_length: 最大路径长度（节点数）
-        :return: 节点列表（路径）或 None
+        :param start_node: Starting node
+        :param max_length: Maximum path length (number of nodes)
+        :return: List of nodes (path) or None
         """
         path = [start_node]
         current_node = start_node
@@ -354,7 +357,7 @@ class BaseCognitiveGraph:
             if not neighbors:
                 break
 
-            # 按能耗升序排列（低能耗优先）
+            # Sort by energy ascending (low energy first)
             neighbors.sort(key=lambda n: self.G[current_node][n]['weight'])
 
             found_next = False
@@ -374,11 +377,11 @@ class BaseCognitiveGraph:
         return path if len(path) >= 2 else None
 
     def _find_soft_traversal_path(self, start_node: str, max_length: int) -> Optional[List[str]]:
-        """寻找软遍历路径：随机选择邻居，但受能量约束。
+        """Find a soft traversal path: randomly select neighbors, subject to energy constraints.
 
-        :param start_node: 起始节点
-        :param max_length: 最大路径长度
-        :return: 节点列表（路径）或 None
+        :param start_node: Starting node
+        :param max_length: Maximum path length
+        :return: List of nodes (path) or None
         """
         path = [start_node]
         current_node = start_node
@@ -407,12 +410,12 @@ class BaseCognitiveGraph:
         return path if len(path) >= 2 else None
 
     def _random_compression(self) -> None:
-        """随机尝试概念压缩：选择中心节点，若其强连接邻居足够则进行压缩。"""
+        """Randomly attempt concept compression: select a center node; if it has enough strong connections, compress."""
         available_nodes = list(self.G.nodes())
         if len(available_nodes) < 3:
             return
 
-        # 低概率触发
+        # Low probability trigger
         if random.random() > 0.10:
             return
 
@@ -436,14 +439,16 @@ class BaseCognitiveGraph:
 
     def conceptual_compression(self, center_node: str, related_nodes: List[str],
                                compression_strength: float = 0.5) -> bool:
-        """执行概念压缩：强化中心节点与相关节点的连接（降低能耗），封装微观结构。
+        """Execute concept compression: strengthen connections between center node and related nodes (reduce energy),
+        encapsulating the microstructure.
 
-        压缩后，中心节点与相关节点的边能耗降低，形成一个宏观概念节点，内部结构被封装。
+        After compression, the edges between center node and related nodes have reduced energy, forming a macro-concept
+        node, with internal structure encapsulated.
 
-        :param center_node: 压缩中心节点
-        :param related_nodes: 相关节点列表
-        :param compression_strength: 压缩强度因子（0~1），越小压缩越强
-        :return: 是否成功执行压缩
+        :param center_node: Compression center node
+        :param related_nodes: List of related nodes
+        :param compression_strength: Compression strength factor (0~1); smaller means stronger compression
+        :return: Whether compression was successfully performed
         """
         if len(related_nodes) < 2:
             return False
@@ -463,7 +468,7 @@ class BaseCognitiveGraph:
         return True
 
     def _random_migration(self) -> None:
-        """随机尝试第一性原理迁移：寻找两个节点间通过原理节点的低能耗路径。"""
+        """Randomly attempt first-principles migration: find a low-energy path between two nodes via principle nodes."""
         available_nodes = list(self.G.nodes())
         if len(available_nodes) < 4:
             return
@@ -487,27 +492,29 @@ class BaseCognitiveGraph:
 
     def first_principles_migration(self, start_node: str, end_node: str,
                                    principle_nodes: List[str], exploration_bonus: float = 0.1) -> Optional[List[str]]:
-        """第一性原理迁移：通过原理节点寻找比直接连接更节能的间接路径。
+        """First-principles migration: find an indirect path through principle nodes that is more energy-efficient
+        than the direct connection.
 
-        迁移的条件是新路径的总能耗比直接连接低至少 improvement_threshold。
+        Migration occurs only if the total energy of the new path is lower than the direct connection by at least
+        improvement_threshold.
 
-        :param start_node: 起始节点
-        :param end_node: 目标节点
-        :param principle_nodes: 候选原理节点列表
-        :param exploration_bonus: 探索奖励，降低路径能耗以鼓励新发现
-        :return: 迁移路径（包含原理节点）或 None
+        :param start_node: Starting node
+        :param end_node: Target node
+        :param principle_nodes: List of candidate principle nodes
+        :param exploration_bonus: Exploration bonus, reduces path energy to encourage new discoveries
+        :return: Migration path (including principle nodes) or None
         """
         best_path = None
         best_energy = float('inf')
 
-        # 直接连接能耗
+        # Direct connection energy
         direct_energy = float('inf')
         if self.G.has_edge(start_node, end_node):
             direct_energy = self.G[start_node][end_node]['weight']
             best_path = [start_node, end_node]
             best_energy = direct_energy
 
-        # 尝试通过每个原理节点
+        # Try through each principle node
         for principle in principle_nodes:
             if (self.G.has_edge(start_node, principle) and
                     self.G.has_edge(principle, end_node)):
@@ -515,26 +522,26 @@ class BaseCognitiveGraph:
                 path_energy = (self.G[start_node][principle]['weight'] +
                                self.G[principle][end_node]['weight'])
 
-                # 应用探索奖励
+                # Apply exploration bonus
                 adjusted_energy = path_energy - exploration_bonus
 
                 if adjusted_energy < best_energy:
                     best_energy = adjusted_energy
                     best_path = [start_node, principle, end_node]
 
-        # 要求新路径必须明显优于直接路径
+        # Require new path to be significantly better than direct path
         improvement_threshold = 0.2
         if (best_path and len(best_path) > 2 and
                 best_energy < direct_energy * (1 - improvement_threshold)):
 
-            # 强化迁移路径上的连接
+            # Strengthen connections along the migration path
             for i in range(len(best_path) - 1):
                 u, v = best_path[i], best_path[i + 1]
                 current = self.G[u][v]['weight']
                 new_energy = max(0.05, current * random.uniform(0.6, 0.8))
                 self.G[u][v]['weight'] = new_energy
 
-            # 记录迁移关系
+            # Record migration relationship
             principle_node = best_path[1]
             if 'migration_bridges' not in self.G.nodes[principle_node]:
                 self.G.nodes[principle_node]['migration_bridges'] = []
@@ -546,7 +553,7 @@ class BaseCognitiveGraph:
                 'iteration': self.iteration_count
             })
 
-            # 模拟遍历这条新发现的优化路径
+            # Simulate traversing this newly discovered optimized path
             self.traverse_path(best_path, traversal_type="soft")
 
             return best_path
@@ -554,9 +561,9 @@ class BaseCognitiveGraph:
         return None
 
     def get_network_stats(self) -> Dict[str, Any]:
-        """获取当前网络的统计信息。
+        """Get statistical information of the current network.
 
-        :return: 包含节点数、边数、迭代次数、平均能耗、压缩中心数、迁移桥梁数的字典
+        :return: Dictionary containing node count, edge count, iteration count, average energy, compression centers count, migration bridges count
         """
         stats = {
             'nodes': self.G.number_of_nodes(),
@@ -574,31 +581,31 @@ class BaseCognitiveGraph:
         return stats
 
     def calculate_network_energy(self) -> float:
-        """计算当前网络的平均能耗（所有边权重的均值）。"""
+        """Calculate the average energy of the current network (mean of all edge weights)."""
         if self.G.number_of_edges() == 0:
             return 0
         energies = [self.G[u][v]['weight'] for u, v in self.G.edges()]
         return np.mean(energies)
 
     def calculate_semantic_similarity(self, node1: str, node2: str) -> float:
-        """计算两个节点间的语义相似度，默认返回0.5，子类应重写该方法以利用真实语义信息。"""
+        """Calculate the semantic similarity between two nodes; default returns 0.5, subclasses should override to use real semantic information."""
         return 0.5
 
     def visualize_energy_convergence(self) -> None:
-        """可视化能耗收敛过程（需安装matplotlib并实现相应函数）。"""
+        """Visualize the energy convergence process (requires matplotlib and appropriate implementation)."""
         from utils.visualization import visualize_energy_convergence
         visualize_energy_convergence(self.energy_history, self.concept_centers)
 
     def visualize_cognitive_states(self) -> None:
-        """可视化认知状态变化历史。"""
+        """Visualize cognitive state change history."""
         from utils.visualization import visualize_cognitive_states
         for i, entry in enumerate(self.cognitive_energy_history):
             if 'iteration' not in entry:
                 entry['iteration'] = i
         visualize_cognitive_states(self.cognitive_energy_history, self.energy_history)
 
-    def visualize_graph(self, title: str = "认知图", figsize: Tuple[int, int] = (12, 8)) -> None:
-        """可视化当前认知图结构。"""
+    def visualize_graph(self, title: str = "Cognitive Graph", figsize: Tuple[int, int] = (12, 8)) -> None:
+        """Visualize the current cognitive graph structure."""
         from utils.visualization import visualize_graph
         visualize_graph(self.G, self.concept_centers, title, figsize)
 
@@ -614,5 +621,5 @@ if __name__ == "__main__":
         'learning_rate_variation': 0.1
     }
     cg = BaseCognitiveGraph(params)
-    # 可添加更多测试逻辑...
-    print("BaseCognitiveGraph 初始化成功")
+    # Additional test logic can be added...
+    print("BaseCognitiveGraph initialized successfully")

@@ -1,8 +1,8 @@
 """
-语义网络模块
+Semantic Network Module
 -------------
-定义语义概念网络及相关类，基于关键词和元结构计算概念间的相似度，
-并支持构建综合网络、跨领域路径搜索等功能。
+Define semantic concept network and related classes. Compute similarity between concepts based on keywords and meta-structures,
+and support building comprehensive networks, cross-domain path search, and other functions.
 """
 
 import time
@@ -19,23 +19,24 @@ from config import (
 
 
 class SemanticConceptNetwork:
-    """基于定义关键词的语义概念网络。
+    """Semantic concept network based on definition keywords.
 
-    该类维护概念定义、关键词列表，并通过关键词Jaccard相似度及领域相似度计算概念间的语义相似度。
-    支持构建综合网络、递归扩展及跨领域路径搜索。
+    This class maintains concept definitions and keyword lists, computes semantic similarity between concepts
+    via Jaccard similarity of keywords and domain similarity. Supports building comprehensive networks,
+    recursive expansion, and cross-domain path search.
     """
 
     def __init__(self):
-        self.concept_definitions: Dict[str, Dict] = {}      # 概念 -> {定义,来源,时间戳}
-        self.concept_keywords: Dict[str, List[str]] = {}    # 概念 -> 关键词列表
-        self.semantic_network: Dict[str, Dict[str, float]] = defaultdict(dict)  # 概念->邻居概念->相似度
+        self.concept_definitions: Dict[str, Dict] = {}      # concept -> {definition, source, timestamp}
+        self.concept_keywords: Dict[str, List[str]] = {}    # concept -> keyword list
+        self.semantic_network: Dict[str, Dict[str, float]] = defaultdict(dict)  # concept -> neighbor concept -> similarity
 
     def add_concept_definition(self, concept: str, definition: str, source: str = "manual") -> None:
-        """添加一个概念的定义，并自动提取关键词。
+        """Add a concept definition and automatically extract keywords.
 
-        :param concept: 概念名称
-        :param definition: 定义文本
-        :param source: 来源标识
+        :param concept: Concept name
+        :param definition: Definition text
+        :param source: Source identifier
         """
         self.concept_definitions[concept] = {
             'definition': definition,
@@ -46,15 +47,15 @@ class SemanticConceptNetwork:
         keywords = self.extract_keywords(definition)
         self.concept_keywords[concept] = keywords
 
-        print(f"添加概念 '{concept}': {definition}")
-        print(f"  提取关键词: {keywords}")
+        print(f"Added concept '{concept}': {definition}")
+        print(f"  Extracted keywords: {keywords}")
 
     def extract_keywords(self, text: str, top_k: Optional[int] = None) -> List[str]:
-        """从文本中提取关键词，使用jieba分词并过滤停用词。
+        """Extract keywords from text using jieba segmentation and stop word filtering.
 
-        :param text: 输入文本
-        :param top_k: 返回的关键词数量，默认从配置中读取
-        :return: 关键词列表
+        :param text: Input text
+        :param top_k: Number of keywords to return, defaults to reading from config
+        :return: List of keywords
         """
         if top_k is None:
             top_k = KEYWORD_CONFIG['top_k']
@@ -73,11 +74,11 @@ class SemanticConceptNetwork:
         return [word for word, freq in sorted_words[:top_k]]
 
     def expand_concept_network(self, concept: str, max_depth: Optional[int] = None, current_depth: int = 0) -> None:
-        """递归扩展概念网络，将概念的关键词（若也是已定义概念）连接起来。
+        """Recursively expand the concept network, connecting the concept's keywords (if they are also defined concepts).
 
-        :param concept: 当前概念
-        :param max_depth: 最大递归深度
-        :param current_depth: 当前深度
+        :param concept: Current concept
+        :param max_depth: Maximum recursion depth
+        :param current_depth: Current depth
         """
         if max_depth is None:
             max_depth = NETWORK_CONFIG['max_expansion_depth']
@@ -97,11 +98,11 @@ class SemanticConceptNetwork:
                     self.expand_concept_network(keyword, max_depth, current_depth + 1)
 
     def calculate_semantic_similarity(self, concept1: str, concept2: str) -> float:
-        """计算两个概念的语义相似度，采用Jaccard相似度（关键词交集/并集）与领域相似度的加权和。
+        """Compute semantic similarity between two concepts using a weighted sum of Jaccard similarity (keyword intersection/union) and domain similarity.
 
-        :param concept1: 第一个概念
-        :param concept2: 第二个概念
-        :return: 相似度值 (0~1)
+        :param concept1: First concept
+        :param concept2: Second concept
+        :return: Similarity value (0~1)
         """
         if concept1 not in self.concept_keywords or concept2 not in self.concept_keywords:
             return 0.0
@@ -123,9 +124,9 @@ class SemanticConceptNetwork:
         return min(combined_similarity, 1.0)
 
     def _calculate_domain_similarity(self, concept1: str, concept2: str) -> float:
-        """根据概念所属领域计算相似度。
+        """Compute domain similarity based on the concept's domain.
 
-        :return: 领域相似度
+        :return: Domain similarity
         """
         domain1 = self.get_domain(concept1)
         domain2 = self.get_domain(concept2)
@@ -138,16 +139,16 @@ class SemanticConceptNetwork:
             return 0.2
 
     def build_comprehensive_network(self, num_concepts: Optional[int] = None) -> None:
-        """构建综合概念网络。
+        """Build a comprehensive concept network.
 
-        根据核心概念定义构建所有概念节点，计算两两相似度，并递归扩展。
+        Build all concept nodes based on core concept definitions, compute pairwise similarities, and expand recursively.
 
-        :param num_concepts: 可选，指定使用的核心概念数量（从配置中截取前N个）
+        :param num_concepts: Optional, number of core concepts to use (take the first N from config)
         """
         self._predefine_core_concepts(num_concepts)
 
         all_concepts = list(self.concept_definitions.keys())
-        print(f"开始构建语义网络，共有 {len(all_concepts)} 个概念")
+        print(f"Building semantic network, total {len(all_concepts)} concepts")
 
         threshold = NETWORK_CONFIG['similarity_threshold']
         for i, concept1 in enumerate(all_concepts):
@@ -160,39 +161,39 @@ class SemanticConceptNetwork:
         for concept in all_concepts:
             self.expand_concept_network(concept)
 
-        print(f"语义网络构建完成! 包含 {len(self.semantic_network)} 个概念节点")
+        print(f"Semantic network construction completed! Contains {len(self.semantic_network)} concept nodes")
         total_connections = sum(len(neighbors) for neighbors in self.semantic_network.values()) // 2
-        print(f"网络连接数: {total_connections}")
+        print(f"Number of connections: {total_connections}")
 
     def _predefine_core_concepts(self, num_concepts: Optional[int] = None) -> None:
-        """从配置中加载核心概念定义。
+        """Load core concept definitions from config.
 
-        :param num_concepts: 可选，指定加载的概念数量
+        :param num_concepts: Optional, number of concepts to load
         """
         if num_concepts is not None:
             all_concepts = list(CORE_CONCEPT_DEFINITIONS.keys())
             if num_concepts > len(all_concepts):
-                print(f"警告：请求的概念数{num_concepts}超过最大概念数{len(all_concepts)}，使用最大概念数")
+                print(f"Warning: Requested {num_concepts} concepts exceeds maximum {len(all_concepts)}, using maximum")
                 num_concepts = len(all_concepts)
 
             selected_concepts = all_concepts[:num_concepts]
             for concept in selected_concepts:
                 definition = CORE_CONCEPT_DEFINITIONS[concept]
                 self.add_concept_definition(concept, definition, "predefined")
-            print(f"使用前 {num_concepts} 个核心概念构建语义网络")
+            print(f"Using first {num_concepts} core concepts to build semantic network")
         else:
             for concept, definition in CORE_CONCEPT_DEFINITIONS.items():
                 self.add_concept_definition(concept, definition, "predefined")
-            print(f"使用全部 {len(CORE_CONCEPT_DEFINITIONS)} 个核心概念构建语义网络")
+            print(f"Using all {len(CORE_CONCEPT_DEFINITIONS)} core concepts to build semantic network")
 
     def find_cross_domain_paths(self, start_concept: str, end_concept: str,
                                  max_path_length: Optional[int] = None) -> List[Tuple[List[str], float]]:
-        """寻找两个概念间的跨领域路径（广度优先搜索）。
+        """Find cross-domain paths between two concepts (breadth-first search).
 
-        :param start_concept: 起始概念
-        :param end_concept: 目标概念
-        :param max_path_length: 最大路径长度
-        :return: 列表，每个元素为 (路径节点列表, 路径累积相似度)
+        :param start_concept: Starting concept
+        :param end_concept: Target concept
+        :param max_path_length: Maximum path length
+        :return: List of (path node list, cumulative similarity)
         """
         if max_path_length is None:
             max_path_length = NETWORK_CONFIG['max_path_length']
@@ -225,14 +226,14 @@ class SemanticConceptNetwork:
         return found_paths
 
     def get_domain(self, concept: str) -> str:
-        """返回概念所属的领域，若未定义则返回 'other'。"""
+        """Return the domain of a concept; returns 'other' if not defined."""
         for domain, concepts in CONCEPT_DOMAINS.items():
             if concept in concepts:
                 return domain
         return "other"
 
     def visualize_semantic_network(self, highlight_concepts: Optional[List[str]] = None) -> None:
-        """可视化语义网络（需安装matplotlib）。"""
+        """Visualize the semantic network (requires matplotlib)."""
         from utils.visualization import visualize_semantic_network
         visualize_semantic_network(self.semantic_network, self.concept_definitions, highlight_concepts)
 
@@ -245,11 +246,11 @@ class SemanticConceptNetwork:
         plt.tight_layout()
         plt.savefig(os.path.join(fig_dir, f"semantic_network_{timestamp}.png"),
                     dpi=300, bbox_inches='tight')
-        print(f"语义网络图已保存到 results/semantic_network/")
+        print(f"Semantic network figure saved to results/semantic_network/")
 
 
 class MetaStructureSimilarity:
-    """基于元结构的相似度计算，将概念映射到元结构空间，计算余弦相似度。"""
+    """Meta-structure based similarity computation, mapping concepts to meta-structure space and computing cosine similarity."""
 
     def __init__(self):
         self.meta_structure_map = META_STRUCTURE_MAP
@@ -259,10 +260,10 @@ class MetaStructureSimilarity:
                 self.concept_to_meta[concept] = meta
 
     def map_to_meta_structure(self, concept: str) -> np.ndarray:
-        """将概念映射到元结构空间的向量。
+        """Map a concept to a vector in meta-structure space.
 
-        :param concept: 概念名称
-        :return: 长度为元结构数量的向量，对应维度为1表示完全匹配，0.5表示关键词匹配。
+        :param concept: Concept name
+        :return: Vector of length equal to the number of meta-structures; the corresponding dimension is 1 for an exact match, 0.5 for keyword match.
         """
         meta_vector = np.zeros(len(self.meta_structure_map))
         meta_list = list(self.meta_structure_map.keys())
@@ -281,9 +282,9 @@ class MetaStructureSimilarity:
         return meta_vector
 
     def meta_structure_similarity(self, concept1: str, concept2: str) -> float:
-        """计算两个概念在元结构空间中的余弦相似度。
+        """Compute cosine similarity between two concepts in meta-structure space.
 
-        :return: 相似度 (0~1)
+        :return: Similarity (0~1)
         """
         vec1 = self.map_to_meta_structure(concept1)
         vec2 = self.map_to_meta_structure(concept2)
@@ -299,7 +300,7 @@ class MetaStructureSimilarity:
 
 
 class EnhancedSemanticConceptNetwork(SemanticConceptNetwork):
-    """增强的语义概念网络，整合元结构相似度，提供多种相似度计算方法。"""
+    """Enhanced semantic concept network, integrating meta-structure similarity, providing multiple similarity calculation methods."""
 
     def __init__(self, num_concepts: Optional[int] = None):
         super().__init__()
@@ -308,11 +309,11 @@ class EnhancedSemanticConceptNetwork(SemanticConceptNetwork):
         self.num_concepts = num_concepts
 
     def build_comprehensive_network(self) -> None:
-        """重写父类方法，使用 num_concepts 构建网络。"""
+        """Override parent method, build network using num_concepts."""
         self._predefine_core_concepts(self.num_concepts)
 
         all_concepts = list(self.concept_definitions.keys())
-        print(f"开始构建增强语义网络，共有 {len(all_concepts)} 个概念")
+        print(f"Building enhanced semantic network, total {len(all_concepts)} concepts")
 
         threshold = NETWORK_CONFIG['similarity_threshold']
         for i, concept1 in enumerate(all_concepts):
@@ -325,18 +326,18 @@ class EnhancedSemanticConceptNetwork(SemanticConceptNetwork):
         for concept in all_concepts:
             self.expand_concept_network(concept)
 
-        print(f"增强语义网络构建完成! 包含 {len(self.semantic_network)} 个概念节点")
+        print(f"Enhanced semantic network construction completed! Contains {len(self.semantic_network)} concept nodes")
         total_connections = sum(len(neighbors) for neighbors in self.semantic_network.values()) // 2
-        print(f"网络连接数: {total_connections}")
+        print(f"Number of connections: {total_connections}")
 
     def calculate_enhanced_similarity(self, concept1: str, concept2: str,
                                       method: str = "combined") -> float:
-        """增强的相似度计算，支持多种策略。
+        """Enhanced similarity calculation, supporting multiple strategies.
 
-        :param concept1: 第一个概念
-        :param concept2: 第二个概念
-        :param method: 计算方法，可选 'semantic_only', 'meta_only', 'combined', 'adaptive'
-        :return: 相似度值
+        :param concept1: First concept
+        :param concept2: Second concept
+        :param method: Calculation method, options: 'semantic_only', 'meta_only', 'combined', 'adaptive'
+        :return: Similarity value
         """
         if method == "semantic_only":
             return self.calculate_semantic_similarity(concept1, concept2)
@@ -372,7 +373,7 @@ class EnhancedSemanticConceptNetwork(SemanticConceptNetwork):
         return 0.0
 
     def _concept_complexity(self, concept: str) -> float:
-        """估计概念复杂度，基于关键词数量及多样性。"""
+        """Estimate concept complexity based on number of keywords and diversity."""
         if concept not in self.concept_keywords:
             return 0.5
 
@@ -384,7 +385,7 @@ class EnhancedSemanticConceptNetwork(SemanticConceptNetwork):
         return complexity
 
     def _abstraction_level(self, concept1: str, concept2: str) -> float:
-        """估计两个概念的平均抽象程度。"""
+        """Estimate the average abstraction level of two concepts."""
         def single_concept_abstraction(concept: str) -> float:
             meta_vec = self.meta_similarity.map_to_meta_structure(concept)
             abstraction_score = np.sum(meta_vec) / len(meta_vec)
@@ -402,7 +403,7 @@ class EnhancedSemanticConceptNetwork(SemanticConceptNetwork):
 
 
 if __name__ == "__main__":
-    # 简单测试
+    # Simple test
     net = SemanticConceptNetwork()
     net.build_comprehensive_network(num_concepts=51)
-    print("语义网络构建成功")
+    print("Semantic network built successfully")

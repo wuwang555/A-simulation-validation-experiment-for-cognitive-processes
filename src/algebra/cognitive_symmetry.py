@@ -1,9 +1,10 @@
 # algebra/cognitive_symmetry.py
 """
-认知对称群模块
+Cognitive Symmetry Group Module
 
-根据论文第4.2节，认知对称群是保持认知网络关键性质不变的变换群。
-该模块实现了概念同构检测、守恒量计算以及Noether型命题的验证。
+According to Section 4.2 of the paper, the cognitive symmetry group is the set of transformations that preserve
+key properties of the cognitive network. This module implements concept isomorphism detection, conserved quantity
+calculation, and verification of the Noether-type proposition.
 """
 
 import networkx as nx
@@ -18,112 +19,113 @@ np.random.seed(42)
 random.seed(42)
 
 class CognitiveSymmetryGroup:
-    """认知对称群实现。
+    """Cognitive Symmetry Group Implementation.
 
-    该类负责检测认知网络中的概念同构（节点置换保持边权重），计算守恒量
-    （全局能量、结构熵、分形维数），并验证Noether型命题。
+    This class is responsible for detecting concept isomorphisms (node permutations that preserve edge weights),
+    calculating conserved quantities (global energy, structural entropy, fractal dimension), and verifying
+    the Noether-type proposition.
 
     Attributes:
-        network (nx.Graph): 当前认知网络。
-        automorphisms (List[Dict]): 已找到的自同构列表。
-        conserved_quantities (Dict): 计算得到的守恒量。
+        network (nx.Graph): Current cognitive network.
+        automorphisms (List[Dict]): List of found automorphisms.
+        conserved_quantities (Dict): Calculated conserved quantities.
     """
 
     def __init__(self, network: nx.Graph):
         """
         Args:
-            network (nx.Graph): 待分析的认知网络。
+            network (nx.Graph): The cognitive network to analyze.
         """
         self.network = network
         self.automorphisms = []
         self.conserved_quantities = {}
 
     def find_concept_isomorphisms(self, max_samples=1000) -> List[Dict]:
-        """寻找概念同构（保持语义的节点置换）。
+        """Find concept isomorphisms (semantics-preserving node permutations).
 
-        由于同构检测是NP难问题，对于大规模网络采用随机采样近似。
-        策略说明：
-        - 节点数 ≤ 8：穷举全排列，但限制最多检查1000个（实际可能小于全排列数）。
-        - 节点数 9~12：使用 networkx 的 GraphMatcher 精确搜索。
-        - 节点数 > 12：随机采样排列，快速度序列过滤后验证同构性。
+        Since isomorphism detection is NP-hard, a random sampling approximation is used for large networks.
+        Strategy description:
+        - Node count ≤ 8: exhaustive enumeration of permutations, but limit to checking at most 1000 (may be less than total permutations).
+        - Node count 9~12: use networkx's GraphMatcher for exact search.
+        - Node count > 12: random sampling of permutations, fast degree sequence filtering followed by isomorphism verification.
 
         Args:
-            max_samples (int): 最大采样次数（用于大规模网络）。
+            max_samples (int): Maximum number of samples (for large networks).
 
         Returns:
-            List[Dict]: 每个字典表示一个自同构映射 {原节点: 映射节点}。
+            List[Dict]: Each dictionary represents an automorphism mapping {original node: mapped node}.
         """
         nodes = list(self.network.nodes())
         n = len(nodes)
         automorphisms = []
 
-        # ---------- 策略1：小规模网络（≤8），穷举全排列 ----------
+        # ---------- Strategy 1: Small networks (≤8), exhaustive enumeration ----------
         if n <= 8:
             permutations = itertools.permutations(range(n))
             total_perms = math.factorial(n)
-            max_to_check = min(1000, total_perms)  # 最多检查1000个
+            max_to_check = min(1000, total_perms)  # Check at most 1000
             checked = 0
             for perm in permutations:
                 if checked >= max_to_check:
                     break
                 checked += 1
-                # 快速筛选：度序列匹配
+                # Quick filter: degree sequence match
                 if [self.network.degree(nodes[i]) for i in perm] != [self.network.degree(nodes[i]) for i in range(n)]:
                     continue
                 if self._is_isomorphism(perm, nodes):
                     mapping = {nodes[i]: nodes[perm[i]] for i in range(n)}
                     automorphisms.append(mapping)
-            # 穷举后添加恒等映射（以防万一，但理论上穷举会找到它）
+            # Add identity mapping after exhaustive search (just in case, exhaustive should find it)
             identity = {node: node for node in nodes}
             if identity not in automorphisms:
                 automorphisms.append(identity)
-            print(f"穷举检查了 {checked} 个排列，找到 {len(automorphisms)} 个自同构")
+            print(f"Exhaustively checked {checked} permutations, found {len(automorphisms)} automorphisms")
             return automorphisms
 
-        # ---------- 策略2：中等规模（9 ≤ n ≤ 12），使用 GraphMatcher 精确搜索 ----------
+        # ---------- Strategy 2: Medium scale (9 ≤ n ≤ 12), use GraphMatcher exact search ----------
         if 9 <= n <= 12:
             try:
-                # 定义边匹配函数：边权重需近似相等
+                # Define edge matching function: edge weights should be approximately equal
                 def edge_match(e1_attr, e2_attr):
                     return np.isclose(e1_attr.get('weight', 0), e2_attr.get('weight', 0), rtol=0.2)
 
                 GM = GraphMatcher(self.network, self.network,
-                                  node_match=lambda n1, n2: True,  # 节点无额外属性，总是匹配
+                                  node_match=lambda n1, n2: True,  # No extra node attributes, always match
                                   edge_match=edge_match)
 
                 for mapping in GM.isomorphisms_iter():
-                    # mapping 已经是 {原节点: 映射节点} 的字典，直接添加
+                    # mapping is already {original node: mapped node}, add directly
                     automorphisms.append(mapping)
 
             except Exception as e:
-                print(f"GraphMatcher 出错: {e}，回退到随机采样")
+                print(f"GraphMatcher error: {e}, falling back to random sampling")
                 automorphisms = self._random_sample_automorphisms(nodes, max_samples)
 
-        # ---------- 策略3：大规模网络（>12），随机采样 + 强制恒等 ----------
+        # ---------- Strategy 3: Large networks (>12), random sampling + enforce identity ----------
         automorphisms = self._random_sample_automorphisms(nodes, max_samples)
-        # 确保恒等映射已加入
+        # Ensure identity mapping is included
         nodes = list(self.network.nodes())
         identity = {node: node for node in nodes}
         if identity not in automorphisms:
             automorphisms.append(identity)
-            print("强制加入了恒等映射（因随机采样可能漏掉）")
+            print("Forced addition of identity mapping (may be missed by random sampling)")
 
-        # 关键：将结果保存到实例属性
+        # Store results in instance attribute
         self.automorphisms = automorphisms
 
         return automorphisms
 
     def _is_isomorphism(self, perm, nodes):
-        """检查排列 perm 是否保持边和权重（用于穷举和随机采样）。
+        """Check whether permutation perm preserves edges and weights (used for exhaustive and random sampling).
 
         Args:
-            perm (tuple): 节点的索引排列。
-            nodes (list): 节点列表。
+            perm (tuple): Index permutation of nodes.
+            nodes (list): List of nodes.
 
         Returns:
-            bool: 如果是自同构返回True。
+            bool: True if it is an automorphism.
         """
-        # 随机抽样部分边以加速（但恒等映射一定能通过）
+        # Sample some edges to speed up (identity mapping will always pass)
         edges_to_check = list(self.network.edges())
         if len(edges_to_check) > 20:
             edges_to_check = random.sample(edges_to_check, 20)
@@ -139,14 +141,14 @@ class CognitiveSymmetryGroup:
         return True
 
     def _random_sample_automorphisms(self, nodes, max_samples):
-        """随机采样排列，寻找自同构（不含恒等映射，因为概率太低）。
+        """Randomly sample permutations to find automorphisms (excluding identity mapping, as probability is low).
 
         Args:
-            nodes (list): 节点列表。
-            max_samples (int): 最大采样次数。
+            nodes (list): List of nodes.
+            max_samples (int): Maximum number of samples.
 
         Returns:
-            list: 找到的自同构映射列表。
+            list: List of found automorphism mappings.
         """
         n = len(nodes)
         automorphisms = []
@@ -154,7 +156,7 @@ class CognitiveSymmetryGroup:
         for _ in range(max_samples):
             perm = list(range(n))
             random.shuffle(perm)
-            # 快速度序列过滤
+            # Quick degree sequence filter
             if [degree_seq[i] for i in perm] != degree_seq:
                 continue
             if self._is_isomorphism(perm, nodes):
@@ -163,24 +165,24 @@ class CognitiveSymmetryGroup:
         return automorphisms
 
     def compute_conserved_quantities(self) -> Dict[str, float]:
-        """计算认知系统的守恒量。
+        """Compute conserved quantities of the cognitive system.
 
-        根据Noether型命题，对称性对应守恒量。此处计算：
-        - 全局认知能量（总权重）——对应时间平移对称性
-        - 结构熵（度分布熵）——对应概念置换对称性
-        - 分形维数（聚类系数/平均最短路径）——对应尺度变换对称性
+        According to the Noether-type proposition, symmetries correspond to conserved quantities. Here we compute:
+        - Global cognitive energy (total weight) – corresponds to time translation symmetry
+        - Structural entropy (degree distribution entropy) – corresponds to concept permutation symmetry
+        - Fractal dimension (clustering coefficient / average shortest path) – corresponds to scale transformation symmetry
 
         Returns:
-            Dict[str, float]: 守恒量名称到值的映射。
+            Dict[str, float]: Mapping from conserved quantity name to value.
         """
         conserved = {}
 
-        # 1. 全局能量守恒（时间平移对称性）
+        # 1. Global energy conservation (time translation symmetry)
         total_energy = sum(self.network[u][v]['weight']
                            for u, v in self.network.edges())
         conserved['total_energy'] = total_energy
 
-        # 2. 结构熵守恒（概念置换对称性）
+        # 2. Structural entropy conservation (concept permutation symmetry)
         degrees = [d for _, d in self.network.degree()]
         if degrees:
             degree_dist = np.histogram(degrees, bins=min(10, len(set(degrees))))[0]
@@ -190,27 +192,27 @@ class CognitiveSymmetryGroup:
         else:
             conserved['structural_entropy'] = 0.0
 
-        # 3. 分形维数守恒（尺度变换对称性）
-        # 使用加权网络计算
+        # 3. Fractal dimension conservation (scale transformation symmetry)
+        # Use weighted network
         try:
-            # 使用权重的倒数作为距离（能耗越高，距离越远）
+            # Use reciprocal of weight as distance (higher energy → farther distance)
             weighted_network = self.network.copy()
             for u, v in weighted_network.edges():
                 weight = weighted_network[u][v]['weight']
-                # 防止除零
+                # Avoid division by zero
                 if weight > 0:
                     weighted_network[u][v]['distance'] = 1.0 / weight
                 else:
-                    weighted_network[u][v]['distance'] = 100.0  # 极大距离
+                    weighted_network[u][v]['distance'] = 100.0  # Very large distance
 
-            # 计算加权聚类系数
+            # Compute weighted clustering coefficient
             if nx.is_connected(weighted_network):
-                # 使用networkx的加权聚类系数
+                # Use networkx's weighted clustering coefficient
                 clustering = nx.average_clustering(weighted_network, weight='distance')
 
-                # 计算加权平均最短路径
+                # Compute weighted average shortest path
                 try:
-                    # 使用Floyd-Warshall算法计算所有节点对的最短路径
+                    # Use Floyd-Warshall algorithm to compute all-pairs shortest paths
                     import itertools
                     path_lengths = []
                     nodes = list(weighted_network.nodes())
@@ -218,11 +220,11 @@ class CognitiveSymmetryGroup:
                     for i, src in enumerate(nodes):
                         for dst in nodes[i + 1:]:
                             try:
-                                # 使用Dijkstra算法计算最短路径
+                                # Use Dijkstra's algorithm to compute shortest path
                                 length = nx.dijkstra_path_length(weighted_network, src, dst, weight='distance')
                                 path_lengths.append(length)
                             except nx.NetworkXNoPath:
-                                # 如果没有路径，跳过
+                                # Skip if no path
                                 continue
 
                     if path_lengths:
@@ -233,13 +235,13 @@ class CognitiveSymmetryGroup:
                         conserved['fractal_dimension'] = 0.0
 
                 except Exception as e:
-                    print(f"计算平均最短路径时出错: {e}")
+                    print(f"Error computing average shortest path: {e}")
                     conserved['fractal_dimension'] = 0.0
             else:
                 conserved['fractal_dimension'] = 0.0
 
         except Exception as e:
-            print(f"计算分形维数时出错: {e}")
+            print(f"Error computing fractal dimension: {e}")
             conserved['fractal_dimension'] = 0.0
 
         self.conserved_quantities = conserved
@@ -248,17 +250,17 @@ class CognitiveSymmetryGroup:
     def verify_noether_theorem(self, before_network: nx.Graph, after_network: nx.Graph,
                                transformation_type: str,
                                tolerance: float = 0.2) -> Tuple[bool, Dict]:
-        """验证Noether型命题：对称性变换前后守恒量是否保持不变。
+        """Verify the Noether-type proposition: whether conserved quantities remain unchanged under symmetry transformations.
 
         Args:
-            before_network (nx.Graph): 变换前的网络。
-            after_network (nx.Graph): 变换后的网络。
-            transformation_type (str): 变换类型描述（仅用于日志）。
-            tolerance (float): 允许的相对变化阈值。
+            before_network (nx.Graph): Network before transformation.
+            after_network (nx.Graph): Network after transformation.
+            transformation_type (str): Type of transformation (only used for logging).
+            tolerance (float): Allowed relative change threshold.
 
         Returns:
-            Tuple[bool, Dict]: 第一个元素表示是否所有守恒量保持；
-                第二个元素为各守恒量的详细变化信息，包含 before、after、relative_change 和 conserved。
+            Tuple[bool, Dict]: First element indicates whether all conserved quantities are preserved;
+                second element provides detailed change information for each conserved quantity, including before, after, relative_change, and conserved.
         """
         before_group = CognitiveSymmetryGroup(before_network)
         after_group = CognitiveSymmetryGroup(after_network)
@@ -274,13 +276,12 @@ class CognitiveSymmetryGroup:
                 before_val = before_conserved[key]
                 after_val = after_conserved[key]
 
-                # 处理可能为0的情况
+                # Handle cases where before_val may be zero
                 if abs(before_val) < 1e-10 and abs(after_val) < 1e-10:
                     is_conserved = True
                 elif abs(before_val) < 1e-10:
                     is_conserved = False
                 else:
-                    # 相对变化
                     relative_change = abs(before_val - after_val) / abs(before_val)
                     is_conserved = relative_change < tolerance
 
@@ -293,14 +294,14 @@ class CognitiveSymmetryGroup:
 
                 if not is_conserved:
                     all_conserved = False
-                    print(f"守恒量 {key} 变化超过阈值 {tolerance * 100:.0f}%: "
+                    print(f"Conserved quantity {key} changed beyond threshold {tolerance * 100:.0f}%: "
                           f"{before_val:.3f} -> {after_val:.3f} "
-                          f"(变化: {relative_change * 100:.1f}%)")
+                          f"(change: {relative_change * 100:.1f}%)")
 
         return all_conserved, conservation_details
 
 
-# 简单测试
+# Simple test
 if __name__ == "__main__":
     G = nx.Graph()
     nodes = ["A", "B", "C"]
@@ -312,5 +313,5 @@ if __name__ == "__main__":
     sym = CognitiveSymmetryGroup(G)
     autos = sym.find_concept_isomorphisms()
     conserved = sym.compute_conserved_quantities()
-    print(f"找到 {len(autos)} 个自同构")
-    print(f"守恒量: {conserved}")
+    print(f"Found {len(autos)} automorphisms")
+    print(f"Conserved quantities: {conserved}")

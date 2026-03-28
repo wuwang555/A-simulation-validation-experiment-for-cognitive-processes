@@ -1,7 +1,7 @@
 """
-随机网络模型 - 无智能基准模型
-完全随机地调整网络边权重，无优化目标
-用于建立无智能机制的基线
+Random Network Model - Non-Intelligent Baseline Model
+Randomly adjusts network edge weights with no optimization objective
+Used to establish a baseline without intelligent mechanisms
 """
 
 import networkx as nx
@@ -14,97 +14,99 @@ np.random.seed(42)
 random.seed(42)
 
 class RandomNetworkModel(BaseCognitiveGraph):
-    """随机网络模型 - 无智能基准。
+    """Random network model - non-intelligent baseline.
 
-    该类完全随机地调整网络权重，没有任何优化目标，用于与其他智能模型进行对比。
+    This class completely randomly adjusts network weights with no optimization objective,
+    used for comparison with other intelligent models.
     """
 
     def __init__(self, individual_params: Dict[str, Any], network_seed: int = 42):
-        """初始化随机网络模型。
+        """Initialize random network model.
 
         Args:
-            individual_params (Dict[str, Any]): 个体参数（实际未使用）。
-            network_seed (int): 随机种子。
+            individual_params (Dict[str, Any]): Individual parameters (not actually used).
+            network_seed (int): Random seed.
         """
         super().__init__(individual_params, network_seed)
-        self.random_weight_std = 0.25  # 增加随机权重调整的标准差
-        self.random_activation_prob = 0.2  # 降低随机激活概率
-        self.forgetting_enabled = False  # 禁用遗忘机制，使其更"随机"
+        self.random_weight_std = 0.25  # Increase standard deviation for random weight adjustments
+        self.random_activation_prob = 0.2  # Reduce random activation probability
+        self.forgetting_enabled = False  # Disable forgetting mechanism to make it more "random"
 
     def initialize_random_network(self, num_nodes=51, connection_prob=0.2):
-        """初始化随机网络。
+        """Initialize random network.
 
-        创建Erdos-Renyi随机图，并为边分配随机权重。
+        Creates an Erdos-Renyi random graph and assigns random weights to edges.
 
         Args:
-            num_nodes (int): 节点数量。
-            connection_prob (float): 边连接概率。
+            num_nodes (int): Number of nodes.
+            connection_prob (float): Edge connection probability.
         """
-        # 创建随机图
+        # Create random graph
         self.G = nx.erdos_renyi_graph(num_nodes, connection_prob, seed=self.network_seed)
 
-        # 为边分配随机权重
+        # Assign random weights to edges
         for u, v in self.G.edges():
-            weight = np.random.uniform(0.8, 2.0)  # 提高初始权重范围
+            weight = np.random.uniform(0.8, 2.0)  # Increase initial weight range
             self.G[u][v]['weight'] = weight
             self.G[u][v]['original_weight'] = weight
             self.G[u][v]['traversal_count'] = 0
             self.last_activation_time[(u, v)] = 0
 
-        # 为节点命名（使用简单编号）
-        node_names = [f"概念_{i}" for i in range(num_nodes)]
+        # Name nodes (using simple numbers)
+        node_names = [f"Concept_{i}" for i in range(num_nodes)]
         mapping = {i: node_names[i] for i in range(num_nodes)}
         self.G = nx.relabel_nodes(self.G, mapping)
 
-        print(f"随机网络初始化: {num_nodes}节点, {self.G.number_of_edges()}条边")
-        print(f"初始平均能耗: {self.calculate_network_energy():.3f}")
+        print(f"Random network initialization: {num_nodes} nodes, {self.G.number_of_edges()} edges")
+        print(f"Initial average energy: {self.calculate_network_energy():.3f}")
 
     def random_weight_adjustment(self):
-        """随机权重调整 - 无智能机制。
+        """Random weight adjustment - no intelligent mechanism.
 
-        随机选择一条边，以50%概率增加或减少其权重。
+        Randomly select an edge, increase or decrease its weight with 50% probability.
         """
         if self.G.number_of_edges() == 0:
             return
 
-        # 随机选择一条边
+        # Randomly select an edge
         edges = list(self.G.edges())
         u, v = random.choice(edges)
 
-        # 生成随机变化 - 增加随机性，不偏向优化
+        # Generate random change - increase randomness, not biased toward optimization
         current_weight = self.G[u][v]['weight']
 
-        # 50%概率增加，50%概率减少
+        # 50% probability to increase, 50% to decrease
         if random.random() < 0.5:
             random_change = np.random.uniform(0, self.random_weight_std)
-            new_weight = min(3.0, current_weight + random_change)  # 上限3.0
+            new_weight = min(3.0, current_weight + random_change)  # Upper bound 3.0
         else:
-            random_change = np.random.uniform(0, self.random_weight_std * 0.5)  # 减少的幅度小一些
-            new_weight = max(0.1, current_weight - random_change)  # 下限0.1
+            random_change = np.random.uniform(0, self.random_weight_std * 0.5)  # Smaller reduction magnitude
+            new_weight = max(0.1, current_weight - random_change)  # Lower bound 0.1
 
-        # 应用变化（无任何优化目标）
+        # Apply change (no optimization objective)
         self.G[u][v]['weight'] = new_weight
 
-        # 随机记录激活时间
+        # Randomly record activation time
         if random.random() < self.random_activation_prob:
             self.last_activation_time[(u, v)] = self.iteration_count
 
     def random_traversal(self):
-        """随机遍历 - 无目标导向。
+        """Random traversal - no goal orientation.
 
-        随机选择起点，随机行走若干步，并可能随机调整经过边的权重。
+        Randomly choose a starting point, perform a random walk of several steps, and possibly randomly adjust
+        the weights of traversed edges.
         """
         nodes = list(self.G.nodes())
         if len(nodes) < 2:
             return
 
-        # 随机起点
+        # Random start node
         start_node = random.choice(nodes)
         path = [start_node]
         current_node = start_node
 
-        # 随机步数
-        path_length = random.randint(1, 3)  # 减少步数
+        # Random number of steps
+        path_length = random.randint(1, 3)  # Reduce step count
 
         for step in range(path_length - 1):
             neighbors = list(self.G.neighbors(current_node))
@@ -118,7 +120,7 @@ class RandomNetworkModel(BaseCognitiveGraph):
             else:
                 break
 
-        # 记录遍历（但不对权重进行有目的调整）
+        # Record traversal (but no purposeful adjustment of weights)
         if len(path) >= 2:
             self.traversal_history.append({
                 'path': path.copy(),
@@ -126,21 +128,21 @@ class RandomNetworkModel(BaseCognitiveGraph):
                 'type': 'random_walk'
             })
 
-            # 随机决定是否对遍历的边进行权重调整
+            # Randomly decide whether to adjust weights of traversed edges
             if random.random() < 0.3:
                 for i in range(len(path) - 1):
                     u, v = path[i], path[i + 1]
                     if self.G.has_edge(u, v):
-                        # 随机调整权重
+                        # Randomly adjust weight
                         current = self.G[u][v]['weight']
                         adjustment = np.random.uniform(-0.2, 0.2)
                         new_weight = max(0.1, min(3.0, current + adjustment))
                         self.G[u][v]['weight'] = new_weight
 
     def random_forgetting(self):
-        """随机遗忘 - 无模式。
+        """Random forgetting - no pattern.
 
-        随机选择边，以一定概率向原始权重回归。
+        Randomly select edges, with a certain probability regress toward original weight.
         """
         if not self.forgetting_enabled:
             return
@@ -148,12 +150,12 @@ class RandomNetworkModel(BaseCognitiveGraph):
         current_time = self.iteration_count
 
         for u, v in self.G.edges():
-            # 随机决定是否应用遗忘
-            if random.random() < 0.05:  # 5%的概率应用遗忘
+            # Randomly decide whether to apply forgetting
+            if random.random() < 0.05:  # 5% probability to apply forgetting
                 current_energy = self.G[u][v]['weight']
                 original_energy = self.G[u][v].get('original_weight', 2.0)
 
-                # 随机遗忘因子，可能增加也可能减少
+                # Random forgetting factor, may increase or decrease
                 forget_factor = random.uniform(-0.1, 0.1)
                 new_energy = current_energy + (original_energy - current_energy) * forget_factor
                 new_energy = max(0.1, min(3.0, new_energy))
@@ -161,18 +163,18 @@ class RandomNetworkModel(BaseCognitiveGraph):
                 self.G[u][v]['weight'] = new_energy
 
     def random_monte_carlo_iteration(self, max_iterations=5000):
-        """随机蒙特卡洛模拟 - 无智能机制。
+        """Random Monte Carlo simulation - no intelligent mechanism.
 
-        主循环，随机选择操作（权重调整、遍历、遗忘）并执行。
+        Main loop, randomly selects operations (weight adjustment, traversal, forgetting) and executes.
 
         Args:
-            max_iterations (int): 最大迭代次数。
+            max_iterations (int): Maximum number of iterations.
 
         Returns:
-            float: 能耗变化百分比（可能为负）。
+            float: Energy change percentage (may be negative).
         """
-        print(f"开始随机网络模拟: {max_iterations}次迭代")
-        print("注意：这是一个无智能的基准模型，预期性能较差")
+        print(f"Starting random network simulation: {max_iterations} iterations")
+        print("Note: This is a non-intelligent baseline model, expected to perform poorly")
 
         initial_energy = self.calculate_network_energy()
         self.energy_history.append(initial_energy)
@@ -180,44 +182,44 @@ class RandomNetworkModel(BaseCognitiveGraph):
         for iteration in range(max_iterations):
             self.iteration_count += 1
 
-            # 随机选择操作类型
+            # Randomly select operation type
             operation_choice = random.random()
 
-            if operation_choice < 0.7:  # 70%概率随机权重调整
+            if operation_choice < 0.7:  # 70% probability random weight adjustment
                 self.random_weight_adjustment()
-            elif operation_choice < 0.9:  # 20%概率随机遍历
+            elif operation_choice < 0.9:  # 20% probability random traversal
                 self.random_traversal()
-            else:  # 10%概率随机遗忘
+            else:  # 10% probability random forgetting
                 self.random_forgetting()
 
-            # 记录能量历史
+            # Record energy history
             current_energy = self.calculate_network_energy()
             self.energy_history.append(current_energy)
 
-            # 定期报告
+            # Periodic reporting
             if iteration % 500 == 0:
                 improvement = ((initial_energy - current_energy) / initial_energy * 100) if initial_energy > 0 else 0
-                print(f"迭代 {iteration}: 网络能耗 = {current_energy:.3f} (变化: {improvement:.1f}%)")
+                print(f"Iteration {iteration}: network energy = {current_energy:.3f} (change: {improvement:.1f}%)")
 
         final_energy = self.calculate_network_energy()
         total_improvement = ((initial_energy - final_energy) / initial_energy * 100) if initial_energy > 0 else 0
 
-        print(f"\n随机网络模拟完成!")
-        print(f"初始能耗: {initial_energy:.3f}, 最终能耗: {final_energy:.3f}")
-        print(f"总变化: {total_improvement:.1f}%")
-        print(f"注意：正值表示能耗降低（改善），负值表示能耗增加（恶化）")
+        print(f"\nRandom network simulation completed!")
+        print(f"Initial energy: {initial_energy:.3f}, Final energy: {final_energy:.3f}")
+        print(f"Total change: {total_improvement:.1f}%")
+        print(f"Note: Positive values indicate energy reduction (improvement), negative values indicate energy increase (deterioration)")
 
         return total_improvement
 
     def run_experiment(self, num_nodes=51, max_iterations=5000):
-        """运行完整实验。
+        """Run a complete experiment.
 
         Args:
-            num_nodes (int): 节点数量。
-            max_iterations (int): 最大迭代次数。
+            num_nodes (int): Number of nodes.
+            max_iterations (int): Maximum number of iterations.
 
         Returns:
-            dict: 实验结果字典。
+            dict: Experiment results dictionary.
         """
         self.initialize_random_network(num_nodes)
         improvement = self.random_monte_carlo_iteration(max_iterations)
@@ -232,14 +234,14 @@ class RandomNetworkModel(BaseCognitiveGraph):
             'final_energy': self.calculate_network_energy(),
             'improvement': improvement,
             'network_stats': stats,
-            'note': '无智能基准模型，预期性能较差'
+            'note': 'Non-intelligent baseline model, expected to perform poorly'
         }
 
 
 if __name__ == "__main__":
-    # 简单测试：运行小型随机网络
-    print("测试 RandomNetworkModel...")
+    # Simple test: run a small random network
+    print("Testing RandomNetworkModel...")
     params = {}
     model = RandomNetworkModel(params)
     result = model.run_experiment(num_nodes=51, max_iterations=8000)
-    print("测试完成。改善率:", result['improvement'])
+    print("Test completed. Improvement rate:", result['improvement'])

@@ -1,7 +1,7 @@
 """
 batch_experiments.py
-认知图模型批处理实验脚本
-用于系统性地运行不同概念规模下的所有模型对比实验
+Batch experiment script for cognitive graph models
+Runs comparison experiments across different concept scales for all models systematically
 """
 
 import sys
@@ -11,63 +11,64 @@ import json
 from datetime import datetime
 import pandas as pd
 from pathlib import Path
-# 导入实验管理器
+# Import experiment manager
 try:
     from main import CognitiveGraphExperimentManager
-    print("✅ 成功导入实验管理器")
+    print("✅ Successfully imported experiment manager")
 except ImportError as e:
-    print(f"❌ 导入实验管理器失败: {e}")
+    print(f"❌ Failed to import experiment manager: {e}")
     sys.exit(1)
 
 
 class BatchExperimentRunner:
-    """批处理实验运行器，管理多规模多模型的对比实验。
+    """Batch experiment runner, manages comparison experiments across multiple scales and models.
 
-    该类负责配置、运行和保存所有模型的实验数据，并生成对比图表。
+    This class is responsible for configuring, running, and saving experimental data for all models,
+    and generating comparison charts.
 
     Attributes:
-        manager (CognitiveGraphExperimentManager): 实验管理器实例。
-        output_dir (Path): 结果输出目录。
-        config (dict): 实验配置参数。
-        results (list): 所有实验结果的列表。
-        summary (dict): 按规模汇总的实验结果。
+        manager (CognitiveGraphExperimentManager): Experiment manager instance.
+        output_dir (Path): Output directory for results.
+        config (dict): Experiment configuration parameters.
+        results (list): List of all experimental results.
+        summary (dict): Summary of results grouped by scale.
     """
 
     def __init__(self, output_dir="../../results/batch_experiments"):
-        """初始化批处理运行器。
+        """Initialize batch runner.
 
         Args:
-            output_dir (str): 结果保存目录，默认为 "../../results/batch_experiments"。
+            output_dir (str): Directory to save results, default is "../../results/batch_experiments".
         """
         self.manager = CognitiveGraphExperimentManager()
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
-        # 实验配置
+        # Experiment configuration
         self.config = {
-            "iterations": 10000,  # 每次迭代次数
-            "repetitions": 1,  # 每个配置重复次数（减少随机性）
+            "iterations": 10000,  # Iterations per run
+            "repetitions": 1,  # Repetitions per configuration (reduced randomness)
             "models": ["random", "qlearning", "traditional", "emergence"],
-            "scales": [51, 71, 91, 111],  # 概念规模
+            "scales": [51, 71, 91, 111],  # Concept scales
             "timestamp": datetime.now().strftime("%Y%m%d_%H%M%S")
         }
 
-        # 结果存储
+        # Result storage
         self.results = []
         self.summary = {}
 
     def run_single_experiment(self, model_type, scale):
-        """运行单个实验。
+        """Run a single experiment.
 
         Args:
-            model_type (str): 模型类型，可选 "random", "qlearning", "traditional", "emergence"。
-            scale (int): 概念规模（节点数）。
+            model_type (str): Model type, one of "random", "qlearning", "traditional", "emergence".
+            scale (int): Concept scale (number of nodes).
 
         Returns:
-            dict or None: 实验结果的指标字典，失败返回None。
+            dict or None: Dictionary of experimental metrics, None if failed.
         """
         print(f"\n{'=' * 60}")
-        print(f"运行实验: {model_type.upper()}模型 | 概念规模: {scale}")
+        print(f"Running experiment: {model_type.upper()} model | Concept scale: {scale}")
         print('=' * 60)
 
         start_time = time.time()
@@ -87,48 +88,48 @@ class BatchExperimentRunner:
                 result = self.manager.run_preset_algorithm_model(
                     num_concepts=scale
                 )
-                # 处理列表格式的结果
+                # Handle list format results
                 if isinstance(result, list) and len(result) > 0:
                     result = result[0]
             elif model_type == "emergence":
                 result = self.manager.run_natural_emergence_model(
-                    num_individuals=1,  # 为了速度，只运行1个个体
+                    num_individuals=1,  # For speed, run only 1 individual
                     max_iterations=self.config["iterations"],
                     num_concepts=scale
                 )
-                # 处理列表格式的结果
+                # Handle list format results
                 if isinstance(result, list) and len(result) > 0:
                     result = result[0]
             else:
-                print(f"❌ 未知模型类型: {model_type}")
+                print(f"❌ Unknown model type: {model_type}")
                 return None
 
             elapsed_time = time.time() - start_time
 
-            # 提取关键指标
+            # Extract key metrics
             metrics = self._extract_metrics(model_type, result, scale, elapsed_time)
 
-            print(f"✅ 实验完成 | 耗时: {elapsed_time:.1f}秒 | 能耗改善: {metrics.get('improvement', 'N/A')}%")
+            print(f"✅ Experiment completed | Time: {elapsed_time:.1f}s | Energy improvement: {metrics.get('improvement', 'N/A')}%")
 
             return metrics
 
         except Exception as e:
-            print(f"❌ 实验失败: {e}")
+            print(f"❌ Experiment failed: {e}")
             import traceback
             traceback.print_exc()
             return None
 
     def _extract_metrics(self, model_type, result, scale, elapsed_time):
-        """从结果中提取关键指标。
+        """Extract key metrics from result.
 
         Args:
-            model_type (str): 模型类型。
-            result (dict): 实验返回的结果字典。
-            scale (int): 概念规模。
-            elapsed_time (float): 运行耗时（秒）。
+            model_type (str): Model type.
+            result (dict): Result dictionary returned by experiment.
+            scale (int): Concept scale.
+            elapsed_time (float): Elapsed time (seconds).
 
         Returns:
-            dict: 提取的指标字典。
+            dict: Extracted metrics dictionary.
         """
         metrics = {
             "model": model_type,
@@ -140,9 +141,9 @@ class BatchExperimentRunner:
         if not result:
             return metrics
 
-        # 通用指标提取
+        # Common metric extraction
         if isinstance(result, dict):
-            # 能耗改善指标
+            # Energy improvement metrics
             if 'improvement' in result:
                 metrics["improvement"] = result['improvement']
             elif 'energy_improvement' in result:
@@ -150,19 +151,19 @@ class BatchExperimentRunner:
             elif 'improvement_percent' in result:
                 metrics["improvement"] = result['improvement_percent']
 
-            # 概念压缩
+            # Concept compression
             if 'compression_centers' in result:
                 metrics["compression_centers"] = result['compression_centers']
             elif 'compression_count' in result:
                 metrics["compression_centers"] = result['compression_count']
 
-            # 原理迁移
+            # Principle migration
             if 'migration_bridges' in result:
                 metrics["migration_bridges"] = result['migration_bridges']
             elif 'migration_count' in result:
                 metrics["migration_bridges"] = result['migration_count']
 
-            # 网络统计
+            # Network statistics
             if 'network_stats' in result:
                 stats = result['network_stats']
                 metrics.update({
@@ -171,7 +172,7 @@ class BatchExperimentRunner:
                     "avg_energy": stats.get('avg_energy', 0)
                 })
 
-        # 特定模型指标
+        # Model-specific metrics
         if model_type == "qlearning" and isinstance(result, dict):
             if 'q_table_stats' in result:
                 q_stats = result['q_table_stats']
@@ -180,13 +181,13 @@ class BatchExperimentRunner:
                     "q_table_non_zero": q_stats.get('non_zero_entries', 0)
                 })
         elif model_type == "traditional" and isinstance(result, dict):
-            # 传统模型可能有认知状态统计
+            # Traditional model may have cognitive state statistics
             if 'state_stats' in result:
                 state_stats = result['state_stats']
                 metrics["exploration_ratio"] = state_stats.get('exploration', 0)
                 metrics["inspiration_ratio"] = state_stats.get('inspiration', 0)
         elif model_type == "emergence" and isinstance(result, dict):
-            # 涌现模型特有指标
+            # Emergence model specific metrics
             metrics.update({
                 "compression_frequency": result.get('compression_frequency', 0),
                 "migration_frequency": result.get('migration_frequency', 0)
@@ -195,11 +196,11 @@ class BatchExperimentRunner:
         return metrics
 
     def run_full_batch(self):
-        """运行完整批处理实验（所有规模 × 所有模型）。"""
+        """Run full batch experiment (all scales × all models)."""
         print("\n" + "=" * 80)
-        print("开始运行完整批处理实验")
-        print(f"配置: {self.config['scales']}个规模 × {self.config['models']}个模型")
-        print(f"迭代次数: {self.config['iterations']}")
+        print("Starting full batch experiment")
+        print(f"Configuration: {self.config['scales']} scales × {self.config['models']} models")
+        print(f"Iterations: {self.config['iterations']}")
         print("=" * 80)
 
         total_experiments = len(self.config["scales"]) * len(self.config["models"])
@@ -209,45 +210,45 @@ class BatchExperimentRunner:
             scale_results = {}
 
             for model in self.config["models"]:
-                # 运行实验
+                # Run experiment
                 metrics = self.run_single_experiment(model, scale)
 
                 if metrics:
-                    # 保存结果
+                    # Save result
                     self.results.append(metrics)
                     scale_results[model] = metrics
 
-                    # 更新进度
+                    # Update progress
                     completed += 1
                     progress = (completed / total_experiments) * 100
-                    print(f"\n📊 进度: {completed}/{total_experiments} ({progress:.1f}%)")
+                    print(f"\n📊 Progress: {completed}/{total_experiments} ({progress:.1f}%)")
 
-            # 保存该规模的结果摘要
+            # Save summary for this scale
             self.summary[scale] = scale_results
 
-        # 保存所有结果
+        # Save all results
         self.save_results()
 
         print("\n" + "=" * 80)
-        print("🎉 所有批处理实验完成!")
+        print("🎉 All batch experiments completed!")
         print("=" * 80)
 
-        # 显示摘要
+        # Display summary
         self.display_summary()
 
     def save_results(self):
-        """保存实验结果到CSV和JSON文件。"""
+        """Save experiment results to CSV and JSON files."""
         timestamp = self.config["timestamp"]
 
-        # 保存详细结果到CSV
+        # Save detailed results to CSV
         df_results = pd.DataFrame(self.results)
         csv_path = self.output_dir / f"detailed_results_{timestamp}.csv"
         df_results.to_csv(csv_path, index=False, encoding='utf-8-sig')
 
-        # 保存摘要到JSON
+        # Save summary to JSON
         summary_path = self.output_dir / f"summary_{timestamp}.json"
         with open(summary_path, 'w', encoding='utf-8') as f:
-            # 转换不能序列化的对象
+            # Convert non-serializable objects
             json_ready = {}
             for scale, models in self.summary.items():
                 json_ready[str(scale)] = {}
@@ -259,29 +260,29 @@ class BatchExperimentRunner:
 
             json.dump(json_ready, f, ensure_ascii=False, indent=2)
 
-        # 保存配置
+        # Save configuration
         config_path = self.output_dir / f"config_{timestamp}.json"
         with open(config_path, 'w', encoding='utf-8') as f:
             json.dump(self.config, f, ensure_ascii=False, indent=2)
 
-        print(f"\n📁 结果已保存:")
-        print(f"  详细结果: {csv_path}")
-        print(f"  实验摘要: {summary_path}")
-        print(f"  配置文件: {config_path}")
+        print(f"\n📁 Results saved:")
+        print(f"  Detailed results: {csv_path}")
+        print(f"  Experiment summary: {summary_path}")
+        print(f"  Configuration: {config_path}")
 
         return csv_path, summary_path
 
     def display_summary(self):
-        """在控制台显示实验结果摘要表格。"""
+        """Display experiment results summary table in console."""
         print("\n" + "=" * 80)
-        print("实验结果摘要")
+        print("Experiment Results Summary")
         print("=" * 80)
 
-        # 创建摘要表格
+        # Create summary table
         summary_data = []
 
         for scale in self.config["scales"]:
-            scale_row = {"概念规模": scale}
+            scale_row = {"Concept Scale": scale}
 
             if scale in self.summary:
                 for model in self.config["models"]:
@@ -289,29 +290,29 @@ class BatchExperimentRunner:
                         metrics = self.summary[scale][model]
                         improvement = metrics.get('improvement', 0)
 
-                        # 添加性能指标
-                        scale_row[f"{model}能耗改善(%)"] = f"{improvement:.1f}%" if isinstance(improvement, (int, float)) else improvement
+                        # Add performance metrics
+                        scale_row[f"{model} Energy Improvement (%)"] = f"{improvement:.1f}%" if isinstance(improvement, (int, float)) else improvement
 
-                        # 添加特殊指标
+                        # Add special metrics
                         if model == "emergence":
                             compression = metrics.get('compression_centers', 0)
                             migration = metrics.get('migration_bridges', 0)
-                            scale_row["涌现压缩"] = compression
-                            scale_row["涌现迁移"] = migration
+                            scale_row["Emergence Compressions"] = compression
+                            scale_row["Emergence Migrations"] = migration
 
             summary_data.append(scale_row)
 
-        # 显示表格
+        # Display table
         df_summary = pd.DataFrame(summary_data)
         print(df_summary.to_string(index=False))
 
-        # 计算统计数据
+        # Calculate statistics
         print("\n" + "=" * 80)
-        print("关键统计数据")
+        print("Key Statistics")
         print("=" * 80)
 
-        # 1. 各模型在不同规模下的平均性能
-        print("\n📈 各模型性能表现:")
+        # 1. Average performance of each model across scales
+        print("\n📈 Model performance:")
         for model in self.config["models"]:
             improvements = []
             for scale in self.config["scales"]:
@@ -322,11 +323,10 @@ class BatchExperimentRunner:
 
             if improvements:
                 avg_imp = sum(improvements) / len(improvements)
-                print(
-                    f"  {model:15s}: 平均改善 {avg_imp:.1f}% (范围: {min(improvements):.1f}%-{max(improvements):.1f}%)")
+                print(f"  {model:15s}: average improvement {avg_imp:.1f}% (range: {min(improvements):.1f}%-{max(improvements):.1f}%)")
 
-        # 2. 规模效应分析
-        print("\n📊 规模效应分析:")
+        # 2. Scale effect analysis
+        print("\n📊 Scale effect analysis:")
         for model in ["traditional", "emergence"]:
             improvements_by_scale = {}
             for scale in self.config["scales"]:
@@ -336,23 +336,23 @@ class BatchExperimentRunner:
                         improvements_by_scale[scale] = imp
 
             if improvements_by_scale:
-                print(f"  {model}模型:")
+                print(f"  {model} model:")
                 for scale, imp in sorted(improvements_by_scale.items()):
-                    print(f"    {scale}概念: {imp:.1f}%")
+                    print(f"    {scale} concepts: {imp:.1f}%")
 
-    def create_comparison_charts(self): # 英文
-        """创建性能对比和规模效应图表（使用matplotlib）。"""
+    def create_comparison_charts(self):
+        """Create performance comparison and scale effect charts (using matplotlib)."""
         try:
             import matplotlib.pyplot as plt
             import numpy as np
 
-            print("\n📊 正在生成对比图表...")
+            print("\n📊 Generating comparison charts...")
 
-            # 准备数据
+            # Prepare data
             scales = self.config["scales"]
             models = self.config["models"]
 
-            # 性能对比柱状图
+            # Performance comparison bar chart
             fig1, ax1 = plt.subplots(figsize=(12, 8))
 
             bar_width = 0.2
@@ -365,7 +365,6 @@ class BatchExperimentRunner:
                 "emergence": "#C44E52"
             }
 
-            # 英文标签
             model_labels = {
                 "random": "Random Network",
                 "qlearning": "Enhanced Q-learning",
@@ -390,7 +389,6 @@ class BatchExperimentRunner:
             ax1.set_title('Performance Comparison of Different Models at Various Concept Scales', fontsize=14,
                           fontweight='bold')
             ax1.set_xticks(x + bar_width * 1.5)
-            # 英文刻度标签
             ax1.set_xticklabels([f"Scale {s}" for s in scales])
             ax1.legend()
             ax1.grid(True, alpha=0.3)
@@ -398,9 +396,9 @@ class BatchExperimentRunner:
             plt.tight_layout()
             chart_path1 = self.output_dir / f"performance_comparison_{self.config['timestamp']}.png"
             plt.savefig(chart_path1, dpi=300)
-            print(f"✅ 性能对比图已保存: {chart_path1}")
+            print(f"✅ Performance comparison chart saved: {chart_path1}")
 
-            # 规模效应折线图
+            # Scale effect line chart
             fig2, ax2 = plt.subplots(figsize=(10, 6))
 
             for model in ["traditional", "emergence"]:
@@ -428,29 +426,29 @@ class BatchExperimentRunner:
             plt.tight_layout()
             chart_path2 = self.output_dir / f"scale_effect_{self.config['timestamp']}.png"
             plt.savefig(chart_path2, dpi=300)
-            print(f"✅ 规模效应图已保存: {chart_path2}")
+            print(f"✅ Scale effect chart saved: {chart_path2}")
 
             plt.show()
 
         except ImportError:
-            print("⚠️  Matplotlib未安装，跳过图表生成")
-            print("   请运行: pip install matplotlib")
+            print("⚠️  Matplotlib not installed, skipping chart generation")
+            print("   Please run: pip install matplotlib")
         except Exception as e:
-            print(f"❌ 生成图表时出错: {e}")
+            print(f"❌ Error generating charts: {e}")
 
-    def create_comparison_charts_zh(self): # 中文
-        """创建性能对比和规模效应图表（使用matplotlib）。"""
+    def create_comparison_charts_zh(self):
+        """Create performance comparison and scale effect charts (using matplotlib) with Chinese labels."""
         try:
             import matplotlib.pyplot as plt
             import numpy as np
 
-            print("\n📊 正在生成对比图表...")
+            print("\n📊 Generating comparison charts...")
 
-            # 准备数据
+            # Prepare data
             scales = self.config["scales"]
             models = self.config["models"]
 
-            # 性能对比柱状图
+            # Performance comparison bar chart
             fig1, ax1 = plt.subplots(figsize=(12, 8))
 
             bar_width = 0.2
@@ -464,10 +462,10 @@ class BatchExperimentRunner:
             }
 
             model_labels = {
-                "random": "随机网络",
-                "qlearning": "增强Q-learning",
-                "traditional": "传统机制设计",
-                "emergence": "自然涌现"
+                "random": "Random Network",
+                "qlearning": "Enhanced Q-learning",
+                "traditional": "Traditional Mechanism Design",
+                "emergence": "Natural Emergence"
             }
 
             for i, model in enumerate(models):
@@ -482,20 +480,21 @@ class BatchExperimentRunner:
                 ax1.bar(x + i * bar_width, improvements, bar_width,
                         label=model_labels[model], color=model_colors[model], alpha=0.8)
 
-            ax1.set_xlabel('概念规模', fontsize=12)
-            ax1.set_ylabel('能耗改善 (%)', fontsize=12)
-            ax1.set_title('不同模型在不同概念规模下的性能对比', fontsize=14, fontweight='bold')
+            ax1.set_xlabel('Concept Scale', fontsize=12)
+            ax1.set_ylabel('Energy Improvement (%)', fontsize=12)
+            ax1.set_title('Performance Comparison of Different Models at Various Concept Scales', fontsize=14,
+                          fontweight='bold')
             ax1.set_xticks(x + bar_width * 1.5)
-            ax1.set_xticklabels([f"{s}概念" for s in scales])
+            ax1.set_xticklabels([f"Scale {s}" for s in scales])
             ax1.legend()
             ax1.grid(True, alpha=0.3)
 
             plt.tight_layout()
             chart_path1 = self.output_dir / f"performance_comparison_{self.config['timestamp']}.png"
             plt.savefig(chart_path1, dpi=300)
-            print(f"✅ 性能对比图已保存: {chart_path1}")
+            print(f"✅ Performance comparison chart saved: {chart_path1}")
 
-            # 规模效应折线图
+            # Scale effect line chart
             fig2, ax2 = plt.subplots(figsize=(10, 6))
 
             for model in ["traditional", "emergence"]:
@@ -514,66 +513,66 @@ class BatchExperimentRunner:
                              marker='o', linewidth=2, markersize=8,
                              label=model_labels[model])
 
-            ax2.set_xlabel('概念规模', fontsize=12)
-            ax2.set_ylabel('能耗改善 (%)', fontsize=12)
-            ax2.set_title('认知模型规模效应分析', fontsize=14, fontweight='bold')
+            ax2.set_xlabel('Concept Scale', fontsize=12)
+            ax2.set_ylabel('Energy Improvement (%)', fontsize=12)
+            ax2.set_title('Scale Effect Analysis of Cognitive Models', fontsize=14, fontweight='bold')
             ax2.legend()
             ax2.grid(True, alpha=0.3)
 
             plt.tight_layout()
             chart_path2 = self.output_dir / f"scale_effect_{self.config['timestamp']}.png"
             plt.savefig(chart_path2, dpi=300)
-            print(f"✅ 规模效应图已保存: {chart_path2}")
+            print(f"✅ Scale effect chart saved: {chart_path2}")
 
             plt.show()
 
         except ImportError:
-            print("⚠️  Matplotlib未安装，跳过图表生成")
-            print("   请运行: pip install matplotlib")
+            print("⚠️  Matplotlib not installed, skipping chart generation")
+            print("   Please run: pip install matplotlib")
         except Exception as e:
-            print(f"❌ 生成图表时出错: {e}")
+            print(f"❌ Error generating charts: {e}")
 
 def run_specific_combination():
-    """运行特定组合的实验（调试用）。"""
+    """Run a specific combination experiment (for debugging)."""
     runner = BatchExperimentRunner()
 
-    # 测试单个组合
-    print("测试单个实验组合...")
+    # Test single combination
+    print("Testing single experiment combination...")
     metrics = runner.run_single_experiment("emergence", 91)
 
     if metrics:
-        print("\n测试结果:")
+        print("\nTest results:")
         for key, value in metrics.items():
             print(f"  {key}: {value}")
 
 
 def main():
-    """主函数，提供交互式菜单选择运行模式。"""
+    """Main function, provides interactive menu for selecting run mode."""
     print("\n" + "=" * 80)
-    print("认知图模型批处理实验平台")
+    print("Cognitive Graph Model Batch Experiment Platform")
     print("=" * 80)
 
-    print("\n选择运行模式:")
-    print("1. 运行完整批处理实验 (所有规模 × 所有模型)")
-    print("2. 运行特定规模实验")
-    print("3. 运行特定模型实验")
-    print("4. 只运行涌现模型多规模实验")
-    print("5. 测试单个实验组合")
+    print("\nSelect run mode:")
+    print("1. Run full batch experiment (all scales × all models)")
+    print("2. Run specific scale experiment")
+    print("3. Run specific model experiment")
+    print("4. Run only emergence model across scales")
+    print("5. Test single experiment combination")
 
-    choice = input("\n请选择模式 (1-5): ").strip()
+    choice = input("\nSelect mode (1-5): ").strip()
 
     runner = BatchExperimentRunner()
 
     if choice == "1":
-        # 完整批处理
+        # Full batch
         runner.run_full_batch()
         runner.create_comparison_charts()
 
     elif choice == "2":
-        # 特定规模
-        print("\n选择概念规模:")
-        print("可用规模: 51, 71, 91, 111")
-        scale_input = input("输入规模（用逗号分隔，如 51,91）: ").strip()
+        # Specific scale
+        print("\nSelect concept scale:")
+        print("Available scales: 51, 71, 91, 111")
+        scale_input = input("Enter scales (comma separated, e.g., 51,91): ").strip()
 
         try:
             scales = [int(s.strip()) for s in scale_input.split(",")]
@@ -581,18 +580,18 @@ def main():
             runner.run_full_batch()
             runner.create_comparison_charts()
         except ValueError:
-            print("❌ 输入无效，请使用数字")
+            print("❌ Invalid input, please use numbers")
 
     elif choice == "3":
-        # 特定模型
-        print("\n选择模型:")
-        print("1. 随机网络")
-        print("2. 增强Q-learning")
-        print("3. 传统机制设计")
-        print("4. 自然涌现")
-        print("5. 所有模型")
+        # Specific model
+        print("\nSelect model:")
+        print("1. Random Network")
+        print("2. Enhanced Q-learning")
+        print("3. Traditional Mechanism Design")
+        print("4. Natural Emergence")
+        print("5. All models")
 
-        model_choice = input("请选择 (1-5): ").strip()
+        model_choice = input("Select (1-5): ").strip()
 
         model_map = {
             "1": ["random"],
@@ -607,25 +606,25 @@ def main():
             runner.run_full_batch()
             runner.create_comparison_charts()
         else:
-            print("❌ 选择无效")
+            print("❌ Invalid selection")
 
     elif choice == "4":
-        # 只运行涌现模型多规模
+        # Run only emergence model across scales
         runner.config["models"] = ["emergence"]
         runner.run_full_batch()
         runner.create_comparison_charts()
 
     elif choice == "5":
-        # 测试单个组合
+        # Test single combination
         run_specific_combination()
 
     else:
-        print("⚠️ 无效选择，运行完整批处理")
+        print("⚠️  Invalid selection, running full batch")
         runner.run_full_batch()
         runner.create_comparison_charts()
 
     print("\n" + "=" * 80)
-    print("批处理实验完成!")
+    print("Batch experiment completed!")
     print("=" * 80)
 
 

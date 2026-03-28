@@ -1,7 +1,8 @@
 # emergence_study_fixed.py
 """
-涌现现象研究实验（修复版本）
-用于观察从两个公设（认知时空和能量动力学）中自然涌现的概念压缩和原理迁移。
+Emergence Phenomenon Study Experiment (Fixed Version)
+Used to observe natural emergence of concept compression and principle migration from the two postulates
+(cognitive spacetime and energy dynamics).
 """
 
 import numpy as np
@@ -19,94 +20,95 @@ import networkx as nx
 
 
 class EmergenceStudyFixed:
-    """修复后的涌现现象研究实验类。
+    """Fixed emergence phenomenon study experiment class.
 
-    该类负责运行纯粹的涌现实验，记录概念压缩和原理迁移事件，
-    并保存结果到Excel文件。
+    This class is responsible for running pure emergence experiments, recording concept compression and
+    principle migration events, and saving results to Excel files.
     """
 
     def __init__(self):
-        """初始化研究实例，创建结果容器和统一时间戳。"""
+        """Initialize study instance, create result containers and unified timestamp."""
         self.results = {}
         self.comparison_data = {}
         self.excel_data = {'compressions': [], 'migrations': []}
         from datetime import datetime
-        self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")   # 统一时间戳
+        self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")   # Unified timestamp
 
     def save_to_excel(self, filename=None):
-        """保存涌现数据到Excel文件。
+        """Save emergence data to Excel file.
 
         Args:
-            filename (str, optional): 保存的文件名。如果为None，自动生成。
+            filename (str, optional): File name to save. If None, automatically generated.
 
         Returns:
-            str: 保存的文件路径。
+            str: Saved file path.
         """
         if filename is None:
-            # 修改：确保目录存在
+            # Ensure directory exists
             emergence_dir = "results/emergence"
             os.makedirs(emergence_dir, exist_ok=True)
 
             filename = os.path.join(emergence_dir, f"emergence_results_{self.timestamp}.xlsx")
 
-        # 创建DataFrame
+        # Create DataFrames
         df_compressions = pd.DataFrame(self.excel_data['compressions'])
         df_migrations = pd.DataFrame(self.excel_data['migrations'])
 
-        # 保存到Excel
+        # Save to Excel
         with pd.ExcelWriter(filename, engine='openpyxl') as writer:
-            df_compressions.to_excel(writer, sheet_name='概念压缩', index=False)
-            df_migrations.to_excel(writer, sheet_name='第一性原理迁移', index=False)
+            df_compressions.to_excel(writer, sheet_name='Concept Compressions', index=False)
+            df_migrations.to_excel(writer, sheet_name='First-Principles Migrations', index=False)
 
-        print(f"数据已保存到: {filename}")
-        print(f"概念压缩记录: {len(df_compressions)} 条")
-        print(f"原理迁移记录: {len(df_migrations)} 条")
+        print(f"Data saved to: {filename}")
+        print(f"Concept compression records: {len(df_compressions)}")
+        print(f"Principle migration records: {len(df_migrations)}")
 
         return filename
 
     def run_pure_emergence_experiment(self, num_individuals=3, max_iterations=None, num_concepts=None):
-        """运行纯粹的涌现观察实验。
+        """Run pure emergence observation experiment.
 
-        基于两个公设（认知时空和能量动力学）运行宇宙演化，观察自然涌现的概念压缩和原理迁移。
+        Based on the two postulates (cognitive spacetime and energy dynamics), run universe evolution and observe
+        natural emergence of concept compression and principle migration.
 
         Args:
-            num_individuals (int): 个体数量。
-            max_iterations (int, optional): 每个个体的最大迭代次数。
-            num_concepts (int, optional): 概念节点数量。如果为None，使用默认值。
+            num_individuals (int): Number of individuals.
+            max_iterations (int, optional): Maximum iterations per individual.
+            num_concepts (int, optional): Number of concept nodes. If None, use default.
 
         Returns:
-            list: 每个个体的结果字典列表。
+            list: List of result dictionaries for each individual.
         """
         if max_iterations is None:
             max_iterations = EXPERIMENT_CONFIG['default_iterations']
 
-        print("=== 纯粹涌现观察实验 ===")
-        print("目标：观察从两个公设中自然涌现的认知现象")
-        print(f"配置：{num_individuals}个个体，{max_iterations}次迭代")
+        print("=== Pure Emergence Observation Experiment ===")
+        print("Goal: Observe natural emergence phenomena from the two postulates")
+        print(f"Configuration: {num_individuals} individuals, {max_iterations} iterations")
         if num_concepts:
-            print(f"概念数量：{num_concepts}")
+            print(f"Number of concepts: {num_concepts}")
         print("=" * 50)
 
         variation_simulator = IndividualVariation(BASE_PARAMETERS, VARIATION_RANGES)
         emergence_results = []
 
         for i in range(num_individuals):
-            individual_id = f"涌现个体_{i + 1}"
-            print(f"\n--- 观察 {individual_id} ---")
+            individual_id = f"Emergence_Individual_{i + 1}"
+            print(f"\n--- Observing {individual_id} ---")
 
-            # 生成个体参数
+            # Generate individual parameters
             base_params = variation_simulator.generate_individual(individual_id)
             individual_params = create_enhanced_individual_params(base_params)
 
-            # 直接创建增强宇宙实例，传入num_concepts参数
+            # Directly create enhanced universe instance, passing num_concepts parameter
             universe_enhanced = CognitiveUniverseEnhanced(individual_params, num_concepts=num_concepts)
             observer = EmergenceObserver()
             detector = EmergenceDetectorFixed()
 
-            # 初始化宇宙网络
+            # Initialize universe network
             self._initialize_universe_network(universe_enhanced)
 
-            # 运行宇宙演化
+            # Run universe evolution
             start_time = time.time()
             observations = universe_enhanced.evolve_with_emergence_detection(
                 iterations=max_iterations,
@@ -114,7 +116,7 @@ class EmergenceStudyFixed:
             )
             end_time = time.time()
 
-            # 保存能量历史
+            # Save energy history
             energy_history = universe_enhanced.energy_history
             energy_file = os.path.join("results/emergence", f"energy_history_{individual_id}_{self.timestamp}.csv")
             with open(energy_file, 'w', newline='', encoding='utf-8') as f:
@@ -122,37 +124,37 @@ class EmergenceStudyFixed:
                 writer.writerow(['iteration', 'energy'])
                 for idx, e in enumerate(energy_history):
                     writer.writerow([idx, e])
-            print(f"能量历史已保存: {energy_file}")
+            print(f"Energy history saved: {energy_file}")
 
-            # 可选：保存最终网络结构（GraphML）
+            # Optionally save final network structure (GraphML)
             graphml_file = os.path.join("results/emergence", f"network_{individual_id}_{self.timestamp}.graphml")
             nx.write_graphml(universe_enhanced.G, graphml_file)
-            print(f"网络结构已保存: {graphml_file}")
+            print(f"Network structure saved: {graphml_file}")
 
-            # 记录到Excel数据结构
+            # Record to Excel data structure
             self._record_excel_data(individual_id, observations, universe_enhanced)
 
-            # 收集个体结果
+            # Collect individual results
             individual_result = {
                 'individual_id': individual_id,
                 'parameters': individual_params,
-                'observations': observations,  # 使用返回的observations
+                'observations': observations,  # Use returned observations
                 'final_energy': universe_enhanced.calculate_network_energy(),
                 'initial_energy': universe_enhanced.energy_history[0] if universe_enhanced.energy_history else 1.0,
                 'energy_improvement': self._calculate_energy_improvement(universe_enhanced.energy_history),
                 'compression_count': len(observations['natural_compressions']),
                 'migration_count': len(observations['natural_migrations']),
                 'computation_time': end_time - start_time,
-                'universe': universe_enhanced  # 保存universe对象以便后续使用
+                'universe': universe_enhanced  # Save universe object for later use
             }
 
             emergence_results.append(individual_result)
 
-            print(f"{individual_id} 完成:")
-            print(f"  计算时间: {individual_result['computation_time']:.1f}秒")
-            print(f"  能耗改善: {individual_result['energy_improvement']:.1f}%")
-            print(f"  观察到压缩: {individual_result['compression_count']}次")
-            print(f"  观察到迁移: {individual_result['migration_count']}次")
+            print(f"{individual_id} completed:")
+            print(f"  Computation time: {individual_result['computation_time']:.1f} seconds")
+            print(f"  Energy improvement: {individual_result['energy_improvement']:.1f}%")
+            print(f"  Compressions observed: {individual_result['compression_count']}")
+            print(f"  Migrations observed: {individual_result['migration_count']}")
 
         self.results['pure_emergence'] = emergence_results
         self._analyze_emergence_results(emergence_results)
@@ -160,63 +162,63 @@ class EmergenceStudyFixed:
         return emergence_results
 
     def _record_excel_data(self, individual_id, observations, universe):
-        """记录压缩和迁移数据到excel_data容器。
+        """Record compression and migration data to excel_data container.
 
         Args:
-            individual_id (str): 个体标识。
-            observations (dict): 观察到的涌现现象字典。
-            universe (CognitiveUniverseEnhanced): 宇宙对象。
+            individual_id (str): Individual identifier.
+            observations (dict): Observed emergence phenomena dictionary.
+            universe (CognitiveUniverseEnhanced): Universe object.
         """
-        # 记录概念压缩
+        # Record concept compressions
         for compression in observations['natural_compressions']:
             self.excel_data['compressions'].append({
-                '个体ID': individual_id,
-                '中心节点': compression['center'],
-                '相关节点数': len(compression['related_nodes']),
-                '相关节点': ', '.join(compression['related_nodes']),
-                '能量协同性': compression.get('energy_synergy', 0),
-                '集群内聚性': compression.get('cohesion', 0),
-                '涌现强度': compression.get('emergence_strength', 0),
-                '检测迭代': compression.get('detection_iteration', 0),
-                '当前网络能耗': universe.calculate_network_energy(),
-                '时间戳': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                'Individual ID': individual_id,
+                'Center Node': compression['center'],
+                'Related Node Count': len(compression['related_nodes']),
+                'Related Nodes': ', '.join(compression['related_nodes']),
+                'Energy Synergy': compression.get('energy_synergy', 0),
+                'Cluster Cohesion': compression.get('cohesion', 0),
+                'Emergence Strength': compression.get('emergence_strength', 0),
+                'Detection Iteration': compression.get('detection_iteration', 0),
+                'Current Network Energy': universe.calculate_network_energy(),
+                'Timestamp': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             })
 
-        # 记录原理迁移
+        # Record principle migrations
         for migration in observations['natural_migrations']:
             self.excel_data['migrations'].append({
-                '个体ID': individual_id,
-                '原理节点': migration['principle_node'],
-                '起始节点': migration['from_node'],
-                '目标节点': migration['to_node'],
-                '迁移路径': ' -> '.join(migration.get('path', [])),
-                '效率增益': migration.get('efficiency_gain', 0),
-                '领域跨度': migration.get('domain_span', 0),
-                '检测迭代': migration.get('detection_iteration', 0),
-                '当前网络能耗': universe.calculate_network_energy(),
-                '时间戳': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                'Individual ID': individual_id,
+                'Principle Node': migration['principle_node'],
+                'Start Node': migration['from_node'],
+                'Target Node': migration['to_node'],
+                'Migration Path': ' -> '.join(migration.get('path', [])),
+                'Efficiency Gain': migration.get('efficiency_gain', 0),
+                'Domain Span': migration.get('domain_span', 0),
+                'Detection Iteration': migration.get('detection_iteration', 0),
+                'Current Network Energy': universe.calculate_network_energy(),
+                'Timestamp': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             })
 
     def _initialize_universe_network(self, universe):
-        """初始化宇宙网络。
+        """Initialize universe network.
 
-        尝试使用语义网络初始化，失败时回退到测试网络。
+        Attempt to use semantic network initialization; fall back to test network on failure.
 
         Args:
-            universe (CognitiveUniverseEnhanced): 宇宙对象。
+            universe (CognitiveUniverseEnhanced): Universe object.
         """
         try:
-            # 使用增强的语义网络初始化，支持num_concepts参数
+            # Use enhanced semantic network initialization, supports num_concepts parameter
             universe.initialize_semantic_network()
         except Exception as e:
-            print(f"语义网络初始化失败: {e}，使用测试网络")
+            print(f"Semantic network initialization failed: {e}, using test network")
             self._create_test_network(universe)
 
     def _create_test_network(self, universe):
-        """创建测试网络用于快速调试。
+        """Create test network for quick debugging.
 
         Args:
-            universe (CognitiveUniverseEnhanced): 宇宙对象。
+            universe (CognitiveUniverseEnhanced): Universe object.
         """
         test_nodes = ["算法", "数据结构", "优化", "递归", "迭代", "抽象", "模式识别",
                       "能量", "学习", "记忆", "思考", "创造", "理解", "应用"]
@@ -225,7 +227,7 @@ class EmergenceStudyFixed:
         import random
         np.random.seed(42)
         random.seed(42)
-        # 创建更有意义的连接
+        # Create more meaningful connections
         connections = [
             ("算法", "数据结构"), ("算法", "优化"), ("递归", "迭代"),
             ("抽象", "模式识别"), ("学习", "记忆"), ("思考", "创造"),
@@ -236,23 +238,23 @@ class EmergenceStudyFixed:
             energy = random.uniform(0.5, 1.5)
             universe.G.add_edge(u, v, weight=energy)
 
-        # 添加一些随机连接
+        # Add some random connections
         for i in range(10):
             u, v = random.sample(test_nodes, 2)
             if not universe.G.has_edge(u, v):
                 energy = random.uniform(0.8, 2.0)
                 universe.G.add_edge(u, v, weight=energy)
 
-        print(f"测试网络: {len(test_nodes)}个节点, {universe.G.number_of_edges()}条边")
+        print(f"Test network: {len(test_nodes)} nodes, {universe.G.number_of_edges()} edges")
 
     def _calculate_energy_improvement(self, energy_history):
-        """计算能耗改善百分比。
+        """Calculate energy improvement percentage.
 
         Args:
-            energy_history (list): 能耗历史列表。
+            energy_history (list): List of energy history.
 
         Returns:
-            float: 改善百分比。
+            float: Improvement percentage.
         """
         if len(energy_history) < 2:
             return 0.0
@@ -263,96 +265,96 @@ class EmergenceStudyFixed:
         return ((initial - final) / initial) * 100
 
     def _analyze_emergence_results(self, results):
-        """分析涌现实验结果，打印统计信息。
+        """Analyze emergence experiment results, print statistics.
 
         Args:
-            results (list): 个体结果列表。
+            results (list): List of individual results.
         """
         print("\n" + "=" * 50)
-        print("自然涌现实验结果分析")
+        print("Natural Emergence Experiment Results Analysis")
         print("=" * 50)
 
-        # 基本统计
+        # Basic statistics
         improvements = [r['energy_improvement'] for r in results]
         compressions = [r['compression_count'] for r in results]
         migrations = [r['migration_count'] for r in results]
 
-        print(f"能耗改善统计:")
-        print(f"  平均: {np.mean(improvements):.1f}%")
-        print(f"  标准差: {np.std(improvements):.1f}%")
-        print(f"  范围: {min(improvements):.1f}% - {max(improvements):.1f}%")
+        print(f"Energy improvement statistics:")
+        print(f"  Mean: {np.mean(improvements):.1f}%")
+        print(f"  Std Dev: {np.std(improvements):.1f}%")
+        print(f"  Range: {min(improvements):.1f}% - {max(improvements):.1f}%")
 
-        print(f"概念压缩涌现:")
-        print(f"  平均: {np.mean(compressions):.1f}次")
-        print(f"  总次数: {sum(compressions)}次")
+        print(f"Concept compression emergence:")
+        print(f"  Mean: {np.mean(compressions):.1f} events")
+        print(f"  Total: {sum(compressions)} events")
 
-        print(f"原理迁移涌现:")
-        print(f"  平均: {np.mean(migrations):.1f}次")
-        print(f"  总次数: {sum(migrations)}次")
+        print(f"Principle migration emergence:")
+        print(f"  Mean: {np.mean(migrations):.1f} events")
+        print(f"  Total: {sum(migrations)} events")
 
     def visualize_emergence_results(self):
-        """可视化涌现实验结果，生成能耗改善、涌现数量等图表。"""
+        """Visualize emergence experiment results, generating energy improvement and emergence quantity charts."""
         import matplotlib.pyplot as plt
         import numpy as np
 
         if 'pure_emergence' not in self.results:
-            print("请先运行实验!")
+            print("Please run the experiment first!")
             return
 
         results = self.results['pure_emergence']
 
-        # 创建对比图表
+        # Create comparison charts
         fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(15, 10))
 
-        # 1. 能耗改善对比
+        # 1. Energy improvement comparison
         improvements = [r['energy_improvement'] for r in results]
         individuals = [r['individual_id'] for r in results]
 
         bars = ax1.bar(individuals, improvements, color=['skyblue', 'lightgreen', 'lightcoral'])
-        ax1.set_title('自然涌现组能耗改善对比')
-        ax1.set_ylabel('能耗改善 (%)')
-        ax1.set_xlabel('个体')
+        ax1.set_title('Natural Emergence Group Energy Improvement Comparison')
+        ax1.set_ylabel('Energy Improvement (%)')
+        ax1.set_xlabel('Individual')
 
-        # 在柱状图上添加数值标签
+        # Add value labels on bars
         for bar, improvement in zip(bars, improvements):
             height = bar.get_height()
             ax1.text(bar.get_x() + bar.get_width() / 2., height,
                      f'{improvement:.1f}%', ha='center', va='bottom')
 
-        # 2. 涌现现象数量
+        # 2. Emergence phenomenon counts
         compressions = [r['compression_count'] for r in results]
         migrations = [r['migration_count'] for r in results]
 
         x = np.arange(len(individuals))
         width = 0.35
 
-        ax2.bar(x - width / 2, compressions, width, label='概念压缩', color='orange')
-        ax2.bar(x + width / 2, migrations, width, label='原理迁移', color='purple')
-        ax2.set_title('涌现现象数量对比')
-        ax2.set_ylabel('现象数量')
-        ax2.set_xlabel('个体')
+        ax2.bar(x - width / 2, compressions, width, label='Concept Compression', color='orange')
+        ax2.bar(x + width / 2, migrations, width, label='Principle Migration', color='purple')
+        ax2.set_title('Emergence Phenomenon Count Comparison')
+        ax2.set_ylabel('Number of Events')
+        ax2.set_xlabel('Individual')
         ax2.set_xticks(x)
         ax2.set_xticklabels(individuals)
         ax2.legend()
 
-        # 3. 能量收敛曲线示例
+        # 3. Energy convergence curve example
         if results and len(results) > 0 and hasattr(results[0]['universe'], 'energy_history'):
             sample_energy_history = results[0]['universe'].energy_history
             ax3.plot(sample_energy_history, 'b-', alpha=0.7)
-            ax3.set_title('典型能量收敛过程')
-            ax3.set_xlabel('迭代次数')
-            ax3.set_ylabel('平均认知能耗')
+            ax3.set_title('Typical Energy Convergence Process')
+            ax3.set_xlabel('Iteration')
+            ax3.set_ylabel('Average Cognitive Energy')
             ax3.grid(True, alpha=0.3)
 
-        # 4. 网络统计
+        # 4. Network statistics
         if results and len(results) > 0:
             node_counts = [r['universe'].G.number_of_nodes() for r in results]
             edge_counts = [r['universe'].G.number_of_edges() for r in results]
 
-            ax4.bar(individuals, node_counts, alpha=0.6, label='节点数')
-            ax4.bar(individuals, edge_counts, alpha=0.6, label='边数')
-            ax4.set_title('网络规模统计')
-            ax4.set_ylabel('数量')
+            ax4.bar(individuals, node_counts, alpha=0.6, label='Node Count')
+            ax4.bar(individuals, edge_counts, alpha=0.6, label='Edge Count')
+            ax4.set_title('Network Scale Statistics')
+            ax4.set_ylabel('Count')
             ax4.legend()
 
         plt.tight_layout()
@@ -365,16 +367,16 @@ class EmergenceStudyFixed:
 
 
 def main_fixed():
-    """修复版本的主函数，运行涌现实验并可视化。"""
+    """Fixed version main function, run emergence experiment and visualize."""
     study = EmergenceStudyFixed()
 
-    # 运行纯粹涌现实验
+    # Run pure emergence experiment
     emergence_results = study.run_pure_emergence_experiment(
         num_individuals=2,
-        max_iterations=8000  # 减少迭代次数以便快速测试
+        max_iterations=8000  # Reduce iterations for quick testing
     )
 
-    # 可视化结果
+    # Visualize results
     study.visualize_emergence_results()
 
     return study

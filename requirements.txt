@@ -1,51 +1,51 @@
-# 🧠 Cognitive Graph Theory - 项目依赖包清单
+# 🧠 Cognitive Graph Theory - Project Dependency List
 # ===================================================
-# 运行此项目所需的所有Python包及其最低版本
-# 安装命令: pip install -r requirements.txt
+# All Python packages required to run this project and their minimum versions
+# Installation command: pip install -r requirements.txt
 # ===================================================
 
-# 核心科学计算库
-numpy>=1.26.4                # 数组计算和线性代数
-pandas>=2.2.2                # 数据框操作和CSV/Excel处理
-scipy>=1.13.1                # 科学计算和稀疏矩阵处理
+# Core scientific computing libraries
+numpy>=1.26.4                # Array computing and linear algebra
+pandas>=2.2.2                # DataFrame operations and CSV/Excel handling
+scipy>=1.13.1                # Scientific computing and sparse matrices
 
-# 图和网络分析
-networkx>=3.4.2              # 图结构创建和分析
+# Graph and network analysis
+networkx>=3.4.2              # Graph creation and analysis
 
-# 数据可视化
-matplotlib>=3.8.4            # 基础绘图库，用于生成所有图表
+# Data visualization
+matplotlib>=3.8.4            # Basic plotting library, used to generate all charts
 
-# 文件格式支持
-openpyxl>=3.1.0              # 读写Excel文件（.xlsx格式）
+# File format support
+openpyxl>=3.1.0              # Read/write Excel files (.xlsx format)
 
-# 中文自然语言处理
-jieba>=0.42.1                # 中文分词工具（用于概念处理）
-
-# ===================================================
-# 可选开发依赖（建议安装）
-# ===================================================
-# 安装命令: pip install -r requirements-dev.txt
-
-# 测试和验证
-pytest>=7.4.4                # 单元测试框架
-pytest-cov>=4.0.0            # 测试覆盖率
-
-# 代码质量
-black>=24.4.2                # 代码格式化
-flake8>=7.0.0                # 代码规范检查
-mypy>=1.10.0                 # 静态类型检查
-
-# 文档生成
-sphinx>=7.3.7                # 文档生成器
-sphinx-rtd-theme>=1.0.0      # 文档主题
-
-# 高级可视化（可选）
-seaborn>=0.11.0              # 统计图表美化
-plotly>=5.22.0               # 交互式图表
+# Chinese natural language processing
+jieba>=0.42.1                # Chinese word segmentation tool (used for concept processing)
 
 # ===================================================
-# 已知版本兼容性说明
+# Optional development dependencies (recommended)
 # ===================================================
-# 以下版本组合经过测试：
+# Installation command: pip install -r requirements-dev.txt
+
+# Testing and validation
+pytest>=7.4.4                # Unit testing framework
+pytest-cov>=4.0.0            # Test coverage
+
+# Code quality
+black>=24.4.2                # Code formatting
+flake8>=7.0.0                # Code style checking
+mypy>=1.10.0                 # Static type checking
+
+# Documentation generation
+sphinx>=7.3.7                # Documentation generator
+sphinx-rtd-theme>=1.0.0      # Documentation theme
+
+# Advanced visualization (optional)
+seaborn>=0.11.0              # Statistical chart beautification
+plotly>=5.22.0               # Interactive charts
+
+# ===================================================
+# Known version compatibility notes
+# ===================================================
+# The following version combinations have been tested:
 # numpy==1.23.5 + networkx==2.8.8 + scipy==1.9.3
 # matplotlib==3.6.2 + pandas==1.5.1 + jieba==0.42.1
