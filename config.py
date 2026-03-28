@@ -1,22 +1,23 @@
 # -*- coding: utf-8 -*-
 
 """
-认知图论配置文件。
+Cognitive Graph Theory Configuration File.
 
-包含所有可调整的实验参数、概念定义、状态转移矩阵、能耗参数等。
+Contains all adjustable experimental parameters, concept definitions,
+state transition matrices, energy parameters, etc.
 """
 
 import jieba
 import matplotlib.pyplot as plt
 
-# 解决中文显示问题
+# Fix Chinese font display
 plt.rcParams['font.sans-serif'] = ['SimHei']
 plt.rcParams['axes.unicode_minus'] = False
 
-# 初始化jieba
+# Initialize jieba
 jieba.initialize()
 
-# 模型类型说明
+# Model type descriptions
 MODEL_TYPES = {
     'preset_algorithm': {
         'description': '预设算法模型 - 模拟传统认知计算范式',
@@ -38,7 +39,7 @@ MODEL_TYPES = {
     }
 }
 
-# ========== 基础认知参数 ==========
+# ========== Basic Cognitive Parameters ==========
 BASE_PARAMETERS = {
     'forgetting_rate': 0.002,
     'base_learning_rate': 0.85,
@@ -59,9 +60,9 @@ VARIATION_RANGES = {
     'learning_rate_variation': (0.05, 0.15)
 }
 
-# ========== 核心概念定义 - 120概念简洁版 ==========
+# ========== Core Concept Definitions - 120‑concept concise version ==========
 CORE_CONCEPT_DEFINITIONS = {
-    # 物理学概念 (14个)
+    # Physics concepts (14)
     "牛顿定律": "物体运动的基本定律，描述了力与运动的关系",
     "力学": "研究物体运动和受力情况的物理学分支",
     "运动学": "研究物体运动而不考虑力的物理学分支",
@@ -78,7 +79,7 @@ CORE_CONCEPT_DEFINITIONS = {
     "统计力学": "用统计方法研究大量粒子系统的物理学分支",
     "宇宙学": "研究宇宙起源和演化的天文学分支",
 
-    # 数学概念 (16个)
+    # Mathematics concepts (16)
     "微积分": "研究变化和累积的数学分支，包括微分和积分",
     "几何学": "研究空间形状大小和相对位置的数学分支",
     "拓扑学": "研究空间在连续变形下不变性质的数学分支",
@@ -96,7 +97,7 @@ CORE_CONCEPT_DEFINITIONS = {
     "实分析": "研究实数、实函数和实数列的数学分支",
     "泛函分析": "研究函数空间和线性算子的数学分支",
 
-    # 计算机科学概念 (16个)
+    # Computer Science concepts (16)
     "算法": "解决问题的一系列明确的计算步骤",
     "数据结构": "计算机中组织和存储数据的方式",
     "机器学习": "让计算机通过经验自动改进性能的人工智能分支",
@@ -114,7 +115,7 @@ CORE_CONCEPT_DEFINITIONS = {
     "云计算": "通过网络提供计算资源的服务模式",
     "物联网": "物理设备通过网络互联的技术",
 
-    # 人工智能概念 (12个)
+    # Artificial Intelligence concepts (12)
     "深度学习": "基于多层神经网络的人工智能技术",
     "强化学习": "通过试错学习最优策略的机器学习方法",
     "生成对抗网络": "通过生成器和判别器对抗训练的人工智能模型",
@@ -128,7 +129,7 @@ CORE_CONCEPT_DEFINITIONS = {
     "数据挖掘": "从大量数据中发现模式和知识的过程",
     "专家系统": "模拟人类专家决策能力的计算机系统",
 
-    # 认知科学概念 (12个)
+    # Cognitive Science concepts (12)
     "工作记忆": "临时存储和处理信息的认知系统",
     "长期记忆": "持久存储知识和经验的记忆系统",
     "认知负荷": "完成认知任务时所需的心理资源总量",
@@ -142,7 +143,7 @@ CORE_CONCEPT_DEFINITIONS = {
     "认知神经科学": "研究认知过程的神经基础的学科",
     "具身认知": "认为认知过程与身体和环境不可分割的理论",
 
-    # 神经科学概念 (10个)
+    # Neuroscience concepts (10)
     "神经元": "神经系统的基本功能单位",
     "突触": "神经元之间传递信息的连接结构",
     "神经可塑性": "神经系统适应环境变化的能力",
@@ -154,7 +155,7 @@ CORE_CONCEPT_DEFINITIONS = {
     "脑电图": "记录大脑电活动的技术",
     "功能磁共振": "测量大脑活动引起血流变化的技术",
 
-    # 哲学概念 (8个)
+    # Philosophy concepts (8)
     "认识论": "研究知识本质和来源的哲学分支",
     "本体论": "研究存在本质的哲学分支",
     "逻辑学": "研究推理和论证有效性的学科",
@@ -164,7 +165,7 @@ CORE_CONCEPT_DEFINITIONS = {
     "语言哲学": "研究语言本质和意义的哲学分支",
     "形而上学": "研究存在本质和现实的哲学分支",
 
-    # 经济学概念 (8个)
+    # Economics concepts (8)
     "博弈论": "研究理性决策者之间冲突与合作的数学模型",
     "行为经济学": "研究心理因素对经济决策影响的学科",
     "微观经济学": "研究个体经济决策的学科",
@@ -174,7 +175,7 @@ CORE_CONCEPT_DEFINITIONS = {
     "制度经济学": "研究制度对经济影响的经济学分支",
     "发展经济学": "研究经济发展过程的学科",
 
-    # 工程学概念 (10个)
+    # Engineering concepts (10)
     "控制理论": "研究动态系统行为控制的数学理论",
     "信号处理": "分析、修改和解释信号的技术",
     "优化理论": "寻找最佳解决方案的数学理论",
@@ -186,7 +187,7 @@ CORE_CONCEPT_DEFINITIONS = {
     "环境工程": "研究环境保护和资源利用的工程学科",
     "化学工程": "研究化学过程设计和操作的学科",
 
-    # 基础原理概念 (14个)
+    # Fundamental principle concepts (14)
     "优化": "在给定约束下找到最佳解决方案的过程",
     "变换": "从一个形式或状态转换为另一个的过程",
     "迭代": "重复反馈过程的活动",
@@ -203,7 +204,7 @@ CORE_CONCEPT_DEFINITIONS = {
     "混沌": "确定性系统中出现的随机行为"
 }
 
-# ========== 领域划分配置 ==========
+# ========== Domain assignment configuration ==========
 CONCEPT_DOMAINS = {
     "physics": ["牛顿定律", "力学", "运动学", "能量守恒", "动量", "万有引力", "摩擦力", "静电力", "电磁学", "热力学",
                 "相对论", "量子力学", "量子场论", "统计力学", "宇宙学"],
@@ -226,7 +227,7 @@ CONCEPT_DOMAINS = {
                    "自组织", "混沌"]
 }
 
-# ========== 元结构映射配置 ==========
+# ========== Meta‑structure mapping configuration ==========
 META_STRUCTURE_MAP = {
     "信息": ["数据", "知识", "信号", "消息", "情报", "记忆", "数据库", "信息经济学"],
     "几何": ["结构", "形状", "关系", "形式", "布局", "拓扑", "对称", "几何学", "微分几何", "神经网络"],
@@ -244,7 +245,7 @@ META_STRUCTURE_MAP = {
     "社会": ["制度", "文化", "组织", "群体", "行为", "行为经济学", "制度经济学", "宏观经济学"]
 }
 
-# ========== 认知状态配置 - 基于实证优化 ==========
+# ========== Cognitive state configuration - empirically optimized ==========
 STATE_TRANSITION_MATRIX = {
     "FOCUSED": {
         "EXPLORATORY": 0.35,
@@ -279,7 +280,7 @@ STATE_ENERGY_RANGES = {
     "INSPIRED": (2.2, 3.2)
 }
 
-# ========== 网络构建参数 - 基于结果优化 ==========
+# ========== Network construction parameters - optimized based on results ==========
 NETWORK_CONFIG = {
     'similarity_threshold': 0.08,
     'max_expansion_depth': 4,
@@ -288,7 +289,7 @@ NETWORK_CONFIG = {
     'min_semantic_similarity': 0.05
 }
 
-# ========== 能耗优化参数 - 基于实证调整 ==========
+# ========== Energy optimization parameters - empirically adjusted ==========
 ENERGY_CONFIG = {
     'hard_traversal_energy_ratio': 0.65,
     'soft_traversal_energy_ratio': 0.35,
@@ -299,7 +300,7 @@ ENERGY_CONFIG = {
     'compression_maturity_threshold': 2500
 }
 
-# ========== 关键词提取配置 - 优化版本 ==========
+# ========== Keyword extraction configuration - optimized version ==========
 KEYWORD_CONFIG = {
     'top_k': 12,
     'stop_words': {
@@ -314,7 +315,7 @@ KEYWORD_CONFIG = {
     }
 }
 
-# ========== 实验参数 - 优化版本 ==========
+# ========== Experiment parameters - optimized version ==========
 EXPERIMENT_CONFIG = {
     'default_iterations': 12000,
     'log_interval': 400,
@@ -323,7 +324,7 @@ EXPERIMENT_CONFIG = {
     'migration_quality_threshold': 0.15
 }
 
-# ========== 跨领域连接偏好配置 ==========
+# ========== Cross‑domain connection preference configuration ==========
 CROSS_DOMAIN_PREFERENCES = {
     'physics_to_ai': 0.6,
     'math_to_cognitive': 0.7,
@@ -332,7 +333,7 @@ CROSS_DOMAIN_PREFERENCES = {
     'philosophy_to_cognitive': 0.75
 }
 
-# ========== 涌现阈值配置 ==========
+# ========== Emergence thresholds configuration ==========
 EMERGENCE_THRESHOLDS = {
     'compression_synergy': 0.65,
     'min_cluster_size': 3,

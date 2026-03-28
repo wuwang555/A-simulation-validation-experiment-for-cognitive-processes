@@ -1,12 +1,13 @@
 # algebra_experiments.py
 """
-代数验证实验 - 验证论文中代数结构的正确性
+Algebraic Validation Experiments - Verify the correctness of algebraic structures in the paper.
 
-该模块实现了论文第5节中设计的五组代数验证实验，用于检验认知操作半群、
-Noether型命题、轨道-稳定子定理、李群演化框架以及代数方法的可扩展性。
+This module implements the five sets of algebraic validation experiments designed in Section 5 of the paper,
+which are used to examine the cognitive operation semigroup, Noether-type propositions, orbit-stabilizer theorem,
+Lie group evolution framework, and the scalability of the algebraic approach.
 
-每个实验对应论文中的一个子节，实验结果用于支撑定理4.1.3、命题4.2.2、
-定理4.3.3和定理4.4.2。
+Each experiment corresponds to a subsection in the paper, and the experimental results support Theorem 4.1.3,
+Proposition 4.2.2, Theorem 4.3.3, and Theorem 4.4.2.
 """
 
 import os
@@ -19,11 +20,12 @@ from algebra.lie_group_cognitive import CognitiveLieGroup
 
 
 class AlgebraValidationExperiments:
-    """代数验证实验管理器。
+    """Algebraic Validation Experiments Manager.
 
-    该类封装了论文第5节中描述的五组代数验证实验，提供统一的实验运行接口。
-    每个实验方法均返回包含关键指标的结果字典，最终可通过 run_all_experiments()
-    执行全部实验并生成总结报告。
+    This class encapsulates the five sets of algebraic validation experiments described in Section 5 of the paper,
+    providing a unified interface for running experiments.
+    Each experiment method returns a dictionary containing key metrics, and ultimately the run_all_experiments()
+    method can be used to execute all experiments and generate a summary report.
     """
 
     def __init__(self):
@@ -32,30 +34,30 @@ class AlgebraValidationExperiments:
         self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     def experiment1_verify_semigroup_properties(self):
-        """实验1：验证认知操作半群的结合律性质。
+        """Experiment 1: Verify the associativity property of the cognitive operation semigroup.
 
-        根据论文定理4.1.3，基本认知操作在复合下应构成半群，满足结合律。
-        该方法对5种基本操作（学习、遗忘、遍历、压缩、迁移）进行组合，
-        在测试网络上验证结合律 (a∘b)∘c = a∘(b∘c)。
+        According to Theorem 4.1.3 in the paper, basic cognitive operations should form a semigroup under composition,
+        satisfying associativity. This method combines five basic operations (learning, forgetting, traversal,
+        compression, migration) and verifies associativity (a∘b)∘c = a∘(b∘c) on a test network.
 
         Returns:
-            dict: 包含结合律验证结果和操作数量的字典，例如：
+            dict: A dictionary containing associativity verification results and operation count, e.g.:
                 {
                     'associativity': {'(learning∘forgetting)∘traversal': True, ...},
                     'operation_count': 5,
-                    'note': '单位元检查暂时跳过（半群不一定要求单位元）'
+                    'note': 'Identity check temporarily skipped (semigroup does not necessarily require identity)'
                 }
         """
-        print("=== 实验1：认知操作半群验证 ===")
+        print("=== Experiment 1: Cognitive Operation Semigroup Validation ===")
 
-        # 创建测试网络
+        # Create test network
         test_network = self._create_test_network()
 
-        # 初始化半群
+        # Initialize semigroup
         semigroup = CognitiveSemigroup()
         self._initialize_operations(semigroup)
 
-        # 验证结合律：选取三个不同的操作组合进行测试
+        # Verify associativity: select three different operation combinations for testing
         test_combinations = [
             ("learning", "forgetting", "traversal"),
             ("compression", "migration", "learning"),
@@ -70,36 +72,36 @@ class AlgebraValidationExperiments:
                 )
                 associativity_results[f"({op1}∘{op2})∘{op3}"] = is_assoc
             except Exception as e:
-                print(f"验证结合律时出错 ({op1}, {op2}, {op3}): {e}")
+                print(f"Error verifying associativity ({op1}, {op2}, {op3}): {e}")
                 associativity_results[f"({op1}∘{op2})∘{op3}"] = False
 
         self.results['experiment1'] = {
             'associativity': associativity_results,
             'operation_count': len(semigroup.operations),
-            'note': "单位元检查暂时跳过（半群不一定要求单位元）"
+            'note': "Identity check temporarily skipped (semigroup does not necessarily require identity)"
         }
 
-        print(f"操作数量: {len(semigroup.operations)}")
-        print(f"结合律验证结果:")
+        print(f"Operation count: {len(semigroup.operations)}")
+        print(f"Associativity verification results:")
         for key, value in associativity_results.items():
-            safe_key = key.replace('∘', 'o')   # 替换特殊字符
+            safe_key = key.replace('∘', 'o')   # Replace special character
             print(f"  {safe_key}: {value}")
 
-        # 检查是否所有结合律验证都通过
+        # Check if all associativity verifications passed
         all_passed = all(associativity_results.values())
-        print(f"所有结合律验证通过: {all_passed}")
+        print(f"All associativity verifications passed: {all_passed}")
 
         return self.results['experiment1']
 
     def experiment2_verify_noether_theorem(self):
-        """实验2：验证Noether型命题（对称性→守恒量）。
+        """Experiment 2: Verify the Noether-type proposition (symmetry → conserved quantity).
 
-        根据论文命题4.2.2，认知系统的每一个连续对称性都对应一个守恒量。
-        该方法在三个不同结构的网络上检测对称性并计算守恒量，验证操作前后
-        守恒量的保持情况。
+        According to Proposition 4.2.2 in the paper, every continuous symmetry of the cognitive system corresponds
+        to a conserved quantity. This method detects symmetries and computes conserved quantities on three networks
+        with different structures, verifying the conservation before and after operations.
 
         Returns:
-            dict: 各网络的Noether验证结果，结构如：
+            dict: A dictionary containing Noether verification results for each network, e.g.:
                 {
                     'network_0': {
                         'automorphisms_count': int,
@@ -111,9 +113,9 @@ class AlgebraValidationExperiments:
                     ...
                 }
         """
-        print("\n=== 实验2：Noether定理验证 ===")
+        print("\n=== Experiment 2: Noether Theorem Verification ===")
 
-        # 创建不同结构的网络（现在都是完全图，保证连通）
+        # Create networks with different structures (now all complete graphs to ensure connectivity)
         networks = [
             self._create_physics_dominant_network(),
             self._create_math_dominant_network(),
@@ -122,12 +124,12 @@ class AlgebraValidationExperiments:
 
         noether_results = {}
         for i, network in enumerate(networks):
-            print(f"处理网络 {i + 1}/{len(networks)}...")
+            print(f"Processing network {i + 1}/{len(networks)}...")
 
-            # 确保网络连通
+            # Ensure network is connected
             if not nx.is_connected(network):
-                print(f"警告：网络{i + 1}不连通，尝试修复...")
-                # 如果由于权重过大导致不连通，降低权重阈值
+                print(f"Warning: Network {i+1} is disconnected, attempting to fix...")
+                # If disconnected due to excessive weights, lower the weight threshold
                 for u, v in network.edges():
                     if network[u][v]['weight'] > 5.0:
                         network[u][v]['weight'] = 2.0
@@ -135,28 +137,28 @@ class AlgebraValidationExperiments:
             symmetry_group = CognitiveSymmetryGroup(network)
 
             try:
-                # 检测对称性
+                # Detect symmetries
                 automorphisms = symmetry_group.find_concept_isomorphisms()
 
-                # 计算守恒量
+                # Compute conserved quantities
                 conserved = symmetry_group.compute_conserved_quantities()
 
-                # 验证操作前后守恒量不变
+                # Verify that conserved quantities remain unchanged before and after operation
                 before_net = network.copy()
 
-                # 随机选择一个学习操作
+                # Randomly select a learning operation
                 import random
                 np.random.seed(42)
                 random.seed(42)
                 edges = list(before_net.edges())
                 if edges:
                     u, v = random.choice(edges)
-                    # 应用学习操作（降低权重）
+                    # Apply learning operation (reduce weight)
                     after_net = before_net.copy()
                     current = after_net[u][v]['weight']
                     after_net[u][v]['weight'] = max(0.05, current * 0.9)
 
-                    # 验证Noether定理
+                    # Verify Noether theorem
                     conserved_after_op = symmetry_group.verify_noether_theorem(
                         before_net, after_net, "learning"
                     )
@@ -172,37 +174,38 @@ class AlgebraValidationExperiments:
                     }
                 else:
                     noether_results[f"network_{i}"] = {
-                        'error': "网络无边"
+                        'error': "Network has no edges"
                     }
 
             except Exception as e:
-                print(f"处理网络{i + 1}时出错: {e}")
+                print(f"Error processing network {i+1}: {e}")
                 noether_results[f"network_{i}"] = {
                     'error': str(e)
                 }
 
         self.results['experiment2'] = noether_results
 
-        print("\nNoether定理验证结果:")
+        print("\nNoether theorem verification results:")
         for net_id, result in noether_results.items():
-            print(f"网络 {net_id}:")
+            print(f"Network {net_id}:")
             if 'error' in result:
-                print(f"  错误: {result['error']}")
+                print(f"  Error: {result['error']}")
             else:
-                print(f"  同构数: {result['automorphisms_count']}")
-                print(f"  守恒量: {result['conserved_quantities']}")
-                print(f"  Noether定理成立: {result['noether_theorem_holds']}")
+                print(f"  Automorphisms count: {result['automorphisms_count']}")
+                print(f"  Conserved quantities: {result['conserved_quantities']}")
+                print(f"  Noether theorem holds: {result['noether_theorem_holds']}")
 
         return noether_results
 
     def experiment3_orbit_stabilizer_theorem(self):
-        """实验3：验证轨道-稳定子定理。
+        """Experiment 3: Verify the orbit-stabilizer theorem.
 
-        根据论文定理4.3.3，对于有限群作用有 |轨道| = |群| / |稳定子|。
-        该方法计算认知对称群的大小、稳定子大小和轨道大小，并验证该等式。
+        According to Theorem 4.3.3 in the paper, for finite group actions we have |Orbit| = |Group| / |Stabilizer|.
+        This method computes the size of the cognitive symmetry group, the stabilizer size, and the orbit size,
+        and verifies this equation.
 
         Returns:
-            dict: 包含定理验证结果及误差百分比的字典，例如：
+            dict: A dictionary containing theorem verification results and error percentage, e.g.:
                 {
                     'automorphism_group_size': int,
                     'orbit_size_actual': int,
@@ -212,44 +215,44 @@ class AlgebraValidationExperiments:
                     'error_percentage': float
                 }
         """
-        print("\n=== 实验3：轨道-稳定子定理验证 ===")
+        print("\n=== Experiment 3: Orbit-Stabilizer Theorem Verification ===")
 
         test_network = self._create_test_network()
         symmetry_group = CognitiveSymmetryGroup(test_network)
 
-        # 找到所有同构
+        # Find all isomorphisms
         automorphisms = symmetry_group.find_concept_isomorphisms()
         if len(automorphisms) == 0:
-            print("错误：未找到任何自同构（包括恒等映射），无法验证定理。")
+            print("Error: No automorphisms found (including identity mapping), cannot verify theorem.")
             self.results['experiment3'] = {'error': 'No automorphisms found'}
             return self.results['experiment3']
 
-        # 初始化群作用
+        # Initialize group action
         group_action = GroupActionOnCognitiveSpace(symmetry_group)
 
-        # 调试：检查恒等映射是否在稳定子中
+        # Debug: Check if identity mapping is in stabilizer
         identity = {node: node for node in test_network.nodes()}
         transformed_identity = group_action.apply_group_element(test_network, identity)
-        print("恒等映射变换后与原网络相等？",
+        print("Is transformed identity network equal to original?",
               group_action._networks_equal(test_network, transformed_identity))
 
-        # 计算轨道和稳定子
+        # Compute orbit and stabilizer
         orbit = group_action.compute_orbit(test_network)
         stabilizer = group_action.compute_stabilizer(test_network)
 
-        print(f"群大小: {len(automorphisms)}")
-        print(f"稳定子大小: {len(stabilizer)}")
+        print(f"Group size: {len(automorphisms)}")
+        print(f"Stabilizer size: {len(stabilizer)}")
         if stabilizer:
-            print("稳定子中的自同构示例:", stabilizer[0])
-        print(f"轨道大小: {len(orbit)}")
+            print("Example automorphism in stabilizer:", stabilizer[0])
+        print(f"Orbit size: {len(orbit)}")
         try:
-            # 验证定理 |轨道| = |群| / |稳定子|
+            # Verify theorem |Orbit| = |Group| / |Stabilizer|
             theorem_holds = group_action.verify_orbit_stabilizer_theorem(test_network)
         except ValueError as e:
-            print(f"定理验证失败: {e}")
+            print(f"Theorem verification failed: {e}")
             theorem_holds = False
 
-        # 计算理论值和实际值
+        # Compute theoretical and actual values
         expected_size = len(automorphisms) / max(1, len(stabilizer))
         actual_size = len(orbit)
 
@@ -263,25 +266,26 @@ class AlgebraValidationExperiments:
             if expected_size > 0 else 0
         }
 
-        print(f"同构群大小: {len(automorphisms)}")
-        print(f"稳定子大小: {len(stabilizer)}")
-        print(f"轨道大小（实际）: {actual_size}")
-        print(f"轨道大小（理论）: {expected_size:.2f}")
-        print(f"轨道-稳定子定理成立: {theorem_holds}")
+        print(f"Isomorphism group size: {len(automorphisms)}")
+        print(f"Stabilizer size: {len(stabilizer)}")
+        print(f"Orbit size (actual): {actual_size}")
+        print(f"Orbit size (theoretical): {expected_size:.2f}")
+        print(f"Orbit-stabilizer theorem holds: {theorem_holds}")
         if not theorem_holds:
-            print(f"误差百分比: {self.results['experiment3']['error_percentage']:.2f}%")
+            print(f"Error percentage: {self.results['experiment3']['error_percentage']:.2f}%")
 
         return self.results['experiment3']
 
     def experiment4_lie_group_evolution(self):
-        """实验4：演示李群演化框架。
+        """Experiment 4: Demonstrate the Lie group evolution framework.
 
-        根据论文定理4.4.2，认知状态的演化满足李群方程 dG/dt = A(t)G(t)。
-        该方法使用三种不同的李代数生成元组合（能量优化主导、概念压缩主导、
-        原理迁移主导）演化网络，并记录能耗变化。
+        According to Theorem 4.4.2 in the paper, the evolution of cognitive states satisfies the Lie group equation
+        dG/dt = A(t)G(t). This method uses three different combinations of Lie algebra generators
+        (energy optimization dominant, concept compression dominant, principle migration dominant)
+        to evolve the network and record energy changes.
 
         Returns:
-            dict: 包含各策略演化结果（能耗变化轨迹）的字典，例如：
+            dict: A dictionary containing evolution results for each strategy (energy change trajectories), e.g.:
                 {
                     'strategy_0': {
                         'generator_coeffs': {'E': 0.7, 'C': 0.2, 'M': 0.1},
@@ -293,20 +297,20 @@ class AlgebraValidationExperiments:
                     ...
                 }
         """
-        print("\n=== 实验4：李群演化演示 ===")
+        print("\n=== Experiment 4: Lie Group Evolution Demonstration ===")
 
-        # 创建初始网络
+        # Create initial network
         initial_network = self._create_test_network()
         n_nodes = initial_network.number_of_nodes()
 
-        # 初始化李群
+        # Initialize Lie group
         lie_group = CognitiveLieGroup(n_nodes)
 
-        # 设置不同演化策略
+        # Set different evolution strategies
         strategies = [
-            {'E': 0.7, 'C': 0.2, 'M': 0.1},  # 能量优化为主
-            {'E': 0.3, 'C': 0.6, 'M': 0.1},  # 概念压缩为主
-            {'E': 0.2, 'C': 0.2, 'M': 0.6},  # 原理迁移为主
+            {'E': 0.7, 'C': 0.2, 'M': 0.1},  # Energy optimization dominant
+            {'E': 0.3, 'C': 0.6, 'M': 0.1},  # Concept compression dominant
+            {'E': 0.2, 'C': 0.2, 'M': 0.6},  # Principle migration dominant
         ]
 
         evolution_results = {}
@@ -317,7 +321,7 @@ class AlgebraValidationExperiments:
                 generator_coeffs=coeffs
             )
 
-            # 计算演化指标
+            # Compute evolution metrics
             energies = []
             for net in evolved_networks:
                 if net.number_of_edges() > 0:
@@ -336,7 +340,7 @@ class AlgebraValidationExperiments:
                 'energy_trajectory': energies
             }
 
-        # 保存能量轨迹
+        # Save energy trajectories
         import csv
         energy_dir = "results/algebra/energy_trajectories"
         os.makedirs(energy_dir, exist_ok=True)
@@ -348,51 +352,51 @@ class AlgebraValidationExperiments:
                 writer.writerow(['time_step', 'avg_energy'])
                 for t, e in enumerate(energy_traj):
                     writer.writerow([t, e])
-            print(f"能量轨迹已保存: {csv_file}")
+            print(f"Energy trajectory saved: {csv_file}")
 
         self.results['experiment4'] = evolution_results
 
-        print("李群演化结果（不同生成元组合）：")
+        print("Lie group evolution results (different generator combinations):")
         for strategy, result in evolution_results.items():
-            print(f"  策略 {strategy}:")
-            print(f"    生成元系数: {result['generator_coeffs']}")
-            print(f"    能耗变化: {result['energy_change_percent']:.1f}%")
+            print(f"  Strategy {strategy}:")
+            print(f"    Generator coefficients: {result['generator_coeffs']}")
+            print(f"    Energy change: {result['energy_change_percent']:.1f}%")
 
         return evolution_results
 
     def experiment5_scalability_test(self):
-        """实验5：代数方法的可扩展性测试。
+        """Experiment 5: Scalability test of the algebraic approach.
 
-        在5,8,10,12,15个节点的网络上测试半群运算和对称性检测的时间消耗，
-        评估代数方法在不同规模网络中的计算效率。
+        Test the time consumption of semigroup operations and symmetry detection on networks with 5, 8, 10, 12, and 15 nodes,
+        evaluating the computational efficiency of the algebraic approach on networks of different sizes.
 
         Returns:
-            dict: 各规模网络的测试结果，包含节点数、边数、半群运算时间、
-                  对称性检测时间、同构数等。
+            dict: Test results for networks of each size, including node count, edge count, semigroup operation time,
+                  symmetry detection time, automorphism count, etc.
         """
-        print("\n=== 实验5：代数方法可扩展性测试 ===")
+        print("\n=== Experiment 5: Algebraic Method Scalability Test ===")
 
-        # 减少测试规模
-        network_sizes = [5, 8, 10, 12, 15]  # 减小规模
+        # Reduce test scales
+        network_sizes = [5, 8, 10, 12, 15]  # Smaller scales
         scalability_results = {}
 
         for size in network_sizes:
-            print(f"测试网络大小: {size}")
+            print(f"Testing network size: {size}")
 
-            # 创建小型完全图
-            nodes = [f"概念_{i}" for i in range(size)]
+            # Create small complete graph
+            nodes = [f"Concept_{i}" for i in range(size)]
             network = nx.complete_graph(nodes)
 
-            # 分配随机权重
+            # Assign random weights
             for u, v in network.edges():
                 network[u][v]['weight'] = np.random.uniform(0.5, 2.0)
 
             import time
 
-            # 测试半群运算时间
+            # Test semigroup operation time
             semigroup = CognitiveSemigroup()
 
-            # 只初始化基本操作
+            # Initialize only basic operations
             def identity_op(network, **kwargs):
                 return network.copy()
 
@@ -403,7 +407,7 @@ class AlgebraValidationExperiments:
                 semigroup.compose("identity", "identity")
             semigroup_time = time.time() - start_time
 
-            # 测试对称群检测时间（限制最大样本）
+            # Test symmetry detection time (limit max samples)
             start_time = time.time()
             try:
                 symmetry_group = CognitiveSymmetryGroup(network)
@@ -414,7 +418,7 @@ class AlgebraValidationExperiments:
                 symmetry_time = time.time() - start_time
                 automorphisms = []
                 symmetry_success = False
-                print(f"对称性检测失败: {e}")
+                print(f"Symmetry detection failed: {e}")
 
             scalability_results[size] = {
                 'nodes': size,
@@ -427,8 +431,8 @@ class AlgebraValidationExperiments:
 
         self.results['experiment5'] = scalability_results
 
-        print("\n可扩展性结果:")
-        print("网络规模 | 半群运算时间(s) | 对称性检测时间(s) | 同构数 | 检测成功")
+        print("\nScalability results:")
+        print("Network Size | Semigroup Op Time(s) | Symmetry Detection Time(s) | Automorphisms | Success")
         print("-" * 70)
         for size, result in scalability_results.items():
             success = "Y" if result['symmetry_detection_success'] else "N"
@@ -439,13 +443,13 @@ class AlgebraValidationExperiments:
         return scalability_results
 
     def run_all_experiments(self):
-        """运行所有代数验证实验。
+        """Run all algebraic validation experiments.
 
         Returns:
-            dict: 包含所有实验结果的总字典，键为实验名称，值为对应实验结果。
+            dict: A dictionary containing all experimental results, with experiment names as keys.
         """
         print("=" * 60)
-        print("代数结构验证实验套件")
+        print("Algebraic Structure Validation Experiment Suite")
         print("=" * 60)
 
         results = {
@@ -460,110 +464,105 @@ class AlgebraValidationExperiments:
         return results
 
     def _generate_summary_report(self):
-        """生成实验总结报告（打印到控制台并保存结果文件）。"""
+        """Generate experiment summary report (print to console and save results file)."""
         print("\n" + "=" * 60)
-        print("代数验证实验总结报告")
+        print("Algebraic Validation Experiment Summary Report")
         print("=" * 60)
 
         summary = {}
 
-        # 实验1：代数性质验证
+        # Experiment 1: Algebraic property verification
         if 'experiment1' in self.results:
             exp1 = self.results['experiment1']
             if 'associativity' in exp1:
-                # 检查所有结合律是否通过
                 all_passed = all(exp1['associativity'].values())
-                summary['代数性质验证'] = "通过" if all_passed else "部分通过"
+                summary['Algebraic Properties'] = "Passed" if all_passed else "Partial Pass"
             else:
-                summary['代数性质验证'] = "数据缺失"
+                summary['Algebraic Properties'] = "Data Missing"
         else:
-            summary['代数性质验证'] = "未运行"
+            summary['Algebraic Properties'] = "Not Run"
 
-        # 实验2：Noether定理
+        # Experiment 2: Noether theorem
         if 'experiment2' in self.results:
             exp2 = self.results['experiment2']
-            # 检查是否有网络通过Noether定理
             noether_results = []
             for net_id, result in exp2.items():
                 if isinstance(result, dict) and 'noether_theorem_holds' in result:
                     holds = result['noether_theorem_holds']
-                    # 如果是元组，取第一个元素
                     if isinstance(holds, tuple):
                         holds = holds[0]
                     noether_results.append(holds)
 
             if noether_results:
                 passed_count = sum(1 for r in noether_results if r)
-                summary['Noether定理'] = f"{passed_count}/{len(noether_results)} 通过"
+                summary['Noether Theorem'] = f"{passed_count}/{len(noether_results)} Passed"
             else:
-                summary['Noether定理'] = "无有效数据"
+                summary['Noether Theorem'] = "No Valid Data"
         else:
-            summary['Noether定理'] = "未运行"
+            summary['Noether Theorem'] = "Not Run"
 
-        # 实验3：轨道-稳定子定理
+        # Experiment 3: Orbit-stabilizer theorem
         if 'experiment3' in self.results:
             exp3 = self.results['experiment3']
             theorem_holds = exp3.get('theorem_holds', False)
-            summary['轨道-稳定子定理'] = "通过" if theorem_holds else "失败"
+            summary['Orbit-Stabilizer Theorem'] = "Passed" if theorem_holds else "Failed"
         else:
-            summary['轨道-稳定子定理'] = "未运行"
+            summary['Orbit-Stabilizer Theorem'] = "Not Run"
 
-        # 实验4：李群演化
+        # Experiment 4: Lie group evolution
         if 'experiment4' in self.results:
             exp4 = self.results['experiment4']
             if exp4:
-                # 检查是否有非零的能耗变化
                 has_changes = any(
                     abs(result.get('energy_change_percent', 0)) > 0.1
                     for result in exp4.values()
                 )
-                summary['李群演化'] = "成功" if has_changes else "无变化"
+                summary['Lie Group Evolution'] = "Successful" if has_changes else "No Change"
             else:
-                summary['李群演化'] = "无数据"
+                summary['Lie Group Evolution'] = "No Data"
         else:
-            summary['李群演化'] = "未运行"
+            summary['Lie Group Evolution'] = "Not Run"
 
-        # 实验5：可扩展性
+        # Experiment 5: Scalability
         if 'experiment5' in self.results:
             exp5 = self.results['experiment5']
             if exp5:
-                # 检查是否所有规模都成功
                 all_success = all(
                     result.get('symmetry_detection_success', False)
                     for result in exp5.values()
                 )
-                summary['可扩展性'] = "良好" if all_success else "受限"
+                summary['Scalability'] = "Good" if all_success else "Limited"
             else:
-                summary['可扩展性'] = "无数据"
+                summary['Scalability'] = "No Data"
         else:
-            summary['可扩展性'] = "未运行"
+            summary['Scalability'] = "Not Run"
 
-        # 打印总结
+        # Print summary
         for test, result in summary.items():
-            print(f"{test:15s}: {result}")
+            print(f"{test:20s}: {result}")
 
-        # 保存结果到文件
+        # Save results to file
         self._save_results_to_file()
 
         return summary
 
     def _save_results_to_file(self):
-        """将实验结果保存为JSON文件。"""
+        """Save experiment results as JSON file."""
         import json
         from datetime import datetime
 
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-        # 修改：确保目录存在
+        # Ensure directory exists
         results_dir = "results"
         os.makedirs(results_dir, exist_ok=True)
 
-        # 修改：将文件保存到 results/algebra/ 目录下
+        # Save to results/algebra/ directory
         algebra_dir = os.path.join(results_dir, "algebra")
         os.makedirs(algebra_dir, exist_ok=True)
         filename = os.path.join(algebra_dir, f"algebra_validation_results_{timestamp}.json")
 
-        # 转换结果为可序列化格式，并替换特殊字符
+        # Convert results to serializable format
         serializable_results = {}
         for exp_name, exp_data in self.results.items():
             if isinstance(exp_data, dict):
@@ -571,28 +570,21 @@ class AlgebraValidationExperiments:
             else:
                 serializable_results[exp_name] = str(exp_data)
 
-        # 安全保存
+        # Safe save
         try:
             with open(filename, 'w', encoding='utf-8') as f:
                 json.dump(serializable_results, f, indent=2, ensure_ascii=False)
-            print(f"\n详细结果已保存到: {filename}")
+            print(f"\nDetailed results saved to: {filename}")
         except Exception as e:
-            print(f"保存结果时出错: {e}")
-            # 尝试备用文件名
+            print(f"Error saving results: {e}")
+            # Try alternative filename
             simple_filename = os.path.join(algebra_dir, f"results_{timestamp}.json")
             with open(simple_filename, 'w', encoding='ascii') as f:
                 json.dump(serializable_results, f, indent=2, ensure_ascii=True)
-            print(f"结果已保存到备用文件: {simple_filename}")
+            print(f"Results saved to alternative file: {simple_filename}")
 
     def _make_serializable(self, obj):
-        """确保对象可JSON序列化（递归转换numpy类型等）。
-
-        Args:
-            obj: 任意对象。
-
-        Returns:
-            可JSON序列化的Python基本类型。
-        """
+        """Ensure object is JSON serializable (recursively convert numpy types, etc.)."""
         if isinstance(obj, (int, float, str, bool, type(None))):
             return obj
         elif isinstance(obj, dict):
@@ -609,52 +601,51 @@ class AlgebraValidationExperiments:
             return str(obj)
 
     def _create_test_network(self):
-        """创建测试用的完全图网络，节点为常见概念。
+        """Create a complete graph for testing with nodes as common concepts.
 
         Returns:
-            networkx.Graph: 包含10个概念节点的完全图，边权重基于语义相似度计算。
+            networkx.Graph: A complete graph with 10 concept nodes, edge weights based on semantic similarity.
         """
-        nodes = ["算法", "数据结构", "优化", "递归", "迭代",
-                 "抽象", "模式识别", "牛顿定律", "能量守恒", "微积分"]
+        nodes = ["算法", "数据结构", "优化", "递归", "迭代", "抽象", "模式识别", "牛顿定律", "能量守恒", "微积分"]
 
-        # 创建完全图
+        # Create complete graph
         G = nx.complete_graph(nodes)
 
-        # 基于语义相似度计算初始能耗
-        # 相似度越高，能耗越低
+        # Calculate initial energy based on semantic similarity
+        # Higher similarity leads to lower energy
         for u, v in G.edges():
             if u == v:
                 continue
 
-            # 基于概念名称的简单相似度启发式
+            # Simple similarity heuristic based on concept names
             similarity = self._calculate_simple_similarity(u, v)
 
-            # 能耗 = 2.0 - 相似度 * 1.5（相似度越高，能耗越低）
+            # Energy = 2.0 - similarity * 1.5 (higher similarity → lower energy)
             energy = 2.0 - similarity * 1.5
-            energy = max(0.1, min(3.0, energy))  # 限制在合理范围
+            energy = max(0.1, min(3.0, energy))  # Clamp to reasonable range
 
             G[u][v]['weight'] = energy
 
         return G
 
     def _calculate_simple_similarity(self, concept1, concept2):
-        """基于概念领域归属的简单相似度计算。
+        """Calculate simple similarity based on concept domain classification.
 
         Args:
-            concept1 (str): 第一个概念名称
-            concept2 (str): 第二个概念名称
+            concept1 (str): First concept name
+            concept2 (str): Second concept name
 
         Returns:
-            float: 0~1之间的相似度估计
+            float: Estimated similarity between 0 and 1
         """
-        # 如果概念相同
+        # If concepts are identical
         if concept1 == concept2:
             return 1.0
 
-        # 概念类别判断（简化实现）
-        physics_concepts = ["牛顿定律", "能量守恒", "力学", "运动学"]
-        math_concepts = ["微积分", "几何", "代数", "递归", "迭代"]
-        cs_concepts = ["算法", "数据结构", "优化", "抽象", "模式识别"]
+        # Concept category determination (simplified implementation)
+        physics_concepts = ["Newton's Law", "Energy Conservation", "Mechanics", "Kinematics"]
+        math_concepts = ["Calculus", "Geometry", "Algebra", "Recursion", "Iteration"]
+        cs_concepts = ["Algorithm", "Data Structure", "Optimization", "Abstraction", "Pattern Recognition"]
 
         concept1_domain = None
         concept2_domain = None
@@ -673,42 +664,41 @@ class AlgebraValidationExperiments:
         elif concept2 in cs_concepts:
             concept2_domain = "cs"
 
-        # 同领域概念相似度高
+        # Same domain concepts have higher similarity
         if concept1_domain and concept2_domain and concept1_domain == concept2_domain:
             return np.random.uniform(0.7, 0.9)
 
-        # 跨领域但有关联（如数学与计算机科学）
+        # Cross-domain but related (e.g., math and computer science)
         if (concept1_domain == "math" and concept2_domain == "cs") or \
                 (concept1_domain == "cs" and concept2_domain == "math"):
             return np.random.uniform(0.5, 0.7)
 
-        # 其他跨领域
+        # Other cross-domain
         return np.random.uniform(0.2, 0.5)
 
     def _create_physics_dominant_network(self):
-        """创建物理学主导的完全图网络。
+        """Create a physics-dominant complete graph network.
 
         Returns:
-            networkx.Graph: 物理学概念间连接较强（能耗低），与其他领域连接较弱。
+            networkx.Graph: Strong connections (low energy) between physics concepts, weaker with other domains.
         """
-        nodes = ["牛顿定律", "力学", "运动学", "能量守恒", "动量",
-                 "万有引力", "摩擦力", "静电力", "优化", "迭代"]
+        nodes = ["牛顿定律", "力学", "运动学", "能量守恒", "动量", "万有引力", "摩擦力", "静电力", "优化", "迭代"]
 
         G = nx.complete_graph(nodes)
 
         for u, v in G.edges():
-            # 物理学概念间连接更强（能耗更低）
-            physics_terms = ["牛顿定律", "力学", "运动学", "能量守恒",
-                             "动量", "万有引力", "摩擦力", "静电力"]
+            # Physics concepts have stronger connections (lower energy)
+            physics_terms = ["Newton's Law", "Mechanics", "Kinematics", "Energy Conservation",
+                             "Momentum", "Gravitation", "Friction", "Electrostatic Force"]
 
             if u in physics_terms and v in physics_terms:
-                # 物理学概念间：强连接（低能耗）
+                # Physics concepts: strong connection (low energy)
                 energy = np.random.uniform(0.3, 0.8)
             elif u in physics_terms or v in physics_terms:
-                # 与跨领域概念：中等连接
+                # Cross-domain: medium connection
                 energy = np.random.uniform(1.0, 1.5)
             else:
-                # 非物理学概念间：弱连接（高能耗）
+                # Non-physics concepts: weak connection (high energy)
                 energy = np.random.uniform(1.5, 2.0)
 
             G[u][v]['weight'] = energy
@@ -716,18 +706,17 @@ class AlgebraValidationExperiments:
         return G
 
     def _create_math_dominant_network(self):
-        """创建数学主导的网络（非完全图，随机稀疏）。
+        """Create a math-dominant network (non-complete, random sparse).
 
         Returns:
-            networkx.Graph: 数学概念间连接较强，随机稀疏图。
+            networkx.Graph: Strong connections between math concepts, random sparse graph.
         """
-        nodes = ["微积分", "几何学", "拓扑学", "线性代数", "概率论",
-                 "统计学", "代数", "离散数学", "算法", "数据结构"]
+        nodes = ["微积分", "几何学", "拓扑学", "线性代数", "概率论", "统计学", "代数", "离散数学", "算法", "数据结构"]
 
         G = nx.Graph()
         G.add_nodes_from(nodes)
 
-        # 数学概念间强连接
+        # Strong connections between math concepts
         for i in range(len(nodes) - 2):
             for j in range(i + 1, len(nodes) - 2):
                 w = np.random.uniform(0.5, 0.9)
@@ -736,35 +725,34 @@ class AlgebraValidationExperiments:
         return G
 
     def _create_balanced_network(self):
-        """创建平衡网络（随机稀疏）。
+        """Create a balanced network (random sparse).
 
         Returns:
-            networkx.Graph: 随机连接，权重均匀分布。
+            networkx.Graph: Random connections, uniformly distributed weights.
         """
-        nodes = ["算法", "数据结构", "优化", "牛顿定律", "能量守恒",
-                 "微积分", "几何学", "递归", "迭代", "抽象"]
+        nodes = ["算法", "数据结构", "优化", "递归", "迭代", "抽象", "模式识别", "牛顿定律", "能量守恒", "微积分"]
 
         G = nx.Graph()
         G.add_nodes_from(nodes)
 
-        # 随机连接
+        # Random connections
         for i in range(len(nodes)):
             for j in range(i + 1, len(nodes)):
-                if np.random.random() < 0.4:  # 40%的连接概率
+                if np.random.random() < 0.4:  # 40% connection probability
                     w = np.random.uniform(0.5, 1.5)
                     G.add_edge(nodes[i], nodes[j], weight=w)
 
         return G
 
     def _initialize_operations(self, semigroup):
-        """初始化认知操作到半群中。
+        """Initialize cognitive operations into the semigroup.
 
         Args:
-            semigroup (CognitiveSemigroup): 要添加操作的半群对象。
+            semigroup (CognitiveSemigroup): The semigroup object to add operations to.
         """
 
         def learning_op(network, edge=None, strength=0.1, **kwargs):
-            """学习操作：降低指定边的权重（能耗）。"""
+            """Learning operation: reduce weight (energy) of specified edge."""
             if edge is None:
                 return network
             u, v = edge
@@ -774,7 +762,7 @@ class AlgebraValidationExperiments:
             return network
 
         def forgetting_op(network, edge=None, strength=0.05, **kwargs):
-            """遗忘操作：增加指定边的权重（能耗）。"""
+            """Forgetting operation: increase weight (energy) of specified edge."""
             if edge is None:
                 return network
             u, v = edge
@@ -784,7 +772,7 @@ class AlgebraValidationExperiments:
             return network
 
         def traversal_op(network, path=None, **kwargs):
-            """遍历操作：降低路径上所有边的权重（模拟熟练度提升）。"""
+            """Traversal operation: reduce weight of all edges along the path (simulating proficiency increase)."""
             if path is None or len(path) < 2:
                 return network
             for i in range(len(path) - 1):
@@ -795,7 +783,7 @@ class AlgebraValidationExperiments:
             return network
 
         def compression_op(network, center=None, related_nodes=None, **kwargs):
-            """概念压缩操作：增强中心节点与相关节点的连接（降低能耗）。"""
+            """Concept compression operation: strengthen connections between center and related nodes (reduce energy)."""
             if center is None or related_nodes is None:
                 return network
             for node in related_nodes:
@@ -805,7 +793,7 @@ class AlgebraValidationExperiments:
             return network
 
         def migration_op(network, principle=None, from_node=None, to_node=None, **kwargs):
-            """原理迁移操作：强化原理节点与两端节点的连接。"""
+            """Principle migration operation: strengthen connections between principle node and endpoints."""
             if principle is None or from_node is None or to_node is None:
                 return network
             if network.has_edge(from_node, principle):
@@ -816,7 +804,7 @@ class AlgebraValidationExperiments:
                 network[principle][to_node]['weight'] = max(0.05, current * 0.9)
             return network
 
-        # 添加到半群
+        # Add to semigroup
         semigroup.add_operation("learning", learning_op)
         semigroup.add_operation("forgetting", forgetting_op)
         semigroup.add_operation("traversal", traversal_op)
@@ -824,9 +812,9 @@ class AlgebraValidationExperiments:
         semigroup.add_operation("migration", migration_op)
 
 
-# 主程序
+# Main program
 if __name__ == "__main__":
-    print("开始代数验证实验...\n")
+    print("Starting algebraic validation experiments...\n")
 
     experiments = AlgebraValidationExperiments()
 
@@ -834,10 +822,10 @@ if __name__ == "__main__":
         all_results = experiments.run_all_experiments()
 
         print("\n" + "=" * 60)
-        print("所有代数验证实验已完成！")
+        print("All algebraic validation experiments completed!")
         print("=" * 60)
 
-        # 显示总体成功情况
+        # Display overall success status
         success_count = 0
         total_experiments = 5
 
@@ -854,11 +842,11 @@ if __name__ == "__main__":
         if experiments.results.get('experiment5', {}):
             success_count += 1
 
-        print(f"成功实验数: {success_count}/{total_experiments}")
+        print(f"Successful experiments: {success_count}/{total_experiments}")
 
     except KeyboardInterrupt:
-        print("\n\n实验被用户中断")
+        print("\n\nExperiment interrupted by user")
     except Exception as e:
-        print(f"\n实验运行出错: {e}")
+        print(f"\nExperiment execution error: {e}")
         import traceback
         traceback.print_exc()

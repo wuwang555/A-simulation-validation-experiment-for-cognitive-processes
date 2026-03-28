@@ -1,7 +1,7 @@
 """
-认知图论结果分析模块。
+Cognitive Graph Results Analysis Module.
 
-提供对实验结果的统计分析和网络指标计算功能。
+Provides statistical analysis of experimental results and network metric calculation functions.
 """
 
 import numpy as np
@@ -9,51 +9,51 @@ import numpy as np
 
 def analyze_population_results(results):
     """
-    分析群体实验结果，计算并打印统计信息。
+    Analyze population experiment results, compute and print statistics.
 
     Parameters
     ----------
     results : list of dict
-        每个个体的实验结果列表，每个字典应包含以下键：
-            - 'improvement' : float  # 能耗改善百分比
-            - 'compression_centers' : list  # 概念压缩中心列表
-            - 'migration_bridges' : list  # 迁移桥梁列表
+        List of experimental results for each individual, each dictionary should contain the following keys:
+            - 'improvement' : float  # Energy improvement percentage
+            - 'compression_centers' : list  # List of concept compression centers
+            - 'migration_bridges' : list  # List of migration bridges
 
     Returns
     -------
     dict
-        包含以下统计指标的字典：
-            - 'mean_improvement' : float   # 平均能耗改善
-            - 'std_improvement' : float    # 能耗改善标准差
-            - 'mean_compressions' : float  # 平均概念压缩数
-            - 'mean_migrations' : float    # 平均迁移数
+        Dictionary containing the following statistical metrics:
+            - 'mean_improvement' : float   # Average energy improvement
+            - 'std_improvement' : float    # Standard deviation of energy improvement
+            - 'mean_compressions' : float  # Average number of concept compressions
+            - 'mean_migrations' : float    # Average number of migrations
     """
-    print(f"\n=== 群体统计结果 ===")
+    print(f"\n=== Population Statistics Results ===")
 
     improvements = [r['improvement'] for r in results]
     compressions = [r['compression_centers'] for r in results]
     migrations = [r['migration_bridges'] for r in results]
 
-    print(f"能耗降低统计:")
-    print(f"  平均: {np.mean(improvements):.1f}%")
-    print(f"  标准差: {np.std(improvements):.1f}%")
-    print(f"  范围: {min(improvements):.1f}% - {max(improvements):.1f}%")
+    print(f"Energy reduction statistics:")
+    print(f"  Mean: {np.mean(improvements):.1f}%")
+    print(f"  Std Dev: {np.std(improvements):.1f}%")
+    print(f"  Range: {min(improvements):.1f}% - {max(improvements):.1f}%")
 
-    print(f"概念压缩统计:")
-    print(f"  平均: {np.mean(compressions):.1f}个")
-    print(f"  范围: {min(compressions)} - {max(compressions)}个")
+    print(f"Concept compression statistics:")
+    print(f"  Mean: {np.mean(compressions):.1f}")
+    print(f"  Range: {min(compressions)} - {max(compressions)}")
 
-    print(f"迁移桥梁统计:")
-    print(f"  平均: {np.mean(migrations):.1f}个")
-    print(f"  范围: {min(migrations)} - {max(migrations)}个")
+    print(f"Migration bridge statistics:")
+    print(f"  Mean: {np.mean(migrations):.1f}")
+    print(f"  Range: {min(migrations)} - {max(migrations)}")
 
-    print(f"\n=== 个体差异分析 ===")
+    print(f"\n=== Individual Difference Analysis ===")
 
     best_individual = max(results, key=lambda x: x['improvement'])
     worst_individual = min(results, key=lambda x: x['improvement'])
 
-    print(f"最优个体: {best_individual['individual_id']} (能耗降低: {best_individual['improvement']:.1f}%)")
-    print(f"最差个体: {worst_individual['individual_id']} (能耗降低: {worst_individual['improvement']:.1f}%)")
+    print(f"Best individual: {best_individual['individual_id']} (energy reduction: {best_individual['improvement']:.1f}%)")
+    print(f"Worst individual: {worst_individual['individual_id']} (energy reduction: {worst_individual['improvement']:.1f}%)")
 
     return {
         'mean_improvement': np.mean(improvements),
@@ -65,27 +65,27 @@ def analyze_population_results(results):
 
 def get_network_stats(G, iteration_count, concept_centers):
     """
-    获取认知网络的统计信息。
+    Get statistical information of the cognitive network.
 
     Parameters
     ----------
     G : networkx.Graph
-        认知网络图对象。
+        Cognitive network graph object.
     iteration_count : int
-        当前迭代次数。
+        Current iteration count.
     concept_centers : dict
-        概念压缩中心字典，键为节点名，值为压缩信息。
+        Dictionary of concept compression centers, keyed by node name with compression information.
 
     Returns
     -------
     dict
-        包含以下键的字典：
-            - 'nodes' : int                     # 节点数
-            - 'edges' : int                      # 边数
-            - 'iterations' : int                  # 迭代次数
-            - 'avg_energy' : float                 # 平均能耗
-            - 'compression_centers' : int          # 压缩中心数量
-            - 'migration_bridges' : int            # 迁移桥梁总数
+        Dictionary containing the following keys:
+            - 'nodes' : int                     # Number of nodes
+            - 'edges' : int                     # Number of edges
+            - 'iterations' : int                # Iteration count
+            - 'avg_energy' : float              # Average energy
+            - 'compression_centers' : int       # Number of compression centers
+            - 'migration_bridges' : int         # Total number of migration bridges
     """
     stats = {
         'nodes': G.number_of_nodes(),
@@ -105,17 +105,17 @@ def get_network_stats(G, iteration_count, concept_centers):
 
 def calculate_network_energy(G):
     """
-    计算网络平均能耗。
+    Calculate the average network energy.
 
     Parameters
     ----------
     G : networkx.Graph
-        认知网络图对象，边应包含 'weight' 属性表示能耗。
+        Cognitive network graph object, edges should have 'weight' attribute representing energy.
 
     Returns
     -------
     float
-        所有边的平均能耗；若无边则返回 0。
+        Average energy across all edges; returns 0 if no edges.
     """
     if G.number_of_edges() == 0:
         return 0
@@ -124,7 +124,7 @@ def calculate_network_energy(G):
 
 
 if __name__ == "__main__":
-    # 简单测试：创建模拟数据并调用分析函数
+    # Simple test: create mock data and call analysis function
     mock_results = [
         {'individual_id': 'ind1', 'improvement': 23.5, 'compression_centers': [1, 2], 'migration_bridges': [1]},
         {'individual_id': 'ind2', 'improvement': 18.2, 'compression_centers': [3], 'migration_bridges': []},

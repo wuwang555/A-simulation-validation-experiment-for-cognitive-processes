@@ -1,9 +1,9 @@
 # algebra/group_action.py
 """
-群作用模块
+Group Action Module
 
-根据论文第4.3节，认知对称群在认知状态空间上有一个群作用。
-该模块实现了群作用、轨道和稳定子的计算，并验证轨道-稳定子定理。
+According to Section 4.3 of the paper, the cognitive symmetry group acts on the cognitive state space.
+This module implements group actions, orbit and stabilizer calculation, and verifies the orbit-stabilizer theorem.
 """
 
 import networkx as nx
@@ -12,21 +12,21 @@ from typing import List, Dict, Set, Tuple
 
 
 class GroupActionOnCognitiveSpace:
-    """群在认知状态空间上的作用。
+    """Group action on cognitive state space.
 
-    该类封装了对称群对认知网络的作用，包括计算轨道、稳定子以及验证
-    轨道-稳定子定理（定理4.3.3）。
+    This class encapsulates the action of the symmetry group on the cognitive network, including
+    computing orbits, stabilizers, and verifying the orbit-stabilizer theorem (Theorem 4.3.3).
 
     Attributes:
-        group (CognitiveSymmetryGroup): 关联的认知对称群。
-        orbits_cache (dict): 缓存已计算的轨道，键为网络的哈希值。
-        stabilizers_cache (dict): 缓存已计算的稳定子。
+        group (CognitiveSymmetryGroup): The associated cognitive symmetry group.
+        orbits_cache (dict): Cache for computed orbits, keyed by network hash.
+        stabilizers_cache (dict): Cache for computed stabilizers.
     """
 
     def __init__(self, symmetry_group: 'CognitiveSymmetryGroup'):
         """
         Args:
-            symmetry_group: 认知对称群实例。
+            symmetry_group: An instance of the cognitive symmetry group.
         """
         self.group = symmetry_group
         self.orbits_cache = {}
@@ -34,45 +34,45 @@ class GroupActionOnCognitiveSpace:
 
     def apply_group_element(self, network: nx.Graph,
                             permutation: Dict) -> nx.Graph:
-        """应用群元素（节点置换）到认知网络。
+        """Apply a group element (node permutation) to the cognitive network.
 
         Args:
-            network (nx.Graph): 原始网络。
-            permutation (Dict): 置换映射，如 {旧节点: 新节点}。
+            network (nx.Graph): Original network.
+            permutation (Dict): Permutation mapping, e.g., {old node: new node}.
 
         Returns:
-            nx.Graph: 置换后的新网络。
+            nx.Graph: New network after permutation.
         """
         new_network = nx.Graph()
-        # 添加节点（使用置换后的名称）
+        # Add nodes (using permuted names)
         for node in network.nodes():
             new_node = permutation.get(node, node)
             new_network.add_node(new_node)
-        # 添加边（保持权重）
+        # Add edges (preserve weights)
         for u, v, data in network.edges(data=True):
             new_u = permutation.get(u, u)
             new_v = permutation.get(v, v)
-            # 深拷贝边数据，避免引用
+            # Deep copy edge data to avoid reference
             new_data = data.copy()
             new_network.add_edge(new_u, new_v, **new_data)
         return new_network
 
     def compute_orbit(self, network: nx.Graph) -> List[nx.Graph]:
-        """计算认知状态的轨道（群作用下的所有像）。
+        """Compute the orbit of a cognitive state (all images under the group action).
 
-        轨道定义为 { g·network | g ∈ 群 }。
+        The orbit is defined as { g·network | g ∈ group }.
 
         Args:
-            network (nx.Graph): 初始网络。
+            network (nx.Graph): Initial network.
 
         Returns:
-            List[nx.Graph]: 轨道中的网络列表（去重）。
+            List[nx.Graph]: List of networks in the orbit (deduplicated).
         """
         network_hash = self._network_hash(network)
         if network_hash in self.orbits_cache:
             return self.orbits_cache[network_hash]
 
-        orbit_set = set()  # 存储哈希值，避免重复
+        orbit_set = set()  # Store hashes to avoid duplicates
         orbit_networks = []
         for g in self.group.automorphisms:
             transformed = self.apply_group_element(network, g)
@@ -85,15 +85,15 @@ class GroupActionOnCognitiveSpace:
         return orbit_networks
 
     def compute_stabilizer(self, network: nx.Graph) -> List[Dict]:
-        """计算认知状态的稳定子群（使网络保持不变的群元素）。
+        """Compute the stabilizer subgroup of a cognitive state (group elements that leave the network unchanged).
 
-        稳定子定义为 { g ∈ 群 | g·network = network }。
+        The stabilizer is defined as { g ∈ group | g·network = network }.
 
         Args:
-            network (nx.Graph): 初始网络。
+            network (nx.Graph): Initial network.
 
         Returns:
-            List[Dict]: 稳定子中的自同构列表。
+            List[Dict]: List of automorphisms in the stabilizer.
         """
         network_hash = self._network_hash(network)
         if network_hash in self.stabilizers_cache:
@@ -109,61 +109,61 @@ class GroupActionOnCognitiveSpace:
         return stabilizer
 
     def verify_orbit_stabilizer_theorem(self, network: nx.Graph) -> bool:
-        """验证轨道-稳定子定理：|轨道| = |群| / |稳定子|。
+        """Verify the orbit-stabilizer theorem: |Orbit| = |Group| / |Stabilizer|.
 
-        定理4.3.3：对于有限群作用，有 |O_G| = |G| / |Stab(G)|。
+        Theorem 4.3.3: For finite group actions, |O_G| = |G| / |Stab(G)|.
 
         Args:
-            network (nx.Graph): 初始网络。
+            network (nx.Graph): Initial network.
 
         Returns:
-            bool: 定理是否成立（在整数意义下）。
+            bool: Whether the theorem holds (in integer sense).
 
         Raises:
-            ValueError: 如果群为空或稳定子为空（至少应有恒等映射）。
+            ValueError: If the group is empty or stabilizer is empty (should at least contain identity).
         """
         if len(self.group.automorphisms) == 0:
-            raise ValueError("群为空，无法验证定理")
+            raise ValueError("Group is empty, cannot verify theorem")
         stabilizer = self.compute_stabilizer(network)
         if len(stabilizer) == 0:
-            # 理论上至少应有恒等映射，若没有，说明实现有误
-            raise ValueError("稳定子为空，可能自同构检测遗漏恒等映射")
+            # In theory, identity should always be present; if not, implementation error
+            raise ValueError("Stabilizer is empty; automorphism detection may have missed identity")
         orbit = self.compute_orbit(network)
         expected = len(self.group.automorphisms) / len(stabilizer)
-        # 期望值应为整数（根据拉格朗日定理）
+        # Expected value should be integer (by Lagrange's theorem)
         if not expected.is_integer():
             return False
         return len(orbit) == int(expected)
 
     def _network_hash(self, network: nx.Graph) -> str:
-        """生成网络的简单哈希表示（用于缓存和去重）。
+        """Generate a simple hash representation of the network (for caching and deduplication).
 
         Args:
-            network (nx.Graph): 网络。
+            network (nx.Graph): Network.
 
         Returns:
-            str: 基于边权重排序的字符串表示。
+            str: String representation based on sorted edge weights.
         """
         edges = sorted([(u, v, network[u][v]['weight'])
                         for u, v in network.edges()])
         return str(edges)
 
     def _networks_equal(self, G1: nx.Graph, G2: nx.Graph, rtol: float = 1e-5) -> bool:
-        """比较两个网络是否相等（考虑节点、边和权重）。
+        """Compare two networks for equality (considering nodes, edges, and weights).
 
         Args:
-            G1 (nx.Graph): 网络1。
-            G2 (nx.Graph): 网络2。
+            G1 (nx.Graph): First network.
+            G2 (nx.Graph): Second network.
 
         Returns:
-            bool: 如果网络结构及权重完全相同返回True。
+            bool: True if network structures and weights are identical.
         """
         if set(G1.nodes()) != set(G2.nodes()):
             return False
         if G1.number_of_edges() != G2.number_of_edges():
             return False
 
-        # 比较边和权重
+        # Compare edges and weights
         for u, v in G1.edges():
             if not G2.has_edge(u, v):
                 return False
@@ -174,7 +174,7 @@ class GroupActionOnCognitiveSpace:
         return True
 
 
-# 简单测试
+# Simple test
 if __name__ == "__main__":
     from algebra.cognitive_symmetry import CognitiveSymmetryGroup
 
@@ -184,11 +184,11 @@ if __name__ == "__main__":
     G.add_edge("A", "B", weight=1.0)
 
     sym_group = CognitiveSymmetryGroup(G)
-    sym_group.automorphisms = [{"A": "A", "B": "B"}, {"A": "B", "B": "A"}]  # 手动设置
+    sym_group.automorphisms = [{"A": "A", "B": "B"}, {"A": "B", "B": "A"}]  # Manually set
 
     action = GroupActionOnCognitiveSpace(sym_group)
     orbit = action.compute_orbit(G)
     stabilizer = action.compute_stabilizer(G)
-    print(f"轨道大小: {len(orbit)}")
-    print(f"稳定子大小: {len(stabilizer)}")
-    print(f"定理成立: {action.verify_orbit_stabilizer_theorem(G)}")
+    print(f"Orbit size: {len(orbit)}")
+    print(f"Stabilizer size: {len(stabilizer)}")
+    print(f"Theorem holds: {action.verify_orbit_stabilizer_theorem(G)}")

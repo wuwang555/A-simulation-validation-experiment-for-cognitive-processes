@@ -1,8 +1,8 @@
 """
-涌现现象检测器（修复版）
+Emergence Phenomenon Detector (Fixed Version)
 -------------------------
-定义 EmergenceDetectorFixed 类，用于从认知网络中检测自发的概念压缩和原理迁移现象。
-包含内聚性、能量同步性、涌现强度等指标的计算。
+Define EmergenceDetectorFixed class to detect spontaneous concept compression and principle migration phenomena
+from the cognitive network. Includes calculation of cohesion, energy synchrony, emergence strength, etc.
 """
 
 import numpy as np
@@ -12,26 +12,27 @@ from typing import Dict, List, Any, Tuple, Optional
 
 
 class EmergenceDetectorFixed:
-    """修复的涌现现象检测器，用于检测概念压缩和原理迁移。
+    """Fixed emergence phenomenon detector for detecting concept compression and principle migration.
 
-    检测阈值可在初始化时指定，默认值基于经验设置。包含去重机制避免重复记录相同涌现事件。
+    Detection thresholds can be specified during initialization; default values are empirically set.
+    Includes deduplication mechanisms to avoid recording the same emergence event multiple times.
     """
 
     def __init__(self, detection_thresholds: Optional[Dict[str, float]] = None):
         """
-        :param detection_thresholds: 阈值字典，支持以下键：
-            - compression_synergy: 压缩协同性阈值 (默认0.76)
-            - migration_efficiency: 迁移效率阈值 (默认0.35)
-            - pattern_stability: 模式稳定性阈值 (默认0.7)
-            - energy_sync_threshold: 能量同步性阈值 (默认0.65)
-            - cross_domain_gain: 跨领域增益 (默认0.2)
-            - cluster_cohesion: 集群内聚性阈值 (默认0.7)
-            - min_cluster_size: 最小集群大小 (默认2)
-            - max_cluster_size: 最大集群大小 (默认6)
-            - dynamic_cluster_sizing: 是否动态确定集群大小 (默认True)
-            - compression_persistence: 压缩持久性要求 (默认3)
-            - migration_confidence: 迁移置信度阈值 (默认0.75)
-            - min_connection_strength: 最小连接强度 (默认0.5)
+        :param detection_thresholds: Threshold dictionary; supports the following keys:
+            - compression_synergy: Compression synergy threshold (default 0.76)
+            - migration_efficiency: Migration efficiency threshold (default 0.35)
+            - pattern_stability: Pattern stability threshold (default 0.7)
+            - energy_sync_threshold: Energy synchrony threshold (default 0.65)
+            - cross_domain_gain: Cross-domain gain (default 0.2)
+            - cluster_cohesion: Cluster cohesion threshold (default 0.7)
+            - min_cluster_size: Minimum cluster size (default 2)
+            - max_cluster_size: Maximum cluster size (default 6)
+            - dynamic_cluster_sizing: Whether to dynamically determine cluster size (default True)
+            - compression_persistence: Compression persistence requirement (default 3)
+            - migration_confidence: Migration confidence threshold (default 0.75)
+            - min_connection_strength: Minimum connection strength (default 0.5)
         """
         self.thresholds = detection_thresholds or {
             'compression_synergy': 0.76,
@@ -58,17 +59,17 @@ class EmergenceDetectorFixed:
     def detect_spontaneous_compression(self, network: nx.Graph,
                                        energy_history: List[float],
                                        traversal_history: Optional[List[Any]] = None) -> List[Dict[str, Any]]:
-        """检测自发的概念压缩现象。
+        """Detect spontaneous concept compression phenomena.
 
-        压缩候选需满足：
-            - 中心节点度在合适范围内
-            - 邻居连接强度高于阈值
-            - 集群内聚性、能量同步性和综合涌现强度均超过阈值
+        Compression candidates must satisfy:
+            - The degree of the center node is within an appropriate range
+            - Neighbor connection strengths exceed the threshold
+            - Cluster cohesion, energy synchrony, and comprehensive emergence strength all exceed thresholds
 
-        :param network: 当前认知网络
-        :param energy_history: 网络平均能耗历史
-        :param traversal_history: 遍历历史（未使用，保留接口）
-        :return: 压缩候选列表，每个元素为包含中心节点、相关节点、各项指标的字典
+        :param network: Current cognitive network
+        :param energy_history: Network average energy history
+        :param traversal_history: Traversal history (unused, retained for interface)
+        :return: List of compression candidates, each a dictionary containing center node, related nodes, and various metrics
         """
         compression_candidates = []
 
@@ -131,18 +132,18 @@ class EmergenceDetectorFixed:
                         'emergence_strength': emergence_strength,
                         'cluster_size': len(selected_neighbors),
                         'avg_connection_strength': np.mean([s for _, s in connection_strengths[:cluster_size]]),
-                        'compression_potential': potential  # 新增字段
+                        'compression_potential': potential  # Added field
                     })
 
         return compression_candidates[:10]
 
     def _determine_dynamic_cluster_size(self, connection_strengths: List[Tuple[str, float]]) -> int:
-        """根据连接强度分布动态确定集群大小。
+        """Dynamically determine cluster size based on the distribution of connection strengths.
 
-        找到强度明显下降的点（低于均值减0.5倍标准差），若无则返回适中大小。
+        Find the point where strength drops significantly (below mean - 0.5 * std). If none, return a moderate size.
 
-        :param connection_strengths: 按强度降序排列的 (节点, 强度) 列表
-        :return: 集群大小
+        :param connection_strengths: List of (node, strength) sorted descending by strength
+        :return: Cluster size
         """
         strengths = [s for _, s in connection_strengths]
         avg_strength = np.mean(strengths)
@@ -159,9 +160,9 @@ class EmergenceDetectorFixed:
 
     def _compute_energy_synchronization_improved(self, center: str, neighbors: List[str],
                                                  network: nx.Graph, energy_history: List[float]) -> float:
-        """计算中心节点与邻居之间的能量变化同步性。
+        """Compute the energy change synchrony between the center node and its neighbors.
 
-        :return: 同步性得分 [0,1]
+        :return: Synchrony score [0,1]
         """
         if len(neighbors) < 2:
             return 0.0
@@ -181,7 +182,7 @@ class EmergenceDetectorFixed:
 
     def _compute_energy_trend(self, node: str, network: nx.Graph,
                               energy_history: List[float], window_size: int = 20) -> float:
-        """估计节点相关的能量趋势（基于其邻边的当前平均能耗）。"""
+        """Estimate the node-related energy trend (based on the current average energy of its incident edges)."""
         if len(energy_history) < window_size:
             return 0.0
 
@@ -198,7 +199,7 @@ class EmergenceDetectorFixed:
     def _compute_comprehensive_emergence_strength(self, center: str, neighbors: List[str],
                                                   network: nx.Graph, cohesion: float,
                                                   energy_sync: float) -> float:
-        """综合涌现强度，结合内聚性、能量同步性、连接密度和语义连贯性。"""
+        """Comprehensive emergence strength, combining cohesion, energy synchrony, connection density, and semantic coherence."""
         connection_density = self._compute_connection_density(neighbors, network)
         semantic_coherence = self._estimate_semantic_coherence(center, neighbors)
 
@@ -211,7 +212,7 @@ class EmergenceDetectorFixed:
         return min(1.0, emergence_strength)
 
     def _compute_connection_density(self, nodes: List[str], network: nx.Graph) -> float:
-        """计算节点集合内部的连接密度。"""
+        """Compute the internal connection density of a set of nodes."""
         if len(nodes) < 2:
             return 0.0
 
@@ -224,7 +225,7 @@ class EmergenceDetectorFixed:
         return actual / possible if possible > 0 else 0.0
 
     def _estimate_semantic_coherence(self, center: str, neighbors: List[str]) -> float:
-        """估计节点间的语义连贯性（基于节点名称的字符重叠启发式）。"""
+        """Estimate semantic coherence among nodes using a heuristic based on character overlap in node names."""
         center_words = set(center)
         scores = []
         for neighbor in neighbors:
@@ -236,7 +237,7 @@ class EmergenceDetectorFixed:
         return np.mean(scores) if scores else 0.0
 
     def _compute_cluster_cohesion(self, center: str, neighbors: List[str], network: nx.Graph) -> float:
-        """计算邻居节点之间的内聚性（边密度）。"""
+        """Compute cohesion among neighbor nodes (edge density)."""
         if len(neighbors) < 2:
             return 0.0
 
@@ -252,15 +253,15 @@ class EmergenceDetectorFixed:
                                   traversal_history: Optional[List[Any]] = None,
                                   current_iteration: int = 0,
                                   semantic_network: Optional[Any] = None) -> List[Dict[str, Any]]:
-        """检测涌现的原理迁移现象。
+        """Detect emergent principle migration phenomena.
 
-        分析最近的遍历路径，找出包含原理节点且跨领域的路径，计算效率增益。
+        Analyze recent traversal paths, identify those containing principle nodes and crossing domains, and compute efficiency gains.
 
-        :param network: 当前认知网络
-        :param traversal_history: 遍历历史记录
-        :param current_iteration: 当前迭代次数
-        :param semantic_network: 语义网络（可选，用于更精细的判断）
-        :return: 迁移候选列表
+        :param network: Current cognitive network
+        :param traversal_history: Traversal history records
+        :param current_iteration: Current iteration number
+        :param semantic_network: Semantic network (optional, for more refined judgments)
+        :return: List of migration candidates
         """
         migrations = []
 
@@ -297,7 +298,7 @@ class EmergenceDetectorFixed:
         return migrations
 
     def _extract_traversal_path(self, traversal: Any) -> Optional[List[str]]:
-        """从遍历记录中提取路径列表。"""
+        """Extract path list from a traversal record."""
         if isinstance(traversal, dict) and 'path' in traversal:
             return traversal['path']
         elif isinstance(traversal, (list, tuple)) and len(traversal) > 0:
@@ -308,19 +309,19 @@ class EmergenceDetectorFixed:
         return None
 
     def _is_principle_node(self, node: str) -> bool:
-        """判断节点名是否包含原理性关键词。"""
+        """Check if the node name contains principle-related keywords."""
         principle_keywords = ['优化', '变换', '抽象', '模式', '递归', '迭代', '对称', '归纳']
         return any(keyword in node for keyword in principle_keywords)
 
     def _is_cross_domain_path(self, path: List[str]) -> bool:
-        """判断路径是否跨越多个领域。"""
+        """Check if the path spans multiple domains."""
         if len(path) < 2:
             return False
         domains = [self._infer_domain(node) for node in path]
         return len(set(domains)) > 1
 
     def _calculate_path_efficiency(self, path: List[str], network: nx.Graph) -> float:
-        """计算路径效率：1 / (总能耗 * 路径长度)。"""
+        """Compute path efficiency: 1 / (total energy * path length)."""
         total_energy = 0.0
         for i in range(len(path) - 1):
             if network.has_edge(path[i], path[i + 1]):
@@ -331,14 +332,14 @@ class EmergenceDetectorFixed:
         return 0.0
 
     def _calculate_domain_span_simple(self, path: List[str]) -> int:
-        """计算路径所涉及的领域数量。"""
+        """Calculate the number of domains covered by the path."""
         domains = set()
         for node in path:
             domains.add(self._infer_domain(node))
         return len(domains)
 
     def _infer_domain(self, concept: str) -> str:
-        """根据关键词推断概念领域。"""
+        """Infer the domain of a concept based on keywords."""
         domain_keywords = {
             'physics': ['力', '运动', '能量', '动量', '牛顿', '引力', '摩擦', '静电'],
             'math': ['积分', '几何', '代数', '概率', '统计', '微积分', '拓扑', '线性'],
@@ -354,7 +355,7 @@ class EmergenceDetectorFixed:
         return 'other'
 
     def calculate_compression_confidence(self, compression: Dict[str, Any]) -> float:
-        """计算压缩事件的置信度。"""
+        """Calculate the confidence of a compression event."""
         synergy = compression.get('energy_synergy', 0)
         cohesion = compression.get('cohesion', 0)
         cluster_size = compression.get('cluster_size', 0)
@@ -368,7 +369,7 @@ class EmergenceDetectorFixed:
         return min(1.0, confidence)
 
     def calculate_migration_confidence(self, migration: Dict[str, Any]) -> float:
-        """计算迁移事件的置信度。"""
+        """Calculate the confidence of a migration event."""
         efficiency = migration.get('efficiency_gain', 0)
         domain_span = migration.get('domain_span', 0)
         path_length = len(migration.get('path', []))
@@ -382,7 +383,7 @@ class EmergenceDetectorFixed:
         return min(1.0, confidence)
 
     def _calculate_temporal_stability(self, compression: Dict[str, Any]) -> float:
-        """计算压缩的时间稳定性（基于历史记录）。"""
+        """Calculate the temporal stability of compression (based on historical records)."""
         center = compression['center']
         current_strength = compression['emergence_strength']
 
@@ -394,7 +395,7 @@ class EmergenceDetectorFixed:
         return 0.5
 
     def _calculate_innovation_score(self, migration: Dict[str, Any]) -> float:
-        """计算迁移的创新性得分。"""
+        """Calculate the innovation score of a migration."""
         path = migration.get('path', [])
         principle_node = migration.get('principle_node', '')
 
@@ -410,7 +411,7 @@ class EmergenceDetectorFixed:
         return innovation_score
 
     def _is_duplicate_compression(self, center: str, neighbors: List[str]) -> bool:
-        """检查是否已记录过相同的压缩事件。"""
+        """Check if the same compression event has already been recorded."""
         key = (center, tuple(sorted(neighbors)))
         if key in self.compression_history:
             return True
@@ -418,7 +419,7 @@ class EmergenceDetectorFixed:
         return False
 
     def _compute_compression_potential(self, center: str, neighbors: List[str], network: nx.Graph) -> float:
-        """计算集群压缩势 Φ = 内部平均能耗 / 外部平均能耗"""
+        """Compute cluster compression potential Φ = internal average energy / external average energy."""
         cluster_nodes = {center} | set(neighbors)
         internal_energy = 0.0
         internal_count = 0
@@ -444,12 +445,12 @@ class EmergenceDetectorFixed:
         avg_external = external_energy / external_count if external_count > 0 else None
 
         if avg_external is None or avg_external == 0:
-            # 无外部连接时压缩势无定义，设为 None（JSON 序列化为 null）
+            # No external connections; potential is undefined, set to None (JSON serializes as null)
             return None
         return avg_internal / avg_external
 
 
 if __name__ == "__main__":
-    # 简单测试
+    # Simple test
     detector = EmergenceDetectorFixed()
-    print("EmergenceDetectorFixed 初始化成功")
+    print("EmergenceDetectorFixed initialized successfully")

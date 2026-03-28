@@ -1,7 +1,7 @@
 """
-认知图论可视化模块。
+Cognitive Graph Visualization Module.
 
-提供认知网络、能耗收敛过程、认知状态变化等图形的绘制与保存功能。
+Provides functions for drawing and saving cognitive networks, energy convergence processes, cognitive state changes, etc.
 """
 
 import matplotlib.pyplot as plt
@@ -11,7 +11,7 @@ import os
 from datetime import datetime
 from core.cognitive_states import CognitiveState
 
-# 获取当前时间戳（只在模块加载时生成一次，确保同一批次实验文件名一致）
+# Get current timestamp (generated once at module load to ensure consistent filenames within the same batch)
 _TIMESTAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
 _VIZ_DIR = "results/visualizations"
 os.makedirs(_VIZ_DIR, exist_ok=True)
@@ -19,37 +19,37 @@ os.makedirs(_VIZ_DIR, exist_ok=True)
 
 def _auto_save_fig(fig, func_name):
     """
-    自动保存当前 figure 到指定目录。
+    Automatically save the current figure to the specified directory.
 
     Parameters
     ----------
     fig : matplotlib.figure.Figure
-        要保存的图形对象。
+        Figure object to save.
     func_name : str
-        调用函数的名称，用于构造文件名。
+        Name of the calling function, used to construct the filename.
     """
     filename = f"{func_name}_{_TIMESTAMP}.png"
     filepath = os.path.join(_VIZ_DIR, filename)
     fig.savefig(filepath, dpi=300, bbox_inches='tight')
-    print(f"📸 图表已保存: {filepath}")
+    print(f"📸 Chart saved: {filepath}")
 
 
 def visualize_energy_convergence(energy_history, concept_centers):
     """
-    可视化能耗收敛过程，并标注概念压缩发生的位置。
+    Visualize the energy convergence process, marking the positions where concept compression occurs.
 
     Parameters
     ----------
     energy_history : list of float
-        每次迭代的平均能耗历史。
+        Average energy history for each iteration.
     concept_centers : dict
-        概念压缩中心字典，键为节点名，值为包含 'iteration' 等信息的字典。
+        Dictionary of concept compression centers, with values containing 'iteration' and other information.
     """
     fig = plt.figure(figsize=(10, 6))
     plt.plot(energy_history, 'b-', alpha=0.7, linewidth=1)
-    plt.xlabel('迭代次数')
-    plt.ylabel('平均认知能耗')
-    plt.title('认知能耗收敛过程')
+    plt.xlabel('Iteration')
+    plt.ylabel('Average Cognitive Energy')
+    plt.title('Cognitive Energy Convergence Process')
     plt.grid(True, alpha=0.3)
 
     colors = ['red', 'green', 'orange', 'purple']
@@ -58,7 +58,7 @@ def visualize_energy_convergence(energy_history, concept_centers):
         if iteration < len(energy_history):
             color = colors[i % len(colors)]
             plt.axvline(x=iteration, color=color, alpha=0.5, linestyle='--',
-                        label=f'压缩: {center}' if i < 4 else "")
+                        label=f'Compression: {center}' if i < 4 else "")
 
     if len(concept_centers) > 0:
         plt.legend(loc='upper right', fontsize=8)
@@ -70,19 +70,19 @@ def visualize_energy_convergence(energy_history, concept_centers):
 
 def visualize_cognitive_states(cognitive_energy_history, energy_history):
     """
-    可视化认知状态变化（主观能耗）与网络能耗演化。
+    Visualize cognitive state changes (subjective energy) and network energy evolution.
 
     Parameters
     ----------
     cognitive_energy_history : list of dict
-        每个条目应包含 'iteration', 'state', 'energy'。
+        Each entry should contain 'iteration', 'state', 'energy'.
     energy_history : list of float
-        网络平均能耗历史。
+        Network average energy history.
     """
     if not cognitive_energy_history:
         return
 
-    # 添加迭代次数到认知能量历史中（如果没有的话）
+    # Add iteration numbers to cognitive energy history if not present
     for i, entry in enumerate(cognitive_energy_history):
         if 'iteration' not in entry:
             entry['iteration'] = i
@@ -90,7 +90,7 @@ def visualize_cognitive_states(cognitive_energy_history, energy_history):
     iterations = [e['iteration'] for e in cognitive_energy_history]
     energies = [e['energy'] for e in cognitive_energy_history]
 
-    # 确保网络能量历史长度匹配
+    # Ensure network energy history length matches
     if len(energy_history) > len(iterations):
         network_energies = energy_history[:len(iterations)]
     else:
@@ -113,8 +113,8 @@ def visualize_cognitive_states(cognitive_energy_history, energy_history):
     plt.subplot(2, 1, 1)
     plt.scatter(iterations, energies, c=colors, alpha=0.6)
     plt.plot(iterations, energies, 'gray', alpha=0.3)
-    plt.ylabel('主观认知能耗')
-    plt.title('主观认知状态与能耗变化')
+    plt.ylabel('Subjective Cognitive Energy')
+    plt.title('Subjective Cognitive State and Energy Changes')
 
     for state, color in state_colors.items():
         plt.plot([], [], 'o', color=color, label=state.value)
@@ -123,40 +123,41 @@ def visualize_cognitive_states(cognitive_energy_history, energy_history):
     plt.subplot(2, 1, 2)
     if network_energies:
         plt.plot(iterations, network_energies, 'b-', alpha=0.7)
-    plt.xlabel('迭代次数')
-    plt.ylabel('网络平均能耗')
-    plt.title('认知网络能耗演化')
+    plt.xlabel('Iteration')
+    plt.ylabel('Network Average Energy')
+    plt.title('Cognitive Network Energy Evolution')
     plt.grid(True, alpha=0.3)
 
     plt.tight_layout()
     _auto_save_fig(fig, "cognitive_states")
     plt.show()
 
-    # 打印状态统计
+    # Print state statistics
     state_counts = {}
     for state in states:
         state_counts[state] = state_counts.get(state, 0) + 1
 
-    print("\n=== 认知状态统计 ===")
+    print("\n=== Cognitive State Statistics ===")
     for state, count in state_counts.items():
         percentage = (count / len(states)) * 100
-        print(f"{state.value}: {count}次 ({percentage:.1f}%)")
+        print(f"{state.value}: {count} times ({percentage:.1f}%)")
 
 
-def visualize_graph(G, concept_centers, title="认知图", figsize=(12, 8)):
+def visualize_graph(G, concept_centers, title="Cognitive Graph", figsize=(12, 8)):
     """
-    可视化认知图，标注概念压缩中心、迁移桥梁，并按能耗着色边。
+    Visualize the cognitive graph, marking concept compression centers and migration bridges,
+    and coloring edges by energy.
 
     Parameters
     ----------
     G : networkx.Graph
-        认知网络图对象。
+        Cognitive network graph object.
     concept_centers : dict
-        概念压缩中心字典。
+        Dictionary of concept compression centers.
     title : str, optional
-        图表标题。
+        Chart title.
     figsize : tuple, optional
-        图形尺寸。
+        Figure size.
     """
     fig = plt.figure(figsize=figsize)
     pos = nx.spring_layout(G, seed=42)
@@ -200,7 +201,7 @@ def visualize_graph(G, concept_centers, title="认知图", figsize=(12, 8)):
     _auto_save_fig(fig, "cognitive_graph")
     plt.show()
 
-    # 打印网络统计信息
+    # Print network statistics
     nodes = G.number_of_nodes()
     edges = G.number_of_edges()
     avg_energy = np.mean([G[u][v]['weight'] for u, v in G.edges()]) if edges > 0 else 0
@@ -209,25 +210,25 @@ def visualize_graph(G, concept_centers, title="认知图", figsize=(12, 8)):
         if 'migration_bridges' in G.nodes[node]:
             migration_bridges += len(G.nodes[node]['migration_bridges'])
 
-    print(f"网络统计:")
-    print(f"  节点: {nodes}, 边: {edges}")
-    print(f"  平均能耗: {avg_energy:.3f}")
-    print(f"  概念压缩中心: {len(concept_centers)}")
-    print(f"  迁移桥梁: {migration_bridges}")
+    print(f"Network statistics:")
+    print(f"  Nodes: {nodes}, Edges: {edges}")
+    print(f"  Average energy: {avg_energy:.3f}")
+    print(f"  Concept compression centers: {len(concept_centers)}")
+    print(f"  Migration bridges: {migration_bridges}")
 
 
 def visualize_semantic_network(semantic_network, concept_definitions=None, highlight_concepts=None):
     """
-    可视化语义概念网络。
+    Visualize the semantic concept network.
 
     Parameters
     ----------
     semantic_network : dict
-        语义网络字典，格式为 {概念: {邻居概念: 相似度, ...}, ...}。
+        Semantic network dictionary, format: {concept: {neighbor: similarity, ...}, ...}.
     concept_definitions : dict, optional
-        概念定义字典，用于获取领域信息。
+        Concept definition dictionary, used to obtain domain information.
     highlight_concepts : list, optional
-        需要高亮显示的概念列表。
+        List of concepts to highlight.
     """
     try:
         G = nx.Graph()
@@ -262,31 +263,31 @@ def visualize_semantic_network(semantic_network, concept_definitions=None, highl
 
         nx.draw_networkx_labels(G, pos, font_size=8, font_family='SimHei')
 
-        plt.title("语义概念网络", fontsize=16, fontfamily='SimHei')
+        plt.title("Semantic Concept Network", fontsize=16, fontfamily='SimHei')
         plt.axis('off')
         plt.tight_layout()
         _auto_save_fig(fig, "semantic_network")
         plt.show()
 
     except ImportError:
-        print("需要安装networkx和matplotlib来可视化网络")
+        print("Need to install networkx and matplotlib to visualize the network")
 
 
 def get_domain(concept, concept_definitions=None):
     """
-    根据概念定义判断概念所属领域。
+    Determine the domain of a concept based on its definition.
 
     Parameters
     ----------
     concept : str
-        概念名称。
+        Concept name.
     concept_definitions : dict, optional
-        概念定义字典，用于辅助判断。
+        Concept definition dictionary, used to assist determination.
 
     Returns
     -------
     str
-        领域名称，如 'physics', 'math', 'cs', 'principles', 'other'。
+        Domain name, such as 'physics', 'math', 'cs', 'principles', 'other'.
     """
     domains = {
         "physics": ["牛顿定律", "力学", "运动学", "能量守恒", "动量", "万有引力", "摩擦力", "静电力"],
@@ -302,9 +303,9 @@ def get_domain(concept, concept_definitions=None):
 
 
 if __name__ == "__main__":
-    # 简单测试：创建一个随机图并调用可视化函数
+    # Simple test: create a random graph and call visualization function
     G = nx.erdos_renyi_graph(10, 0.2)
     for u, v in G.edges():
         G[u][v]['weight'] = np.random.random()
     concept_centers = {node: {} for node in list(G.nodes())[:2]}
-    visualize_graph(G, concept_centers, title="测试图")
+    visualize_graph(G, concept_centers, title="Test Graph")

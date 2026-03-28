@@ -1,8 +1,8 @@
 """
-认知宇宙模块（基于两个公设）
+Cognitive Universe Module (Based on Two Postulates)
 -----------------------------
-定义 PureEnergyDynamics 和 CognitiveUniverse 类，仅依赖能量最小化公设和遗忘机制，
-观察自然涌现现象。
+Define PureEnergyDynamics and CognitiveUniverse classes, relying only on the energy minimization postulate and forgetting mechanism,
+to observe natural emergence phenomena.
 """
 
 import networkx as nx
@@ -17,11 +17,11 @@ np.random.seed(42)
 random.seed(42)
 
 class PureEnergyDynamics:
-    """纯粹的能量动力学，只实现两个公设：全局能量计算和局部变化尝试。"""
+    """Pure energy dynamics, implementing only the two postulates: global energy calculation and local change attempts."""
 
     def __init__(self, individual_params: Dict[str, Any]):
         """
-        :param individual_params: 个体参数，包含 forgetting_rate 等
+        :param individual_params: Individual parameters, including forgetting_rate, etc.
         """
         self.individual_params = individual_params
         self.energy_state = {}
@@ -30,14 +30,14 @@ class PureEnergyDynamics:
         self.forgetting_rate = individual_params.get('forgetting_rate', 0.002)
 
     def compute_global_energy(self, network: nx.Graph) -> float:
-        """计算网络全局能量（平均边权重）。"""
+        """Compute global network energy (average edge weight)."""
         if network.number_of_edges() == 0:
             return 0
         energies = [network[u][v]['weight'] for u, v in network.edges()]
         return np.mean(energies)
 
     def compute_local_energy(self, node: str, network: nx.Graph) -> float:
-        """计算节点局部能量（邻居边权重的均值）。"""
+        """Compute local energy of a node (mean weight of incident edges)."""
         if node not in network:
             return 0
         neighbors = list(network.neighbors(node))
@@ -49,7 +49,7 @@ class PureEnergyDynamics:
         return local_energy / len(neighbors)
 
     def generate_random_changes(self, network: nx.Graph, num_changes: int = 5) -> List[Dict]:
-        """生成随机变化尝试，包括边权重调整、节点激活、局部优化。"""
+        """Generate random change attempts, including edge weight adjustments, node activation, local optimization."""
         changes = []
         nodes = list(network.nodes())
 
@@ -98,7 +98,7 @@ class PureEnergyDynamics:
         return changes
 
     def apply_change_and_compute(self, network: nx.Graph, change: Dict) -> float:
-        """应用变化并计算新能量（不永久保留变化）。"""
+        """Apply change and compute new energy (without permanently retaining change)."""
         original_state = {}
 
         if change['type'] == 'edge_weight_adjustment':
@@ -121,7 +121,7 @@ class PureEnergyDynamics:
 
         new_energy = self.compute_global_energy(network)
 
-        # 恢复原始状态
+        # Restore original state
         for key, value in original_state.items():
             if isinstance(key, tuple) and len(key) == 2:
                 u, v = key
@@ -131,7 +131,7 @@ class PureEnergyDynamics:
         return new_energy
 
     def keep_change(self, network: nx.Graph, change: Dict) -> None:
-        """永久保留变化（更新网络）。"""
+        """Permanently keep change (update network)."""
         if change['type'] == 'edge_weight_adjustment':
             u, v = change['edge']
             network[u][v]['weight'] = change['new_weight']
@@ -149,19 +149,19 @@ class PureEnergyDynamics:
 
 
 class CognitiveUniverse:
-    """认知宇宙，基于两个公设：认知时空和能量动力学，观察自然涌现。
+    """Cognitive universe, based on two postulates: cognitive spacetime and energy dynamics, observing natural emergence.
 
-    主要机制：
-        - 学习：通过遍历降低边权重
-        - 遗忘：长时间未激活的边向原始权重恢复
-        - 随机遍历：探索网络
-    不包含任何预设的压缩或迁移算法，仅记录观察到的涌现现象。
+    Main mechanisms:
+        - Learning: reduce edge weights through traversal
+        - Forgetting: edges not activated for a long time return to original weight
+        - Random traversal: explore the network
+    Does not include any preset compression or migration algorithms, only records observed emergence phenomena.
     """
 
     def __init__(self, individual_params: Optional[Dict[str, Any]] = None, network_seed: int = 42):
         """
-        :param individual_params: 个体参数，默认使用 BASE_PARAMETERS
-        :param network_seed: 随机种子
+        :param individual_params: Individual parameters, default uses BASE_PARAMETERS
+        :param network_seed: Random seed
         """
         if individual_params is None:
             individual_params = BASE_PARAMETERS.copy()
@@ -196,10 +196,10 @@ class CognitiveUniverse:
 
         random.seed(network_seed)
         np.random.seed(network_seed)
-        print("认知宇宙初始化完成: 遗忘机制已激活")
+        print("Cognitive universe initialized: forgetting mechanism activated")
 
     def initialize_semantic_network(self) -> None:
-        """初始化语义网络，从 SemanticConceptNetwork 构建节点和边。"""
+        """Initialize semantic network, building nodes and edges from SemanticConceptNetwork."""
         from core.semantic_network import SemanticConceptNetwork
 
         semantic_net = SemanticConceptNetwork()
@@ -228,18 +228,18 @@ class CognitiveUniverse:
         for u, v, attr in initial_edges:
             self.G.add_edge(u, v, **attr)
 
-        print(f"语义网络初始化: {len(nodes)}节点, {len(initial_edges)}条边")
-        print(f"初始全局能量: {self.calculate_network_energy():.3f}")
+        print(f"Semantic network initialization: {len(nodes)} nodes, {len(initial_edges)} edges")
+        print(f"Initial global energy: {self.calculate_network_energy():.3f}")
 
     def calculate_network_energy(self) -> float:
-        """计算当前网络平均能耗。"""
+        """Calculate current network average energy."""
         if self.G.number_of_edges() == 0:
             return 0
         energies = [self.G[u][v]['weight'] for u, v in self.G.edges()]
         return np.mean(energies)
 
     def basic_energy_optimization(self) -> bool:
-        """基本的能量优化：随机选择一条边进行学习（降低能耗），并可能扩散到邻居。"""
+        """Basic energy optimization: randomly select an edge for learning (reduce energy), possibly propagate to neighbors."""
         if self.G.number_of_edges() == 0:
             return False
 
@@ -258,7 +258,7 @@ class CognitiveUniverse:
         return True
 
     def record_edge_activation(self, u: str, v: str) -> None:
-        """记录边的激活，更新激活时间并应用学习效应（降低权重）。"""
+        """Record edge activation, update activation time and apply learning effect (reduce weight)."""
         self.last_activation_time[(u, v)] = self.iteration_count
 
         current_energy = self.G[u][v]['weight']
@@ -267,7 +267,7 @@ class CognitiveUniverse:
         self.G[u][v]['weight'] = max(0.05, new_energy)
 
     def apply_basic_forgetting(self) -> None:
-        """应用基础遗忘机制：长时间未激活的边向原始能量恢复。"""
+        """Apply basic forgetting mechanism: edges not activated for a long time return to original energy."""
         current_time = self.iteration_count
 
         for u, v in self.G.edges():
@@ -285,14 +285,14 @@ class CognitiveUniverse:
                 self.G[u][v]['weight'] = max(0.1, new_energy)
 
     def _compute_forget_factor(self, time_gap: int) -> float:
-        """计算遗忘因子，基于指数衰减。"""
+        """Compute forgetting factor based on exponential decay."""
         base_rate = self.forgetting_rate
         time_factor = 1 - math.exp(-time_gap / 800)
         forget_factor = base_rate * time_factor
         return min(forget_factor, 0.15)
 
     def _random_traversal(self) -> None:
-        """随机遍历：从随机节点出发随机行走2-4步，记录路径并激活沿途边。"""
+        """Random traversal: start from a random node and perform a random walk of 2-4 steps, record path and activate edges."""
         nodes = list(self.G.nodes())
         if len(nodes) < 2:
             return
@@ -327,18 +327,18 @@ class CognitiveUniverse:
                     self.record_edge_activation(u, v)
 
     def evolve(self, iterations: int = 1000, observation_interval: int = 100) -> Dict[str, List]:
-        """让宇宙自然演化，观察涌现现象。
+        """Let the universe evolve naturally, observing emergence phenomena.
 
-        :param iterations: 迭代次数
-        :param observation_interval: 记录网络快照的间隔
-        :return: observations 字典
+        :param iterations: Number of iterations
+        :param observation_interval: Interval for taking network snapshots
+        :return: observations dictionary
         """
-        print(f"开始认知宇宙演化: {iterations}次迭代")
-        print("只执行基本能量优化，观察自然涌现...")
+        print(f"Starting cognitive universe evolution: {iterations} iterations")
+        print("Executing only basic energy optimization, observing natural emergence...")
 
         initial_energy = self.calculate_network_energy()
         self.energy_history.append(initial_energy)
-        print(f"初始全局能量: {initial_energy:.3f}")
+        print(f"Initial global energy: {initial_energy:.3f}")
 
         for i in range(iterations):
             self.iteration_count += 1
@@ -360,21 +360,21 @@ class CognitiveUniverse:
             if i % 500 == 0:
                 current_energy = self.calculate_network_energy()
                 improvement = ((initial_energy - current_energy) / initial_energy * 100) if initial_energy > 0 else 0
-                print(f"迭代 {i}: 全局能量 = {current_energy:.3f} (改善: {improvement:.1f}%)")
+                print(f"Iteration {i}: global energy = {current_energy:.3f} (improvement: {improvement:.1f}%)")
 
         final_energy = self.calculate_network_energy()
         total_improvement = ((initial_energy - final_energy) / initial_energy * 100) if initial_energy > 0 else 0
 
-        print(f"\n演化完成!")
-        print(f"最终全局能量: {final_energy:.3f}")
-        print(f"总改善: {total_improvement:.1f}%")
-        print(f"网络规模: {self.G.number_of_nodes()}节点, {self.G.number_of_edges()}边")
-        print(f"遍历次数: {len(self.traversal_history)}")
+        print(f"\nEvolution completed!")
+        print(f"Final global energy: {final_energy:.3f}")
+        print(f"Total improvement: {total_improvement:.1f}%")
+        print(f"Network size: {self.G.number_of_nodes()} nodes, {self.G.number_of_edges()} edges")
+        print(f"Number of traversals: {len(self.traversal_history)}")
 
         return self.observations
 
     def _take_network_snapshot(self) -> None:
-        """记录当前网络快照（统计信息）。"""
+        """Record current network snapshot (statistics)."""
         snapshot = {
             'iteration': self.iteration_count,
             'global_energy': self.calculate_network_energy(),
@@ -386,7 +386,7 @@ class CognitiveUniverse:
         self.observations['network_evolution_snapshots'].append(snapshot)
 
     def get_emergence_metrics(self) -> Dict[str, float]:
-        """获取涌现现象的量化指标。"""
+        """Get quantitative metrics of emergence phenomena."""
         metrics = {
             'energy_minimization_efficiency': 0,
             'structural_emergence_index': 0,
@@ -416,38 +416,38 @@ class CognitiveUniverse:
         return metrics
 
     def report_emergence_findings(self) -> Dict[str, float]:
-        """打印并返回涌现观察报告。"""
+        """Print and return emergence observation report."""
         print("\n" + "=" * 60)
-        print("纯粹涌现观察报告")
+        print("Pure Emergence Observation Report")
         print("=" * 60)
 
         metrics = self.get_emergence_metrics()
 
-        print(f"能量最小化效率: {metrics['energy_minimization_efficiency']:.3f}")
-        print(f"结构涌现指数: {metrics['structural_emergence_index']:.3f}")
-        print(f"认知复杂性: {metrics['cognitive_complexity']:.3f}")
-        print(f"适应率: {metrics['adaptation_rate']:.3f}")
+        print(f"Energy minimization efficiency: {metrics['energy_minimization_efficiency']:.3f}")
+        print(f"Structural emergence index: {metrics['structural_emergence_index']:.3f}")
+        print(f"Cognitive complexity: {metrics['cognitive_complexity']:.3f}")
+        print(f"Adaptation rate: {metrics['adaptation_rate']:.3f}")
 
-        print(f"\n网络演化快照: {len(self.observations['network_evolution_snapshots'])}次记录")
-        print(f"遍历模式: {len(self.traversal_history)}次遍历")
+        print(f"\nNetwork evolution snapshots: {len(self.observations['network_evolution_snapshots'])} records")
+        print(f"Traversal patterns: {len(self.traversal_history)} traversals")
 
         if self.energy_dynamics.global_energy_history:
             energy_reduction = self.energy_dynamics.global_energy_history[0] - \
                                self.energy_dynamics.global_energy_history[-1]
-            print(f"能量降低总量: {energy_reduction:.3f}")
+            print(f"Total energy reduction: {energy_reduction:.3f}")
 
-        print(f"\n观察结论:")
+        print(f"\nObservation conclusions:")
         if metrics['energy_minimization_efficiency'] > 0.1:
-            print("✓ 观察到显著的能量最小化趋势")
+            print("✓ Significant energy minimization trend observed")
         if metrics['structural_emergence_index'] > 0:
-            print("✓ 观察到网络结构的自组织")
+            print("✓ Self-organization of network structure observed")
         if metrics['adaptation_rate'] > 0.3:
-            print("✓ 观察到良好的环境适应性")
+            print("✓ Good environmental adaptability observed")
 
         return metrics
 
     def get_network_stats(self) -> Dict[str, Any]:
-        """返回当前网络统计信息。"""
+        """Return current network statistics."""
         return {
             'nodes': self.G.number_of_nodes(),
             'edges': self.G.number_of_edges(),
@@ -462,4 +462,4 @@ if __name__ == "__main__":
     universe = CognitiveUniverse()
     universe.initialize_semantic_network()
     universe.evolve(iterations=10000)
-    print("CognitiveUniverse 演化测试完成")
+    print("CognitiveUniverse evolution test completed")

@@ -1,7 +1,7 @@
 """
-涌现现象观察器（精简版）
+Emergence Phenomenon Observer (Simplified Version)
 ------------------------
-定义 EmergenceObserver 类，实时观察并记录概念压缩和原理迁移现象。
+Define EmergenceObserver class to observe and record concept compression and principle migration phenomena in real time.
 """
 
 import numpy as np
@@ -9,7 +9,7 @@ from typing import List, Dict, Any, Optional
 
 
 class EmergenceObserver:
-    """涌现现象观察器，定期从网络中检测涌现事件并记录。"""
+    """Emergence phenomenon observer, periodically detects emergence events from the network and records them."""
 
     def __init__(self):
         self.observations = {
@@ -26,12 +26,12 @@ class EmergenceObserver:
 
     def observe_compression_emergence(self, network: Any, energy_history: List[float],
                                       iteration: int) -> List[Dict[str, Any]]:
-        """观察概念压缩涌现。
+        """Observe concept compression emergence.
 
-        :param network: 认知网络（应具有 nodes() 和 neighbors() 方法）
-        :param energy_history: 能耗历史
-        :param iteration: 当前迭代次数
-        :return: 本次观察到的压缩事件列表
+        :param network: Cognitive network (should have nodes() and neighbors() methods)
+        :param energy_history: Energy history
+        :param iteration: Current iteration number
+        :return: List of compression events observed in this step
         """
         compressions = []
 
@@ -58,12 +58,12 @@ class EmergenceObserver:
 
     def observe_migration_emergence(self, network: Any, traversal_history: List[Any],
                                     iteration: int) -> List[Dict[str, Any]]:
-        """观察原理迁移涌现。
+        """Observe principle migration emergence.
 
-        :param network: 认知网络
-        :param traversal_history: 遍历历史
-        :param iteration: 当前迭代次数
-        :return: 本次观察到的迁移事件列表
+        :param network: Cognitive network
+        :param traversal_history: Traversal history
+        :param iteration: Current iteration number
+        :return: List of migration events observed in this step
         """
         migrations = []
 
@@ -92,7 +92,7 @@ class EmergenceObserver:
         return migrations
 
     def _compute_cohesion(self, center: str, neighbors: List[str], network: Any) -> float:
-        """计算邻居节点间的内聚性（边密度）。"""
+        """Compute cohesion among neighbor nodes (edge density)."""
         connections = 0
         possible = len(neighbors) * (len(neighbors) - 1) / 2
         for i, n1 in enumerate(neighbors):
@@ -102,7 +102,7 @@ class EmergenceObserver:
         return connections / possible if possible > 0 else 0
 
     def _compute_energy_sync(self, center: str, neighbors: List[str], energy_history: List[float]) -> float:
-        """计算能量同步性：基于最近能量变化的趋势平缓程度。"""
+        """Compute energy synchrony: based on the flatness of recent energy change trend."""
         if len(energy_history) < 20:
             return 0.5
         recent = energy_history[-20:]
@@ -110,7 +110,7 @@ class EmergenceObserver:
         return max(0, 1 - abs(trend))
 
     def _extract_path(self, traversal: Any) -> Optional[List[str]]:
-        """从遍历记录中提取路径。"""
+        """Extract path from traversal record."""
         if isinstance(traversal, (list, tuple)) and len(traversal) > 0:
             return traversal[0] if isinstance(traversal[0], list) else [traversal[0]]
         elif isinstance(traversal, dict) and 'path' in traversal:
@@ -118,7 +118,7 @@ class EmergenceObserver:
         return None
 
     def _is_cross_domain(self, path: List[str]) -> bool:
-        """判断路径是否跨领域。"""
+        """Determine if a path is cross-domain."""
         domains = set()
         for node in path:
             domain = self._infer_domain(node)
@@ -126,7 +126,7 @@ class EmergenceObserver:
         return len(domains) > 1
 
     def _compute_path_efficiency(self, path: List[str], network: Any) -> float:
-        """计算路径效率：1 / (总能耗 + 0.1)。"""
+        """Compute path efficiency: 1 / (total energy + 0.1)."""
         total_energy = 0
         for i in range(len(path)-1):
             if network.has_edge(path[i], path[i+1]):
@@ -134,13 +134,13 @@ class EmergenceObserver:
         return 1.0 / (total_energy + 0.1) if total_energy > 0 else 0
 
     def _find_mediator(self, path: List[str]) -> str:
-        """返回路径中间节点作为中介。"""
+        """Return the middle node of the path as the mediator."""
         if len(path) < 3:
             return path[0] if path else ""
         return path[len(path)//2]
 
     def _infer_domain(self, concept: str) -> str:
-        """简单领域推断。"""
+        """Simple domain inference."""
         domain_keywords = {
             'physics': ['力', '运动', '能量', '牛顿'],
             'math': ['积分', '几何', '代数', '概率'],
@@ -153,7 +153,7 @@ class EmergenceObserver:
         return 'other'
 
     def get_observation_summary(self) -> Dict[str, int]:
-        """返回观察统计摘要。"""
+        """Return observation statistics summary."""
         return {
             'total_compressions': len(self.observations['compressions']),
             'total_migrations': len(self.observations['migrations']),
@@ -163,4 +163,4 @@ class EmergenceObserver:
 
 if __name__ == "__main__":
     obs = EmergenceObserver()
-    print("EmergenceObserver 初始化成功")
+    print("EmergenceObserver initialized successfully")

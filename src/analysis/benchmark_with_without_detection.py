@@ -4,7 +4,7 @@
 """
 compare_time.py
 
-对比纯公设演化（无检测）与完整演化（含检测）的运行时间。
+Compare runtime between pure postulate evolution (no detection) and full evolution (with detection).
 """
 
 import sys
@@ -27,11 +27,11 @@ np.random.seed(42)
 
 
 # ============================================================
-# 1. 纯公设模式（无检测）
+# 1. Pure postulate mode (no detection)
 # ============================================================
 class CoreOnlyUniverse(CognitiveUniverse):
     """
-    只保留时空图与能量最小化，移除所有观测、记录、检测。
+    Keep only spacetime graph and energy minimization, remove all observations, logging, and detection.
     """
 
     def __init__(self, individual_params=None, network_seed=42, num_concepts=None):
@@ -40,22 +40,22 @@ class CoreOnlyUniverse(CognitiveUniverse):
 
     def evolve_core_only(self, iterations=10000):
         """
-        执行纯公设演化，不记录任何观测。
+        Execute pure postulate evolution, no observations recorded.
         """
-        # 初始化网络（重要！）
+        # Initialize network (important!)
         self.initialize_semantic_network()
 
         for i in range(iterations):
             self.iteration_count += 1
 
-            # 能量优化（学习）
+            # Energy optimization (learning)
             self.basic_energy_optimization()
 
-            # 随机遍历
+            # Random traversal
             if random.random() < 0.3:
                 self._random_traversal()
 
-            # 遗忘（每10步）
+            # Forgetting (every 10 steps)
             if i % 10 == 0:
                 self.apply_basic_forgetting()
 
@@ -84,7 +84,7 @@ class CoreOnlyUniverse(CognitiveUniverse):
 
 def run_core_only_benchmark(scales, num_individuals=3, iterations=10000):
     """
-    运行纯公设模式，返回结果列表。
+    Run pure postulate mode, return list of results.
     """
     results = []
     for scale in scales:
@@ -110,16 +110,16 @@ def run_core_only_benchmark(scales, num_individuals=3, iterations=10000):
                 'time_sec': elapsed
             })
 
-            print(f"[core_only] 规模 {scale} 个体 {ind+1} 完成，耗时 {elapsed:.2f} 秒")
+            print(f"[core_only] Scale {scale} Individual {ind+1} completed, time: {elapsed:.2f} seconds")
     return results
 
 
 # ============================================================
-# 2. 完整模式（含检测）
+# 2. Full mode (with detection)
 # ============================================================
 def run_full_benchmark(scales, num_individuals=3, iterations=10000):
     """
-    运行完整模式（CognitiveUniverseEnhanced + 检测），返回结果列表。
+    Run full mode (CognitiveUniverseEnhanced + detection), return list of results.
     """
     results = []
     for scale in scales:
@@ -134,7 +134,7 @@ def run_full_benchmark(scales, num_individuals=3, iterations=10000):
                 num_concepts=scale
             )
 
-            # 重要：初始化网络（完整模式不会自动初始化）
+            # Important: initialize network (full mode does not auto-initialize)
             universe.initialize_semantic_network()
 
             start = time.time()
@@ -151,12 +151,12 @@ def run_full_benchmark(scales, num_individuals=3, iterations=10000):
                 'time_sec': elapsed
             })
 
-            print(f"[full] 规模 {scale} 个体 {ind+1} 完成，耗时 {elapsed:.2f} 秒")
+            print(f"[full] Scale {scale} Individual {ind+1} completed, time: {elapsed:.2f} seconds")
     return results
 
 
 # ============================================================
-# 3. 主函数：依次运行并输出对比
+# 3. Main: run sequentially and output comparison
 # ============================================================
 def main():
     scales = [51, 71, 91, 111]
@@ -164,21 +164,21 @@ def main():
     iterations = 10000
 
     print("=" * 70)
-    print("时间对比实验：纯公设 vs 完整检测")
-    print(f"规模列表: {scales}")
-    print(f"每个规模个体数: {num_individuals}")
-    print(f"迭代次数: {iterations}")
+    print("Time Comparison Experiment: Pure Postulate vs Full Detection")
+    print(f"Scales: {scales}")
+    print(f"Individuals per scale: {num_individuals}")
+    print(f"Iterations: {iterations}")
     print("=" * 70)
 
-    # 1. 运行纯公设模式
-    print("\n--- 开始测量纯公设模式（无检测）---")
+    # 1. Run pure postulate mode
+    print("\n--- Starting pure postulate mode (no detection) ---")
     core_results = run_core_only_benchmark(scales, num_individuals, iterations)
 
-    # 2. 运行完整模式
-    print("\n--- 开始测量完整模式（含检测）---")
+    # 2. Run full mode
+    print("\n--- Starting full mode (with detection) ---")
     full_results = run_full_benchmark(scales, num_individuals, iterations)
 
-    # 3. 汇总统计
+    # 3. Aggregate statistics
     core_by_scale = {}
     full_by_scale = {}
     for r in core_results:
@@ -189,8 +189,8 @@ def main():
         full_by_scale.setdefault(s, []).append(r['time_sec'])
 
     print("\n" + "=" * 70)
-    print("各规模平均耗时（秒）")
-    print(f"{'规模':>6} {'纯公设':>12} {'完整检测':>12} {'差异':>12} {'比例':>10}")
+    print("Average time per scale (seconds)")
+    print(f"{'Scale':>6} {'Pure Postulate':>12} {'Full Detection':>12} {'Difference':>12} {'Ratio':>10}")
     print("-" * 70)
     for scale in scales:
         core_avg = np.mean(core_by_scale[scale])
@@ -202,15 +202,15 @@ def main():
     total_core = sum(r['time_sec'] for r in core_results)
     total_full = sum(r['time_sec'] for r in full_results)
     print("-" * 70)
-    print(f"{'总计':>6} {total_core:>12.2f} {total_full:>12.2f} {total_full - total_core:>+12.2f} {total_full/total_core:>9.2f}x")
+    print(f"{'Total':>6} {total_core:>12.2f} {total_full:>12.2f} {total_full - total_core:>+12.2f} {total_full/total_core:>9.2f}x")
 
-    # 4. 保存结果到 CSV
+    # 4. Save results to CSV
     import pandas as pd
     df = pd.DataFrame(core_results + full_results)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     out_file = f"../../results/analysis/time/time_comparison_{timestamp}.csv"
     df.to_csv(out_file, index=False)
-    print(f"\n详细结果已保存至 {out_file}")
+    print(f"\nDetailed results saved to {out_file}")
 
 
 if __name__ == "__main__":

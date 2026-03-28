@@ -67,7 +67,7 @@
           "fractal_dimension": {
             "before": 0.0,
             "after": 0.0,
-            "relative_change": Infinity,
+            "relative_change": "Infinity",
             "conserved": true
           }
         }
