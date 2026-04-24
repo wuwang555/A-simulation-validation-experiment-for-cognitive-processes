@@ -43,7 +43,7 @@ class ObjectiveMetricsAnalysis:
     Cognitive Graph Objective Metrics Analysis Class (Central Nodes + Total Node Frequency Zipf)
     """
 
-    def __init__(self, output_dir="results/analysis/objective_metrics"):
+    def __init__(self, output_dir="../../results/analysis/objective_metrics"):
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.fig_dir = self.output_dir / "figures"
@@ -56,18 +56,18 @@ class ObjectiveMetricsAnalysis:
     # ---------- Fitting function definitions ----------
     @staticmethod
     def power_law(x, a, b, c):
-        """Power-law function a * x^(-b) + c"""
+        """Power-law function a * x^(-b) + Cognitive_Map_Animation_Visual_Elements_Description.md"""
         return a * np.power(x, -b) + c
 
     @staticmethod
     def exp_decay(x, a, b, c):
-        """Exponential decay a * exp(-b * x) + c"""
+        """Exponential decay a * exp(-b * x) + Cognitive_Map_Animation_Visual_Elements_Description.md"""
         return a * np.exp(-b * x) + c
 
     def fit_energy_curve(self, x, y):
         """
         Fit the energy history with two models, return the best model's parameters and metrics.
-        Returns dictionary: {'model': 'power'/'exp', 'params': [a,b,c], 'r2': float, 'rmse': float, 'fluctuation': float}
+        Returns dictionary: {'model': 'power'/'exp', 'params': [a,b,Cognitive_Map_Animation_Visual_Elements_Description.md], 'r2': float, 'rmse': float, 'fluctuation': float}
         """
         # Power-law fit
         try:

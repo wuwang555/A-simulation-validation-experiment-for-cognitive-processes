@@ -38,7 +38,7 @@ class AlgebraValidationExperiments:
 
         According to Theorem 4.1.3 in the paper, basic cognitive operations should form a semigroup under composition,
         satisfying associativity. This method combines five basic operations (learning, forgetting, traversal,
-        compression, migration) and verifies associativity (a∘b)∘c = a∘(b∘c) on a test network.
+        compression, migration) and verifies associativity (a∘b)∘Cognitive_Map_Animation_Visual_Elements_Description.md = a∘(b∘Cognitive_Map_Animation_Visual_Elements_Description.md) on a test network.
 
         Returns:
             dict: A dictionary containing associativity verification results and operation count, e.g.:
