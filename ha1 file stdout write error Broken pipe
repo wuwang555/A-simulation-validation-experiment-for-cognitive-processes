@@ -1,0 +1,422 @@
+[33mcommit 5efd0905e1b4eac9261c72a81a40775e2e590049[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Wed Apr 29 23:47:36 2026 +0800
+
+    new structure fix2
+
+[33mcommit 826ed9838954dcb6aa647783ed98e9f204018611[m[33m ([m[1;31morigin2/master[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Wed Apr 29 23:45:07 2026 +0800
+
+    new structure fix
+
+[33mcommit 7cbdb8c32baea41944e9e9f032caca06f687ec71[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Wed Apr 29 23:32:58 2026 +0800
+
+    new_file_structure_fix
+
+[33mcommit 3b9aac78fdf686691975be3141e38254b072fa52[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Wed Apr 29 23:28:10 2026 +0800
+
+    new_file_structure
+
+[33mcommit beae5b9b7bfbbd0daf2a539409d495167eb8d724[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Tue Apr 28 11:05:57 2026 +0800
+
+    repair_latex_overfull_warning
+
+[33mcommit a81640baea59409c6c588b4e6c12ce77d75ae86d[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Fri Apr 24 11:09:40 2026 +0800
+
+    Repair_SaveDir
+
+[33mcommit 012e7f0b1e6993b94b296f84a7e180b544604522[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Mon Mar 30 20:42:55 2026 +0800
+
+    paper_translate_en
+
+[33mcommit 8dfafe9176ef0076591aac66ae0419c312921ebe[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Sat Mar 28 17:16:28 2026 +0800
+
+    Code_Transalte_EN
+
+[33mcommit 5ff9daa9ac4cdf6cea96a5dbdc48279742e535ef[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Sat Mar 28 00:58:39 2026 +0800
+
+    add_time.Renew_Project_Structure,Readme
+
+[33mcommit 2b5d63567b32d85af16fcf65a4d8f4d113df7d35[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Sat Mar 21 00:51:38 2026 +0800
+
+    new_readme
+
+[33mcommit fba89d7c6bf145768c718f5379a4c7700b4a7823[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Mon Mar 16 22:32:29 2026 +0800
+
+    abstract_FirstSection_update
+
+[33mcommit f24627e5bccc03067b860d5b77eb90ceb6aa0a6a[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Mon Mar 16 19:11:38 2026 +0800
+
+    better_figure
+
+[33mcommit 15f5230be6b92a1d705a4bdae969491cd4e7f71d[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Sat Mar 14 17:11:10 2026 +0800
+
+    pro_obj_2
+
+[33mcommit 088b1796f38fbe4c98e37ae47fcabf16a79ee0d8[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Sat Mar 14 03:06:39 2026 +0800
+
+    pro_objectivity
+
+[33mcommit b13360e49933c9f8a3c00ca8c1b029adc65f4170[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Fri Mar 13 18:06:16 2026 +0800
+
+    new_paper_V1.1.1+upload
+
+[33mcommit a9569f15776297b8361fb4c31c313e1b8b01152d[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Thu Mar 12 12:30:08 2026 +0800
+
+    repair_paper_table
+
+[33mcommit 9380d56ea696a58b779669ca9146359f1d17cc7c[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Thu Mar 12 08:02:03 2026 +0800
+
+    paper_V1.1.0_streamline_1
+
+[33mcommit a64d2a069957344be58d220a41a102de71cd6b4b[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Mon Mar 9 12:32:14 2026 +0800
+
+    paper_V1.0.12
+
+[33mcommit e97057f060986b7723cb1cec5b1a33c53f4ad752[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Fri Mar 6 21:46:46 2026 +0800
+
+    logs_apper
+
+[33mcommit 7f2d1d753a1bba4d1588639ed862298f2b65537c[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Thu Mar 5 21:08:05 2026 +0800
+
+    new paper V1.0.11
+
+[33mcommit fae029cde3d9613b3d304b47c23a234cd91d3612[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Thu Feb 26 03:54:50 2026 +0800
+
+    add note_algebra and update paper
+
+[33mcommit 5fc6110ea8ebdce66a57501da5f4901afc86681d[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Thu Feb 26 02:09:28 2026 +0800
+
+    update paper,readme and algebra_experiments
+
+[33mcommit a760b85814ecf46b20d1c061f79953b49c469b40[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Tue Feb 24 02:42:11 2026 +0800
+
+    add logs,data_dic and proj_stru.updata require
+
+[33mcommit 81de7188bd2c299b178354ffeba4dd2abe92c8ba[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Tue Feb 24 00:32:51 2026 +0800
+
+    set_all_code_random_seed_to_42
+
+[33mcommit e0aa7c2e27035c2adfdf79ecaa323edff996d69a[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Mon Feb 23 01:48:18 2026 +0800
+
+    add_more_note
+
+[33mcommit 2faf8fafff6a76701ce91d4538b02b1ae66b44c3[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Mon Feb 23 01:12:35 2026 +0800
+
+    add_auto_save
+
+[33mcommit b7860cb3298834d79390589de56c080aef50bf98[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Sat Feb 14 21:36:49 2026 +0800
+
+    new_stru
+
+[33mcommit aac389fbca416957f86eb8716ac13b20384c3065[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Fri Jan 23 00:53:59 2026 +0800
+
+    add ariticle picture
+
+[33mcommit 7e8be74c8a12b4e51db0456e8af1356a7775b017[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Sat Jan 17 14:48:37 2026 +0800
+
+    add_Readme_Eh
+
+[33mcommit b4766d87f5192dfcee2d7f83859bf992d72796db[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Sat Jan 17 14:22:06 2026 +0800
+
+    update_readme
+
+[33mcommit 28d97e1161733b46da267d9dcaa9712f0df8ee2c[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Sat Jan 17 13:40:26 2026 +0800
+
+    CognitiveGraphV3.0(new_comp)
+
+[33mcommit 97bfea6baa1e8caa7cdfaba44a9cca4cda490da9[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Sat Jan 10 21:45:44 2026 +0800
+
+    new experiments-algebra
+
+[33mcommit 46268d7663b2d10fee4b8b4d4d8f02a1b8da41ab[m[33m ([m[1;31morigin2_http/master[m[33m)[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Mon Dec 15 15:55:32 2025 +0800
+
+    update_english_readme_and_structure
+
+[33mcommit b6506d48debe818abdca49c108b7f9febfce4f02[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Sun Dec 14 23:15:20 2025 +0800
+
+    Update_readme_2
+
+[33mcommit 940b2e7af332ffddcf72ee782421497dfb846780[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Sun Dec 14 23:12:03 2025 +0800
+
+    Update_readme
+
+[33mcommit 1924be47315896bf07fdf3c8d927d9f47946cc09[m
+Author: 无望555 <16287967+hopeless-555@user.noreply.gitee.com>
+Date:   Sun Dec 14 14:55:17 2025 +0000
+
+    add LICENSE.
+    
+    Signed-off-by: 无望555 <16287967+hopeless-555@user.noreply.gitee.com>
+
+[33mcommit 955d462eeae3f098d1e7ac32b27dd9bbcbeaa45d[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Sun Dec 14 22:53:54 2025 +0800
+
+    A_simulation_validation_experiment_for_cognitive_processes
+
+[33mcommit b13a8ac36d51ff316baa3a0698dc0540711d7b4e[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Fri Oct 24 23:39:58 2025 +0800
+
+    CognitiveGraph_AI_V2.0_better_structure
+
+[33mcommit c43d61b64968d0b38f11612ada61473f4ae27265[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Fri Oct 24 19:56:50 2025 +0800
+
+    CognitiveGraph_AI_V1.0
+
+[33mcommit 048bcf2b2034fb8c6f4c98aa7e69a869e74242db[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Wed Oct 22 23:34:08 2025 +0800
+
+    add_latex_ch_V0.1
+
+[33mcommit b891f03a4ad2aaacb4781d9c796aeabd7355a822[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Wed Oct 22 23:11:56 2025 +0800
+
+    newadd
+
+[33mcommit a78e1f8ce1482b40aec3961d297ac1fe746ab2fa[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Sun Oct 19 22:00:54 2025 +0800
+
+    CognitiveGraph_sourse_coed_V1.0
+
+[33mcommit 742006cbb9f0c9a8eb95325cefe4a05bfa3446c9[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Sun Oct 19 16:34:54 2025 +0800
+
+    CognitivateGraph_sourse_code_all_emergence_beta_0.1
+
+[33mcommit 0ad844d1d04e78e24e07aacc1e06826bc8a32b4f[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Sun Oct 19 10:54:17 2025 +0800
+
+    CognitiveGraph_sourse_code_betaV0.1
+
+[33mcommit 2b4b0ab1d9b9a0fc847100b11f5d5050272e841c[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Sun Oct 19 09:09:53 2025 +0800
+
+    text_times=2
+
+[33mcommit 18ca4fdf882cd100c887374a23f2f1c311a2e167[m
+Author: wuwang555 <2401620659@qq.com>
+Date:   Tue Oct 14 23:55:06 2025 +0800
+
+    text01-06py
+
+                   SSUUMMMMAARRYY OOFF LLEESSSS CCOOMMMMAANNDDSS
+
+      Commands marked with * may be preceded by a number, _N.
+      Notes in parentheses indicate the behavior if _N is given.
+      A key preceded by a caret indicates the Ctrl key; thus ^K is ctrl-K.
+
+  h  H                 Display this help.
+  q  :q  Q  :Q  ZZ     Exit.
+ ---------------------------------------------------------------------------
+
+                           MMOOVVIINNGG
+
+  e  ^E  j  ^N  CR  *  Forward  one line   (or _N lines).
+  y  ^Y  k  ^K  ^P  *  Backward one line   (or _N lines).
+  f  ^F  ^V  SPACE  *  Forward  one window (or _N lines).
+  b  ^B  ESC-v      *  Backward one window (or _N lines).
+  z                 *  Forward  one window (and set window to _N).
+  w                 *  Backward one window (and set window to _N).
+  ESC-SPACE         *  Forward  one window, but don't stop at end-of-file.
+  d  ^D             *  Forward  one half-window (and set half-window to _N).
+  u  ^U             *  Backward one half-window (and set half-window to _N).
+  ESC-)  RightArrow *  Right one half screen width (or _N positions).
+  ESC-(  LeftArrow  *  Left  one half screen width (or _N positions).
+  ESC-}  ^RightArrow   Right to last column displayed.
+  ESC-{  ^LeftArrow    Left  to first column.
+  F                    Forward forever; like "tail -f".
+  ESC-F                Like F but stop when search pattern is found.
+  r  ^R  ^L            Repaint screen.
+  R                    Repaint screen, discarding buffered input.
+        ---------------------------------------------------
+        Default "window" is the screen height.
+        Default "half-window" is half of the screen height.
+ ---------------------------------------------------------------------------
+
+                          SSEEAARRCCHHIINNGG
+
+  /_p_a_t_t_e_r_n          *  Search forward for (_N-th) matching line.
+  ?_p_a_t_t_e_r_n          *  Search backward for (_N-th) matching line.
+  n                 *  Repeat previous search (for _N-th occurrence).
+  N                 *  Repeat previous search in reverse direction.
+  ESC-n             *  Repeat previous search, spanning files.
+  ESC-N             *  Repeat previous search, reverse dir. & spanning files.
+  ESC-u                Undo (toggle) search highlighting.
+  ESC-U                Clear search highlighting.
+  &_p_a_t_t_e_r_n          *  Display only matching lines.
+        ---------------------------------------------------
+        A search pattern may begin with one or more of:
+        ^N or !  Search for NON-matching lines.
+        ^E or *  Search multiple files (pass thru END OF FILE).
+        ^F or @  Start search at FIRST file (for /) or last file (for ?).
+        ^K       Highlight matches, but don't move (KEEP position).
+        ^R       Don't use REGULAR EXPRESSIONS.
+        ^S _n     Search for match in _n-th parenthesized subpattern.
+        ^W       WRAP search if no match found.
+ ---------------------------------------------------------------------------
+
+                           JJUUMMPPIINNGG
+
+  g  <  ESC-<       *  Go to first line in file (or line _N).
+  G  >  ESC->       *  Go to last line in file (or line _N).
+  p  %              *  Go to beginning of file (or _N percent into file).
+  t                 *  Go to the (_N-th) next tag.
+  T                 *  Go to the (_N-th) previous tag.
+  {  (  [           *  Find close bracket } ) ].
+  }  )  ]           *  Find open bracket { ( [.
+  ESC-^F _<_c_1_> _<_c_2_>  *  Find close bracket _<_c_2_>.
+  ESC-^B _<_c_1_> _<_c_2_>  *  Find open bracket _<_c_1_>.
+        ---------------------------------------------------
+        Each "find close bracket" command goes forward to the close bracket 
+          matching the (_N-th) open bracket in the top line.
+        Each "find open bracket" command goes backward to the open bracket 
+          matching the (_N-th) close bracket in the bottom line.
+
+  m_<_l_e_t_t_e_r_>            Mark the current top line with <letter>.
+  M_<_l_e_t_t_e_r_>            Mark the current bottom line with <letter>.
+  '_<_l_e_t_t_e_r_>            Go to a previously marked position.
+  ''                   Go to the previous position.
+  ^X^X                 Same as '.
+  ESC-m_<_l_e_t_t_e_r_>        Clear a mark.
+        ---------------------------------------------------
+        A mark is any upper-case or lower-case letter.
+        Certain marks are predefined:
+             ^  means  beginning of the file
+             $  means  end of the file
+ ---------------------------------------------------------------------------
+
+                        CCHHAANNGGIINNGG FFIILLEESS
+
+  :e [_f_i_l_e]            Examine a new file.
+  ^X^V                 Same as :e.
+  :n                *  Examine the (_N-th) next file from the command line.
+  :p                *  Examine the (_N-th) previous file from the command line.
+  :x                *  Examine the first (or _N-th) file from the command line.
+  :d                   Delete the current file from the command line list.
+  =  ^G  :f            Print current file name.
+ ---------------------------------------------------------------------------
+
+                    MMIISSCCEELLLLAANNEEOOUUSS CCOOMMMMAANNDDSS
+
+  -_<_f_l_a_g_>              Toggle a command line option [see OPTIONS below].
+  --_<_n_a_m_e_>             Toggle a command line option, by name.
+  __<_f_l_a_g_>              Display the setting of a command line option.
+  ___<_n_a_m_e_>             Display the setting of an option, by name.
+  +_c_m_d                 Execute the less cmd each time a new file is examined.
+
+  !_c_o_m_m_a_n_d             Execute the shell command with $SHELL.
+  #_c_o_m_m_a_n_d             Execute the shell command, expanded like a prompt.
+  |XX_c_o_m_m_a_n_d            Pipe file between current pos & mark XX to shell command.
+  s _f_i_l_e               Save input to a file.
+  v                    Edit the current file with $VISUAL or $EDITOR.
+  V                    Print version number of "less".
+ ---------------------------------------------------------------------------
+
+                           OOPPTTIIOONNSS
+
+        Most options may be changed either on the command line,
+        or from within less by using the - or -- command.
+        Options may be given in one of two forms: either a single
+        character preceded by a -, or a name preceded by --.
+
+  -?  ........  --help
+                  Display help (from command line).
+  -a  ........  --search-skip-screen
+                  Search skips current screen.
+  -A  ........  --SEARCH-SKIP-SCREEN
+                  Search starts just after target line.
+  -b [_N]  ....  --buffers=[_N]
+                  Number of buffers.
+  -B  ........  --auto-buffers
+                  Don't automatically allocate buffers for pipes.
+  -c  ........  --clear-screen
+                  Repaint by clearing rather than scrolling.
+  -d  ........  --dumb
+                  Dumb terminal.
+  -D xx_c_o_l_o_r  .  --color=xx_c_o_l_o_r
+                  Set screen colors.
+  -e  -E  ....  --quit-at-eof  --QUIT-AT-EOF
+                  Quit at end of file.
+  -f  ........  --force
+                  Force open non-regular files.
+  -F  ........  --quit-if-one-screen
+                  Quit if entire file fits on first screen.
+  -g  ........  --hilite-search
+                  Highlight only last match for searches.
