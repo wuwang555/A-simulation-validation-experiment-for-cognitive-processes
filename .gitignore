@@ -29,9 +29,6 @@ results/*
 !results/Fresults/
 results/Fresults/*
 !results/Fresults/animations/
-results/Fresults/animations/*
-!results/Fresults/animations/cognitive_3d_71c_ind0_20260429_001528.html
-!results/Fresults/animations/cognitive_anim_dynamic_71c_ind0_20260406_190427.gif
 !results/DATA_DICTIONARY.md
 !results/111_concepts.xlsx
 !results/51_concepts.xlsx
