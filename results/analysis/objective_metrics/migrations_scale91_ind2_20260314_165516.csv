@@ -1,4 +1,3 @@
-detection_iteration,principle_node,from_node,to_node,efficiency_gain,domain_span,path
-5600,模式识别,语言习得,模式识别,0.38759185626256526,3,语言习得 -> 具身认知 -> 模式识别
-8300,模式识别,数据结构,智能体,0.4173772583850255,2,数据结构 -> 模式识别 -> 智能体
-8600,模式识别,知识图谱,深度学习,0.3826849120740622,3,知识图谱 -> 模式识别 -> 深度学习
+version https://git-lfs.github.com/spec/v1
+oid sha256:1faeed4299b4bd718af0bda2bd7c035426c003a6fe81db5d24cb9a12b82ec7db
+size 415

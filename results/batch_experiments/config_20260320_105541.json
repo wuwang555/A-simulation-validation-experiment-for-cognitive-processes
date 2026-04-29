@@ -1,17 +1,3 @@
-{
-  "iterations": 10000,
-  "repetitions": 1,
-  "models": [
-    "random",
-    "qlearning",
-    "traditional",
-    "emergence"
-  ],
-  "scales": [
-    51,
-    71,
-    91,
-    111
-  ],
-  "timestamp": "20260320_105541"
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:1321a805aa29e803600ad19564df90a751741451fb7b5537af8653570c00fe2e
+size 231
