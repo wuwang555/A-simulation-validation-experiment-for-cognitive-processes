@@ -96,6 +96,9 @@ These phenomena closely align with Wallas's four-stage model of creative thinkin
 *   **Orbit-Stabilizer Theorem:** Confirmed the relationship between orbit size and stabilizer size in the cognitive state space (although high network personalization resulted in zero isomorphisms, the theorem holds in trivial cases).
 *   **Lie Group Evolution Demonstration:** Showcased the feasibility of continuous-time cognitive evolution, with different generator combinations leading to varying energy optimization effects (energy-dominant strategy reduced consumption by 37.8%).
 
+### Visualizing Cognitive Graph Evolution
+![Visualization process at 71-concept scale](results/Fresults/animations/cognitive_anim_dynamic_71c_ind0_20260406_190427.gif)
+
 ---
 
 ## Application Exploration: Personalized Education Prototype (Example)
