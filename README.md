@@ -97,7 +97,24 @@ These phenomena closely align with Wallas's four-stage model of creative thinkin
 *   **Lie Group Evolution Demonstration:** Showcased the feasibility of continuous-time cognitive evolution, with different generator combinations leading to varying energy optimization effects (energy-dominant strategy reduced consumption by 37.8%).
 
 ### Visualizing Cognitive Graph Evolution
-![Visualization process at 71-concept scale](results/Fresults/animations/cognitive_anim_dynamic_71c_ind0_20260406_190427.gif)
+![71‑concept scale animation](results/Fresults/animations/cognitive_anim_dynamic_71c_ind0_20260406_190427.gif)
+
+#### Visual Legend of the Cognitive Animation
+
+| Element | Color / Style | Meaning |
+|---------|---------------|---------|
+| **Node** | Light blue circle, black border | Represents a concept (e.g., "algorithm", "neural network", "energy conservation") |
+| **Node label** | Black text | Name of the concept |
+| **Ordinary edge** | Blue‑green → red‑purple gradient, variable thickness | Cognitive association between concepts. **Color**: Blue‑green = low cognitive energy (well learned), red‑purple = high energy (unfamiliar). **Thickness**: Thicker = higher energy (resistance), thinner = lower energy (fluent) |
+| **Hard traversal path** | Blue solid arrow | System performs “hard traversal” – follows existing low‑energy paths for efficient, deterministic cognition, consolidating known knowledge |
+| **Soft traversal attempts** | Orange dashed arrows | Multiple directions explored during soft traversal, reflecting exploration |
+| **Soft traversal chosen path** | Red solid arrow | Final path selected after soft traversal, used to explore new associations or cross‑domain connections |
+| **Highlighted node** | Yellow circle, black border | Node currently visited on the traversal path – the concept being activated/accessed |
+| **Title bar** | Text at top‑left | Current iteration number and global average energy of the network |
+
+- Edge colors and thicknesses change dynamically with iterations, reflecting how cognitive energy evolves through learning/forgetting.
+- Hard traversal normally follows a single path (blue solid arrow); soft traversal first tries several directions (orange dashed arrows) before committing to the actual path (red solid arrow).
+- Node positions may shift slowly if dynamic layout is enabled, representing the reconfiguration of cognitive space.
 
 ---
 
