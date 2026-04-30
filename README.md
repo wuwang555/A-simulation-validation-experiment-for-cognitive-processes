@@ -98,7 +98,13 @@ These phenomena closely align with Wallas's four-stage model of creative thinkin
 
 ### Visualizing Cognitive Graph Evolution
 ![71‑concept scale animation](results/Fresults/animations/cognitive_anim_dynamic_71c_ind0_20260406_190427.gif)
-
+<iframe 
+  src="results/Fresults/animations/cognitive_3d_51c_ind0_20260429_000731.html" 
+  width="800" 
+  height="600" 
+  style="border: none;">
+  Your browser is not supported iframe.
+</iframe>
 #### Visual Legend of the Cognitive Animation
 
 | Element | Color / Style | Meaning |

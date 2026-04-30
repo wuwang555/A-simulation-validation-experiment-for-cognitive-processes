@@ -98,6 +98,13 @@
 
 ### 可视化认知图演化过程
 ![71概念规模下的可视化过程](results/Fresults/animations/cognitive_anim_dynamic_71c_ind0_20260406_190427.gif)
+<iframe 
+  src="results/Fresults/animations/cognitive_3d_51c_ind0_20260429_000731.html" 
+  width="800" 
+  height="600" 
+  style="border: none;">
+  您的浏览器不支持 iframe。
+</iframe>
 #### 认知图动画视觉元素说明
 
 | 元素 | 颜色/样式 | 含义 |
