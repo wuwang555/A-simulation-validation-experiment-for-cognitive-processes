@@ -24,7 +24,7 @@
 
 2. **能量动力学（驱动机制）**  
    系统演化受能耗最小化驱动，认知能耗函数定义为：
-   $$E_{ij}(t) = \alpha \cdot (1 - \text{sim}_{ij}) + \beta \cdot \frac{1}{1 + H_{ij}(t)} + \gamma \cdot \text{div}_{ij}$$
+   $E_{ij}(t) = \alpha \cdot (1 - \text{sim}_{ij}) + \beta \cdot \frac{1}{1 + H_{ij}(t)} + \gamma \cdot \text{div}_{ij}$
    其中 $\text{sim}_{ij}$ 为语义相似度，$H_{ij}(t)$ 为历史熟练度（模拟遗忘与学习），$\text{div}_{ij}$ 为结构差异性。系统通过反复“遍历”（认知操作）降低全局认知自由能 $F(G)$，从而自组织演化。
 
 ### 涌现现象

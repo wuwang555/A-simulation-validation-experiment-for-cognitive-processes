@@ -24,7 +24,7 @@ The core contributions of this project are:
 
 2.  **Energy Dynamics (Driving Mechanism)**
     System evolution is driven by the minimization of energy consumption. The cognitive energy function is defined as:
-    $$E_{ij}(t) = \alpha \cdot (1 - \text{sim}_{ij}) + \beta \cdot \frac{1}{1 + H_{ij}(t)} + \gamma \cdot \text{div}_{ij}$$
+    $E_{ij}(t) = \alpha \cdot (1 - \text{sim}_{ij}) + \beta \cdot \frac{1}{1 + H_{ij}(t)} + \gamma \cdot \text{div}_{ij}$
     where $\text{sim}_{ij}$ is semantic similarity, $H_{ij}(t)$ is historical proficiency (simulating forgetting and learning), and $\text{div}_{ij}$ is structural dissimilarity. The system repeatedly "traverses" (cognitive operations) to reduce the global cognitive free energy $F(G)$, thereby self-organizing and evolving.
 
 ### Emergent Phenomena
