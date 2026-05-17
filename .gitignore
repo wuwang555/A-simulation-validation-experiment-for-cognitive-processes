@@ -24,6 +24,7 @@ logs/*
 !logs/example.log
 paper/*
 !paper/Manuscript
+!paper/Manuscript/*.pdf
 # 忽略 results 目录下所有文件，但显式保留以下核心文件
 results/*
 !results/Fresults/
