@@ -30,7 +30,9 @@ results/*
 !results/Fresults/
 results/Fresults/*
 !results/Fresults/animations/
+!results/analysis/
 !results/DATA_DICTIONARY.md
+!results/DATA_DICTIONARY_ch.md
 !results/111_concepts.xlsx
 !results/51_concepts.xlsx
 !results/71_concepts.xlsx
@@ -38,12 +40,6 @@ results/Fresults/*
 !results/algebra/algebra_validation_results_20260320_111020.json
 !results/analysis/add_scan/threshold_scan_plot.png
 !results/analysis/add_scan/threshold_scan_results.json
-!results/analysis/objective_metrics/individual_summary_20260320_111042.json
-!results/analysis/objective_metrics/zipf_center_result_20260320_111042.json
-!results/analysis/objective_metrics/zipf_node_total_result_20260320_111042.json
-!results/analysis/objective_metrics/figures/energy_rate_scale51_ind0_20260320_111042.png
-!results/analysis/objective_metrics/figures/zipf_center_20260320_111042.png
-!results/analysis/objective_metrics/figures/zipf_node_total_20260320_111042.png
 !results/analysis/potential_analysis/potential_dist_scale51.png
 !results/analysis/potential_analysis/potential_dist_scale71.png
 !results/analysis/potential_analysis/potential_dist_scale91.png
@@ -60,6 +56,8 @@ results/Fresults/*
 !results/emergence/figures/emergence_visualization_20260320_110711.png
 !results/population/energy_history_个体_1_20260320_105557.csv
 !results/population/energy_history_个体_2_20260320_105557.csv
+!results/population/energy_history_Individual_2_20260329_164240.csv
+!results/population/energy_history_Individual_1_20260329_164541.csv
 !results/semantic_network/semantic_network_20260320_111029.png
 !results/visualizations/cognitive_graph_20260320_105541.png
 !results/visualizations/cognitive_states_20260320_105541.png
