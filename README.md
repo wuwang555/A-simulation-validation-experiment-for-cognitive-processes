@@ -168,8 +168,7 @@ Experimental results are saved in the `results/` directory:
 *   `emergence/`: Detailed emergence detection records.
 *   `visualizations/`: Cognitive network evolution diagrams, state distribution plots, etc.
 
-Key paper figures (`performance_comparison.png`, `scale_effect.png`) are located in the `paper/` directory and are ready for academic presentation.
-
+- For details, you can directly refer to the file `results/DATA_DICTIONARY.md`, which provides explanations for all the data in the results folder.
 ---
 
 ## Project Structure

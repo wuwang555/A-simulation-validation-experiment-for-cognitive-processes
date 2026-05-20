@@ -168,7 +168,7 @@ python src/analysis/run_potential_analysis_en.py # 英文版本
 - `emergence/`：涌现检测详细记录。
 - `visualizations/`：认知网络演化图、状态分布图等。
 
-论文核心图表（`performance_comparison.png`, `scale_effect.png`）位于 `paper/` 目录，可直接用于学术展示。
+具体可直接见`results/DATA_DICTIONARY_ch.md`的文件，该文件是对该results文件夹下的所有数据的说明。
 
 ---
 
